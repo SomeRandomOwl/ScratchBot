@@ -1,0 +1,9 @@
+{
+    "email": "", //This is for using a non bot account login with a email and password
+    "pass": "",
+    "cmdMod": "!", //The symbol needed to have at the begining of commands
+    "ownerId": "", //The id of the bot owner
+    "token": "", //The token for the bot, for using token login
+    "youTubeApiKey": "", //Api key for youtube
+    "imgurId": "815f77d8e562c63" //Id for imgur login
+}
