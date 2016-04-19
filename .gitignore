@@ -1,0 +1,11 @@
+log.json
+tenc
+Main LOG.txt
+Commandlog.json
+space.txt
+logs/**
+logs/
+settings.json
+#start.sh#
+*~
+\#*#

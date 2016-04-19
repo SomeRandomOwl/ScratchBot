@@ -1,0 +1,9 @@
+{
+    "name": "ScratchBot",
+    "version": "0.7.0",
+    "private": true,
+    "repository": {
+	"type": "git",
+	"url": "git://git@ratchtnet.cf:/projects.git"
+    }
+}
