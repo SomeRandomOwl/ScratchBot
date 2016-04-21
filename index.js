@@ -24,10 +24,8 @@ var bot = new DiscordClient({
 bot.on('ready', function() {
     winston.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
-bot.acceptInvite("0uEoMULKXv47xSLw", function(error, response) {
-        console.log(response);
-    })
-    //Global variable setting
+
+//Global variable setting
 imgur.setClientID(config.imgurId);
 var commandmod = config.cmdMod
 var ownerId = config.ownerId
@@ -57,7 +55,9 @@ function statusmsg(msg) {
         game: msg
     })
 }
-
+bot.on('disconnected', function() {
+    bot.connect()
+});
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     rconcmd = 'No'
     var messageID = rawEvent.d.id
