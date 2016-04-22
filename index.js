@@ -10,7 +10,9 @@ var readline = require('readline');
 var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
+
 youTube.setKey(config.youTubeApiKey)
+
 //Bot credentials
 var bot = new DiscordClient({
     autorun: true,
@@ -18,10 +20,12 @@ var bot = new DiscordClient({
     //password: config.pass,
     token: config.token
 });
+
 //Start up console output
 bot.on('ready', function() {
     winston.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
+
 //Global variable setting
 imgur.setClientID(config.imgurId);
 var commandmod = config.cmdMod
@@ -47,14 +51,24 @@ function cnsmsg(chan, msg) {
     })
 }
 
+try {
+    fs.accessSync('storage.json', fs.F_OK);
+    return
+} catch (e) {
+    console.log('Storage File doesnt exist')
+}
+
+
 function statusmsg(msg) {
     bot.setPresence({
         game: msg
     })
 }
+
 bot.on('disconnected', function() {
     bot.connect()
 });
+
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     rconcmd = 'No'
     var messageID = rawEvent.d.id
@@ -192,8 +206,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('math') === 1) {
             var mathcmd = message
             var mathcall = mathcmd.replace('!math ', '')
-            messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
-            rconcmd = "Yes"
+            try {
+		messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
+            } catch(e) {
+		messgt("Sorry I'm unable to run that")
+	    }
+	    rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('supportedmath') === 1) {
             bot.uploadFile({
