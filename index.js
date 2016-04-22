@@ -10,10 +10,7 @@ var readline = require('readline');
 var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
-var jsonfile = require('jsonfile')
 
-
-var storage = require('./storage.json')
 youTube.setKey(config.youTubeApiKey)
 
 //Bot credentials
