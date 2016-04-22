@@ -22,13 +22,6 @@ var bot = new DiscordClient({
 bot.on('ready', function() {
     winston.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
-<<<<<<< HEAD
-bot.acceptInvite("0uEoMULKXv47xSLw", function(error, response) {
-    console.log(response);
-})
-=======
-
->>>>>>> master
 //Global variable setting
 imgur.setClientID(config.imgurId);
 var commandmod = config.cmdMod
@@ -59,12 +52,9 @@ function statusmsg(msg) {
         game: msg
     })
 }
-<<<<<<< HEAD
-=======
 bot.on('disconnected', function() {
     bot.connect()
 });
->>>>>>> master
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     rconcmd = 'No'
     var messageID = rawEvent.d.id
