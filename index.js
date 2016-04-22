@@ -16,7 +16,7 @@ try {
     return
 } catch (e) {
     console.log('Storage File doesnt exist creating...')
-    var storage = {"settings": {"debug": 0},"users": ["null": {"id": null},], "channels":["null":{"id": null}], "servers":["null": {"id": null}]}
+    var storage = {"settings": {"debug": 0},"users": {"null": {"id": null}}, "channels": {"null":{"id": null}}, "servers": {"null": {"id": null}}}
     fs.appendFile('storage.json', storage)
 }
 
