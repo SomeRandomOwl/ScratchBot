@@ -20,7 +20,7 @@ try {
     fs.appendFile('storage.json', storage)
 }
 
-var storage = require('storage.json')
+var storage = require('./storage.json')
 youTube.setKey(config.youTubeApiKey)
 
 //Bot credentials
