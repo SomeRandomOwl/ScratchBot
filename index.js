@@ -13,13 +13,14 @@ var imgur = require('imgur-node-api');
 
 try {
     fs.accessSync('storage.json', fs.F_OK);
-    return
+    console.log('Storage file found!')
 } catch (e) {
     console.log('Storage File doesnt exist creating...')
     var storage = {"settings": {"debug": 0},"users": {"null": {"id": null}}, "channels": {"null":{"id": null}}, "servers": {"null": {"id": null}}}
     fs.appendFile('storage.json', storage)
 }
 
+var storage = require('storage.json')
 youTube.setKey(config.youTubeApiKey)
 
 //Bot credentials
