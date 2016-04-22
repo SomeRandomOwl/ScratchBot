@@ -11,6 +11,15 @@ var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
 
+try {
+    fs.accessSync('storage.json', fs.F_OK);
+    return
+} catch (e) {
+    console.log('Storage File doesnt exist creating...')
+    var storage = {'settings': {'debug': 0},'users': ['null': {'id': null},], 'channels':['null':{'id': null}], 'servers':['null': {'id': null}]}
+    fs.appendFile('storage.json', storage)
+}
+
 youTube.setKey(config.youTubeApiKey)
 
 //Bot credentials
@@ -50,14 +59,6 @@ function cnsmsg(chan, msg) {
         typing: false
     })
 }
-
-try {
-    fs.accessSync('storage.json', fs.F_OK);
-    return
-} catch (e) {
-    console.log('Storage File doesnt exist')
-}
-
 
 function statusmsg(msg) {
     bot.setPresence({
