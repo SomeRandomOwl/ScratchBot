@@ -1,7 +1,7 @@
 //Welcome, this is scratch bots source code, everything that makes her run and tick!
 var DiscordClient = require('discord.io');
 var winston = require('winston');
-var config = require('../../config.json');
+var config = require('config.json');
 var fs = require('fs');
 var Roll = require('roll'),
     roll = new Roll();
