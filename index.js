@@ -10,9 +10,7 @@ var readline = require('readline');
 var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
-
 youTube.setKey(config.youTubeApiKey)
-
 //Bot credentials
 var bot = new DiscordClient({
     autorun: true,
@@ -24,10 +22,7 @@ var bot = new DiscordClient({
 bot.on('ready', function() {
     winston.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
-bot.acceptInvite("0uEoMULKXv47xSLw", function(error, response) {
-        console.log(response);
-    })
-    //Global variable setting
+//Global variable setting
 imgur.setClientID(config.imgurId);
 var commandmod = config.cmdMod
 var ownerId = config.ownerId
@@ -38,6 +33,7 @@ var tlist = triggerlist.toString()
 var clist = commandlist.toString()
 var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!']
 var debug = false
+var serverID = null
 
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
@@ -56,7 +52,9 @@ function statusmsg(msg) {
         game: msg
     })
 }
-
+bot.on('disconnected', function() {
+    bot.connect()
+});
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     rconcmd = 'No'
     var messageID = rawEvent.d.id
@@ -169,7 +167,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     typing: false
                 });
             }
-
             rconcmd = 'Yes'
         }
         //Makes scratch print out her avatar
@@ -230,17 +227,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
             rconcmd = 'Yes'
         }
-	if (message.toLowerCase().indexOf('poke') === 1) {
-	    var pkcmd = message
-	    var pkcall = pkcmd.replace('!poke ', '')
-	    var pkcall = pkcall.replace('<@', '')
-	    var pkcall = pkcall.replace('>', '')
-	    bot.sendMessage({
-		to: pkcall,
-		message: "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">",
-		typing: false
-	    })
-	}
+        if (message.toLowerCase().indexOf('poke') === 1) {
+            var pkcmd = message
+            var pkcall = pkcmd.replace('!poke ', '')
+            var pkcall = pkcall.replace('<@', '')
+            var pkcall = pkcall.replace('>', '')
+            bot.sendMessage({
+                to: pkcall,
+                message: "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">",
+                typing: false
+            })
+        }
         if (message.toLowerCase().indexOf('yt') === 1) {
             var ytcmd = message
             var ytcall = ytcmd.replace('!yt ', '')
@@ -296,16 +293,20 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var timed = Date()
         timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
         timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
-	servern = bot.servers[serverID].name
-	channeln = bot.servers[serverID].channels[channelID].name
-        console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
-        //fs.appendFile("logs/Main LOG.txt", '\n' + timed + user + ": " + message)
-	fs.appendFile("logs/" + servern + '.' + channeln + '.txt', '\n' + timed + user + ": " + message)
+        if (channelID in bot.directMessages) {
+            console.log(timed + 'Channel: ' + 'PM | ' + user + ': ' + message)
+            fs.appendFile("logs/" + user + ".txt", '\n' + timed + user + ": " + message)
+        } else {
+            servern = bot.servers[serverID].name
+            channeln = bot.servers[serverID].channels[channelID].name
+            console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
+            //fs.appendFile("logs/Main LOG.txt", '\n' + timed + user + ": " + message)
+            fs.appendFile("logs/" + servern + '.' + channeln + '.txt', '\n' + timed + user + ": " + message)
+        }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes") {
         winston.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
     }
 });
-
 var cnaid = '162390519748624384'
 
 function consoleparse(line) {
@@ -332,7 +333,6 @@ var rl = readline.createInterface({
     output: process.stdout,
     terminal: false
 });
-
 rl.on('line', function(line) {
     consoleparse(line);
 })

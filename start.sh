@@ -1,3 +1,5 @@
-while true; do
-    node index.js
+echo "$!"
+while :
+do
+      node index.js
 done
