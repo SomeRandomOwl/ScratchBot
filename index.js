@@ -40,7 +40,7 @@ var commandmod = config.cmdMod
 var ownerId = config.ownerId
 var rconcmd = 'No'
 var commandlist = ['\nUtility: !commands', ' !math', ' !ids', ' !supportedmath', ' !yt', ' !triggers\nOther: !picture']
-var triggerlist = ['\nUtility: ping', ' thanks scratch', ' say hello scratch\nSilly: rick\nOther: hey nice avatar scratch', ' nice avatar scratch\nPolite replies: goodnight', ' nite', ' night']
+var triggerlist = ['\nUtility: ping\nOther: hey nice avatar scratch', ' nice avatar scratch\nPolite replies: goodnight', ' nite', ' night','hi','hello']
 var tlist = triggerlist.toString()
 var clist = commandlist.toString()
 var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!']
@@ -70,7 +70,7 @@ bot.on('disconnected', function() {
     bot.connect()
     logger.info("Reconnected")
     bot.sendMessage({
-	to: "167147199501697024",
+	to: logChan,
 	message:"Got disconneted, Reconnected now",
 	typeing: false
     })
@@ -280,7 +280,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     console.log(error);
                 } else {
 		    console.log(result.items[0])
-		    messgnt('<@' + userID + '> Here is the result for: ' + ytcall + '\nhttps://youtu.be/' + result.items[0].id.videoId)
+		    messgnt('<@' + userID + '> Here is the result for: ' + ytcall + '\nTitle: ' + result.items[0].snippet.title+ '\nDescription: ' + result.items[0].snippet.description + 'https://youtu.be/' + result.items[0].id.videoId)
                 }
             });
             bot.deleteMessage({
