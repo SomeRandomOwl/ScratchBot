@@ -282,6 +282,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     console.log(error);
                 } else {
                     console.log(result.items[0])
+                    try {
                     if (result.items[0].id.kind === 'youtube#video') {
                         messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + result.items[0].snippet.description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
                     } else if (result.items[0].id.kind === 'youtube#channel') {
@@ -289,6 +290,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     } else {
                         messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
                     }
+                } catch(e) {
+                    messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
+                    console.log(e)
                 }
             });
             bot.deleteMessage({
