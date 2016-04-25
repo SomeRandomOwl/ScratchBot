@@ -280,7 +280,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     console.log(error);
                 } else {
 		    console.log(result.items[0])
-		    messgnt('<@' + userID + '> Here is the result for: ' + ytcall + '\nTitle: ' + result.items[0].snippet.title+ '\nDescription: ' + result.items[0].snippet.description + 'https://youtu.be/' + result.items[0].id.videoId)
+		    messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title+ '\n\nDescription: ' + result.items[0].snippet.description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
                 }
             });
             bot.deleteMessage({
