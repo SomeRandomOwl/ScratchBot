@@ -229,7 +229,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             try {
                 messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
             } catch (e) {
-                messgt("Sorry I'm unable to run that")
+                messgnt("Sorry I'm unable to run that")
             }
             rconcmd = "Yes"
         }
