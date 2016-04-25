@@ -78,7 +78,7 @@ bot.on('disconnected', function() {
 
 function messageSend(channelID, msg, typing) {
     bot.sendMessage({
-            to: chanelID,
+            to: channelID,
             message: msg,
             typing: false
         }, function(error, response) {
