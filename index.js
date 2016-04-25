@@ -83,14 +83,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         console.log(rawEvent)
     }
     //function to quick call message sending to minimize code
-    function messgt(msg) {
-        bot.sendMessage({
-            to: channelID,
-            message: msg,
-            typing: true
-        });
-    }
-
     function messgnt(msg) {
         bot.sendMessage({
             to: channelID,
@@ -99,22 +91,22 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         });
     }
     if (message.toLowerCase() === "ping") {
-        messgt("pong")
+        messgnt("pong")
         rconcmd = 'Yes'
     }
     if (message.toLowerCase() === "rick" && userID != '167017777012408320' && user != 'ScratchBot') {
         var ricks = ["and morty!", "dont forget morty!", "uuuuur morty! er goota git outta here morty! They're onto us!", "Wubba-Lubba Dub Dub!"]
         var rickm = "Morty!"
         rickm = ricks[Math.floor(Math.random() * ricks.length)];
-        messgt(rickm)
+        messgnt(rickm)
         rconcmd = 'Yes'
     }
     if (message.toLowerCase() === "thanks scratch") {
-        messgt("You're Welcome!")
+        messgnt("You're Welcome!")
         rconcmd = 'Yes'
     }
     if (message.toLowerCase() === "say hello scratch") {
-        messgt("Hello World")
+        messgnt("Hello World")
         rconcmd = 'Yes'
     }
     if (message.toLowerCase() === "hey nice avatar scratch" || message.toLowerCase() === "nice avatar scratch") {
@@ -127,10 +119,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         });
         rconcmd = 'Yes'
     }
-    //if (message.toLowerCase().indexOf('(') > -1 && message.toLowerCase.indexOf('scratch') > message.toLowerCase.indexOf('()') && message.toLowerCase.indexOf('scratch') < message.toLowerCase.indexOf(')')) {
-//	messgt("uh...yes?")
-//	rconcmd = 'Yes'
-  //  }
     if (isInArray(message, nighttig)) {
         var nights = ["Night! :zzz:", "Goodnight <@" + userID + "> :zzz:", "Sleep well <@" + userID + "> :zzz:", "Have a good sleep! :zzz:", "Don't let the bed bugs bite! :zzz:", "Nighty nite! :zzz:"]
         var nightm = "Night!"
@@ -287,14 +275,14 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
-        if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf('70921043782402048') === 0) {
+        if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
             var jscmd = message
             var jscall = jscmd.replace('!js ', '')
 	    try {
 		eval(jscall)
 	    } catch(e) {
 		console.log(e)
-		messgt("Err...I'm sorry...that results in a error")
+		messgnt("Err...I'm sorry...that results in a error")
 	    }
             rconcmd = 'Yes'
         }
