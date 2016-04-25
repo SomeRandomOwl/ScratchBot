@@ -72,9 +72,9 @@ bot.on('disconnected', function() {
     bot.connect()
     logger.info("Reconnected")
     //bot.sendMessage({
-      //  to: logChan,
-      //  message: "Got disconneted, Reconnected now",
-      //  typeing: false
+    //  to: logChan,
+    //  message: "Got disconneted, Reconnected now",
+    //  typeing: false
     //})
 });
 
@@ -91,9 +91,9 @@ function messageSend(channelID, msg, typing) {
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     console.log(user + " is now: " + status);
     //bot.sendMessage({
-     //   to: logChan,
-     //   message: user + " is now: " + status,
-     //   typing: false
+    //   to: logChan,
+    //   message: user + " is now: " + status,
+    //   typing: false
     //});
 });
 
@@ -283,16 +283,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 } else {
                     console.log(result.items[0])
                     try {
-                    if (result.items[0].id.kind === 'youtube#video') {
-                        messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + result.items[0].snippet.description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
-                    } else if (result.items[0].id.kind === 'youtube#channel') {
-                        messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + result.items[0].snippet.description + '\nhttps://www.youtube.com/channel/' + result.items[0].id.channelId)
-                    } else {
+                        if (result.items[0].id.kind === 'youtube#video') {
+                            messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + result.items[0].snippet.description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
+                        } else if (result.items[0].id.kind === 'youtube#channel') {
+                            messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + result.items[0].snippet.description + '\nhttps://www.youtube.com/channel/' + result.items[0].id.channelId)
+                        } else {
+                            messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
+                        }
+                    } catch (e) {
                         messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
+                        console.log(e)
                     }
-                } catch(e) {
-                    messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
-                    console.log(e)
                 }
             });
             bot.deleteMessage({
