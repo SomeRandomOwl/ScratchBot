@@ -285,12 +285,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     if (result.items[0].id.kind === 'youtube#video') {
                         messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + result.items[0].snippet.description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
                     } else if (result.items[0].id.kind === 'youtube#channel') {
-                        if (result.items[0].id.kind === 'youtube#video') {
                         messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + result.items[0].snippet.description + '\nhttps://www.youtube.com/channel/' + result.items[0].id.channelId)
                     } else {
                         messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
                     }
-
                 }
             });
             bot.deleteMessage({
