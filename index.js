@@ -16,7 +16,9 @@ youTube.setKey(config.youTubeApiKey)
 var logger = new(winston.Logger)({
     transports: [
         new(winston.transports.Console)(),
-        new(winston.transports.File)({filename: 'logs/Command.log'})
+        new(winston.transports.File)({
+            filename: 'logs/Command.log'
+        })
     ]
 });
 
@@ -40,7 +42,7 @@ var commandmod = config.cmdMod
 var ownerId = config.ownerId
 var rconcmd = 'No'
 var commandlist = ['\nUtility: !commands', ' !math', ' !ids', ' !supportedmath', ' !yt', ' !triggers\nOther: !picture']
-var triggerlist = ['\nUtility: ping\nOther: hey nice avatar scratch', ' nice avatar scratch\nPolite replies: goodnight', ' nite', ' night','hi','hello']
+var triggerlist = ['\nUtility: ping\nOther: hey nice avatar scratch', ' nice avatar scratch\nPolite replies: goodnight', ' nite', ' night', 'hi', 'hello']
 var tlist = triggerlist.toString()
 var clist = commandlist.toString()
 var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!']
@@ -70,29 +72,29 @@ bot.on('disconnected', function() {
     bot.connect()
     logger.info("Reconnected")
     bot.sendMessage({
-	to: logChan,
-	message:"Got disconneted, Reconnected now",
-	typeing: false
+        to: logChan,
+        message: "Got disconneted, Reconnected now",
+        typeing: false
     })
 });
 
 function messageSend(channelID, msg, typing) {
     bot.sendMessage({
-            to: channelID,
-            message: msg,
-            typing: false
-        }, function(error, response) {
-            console.log(response)
-        });
+        to: channelID,
+        message: msg,
+        typing: false
+    }, function(error, response) {
+        console.log(response)
+    });
 }
 
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     console.log(user + " is now: " + status);
     bot.sendMessage({
-            to: logChan,
-            message: user + " is now: " + status,
-            typing: false
-        });
+        to: logChan,
+        message: user + " is now: " + status,
+        typing: false
+    });
 });
 
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
@@ -223,11 +225,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var mathcmd = message
             var mathcall = mathcmd.replace('!math ', '')
             try {
-		messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
-            } catch(e) {
-		messgt("Sorry I'm unable to run that")
-	    }
-	    rconcmd = "Yes"
+                messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
+            } catch (e) {
+                messgt("Sorry I'm unable to run that")
+            }
+            rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('supportedmath') === 1) {
             bot.uploadFile({
@@ -279,8 +281,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 if (error) {
                     console.log(error);
                 } else {
-		    console.log(result.items[0])
-		    messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title+ '\n\nDescription: ' + result.items[0].snippet.description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
+                    console.log(result.items[0])
+                    if (result.items[0].id.kind === 'youtube#video') {
+                        messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + result.items[0].snippet.description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
+                    } else if (result.items[0].id.kind === 'youtube#channel') {
+                        if (result.items[0].id.kind === 'youtube#video') {
+                        messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + result.items[0].snippet.description + '\nhttps://www.youtube.com/channel/' + result.items[0].id.channelId)
+                    } else {
+                        messgnt('<@' + userID + '> Sorr I could not retrieve that :confused:)
+                    }
+
                 }
             });
             bot.deleteMessage({
@@ -298,12 +308,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
             var jscmd = message
             var jscall = jscmd.replace('!js ', '')
-	    try {
-		eval(jscall)
-	    } catch(e) {
-		console.log(e)
-		messgnt("Err...I'm sorry...that results in a error")
-	    }
+            try {
+                eval(jscall)
+            } catch (e) {
+                console.log(e)
+                messgnt("Err...I'm sorry...that results in a error")
+            }
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf('70921043782402048') === -1) {
@@ -344,7 +354,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             fs.appendFile("logs/" + servern + '.' + channeln + '.txt', '\n' + timed + user + ": " + message)
         }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes") {
-	logger.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
+        logger.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
     }
 });
 var cnaid = '162390519748624384'
