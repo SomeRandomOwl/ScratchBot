@@ -13,6 +13,13 @@ var imgur = require('imgur-node-api');
 
 youTube.setKey(config.youTubeApiKey)
 
+var logger = new(winston.Logger)({
+    transports: [
+        new(winston.transports.Console)(),
+        new(winston.transports.File)({filename: 'logs/Command.log'})
+    ]
+});
+
 //Bot credentials
 var bot = new DiscordClient({
     autorun: true,
@@ -23,7 +30,7 @@ var bot = new DiscordClient({
 
 //Start up console output
 bot.on('ready', function() {
-    winston.info(bot.username + " - (" + bot.id + ")" + " Is now running");
+    logger.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
 
 //Global variable setting
@@ -58,7 +65,14 @@ function statusmsg(msg) {
 }
 
 bot.on('disconnected', function() {
+    logger.error("Bot got disconnected, reconnecting")
     bot.connect()
+    logger.info("Reconnected")
+    bot.sendMessage({
+	to: "167147199501697024",
+	message:"Got disconneted, Reconnected now",
+	typeing: false
+    })
 });
 
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
@@ -113,6 +127,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         });
         rconcmd = 'Yes'
     }
+    //if (message.toLowerCase().indexOf('(') > -1 && message.toLowerCase.indexOf('scratch') > message.toLowerCase.indexOf('()') && message.toLowerCase.indexOf('scratch') < message.toLowerCase.indexOf(')')) {
+//	messgt("uh...yes?")
+//	rconcmd = 'Yes'
+  //  }
     if (isInArray(message, nighttig)) {
         var nights = ["Night! :zzz:", "Goodnight <@" + userID + "> :zzz:", "Sleep well <@" + userID + "> :zzz:", "Have a good sleep! :zzz:", "Don't let the bed bugs bite! :zzz:", "Nighty nite! :zzz:"]
         var nightm = "Night!"
@@ -137,7 +155,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (dice.indexOf('d') === 0) {
                 var dienum = roll.roll(dice);
                 console.log(dienum);
-                winston.info(dienum.rolled.toString())
                 bot.sendMessage({
                     to: channelID,
                     message: '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString(),
@@ -151,7 +168,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 if (numdie < 21) {
                     var dienum = roll.roll(dice);
                     console.log(dienum);
-                    winston.info(dienum.rolled.toString())
                     bot.sendMessage({
                         to: channelID,
                         message: '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString() + ' For a total of: ' + dienum.result,
@@ -255,7 +271,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 if (error) {
                     console.log(error);
                 } else {
-                    messgnt('<@' + userID + '> Here is the result for: ' + ytcall + '\nhttps://youtu.be/' + result.items[0].id.videoId)
+		    console.log(result.items[0])
+		    messgnt('<@' + userID + '> Here is the result for: ' + ytcall + '\nhttps://youtu.be/' + result.items[0].id.videoId)
                 }
             });
             bot.deleteMessage({
@@ -273,13 +290,18 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf('70921043782402048') === 0) {
             var jscmd = message
             var jscall = jscmd.replace('!js ', '')
-            eval(jscall)
+	    try {
+		eval(jscall)
+	    } catch(e) {
+		console.log(e)
+		messgt("Err...I'm sorry...that results in a error")
+	    }
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf('70921043782402048') === -1) {
             messgnt('<@' + userID + '> You are not allowed to use this command')
         } else if (rconcmd === 'no') {
-            winston.info(commandmod + ' was said but there was No Detected command');
+            logger.info(commandmod + ' was said but there was No Detected command');
         }
     }
     if (channelID === '164845697508704257') {
@@ -314,7 +336,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             fs.appendFile("logs/" + servern + '.' + channeln + '.txt', '\n' + timed + user + ": " + message)
         }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes") {
-        winston.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
+	logger.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
     }
 });
 var cnaid = '162390519748624384'
