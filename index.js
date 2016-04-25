@@ -77,7 +77,13 @@ bot.on('disconnected', function() {
 });
 
 function messageSend(channelID, msg, typing) {
-    // body...
+    bot.sendMessage({
+            to: chanelID,
+            message: msg,
+            typing: false
+        }, function(error, response) {
+            console.log(response)
+        });
 }
 
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
