@@ -71,11 +71,11 @@ bot.on('disconnected', function() {
     logger.error("Bot got disconnected, reconnecting")
     bot.connect()
     logger.info("Reconnected")
-    bot.sendMessage({
-        to: logChan,
-        message: "Got disconneted, Reconnected now",
-        typeing: false
-    })
+    //bot.sendMessage({
+      //  to: logChan,
+      //  message: "Got disconneted, Reconnected now",
+      //  typeing: false
+    //})
 });
 
 function messageSend(channelID, msg, typing) {
@@ -90,11 +90,11 @@ function messageSend(channelID, msg, typing) {
 
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     console.log(user + " is now: " + status);
-    bot.sendMessage({
-        to: logChan,
-        message: user + " is now: " + status,
-        typing: false
-    });
+    //bot.sendMessage({
+     //   to: logChan,
+     //   message: user + " is now: " + status,
+     //   typing: false
+    //});
 });
 
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
