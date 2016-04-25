@@ -307,7 +307,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf('70921043782402048') === -1) {
-            messgnt('<@' + userID + '> You are not allowed to use this command, only the bot owner can because it can potentially damage the bot')
+            messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
         } else if (rconcmd === 'no') {
             logger.info(commandmod + ' was said but there was No Detected command');
         }
