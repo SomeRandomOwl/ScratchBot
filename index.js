@@ -38,6 +38,7 @@ bot.on('ready', function() {
 //Global variable setting
 imgur.setClientID(config.imgurId);
 var logChan = config.logChan
+var sentPrevId = null
 var commandmod = config.cmdMod
 var ownerId = config.ownerId
 var rconcmd = 'No'
@@ -84,7 +85,8 @@ function messageSend(channelID, msg, typing) {
         message: msg,
         typing: false
     }, function(error, response) {
-        console.log(response)
+        console.log('Last Message Sent ID: ' + response.id)
+        sentPrevId = response.id
     });
 }
 
