@@ -227,7 +227,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             try {
                 messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
             } catch (e) {
-            	log.error("Bad Math Command" + mathcall + " | " + e)
+            	logger.error("Bad Math Command" + mathcall + " | " + e)
                 messgnt("Sorry I'm unable to run that")
             }
             rconcmd = "Yes"
@@ -294,7 +294,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
                         }
                     } catch (e) {
-                    	log.error("Youtube Fetch Failed" + e + " | " + ytcall)
+                    	logger.error("Youtube Fetch Failed" + e + " | " + ytcall)
                         messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
                         console.log(e)
                     }
@@ -318,7 +318,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             try {
                 eval(jscall)
             } catch (e) {
-            	log.error("Bad JS Command" + e)
+            	logger.error("Bad JS Command" + e)
                 console.log(e)
                 messgnt("Err...I'm sorry...that results in a error")
             }
