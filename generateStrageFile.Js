@@ -1,27 +1,4 @@
-var storageDefault = {
-	"settings": {
-		"debug": 0
-	},
-	"Channels": {
-		"test": {
-			"id": "null",
-			"settings": {}
-		}
-	},
-	"Servers": {
-		"test": {
-			"id": "null",
-			"settings": {}
-		}
-	},
-	"Users": {
-		"test": {
-			"id": "null",
-			"settings": {}
-		}
-	}
-}
-
+var storageDefault = {"settings":{"debug":0},"d":{"Channels":{"test":{"id":"null","settings":{}}},"Servers":{"test":{"id":"null","settings":{}}},"Users":{"test":{"id":"null","settings":{}}}}}
 var fs = require('fs');
 
 function writeJSON(path, data, callback) {
@@ -51,5 +28,4 @@ if (fs.existsSync('storage.json')) {
 				return;
 		}
 	});
-	process.exit()
 }
