@@ -77,7 +77,7 @@ function writeJSON(path, data, callback) {
 			callback(error);
 			return;
 		}
-		fs.rename(path + '.tmp', path + 'json', function(error) {
+		fs.rename(path + '.tmp', path + '.json', function(error) {
 			if (error) {
 				callback(error);
 				return;
