@@ -354,9 +354,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (statuscall.toLowerCase().indexOf('<@') === -1) {
                 try {
                     if (Storage.d.Users[statuscall].status = 'online') {
-                        sendMessage(channelID, statuscall + " Is currently online")
+                        messageSend(channelID, statuscall + " Is currently online")
                     } else {
-                        sendMessage(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
+                        messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
                     }
                 } catch (e) {
                     return
@@ -367,9 +367,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     if (mentId === storage.d.Users[user].id) {
                         try {
                             if (Storage.d.Users[statuscall].status = 'online') {
-                                sendMessage(channelID, statuscall + " Is currently online")
+                                messageSend(channelID, statuscall + " Is currently online")
                             } else {
-                                sendMessage(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
+                                messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
                             }
                         } catch (e) {
                             return
@@ -380,6 +380,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 }
             }
+            rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('supportedmath') === 1) {
             bot.uploadFile({
