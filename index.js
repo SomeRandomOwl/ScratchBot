@@ -52,15 +52,12 @@ var serverID = null
 function writeJSON(path, data, callback) {
 	fs.writeFile(path + '.tmp', JSON.stringify(data), function(error) {
 		if (error) {
-			callback(error);
-			return;
+			return error;
 		}
 		fs.rename(path + '.tmp', path + '.json', function(error) {
 			if (error) {
-				callback(error);
-				return;
+				return error;
 			}
-			callback(null);
 		});
 	});
 }
