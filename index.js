@@ -81,14 +81,9 @@ function serverlist() {
     for (var serverID in bot.servers) {
         console.log(bot.servers[serverID].name);
         var name = bot.servers[serverID].name;
-        if (storage.d.Servers[name] === undefined) {
-            storage.d.Servers[name] = {
-                'id': serverID
-            }
-        } else  {
-            return
+        storage.d.Servers[name] = {
+            'id': serverID
         }
-
     }
     writeJSON('./storage', storage)
 }
