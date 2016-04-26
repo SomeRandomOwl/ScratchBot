@@ -37,7 +37,7 @@ bot.on('ready', function() {
 
 //Global variable setting
 imgur.setClientID(config.imgurId);
-var storageDefault = {"settings":{"debug":0},"Channels":{},"Servers":{},"Users":{}}
+var storageDefault = {"settings":{"debug":0},"Channels":{"test":{"id": "null","settings":{}}},"Servers":{"test":{"id": "null","settings":{}}},"Users":{"test":{"id": "null","settings":{}}}}
 var logChan = config.logChan
 var sentPrevId = null
 var commandmod = config.cmdMod
@@ -70,7 +70,12 @@ if (fs.existsSync('storage.json')) {
 	var storage = require('./storage.json')
 } else if (fs.existsSync('storage.json') === false) { 
 	console.log('Didnt Find Storage.json, creating'); 
-	writeJSON('./storage', storageDefault)
+	writeJSON('./storage', storageDefault, function(error) {
+	if (error)
+		console.error(error);
+		return;
+	}
+	});
 	var storage = require('./storage.json')	
 }
 
