@@ -173,14 +173,14 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
-	console.log("Storage Reads: " + storage.d.Users[user].status)
+        console.log("Storage Reads: " + storage.d.Users[user].status)
     }
     if (status === 'idle') {
         var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
-	console.log("Storage Reads: " + storage.d.Users[user].status)
+        console.log("Storage Reads: " + storage.d.Users[user].status)
     }
     if (status === 'online') {
         storage.d.Users[user].status = status
@@ -362,9 +362,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             console.log(statuscall)
             if (statuscall.toLowerCase().indexOf('<@') === -1) {
                 console.log(storage.d.Users[statuscall].status)
-                if (storage.d.Users[statuscall].status = 'idle') {
+                var status = storage.d.Users[statuscall].status
+                console.log(status)
+                if (status = 'idle') {
                     messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
-                } else if (storage.d.Users[statuscall].status = 'offline') {
+                } else if (status = 'offline') {
                     messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
                 } else {
                     messageSend(channelID, statuscall + " Is currently online")
@@ -374,9 +376,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 for (var user in storage.d.Users) {
                     if (mentId === storage.d.Users[user].id) {
                         console.log(storage.d.Users[user].status)
-                        if (storage.d.Users[user].status = 'idle') {
+                        var status = storage.d.Users[user].status
+                        console.log(status)
+                        if (status = 'idle') {
                             messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
-                        } else if (storage.d.Users[user].status = 'offline') {
+                        } else if (status = 'offline') {
                             messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
                         } else {
                             messageSend(channelID, statuscall + " Is currently online")
