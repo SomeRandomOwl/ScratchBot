@@ -98,6 +98,7 @@ if (fs.existsSync('storage.json')) {
 				return;
 		}
 	});
+	process.exit()
 }
 
 try{
