@@ -10,6 +10,7 @@ var readline = require('readline');
 var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
+var moment = require('moment')
 
 youTube.setKey(config.youTubeApiKey)
 
@@ -168,6 +169,17 @@ function messageSend(channelID, msg, typing) {
 
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     console.log(user + " is now: " + status);
+    if (status === 'offline') {
+        lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
+        storage.d.Users[user].lastseen = lastseen
+        storage.d.Users[user].status = status
+    } else if (status === 'idle') {
+        lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
+        storage.d.Users[user].lastseen = lastseen
+        storage.d.Users[user].status = status
+    } else if (status === 'offline') {
+            storage.d.Users[user].status = status
+    }
     //bot.sendMessage({
     //   to: logChan,
     //   message: user + " is now: " + status,
