@@ -367,9 +367,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             } else {
                                 messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
                             }
+                        } else {
+                            console.log("Not " + user)
                         }
-                    } else {
-                        console.log("Not " + user)
                     }
                 }
             }
