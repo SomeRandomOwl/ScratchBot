@@ -173,14 +173,16 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
+	console.log("Storage Reads: " + storage.d.Users[user].status)
     }
     if (status === 'idle') {
         lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
+	console.log("Storage Reads: " + storage.d.Users[user].status)
     }
-    if (status === 'offline') {
+    if (status === 'online') {
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
     }
