@@ -63,7 +63,7 @@ function writeJSON(path, data, callback) {
                 return error;
             }
         });
-        console.log(storage)
+        console.log(storage.d)
     });
 }
 
