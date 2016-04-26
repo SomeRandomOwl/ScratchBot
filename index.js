@@ -98,9 +98,13 @@ if (fs.existsSync('storage.json')) {
 				return;
 		}
 	});
-	var storage = require('./storage.json')
 }
 
+try{
+	var storage = require('./storage.json')
+}catch(e){
+	console.log(e);
+}
 function isInArray(value, array) {
 	return array.indexOf(value) > -1;
 }
