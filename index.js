@@ -168,18 +168,19 @@ function messageSend(channelID, msg) {
 };
 
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
-    console.log(user + " is now: " + status);
     if (status === 'offline') {
         lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
-    } else if (status === 'idle') {
+    }
+    if (status === 'idle') {
         lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
-    } else if (status === 'offline') {
+    }
+    if (status === 'offline') {
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
     }
