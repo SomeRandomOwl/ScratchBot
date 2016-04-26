@@ -358,6 +358,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         } else {
                             sendMessage(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
                         }
+                    } catch (e) {
+                        return
                     }
                 } else {
                     var mentId = rawEvent.d.mentions[0].id
@@ -369,6 +371,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                                 } else {
                                     sendMessage(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
                                 }
+                            } catch (e) {
+                                return
                             }
 
                         } else {
