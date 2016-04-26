@@ -370,7 +370,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 } else if (status = 'offline') {
                     console.log('Offline, raw')
                     messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
-                } else  if (status = 'online' {
+                } else  if (status = 'online') {
                     console.log('Online, raw')
                     messageSend(channelID, statuscall + " Is currently online")
                 }
