@@ -3,16 +3,16 @@ var DiscordClient = require('discord.io');
 var winston = require('winston');
 var config = require('../../config.json');
 var fs = require('fs');
-var Roll = require('roll'),
-    roll = new Roll();
+var Roll = require('roll');
+roll = new Roll();
 var math = require('mathjs');
 var readline = require('readline');
 var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
-var moment = require('moment')
+var moment = require('moment');
 
-youTube.setKey(config.youTubeApiKey)
+youTube.setKey(config.youTubeApiKey);
 
 var logger = new(winston.Logger)({
     transports: [
@@ -40,16 +40,16 @@ bot.on('ready', function() {
 //Global variable setting
 imgur.setClientID(config.imgurId);
 
-var logChan = config.logChan
-var sentPrevId = null
-var commandmod = config.cmdMod
-var ownerId = config.ownerId
-var rconcmd = 'No'
-var clist = '\nUtility: !commands, !math, !ids, !supportedmath, !yt, !triggers\nOther: !picture'
-var tlist = '\nUtility: ping\nPolite replies: goodnight,  nite,  night, hi, hello'
-var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!']
-var debug = false
-var serverID = null
+var logChan = config.logChan;
+var sentPrevId = null;
+var commandmod = config.cmdMod;
+var ownerId = config.ownerId;
+var rconcmd = 'No';
+var clist = '\nUtility: !commands, !math, !ids, !supportedmath, !yt, !triggers\nOther: !picture';
+var tlist = '\nUtility: ping\nPolite replies: goodnight,  nite,  night, hi, hello';
+var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!'];
+var debug = false;
+var serverID = null;
 
 
 //Writes JSON to a file
@@ -73,7 +73,7 @@ if (fs.existsSync('storage.json')) {
     var storage = require('./storage.json')
 } else if (fs.existsSync('storage.json') === false) {
     console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
-}
+};
 
 //Lists currently connected severs and writes them to json
 function serverlist() {
@@ -87,7 +87,7 @@ function serverlist() {
         }
     }
     writeJSON('./storage', storage)
-}
+};
 
 
 function channellist() {
@@ -109,7 +109,7 @@ function channellist() {
         }
     }
     writeJSON('./storage', storage)
-}
+};
 
 function userlist() {
     console.log("Currently seeing these users: ")
@@ -123,7 +123,7 @@ function userlist() {
         }
     }
     writeJSON('./storage', storage)
-}
+};
 
 //Quick way of checkin if something is in a array
 
@@ -137,13 +137,13 @@ function cnsmsg(chan, msg) {
         message: msg,
         typing: false
     })
-}
+};
 
 function statusmsg(msg) {
     bot.setPresence({
         game: msg
     })
-}
+};
 
 bot.on('disconnected', function() {
     logger.error("Bot got disconnected, reconnecting")
@@ -165,7 +165,7 @@ function messageSend(channelID, msg) {
         console.log('Last Message Sent ID: ' + response.id)
         sentPrevId = response.id
     });
-}
+};
 
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     console.log(user + " is now: " + status);
@@ -371,10 +371,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             console.log("Not " + user)
                         }
                     }
-                }
+                } rconcmd = 'Yes'
             }
-            rconcmd = 'Yes'
-        }
         if (message.toLowerCase().indexOf('supportedmath') === 1) {
             bot.uploadFile({
                 to: channelID,
