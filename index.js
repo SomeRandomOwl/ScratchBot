@@ -353,7 +353,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 var statuscall = statuscmd.replace('!status ', '')
                 console.log(statuscall)
                 if (statuscall.toLowerCase().indexOf('<@') === -1) {
-                    if (Storage.d.Users[statuscall].status = 'online') {
+                    if (storage.d.Users[statuscall].status = 'online') {
                         messageSend(channelID, statuscall + " Is currently online")
                     } else {
                         messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
@@ -362,7 +362,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     var mentId = rawEvent.d.mentions[0].id
                     for (var user in storage.d.Users) {
                         if (mentId === storage.d.Users[user].id) {
-                            if (Storage.d.Users[statuscall].status = 'online') {
+                            if (storage.d.Users[statuscall].status = 'online') {
                                 messageSend(channelID, statuscall + " Is currently online")
                             } else {
                                 messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
