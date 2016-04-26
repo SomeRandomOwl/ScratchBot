@@ -116,7 +116,7 @@ function userlist() {
         for (var userID in bot.servers[serverID].members) {
             console.log(bot.servers[serverID].members[userID].username)
             var name = bot.servers[serverID].members[userID].username;
-            storage.d.Channels[name] = {
+            storage.d.Users[name] = {
                 "id": userID
             }
         }
