@@ -185,6 +185,24 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     } catch (e) {
         console.log(e)
     }
+    if (cname !== undefined) {
+        if (storage.d.Channels[cname].messageCnt === undefined) {
+            storage.d.Channels[cname].messageCnt = 1
+        } else {
+            mcount = storage.d.Channels[cname].messageCnt
+            mcount = mcount + 1
+            storage.d.Channels[cname].messageCnt = mcount
+        }
+    }
+    if (sname !== undefined) {
+        if (storage.d.Servers[sname].messageCnt === undefined) {
+            storage.d.Servers[sname].messageCnt = 1
+        } else {
+            mcount = storage.d.Servers[sname].messageCnt
+            mcount = mcount + 1
+            storage.d.servers[sname].messageCnt = mcount
+        }
+    }
     if (debug === 1) {
         console.log(rawEvent)
     }
