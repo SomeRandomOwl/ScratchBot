@@ -84,6 +84,19 @@ function serverlist() {
     writeJSON('./storage', storage)
 }
 
+function channellist() {
+    console.log("Currently connected to these channels: ")
+    for (var serverID in bot.servers) {
+	for (var channelID in bot.servers[serverID].channels) {
+	    console.log(bot.servers[serverID].channels[channelID].name)
+	    var name = bot.servers[serverID].channels[channelID].name;
+	    var type = bot.servers[serverID].channels[channelID].type;
+	    storage.d.Channels[name].id = channelID
+	    storage.d.Channels[name].type = type
+	}
+    }
+    writeJSON('./storage', storage)
+}
 
 function isInArray(value, array) {
     return array.indexOf(value) > -1;

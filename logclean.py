@@ -1,6 +1,6 @@
 import jsbeautifier
 opts = jsbeautifier.default_options()
-opts.indent_size = 2
+opts.indent_size = 1
 opts.indent_char = '	'
 opts.eol = '\n'
 opts.end_with_newline = 'true'
