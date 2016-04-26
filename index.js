@@ -89,7 +89,6 @@ function writeJSON(path, data, callback) {
 
 if (fs.existsSync('storage.json')) {
 	console.log('Found Storage.json');
-	var storage = require('./storage.json')
 } else if (fs.existsSync('storage.json') === false) {
 	console.log('Didnt Find Storage.json, creating');
 	writeJSON('./storage', storageDefault, function(error) {
@@ -98,7 +97,6 @@ if (fs.existsSync('storage.json')) {
 				return;
 		}
 	});
-var storage = require('./storage.json')
 }
 
 function isInArray(value, array) {
