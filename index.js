@@ -119,7 +119,7 @@ function userlist() {
                 var name = bot.servers[serverID].members[userID].Member.username;
                 if (storage.d.Users[name] === undefined) {
                     storage.d.Channels[name] = {
-                        "id": userID
+                        "id": userID,
                         "nicknames": [name]
                     }
                 } else {
