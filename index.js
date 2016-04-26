@@ -185,6 +185,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     if (status === 'online') {
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
+        console.log("Storage Reads: " + storage.d.Users[user].status)
     }
     writeJSON('./storage', storage)
     //bot.sendMessage({
