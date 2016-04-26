@@ -366,10 +366,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 var status = storage.d.Users[statuscall].status
                 console.log(status)
                 if (status = 'idle') {
+                    console.log('Idle, raw')
                     messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
                 } else if (status = 'offline') {
+                    console.log('Offline, raw')
                     messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
-                } else {
+                } else  if (status = 'online' {
+                    console.log('Online, raw')
                     messageSend(channelID, statuscall + " Is currently online")
                 }
             } else {
@@ -380,10 +383,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         var status = storage.d.Users[user].status
                         console.log(status)
                         if (status = 'idle') {
+                            console.log('Idle, mention')
                             messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
                         } else if (status = 'offline') {
+                            console.log('Offline, mention')
                             messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
-                        } else {
+                        } else if (status = 'online') {
                             messageSend(channelID, statuscall + " Is currently online")
                         }
                     } else {
