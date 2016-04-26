@@ -116,13 +116,8 @@ function userlist() {
         for (var userID in bot.servers[serverID].members) {
             console.log(bot.servers[serverID].members[userID].username)
             var name = bot.servers[serverID].members[userID].username;
-            if (storage.d.Users[name] === undefined) {
-                storage.d.Channels[name] = {
-                    "id": userID,
-                    "nicknames": [name]
-                }
-            } else {
-                console.log("already known")
+            storage.d.Channels[name] = {
+                "id": userID
             }
         }
     }
