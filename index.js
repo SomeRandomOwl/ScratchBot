@@ -350,7 +350,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('status') === 1) {
             var statuscmd = message
-            var statuscall = statuscall.replace('!status ', '')
+            var statuscall = statuscmd.replace('!status ', '')
             if (statuscall.toLowerCase().indexOf('<@') === -1) {
                 try {
                     if (Storage.d.Users[statuscall].status = 'online') {
