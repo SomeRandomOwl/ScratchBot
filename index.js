@@ -183,7 +183,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
     } catch (e) {
-        return
+        console.log(e)
     }
     if (cname !== undefined) {
         if (storage.d.Channels[cname].messageCnt === undefined) {
