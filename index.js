@@ -81,9 +81,14 @@ function serverlist() {
     for (var serverID in bot.servers) {
         console.log(bot.servers[serverID].name);
         var name = bot.servers[serverID].name;
-        storage.d.Servers[name] = {
-            'id': serverID
+        if (storage.d.servers[name] === undefined) {
+            storage.d.Servers[name] = {
+                'id': serverID
+            }
+        } else  {
+            return
         }
+
     }
     writeJSON('./storage', storage)
 }
@@ -92,13 +97,20 @@ function serverlist() {
 function channellist() {
     console.log("Currently connected to these channels: ")
     for (var serverID in bot.servers) {
-	for (var channelID in bot.servers[serverID].channels) {
-	    console.log(bot.servers[serverID].channels[channelID].name)
-	    var name = bot.servers[serverID].channels[channelID].name;
-	    var type = bot.servers[serverID].channels[channelID].type;
-	    storage.d.Channels[name].id = channelID
-	    storage.d.Channels[name].type = type
-	}
+        for (var channelID in bot.servers[serverID].channels) {
+            console.log(bot.servers[serverID].channels[channelID].name)
+            var name = bot.servers[serverID].channels[channelID].name;
+            var type = bot.servers[serverID].channels[channelID].type;
+            if (storage.d.Channels[name] === undefined) {
+                storage.d.Channels[name] = {
+                    "id": channelID,
+                    "type": type
+                }
+            } else {
+                storage.d.Channels[name].id = channelID
+                storage.d.Channels[name].type = type
+            }
+        }
     }
     writeJSON('./storage', storage)
 }
