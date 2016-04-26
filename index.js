@@ -183,6 +183,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
     }
+    writeJSON('./storage', storage)
     //bot.sendMessage({
     //   to: logChan,
     //   message: user + " is now: " + status,
