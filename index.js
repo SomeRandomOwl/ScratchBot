@@ -72,6 +72,7 @@ if (fs.existsSync('storage.json')) {
 }
 
 function serverlist() {
+    console.log(typeof storage.d.Servers)
     console.log("Currently connected to these servers: ")
     for (var serverID in bot.servers) {
         console.log(bot.servers[serverID].name);
