@@ -37,6 +37,7 @@ bot.on('ready', function() {
 
 //Global variable setting
 imgur.setClientID(config.imgurId);
+var storageDefault = {"settings":{"debug":0},"Channels":{},"Servers":{},"Users":{}}
 var logChan = config.logChan
 var sentPrevId = null
 var commandmod = config.cmdMod
@@ -47,6 +48,31 @@ var tlist = '\nUtility: ping\nPolite replies: goodnight,  nite,  night, hi, hell
 var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!']
 var debug = false
 var serverID = null
+
+function writeJSON (path, data, callback) {
+  fs.writeFile(path + '.tmp', JSON.stringify(data), function(error) {
+    if (error) {
+      callback(error);
+      return;
+    }
+    fs.rename(path + '.tmp', path + 'json', function(error) {
+      if (error) {
+        callback(error);
+        return;
+      }
+      callback(null);
+    });
+  });
+}
+
+if (fs.existsSync('storage.json')) { 
+	console.log('Found Storage.json');
+	var storage = require('./storage.json')
+} else if (fs.existsSync('storage.json') === false) { 
+	console.log('Didnt Find Storage.json, creating'); 
+	writeJSON('./storage', storageDefault)
+	var storage = require('./storage.json')	
+}
 
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
