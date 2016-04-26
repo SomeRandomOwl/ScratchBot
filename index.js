@@ -110,6 +110,27 @@ function channellist() {
     writeJSON('./storage', storage)
 }
 
+function userlist() {
+    console.log("Currently seeing these users: ")
+    for (var serverID in bot.servers) {
+        for (var channelID in bot.servers[serverID].channels) {
+            for (var userID in bot.servers[serverID].members) {
+                console.log(bot.servers[serverID].members[userID].Member.username)
+                var name = bot.servers[serverID].members[userID].Member.username;
+                if (storage.d.Users[name] === undefined) {
+                    storage.d.Channels[name] = {
+                        "id": userID
+                        "nicknames": [name]
+                    }
+                } else {
+                    console.log("already known")
+                }
+            }
+        }
+    }
+    writeJSON('./storage', storage)
+}
+
 //Quick way of checkin if something is in a array
 
 function isInArray(value, array) {
