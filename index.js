@@ -63,6 +63,7 @@ function writeJSON(path, data, callback) {
                 return error;
             }
         });
+        console.log(storage)
     });
 }
 
@@ -169,14 +170,14 @@ function messageSend(channelID, msg) {
 
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     if (status === 'offline') {
-        lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
+        var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
 	console.log("Storage Reads: " + storage.d.Users[user].status)
     }
     if (status === 'idle') {
-        lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
+        var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
         console.log(user + " is now: " + status);
