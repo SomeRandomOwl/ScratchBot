@@ -362,9 +362,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (statuscall.toLowerCase().indexOf('<@') === -1) {
                 console.log(storage.d.Users[statuscall].status)
                 if (storage.d.Users[statuscall].status = 'idle') {
-                    messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
+                    messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
                 } else if (storage.d.Users[statuscall].status = 'offline') {
-                    messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
+                    messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
                 } else {
                     messageSend(channelID, statuscall + " Is currently online")
                 }
@@ -374,9 +374,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     if (mentId === storage.d.Users[user].id) {
                         console.log(storage.d.Users[user].status)
                         if (storage.d.Users[user].status = 'idle') {
-                            messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[user].status + " And was last Seen: " + Storage.d.Users[user].lastseen)
+                            messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
                         } else if (storage.d.Users[user].status = 'offline') {
-                            messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[user].status + " And was last Seen: " + Storage.d.Users[user].lastseen)
+                            messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
                         } else {
                             messageSend(channelID, statuscall + " Is currently online")
                         }
