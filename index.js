@@ -50,6 +50,8 @@ var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!']
 var debug = false
 var serverID = null
 
+
+//Writes JSON to a file
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data), function(error) {
         if (error) {
@@ -63,6 +65,7 @@ function writeJSON(path, data, callback) {
     });
 }
 
+//Loads Storage.json if it exists
 
 if (fs.existsSync('storage.json')) {
     console.log('Found Storage.json');
@@ -71,6 +74,7 @@ if (fs.existsSync('storage.json')) {
     console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
 }
 
+//Lists currently connected severs and writes them to json
 function serverlist() {
     console.log(typeof storage.d.Servers)
     console.log("Currently connected to these servers: ")
@@ -84,7 +88,7 @@ function serverlist() {
     writeJSON('./storage', storage)
 }
 
-
+//Quick way of checkin if something is in a array
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
