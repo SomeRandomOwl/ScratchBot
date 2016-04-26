@@ -35,6 +35,13 @@ bot.on('ready', function() {
 	logger.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
 
+function serverlist () {
+    for (var serverID in bot.servers) {
+	console.log(bot.servers[serverID].name);
+    }
+}
+
+
 //Global variable setting
 imgur.setClientID(config.imgurId);
 
