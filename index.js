@@ -179,6 +179,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     rconcmd = 'No'
     var messageID = rawEvent.d.id
     var serverID = bot.serverFromChannel(channelID)
+    try {
+        var cname = bot.servers[serverID].channels[channelID].name
+        var sname = bot.servers[serverID].name
+    } catch (e) {
+        console.log(e)
+    }
     if (debug === 1) {
         console.log(rawEvent)
     }
