@@ -189,8 +189,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (storage.d.Channels[cname].messageCnt === undefined) {
             storage.d.Channels[cname].messageCnt = 1
         } else {
-            mcount = storage.d.Channels[cname].messageCnt
-            mcount = mcount + 1
+            mccount = storage.d.Channels[cname].messageCnt
+            mccount = mccount + 1
             storage.d.Channels[cname].messageCnt = mcount
         }
         writeJSON('./storage', storage)
@@ -199,8 +199,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (storage.d.Servers[sname].messageCnt === undefined) {
             storage.d.Servers[sname].messageCnt = 1
         } else {
-            mcount = storage.d.Servers[sname].messageCnt
-            mcount = mcount + 1
+            mscount = storage.d.Servers[sname].messageCnt
+            mscount = mscount + 1
             storage.d.Servers[sname].messageCnt = mcount
         }
         writeJSON('./storage', storage)
