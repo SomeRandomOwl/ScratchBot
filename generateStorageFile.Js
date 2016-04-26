@@ -17,6 +17,8 @@ function writeJSON(path, data, callback) {
 	});
 }
 
+console.log(typeof storageDefault)
+
 if (fs.existsSync('storage.json')) {
 	console.log('Found Storage.json');
 	var storage = require('./storage.json')
