@@ -193,191 +193,198 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
 });
 
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
-        rconcmd = 'No'
-        var messageID = rawEvent.d.id
-        var serverID = bot.serverFromChannel(channelID)
-        try {
-            var cname = bot.servers[serverID].channels[channelID].name
-            var sname = bot.servers[serverID].name
-        } catch (e) {
-            console.log(e)
+    rconcmd = 'No'
+    var messageID = rawEvent.d.id
+    var serverID = bot.serverFromChannel(channelID)
+    try {
+        var cname = bot.servers[serverID].channels[channelID].name
+        var sname = bot.servers[serverID].name
+    } catch (e) {
+        console.log(e)
+    }
+    if (cname !== undefined) {
+        if (storage.d.Channels[cname].messageCnt === undefined) {
+            storage.d.Channels[cname].messageCnt = 1
+        } else {
+            mccount = storage.d.Channels[cname].messageCnt
+            mccount = mccount + 1
+            storage.d.Channels[cname].messageCnt = mccount
         }
-        if (cname !== undefined) {
-            if (storage.d.Channels[cname].messageCnt === undefined) {
-                storage.d.Channels[cname].messageCnt = 1
-            } else {
-                mccount = storage.d.Channels[cname].messageCnt
-                mccount = mccount + 1
-                storage.d.Channels[cname].messageCnt = mccount
+        writeJSON('./storage', storage)
+    }
+    if (sname !== undefined) {
+        if (storage.d.Servers[sname].messageCnt === undefined) {
+            storage.d.Servers[sname].messageCnt = 1
+        } else {
+            mscount = storage.d.Servers[sname].messageCnt
+            mscount = mscount + 1
+            storage.d.Servers[sname].messageCnt = mscount
+        }
+        writeJSON('./storage', storage)
+    }
+    if (debug === 1) {
+        console.log(rawEvent)
+    }
+    //function to quick call message sending to minimize code
+    function messgnt(msg) {
+        bot.sendMessage({
+            to: channelID,
+            message: msg,
+            typing: false
+        });
+    }
+    if (message.toLowerCase() === "ping") {
+        messgnt("pong")
+        rconcmd = 'Yes'
+    }
+    if (message.toLowerCase() === "rick" && userID != '167017777012408320' && user != 'ScratchBot') {
+        var ricks = ["and morty!", "dont forget morty!", "uuuuur morty! er goota git outta here morty! They're onto us!", "Wubba-Lubba Dub Dub!"]
+        var rickm = "Morty!"
+        rickm = ricks[Math.floor(Math.random() * ricks.length)];
+        messgnt(rickm)
+        rconcmd = 'Yes'
+    }
+    if (message.toLowerCase() === "thanks scratch") {
+        messgnt("You're Welcome!")
+        rconcmd = 'Yes'
+    }
+    if (message.toLowerCase() === "say hello scratch") {
+        messgnt("Hello World")
+        rconcmd = 'Yes'
+    }
+    if (message.toLowerCase() === "hey nice avatar scratch" || message.toLowerCase() === "nice avatar scratch") {
+        bot.uploadFile({
+            to: channelID,
+            file: "avatar.png",
+            filename: "avatar.png",
+            message: "Thanks! Heres a bigger version!",
+            typing: true
+        });
+        rconcmd = 'Yes'
+    }
+    if (isInArray(message, nighttig)) {
+        var nights = ["Night! :zzz:", "Goodnight <@" + userID + "> :zzz:", "Sleep well <@" + userID + "> :zzz:", "Have a good sleep! :zzz:", "Don't let the bed bugs bite! :zzz:", "Nighty nite! :zzz:"]
+        var nightm = "Night!"
+        nightm = nights[Math.floor(Math.random() * nights.length)];
+        bot.sendMessage({
+            to: channelID,
+            message: nightm,
+            typing: true
+        });
+        rconcmd = 'Yes'
+    }
+    //This tests for commands using the command mod set in the config
+    if (message.indexOf(commandmod) != -1) {
+        //This is the command for rolling dice
+        if (message.toLowerCase().indexOf('roll') === 1) {
+            //This pulls the entire message into a seperate variable
+            var msg = message
+                //This removes the !roll
+            var dice = msg.replace('!roll ', '')
+                //this retrieves what kind of die it is currently unused, but will be implimented to limit it to a d100
+            var typedie = dice.substring(dice.toLowerCase().indexOf('d') + 1)
+            if (dice.indexOf('d') === 0) {
+                var dienum = roll.roll(dice);
+                console.log(dienum);
+                bot.sendMessage({
+                    to: channelID,
+                    message: '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString(),
+                    typing: false
+                });
             }
-            writeJSON('./storage', storage)
-        }
-        if (sname !== undefined) {
-            if (storage.d.Servers[sname].messageCnt === undefined) {
-                storage.d.Servers[sname].messageCnt = 1
-            } else {
-                mscount = storage.d.Servers[sname].messageCnt
-                mscount = mscount + 1
-                storage.d.Servers[sname].messageCnt = mscount
-            }
-            writeJSON('./storage', storage)
-        }
-        if (debug === 1) {
-            console.log(rawEvent)
-        }
-        //function to quick call message sending to minimize code
-        function messgnt(msg) {
-            bot.sendMessage({
-                to: channelID,
-                message: msg,
-                typing: false
-            });
-        }
-        if (message.toLowerCase() === "ping") {
-            messgnt("pong")
-            rconcmd = 'Yes'
-        }
-        if (message.toLowerCase() === "rick" && userID != '167017777012408320' && user != 'ScratchBot') {
-            var ricks = ["and morty!", "dont forget morty!", "uuuuur morty! er goota git outta here morty! They're onto us!", "Wubba-Lubba Dub Dub!"]
-            var rickm = "Morty!"
-            rickm = ricks[Math.floor(Math.random() * ricks.length)];
-            messgnt(rickm)
-            rconcmd = 'Yes'
-        }
-        if (message.toLowerCase() === "thanks scratch") {
-            messgnt("You're Welcome!")
-            rconcmd = 'Yes'
-        }
-        if (message.toLowerCase() === "say hello scratch") {
-            messgnt("Hello World")
-            rconcmd = 'Yes'
-        }
-        if (message.toLowerCase() === "hey nice avatar scratch" || message.toLowerCase() === "nice avatar scratch") {
-            bot.uploadFile({
-                to: channelID,
-                file: "avatar.png",
-                filename: "avatar.png",
-                message: "Thanks! Heres a bigger version!",
-                typing: true
-            });
-            rconcmd = 'Yes'
-        }
-        if (isInArray(message, nighttig)) {
-            var nights = ["Night! :zzz:", "Goodnight <@" + userID + "> :zzz:", "Sleep well <@" + userID + "> :zzz:", "Have a good sleep! :zzz:", "Don't let the bed bugs bite! :zzz:", "Nighty nite! :zzz:"]
-            var nightm = "Night!"
-            nightm = nights[Math.floor(Math.random() * nights.length)];
-            bot.sendMessage({
-                to: channelID,
-                message: nightm,
-                typing: true
-            });
-            rconcmd = 'Yes'
-        }
-        //This tests for commands using the command mod set in the config
-        if (message.indexOf(commandmod) != -1) {
-            //This is the command for rolling dice
-            if (message.toLowerCase().indexOf('roll') === 1) {
-                //This pulls the entire message into a seperate variable
-                var msg = message
-                    //This removes the !roll
-                var dice = msg.replace('!roll ', '')
-                    //this retrieves what kind of die it is currently unused, but will be implimented to limit it to a d100
-                var typedie = dice.substring(dice.toLowerCase().indexOf('d') + 1)
-                if (dice.indexOf('d') === 0) {
+            //This is if theres more than one die thrown
+            if (dice.indexOf('d') != 0 && dice.indexOf('d') != -1) {
+                var numdie = dice.substring(0, dice.toLowerCase().indexOf('d'))
+                    //This is to limit the number of die thrown
+                if (numdie < 21) {
                     var dienum = roll.roll(dice);
                     console.log(dienum);
                     bot.sendMessage({
                         to: channelID,
-                        message: '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString(),
+                        message: '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString() + ' For a total of: ' + dienum.result,
                         typing: false
                     });
-                }
-                //This is if theres more than one die thrown
-                if (dice.indexOf('d') != 0 && dice.indexOf('d') != -1) {
-                    var numdie = dice.substring(0, dice.toLowerCase().indexOf('d'))
-                        //This is to limit the number of die thrown
-                    if (numdie < 21) {
-                        var dienum = roll.roll(dice);
-                        console.log(dienum);
-                        bot.sendMessage({
-                            to: channelID,
-                            message: '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString() + ' For a total of: ' + dienum.result,
-                            typing: false
-                        });
-                    } else if (numdie > 21) {
-                        bot.sendMessage({
-                            to: channelID,
-                            message: '<@' + userID + '>' + ' Please roll no more than 20 dice',
-                            typing: false
-                        });
-                    }
-                }
-                //If now die are thrown toss this
-                if (dice.indexOf('d') === -1) {
+                } else if (numdie > 21) {
                     bot.sendMessage({
                         to: channelID,
-                        message: '<@' + userID + '>' + ' How can i roll a die with no dice to roll? :disappointed:',
+                        message: '<@' + userID + '>' + ' Please roll no more than 20 dice',
                         typing: false
                     });
                 }
-                rconcmd = 'Yes'
             }
-            //Makes scratch print out her avatar
-            if (message.indexOf("avatar") === 1) {
-                bot.uploadFile({
-                    to: channelID,
-                    file: "avatar.png",
-                    filename: "avatar.png",
-                    message: "Here you go!",
-                    typing: true
-                });
-                rconcmd = 'Yes'
-            }
-            //Makes scratch print out channel id's and user id's
-            if (message.toLowerCase().indexOf('ids') === 1) {
+            //If now die are thrown toss this
+            if (dice.indexOf('d') === -1) {
                 bot.sendMessage({
                     to: channelID,
-                    message: '<@' + userID + '>' + ' Your userID is: ' + userID + ' and your channelID is: ' + channelID,
+                    message: '<@' + userID + '>' + ' How can i roll a die with no dice to roll? :disappointed:',
                     typing: false
                 });
-                rconcmd = 'Yes'
             }
-            if (message.toLowerCase().indexOf('math') === 1) {
-                var mathcmd = message
-                var mathcall = mathcmd.replace('!math ', '')
-                try {
-                    messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
-                } catch (e) {
-                    logger.error("Bad Math Command " + mathcall + " | " + e)
-                    messgnt("Sorry I'm unable to run that")
-                }
-                rconcmd = "Yes"
+            rconcmd = 'Yes'
+        }
+        //Makes scratch print out her avatar
+        if (message.indexOf("avatar") === 1) {
+            bot.uploadFile({
+                to: channelID,
+                file: "avatar.png",
+                filename: "avatar.png",
+                message: "Here you go!",
+                typing: true
+            });
+            rconcmd = 'Yes'
+        }
+        //Makes scratch print out channel id's and user id's
+        if (message.toLowerCase().indexOf('ids') === 1) {
+            bot.sendMessage({
+                to: channelID,
+                message: '<@' + userID + '>' + ' Your userID is: ' + userID + ' and your channelID is: ' + channelID,
+                typing: false
+            });
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('math') === 1) {
+            var mathcmd = message
+            var mathcall = mathcmd.replace('!math ', '')
+            try {
+                messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
+            } catch (e) {
+                logger.error("Bad Math Command " + mathcall + " | " + e)
+                messgnt("Sorry I'm unable to run that")
             }
-            if (message.toLowerCase().indexOf('status') === 1) {
-                var statuscmd = message
-                var statuscall = statuscmd.replace('!status ', '')
-                console.log(statuscall)
-                if (statuscall.toLowerCase().indexOf('<@') === -1) {
-                    if (storage.d.Users[statuscall].status = 'online') {
-                        messageSend(channelID, statuscall + " Is currently online")
-                    } else {
-                        messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
-                    }
+            rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('status') === 1) {
+            var statuscmd = message
+            var statuscall = statuscmd.replace('!status ', '')
+            console.log(statuscall)
+            if (statuscall.toLowerCase().indexOf('<@') === -1) {
+                console.log(storage.d.Users[statuscall].status)
+                if (storage.d.Users[statuscall].status = 'idle') {
+                    messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
+                } else if (storage.d.Users[statuscall].status = 'offline') {
+                    messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
                 } else {
-                    var mentId = rawEvent.d.mentions[0].id
-                    for (var user in storage.d.Users) {
-                        if (mentId === storage.d.Users[user].id) {
-                            if (storage.d.Users[user].status = 'online') {
-                                messageSend(channelID, statuscall + " Is currently online")
-                            } else {
-                                messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[statuscall].status + " And was last Seen: " + Storage.d.Users[statuscall].lastseen)
-                            }
+                    messageSend(channelID, statuscall + " Is currently online")
+                }
+            } else {
+                var mentId = rawEvent.d.mentions[0].id
+                for (var user in storage.d.Users) {
+                    if (mentId === storage.d.Users[user].id) {
+                        console.log(storage.d.Users[user].status)
+                        if (storage.d.Users[user].status = 'idle') {
+                            messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[user].status + " And was last Seen: " + Storage.d.Users[user].lastseen)
+                        } else if (storage.d.Users[user].status = 'offline') {
+                            messageSend(channelID, statuscall + " Is currently " + Storage.d.Users[user].status + " And was last Seen: " + Storage.d.Users[user].lastseen)
                         } else {
-                            console.log("Not " + user)
+                            messageSend(channelID, statuscall + " Is currently online")
                         }
+                    } else {
+                        console.log("Not " + user)
                     }
-                } rconcmd = 'Yes'
+                }
             }
+            rconcmd = 'Yes'
+        }
         if (message.toLowerCase().indexOf('supportedmath') === 1) {
             bot.uploadFile({
                 to: channelID,
