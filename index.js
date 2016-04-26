@@ -35,12 +35,6 @@ bot.on('ready', function() {
 	logger.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
 
-function serverlist () {
-    for (var serverID in bot.servers) {
-	console.log(bot.servers[serverID].name);
-    }
-}
-
 
 //Global variable setting
 imgur.setClientID(config.imgurId);
@@ -69,11 +63,22 @@ function writeJSON(path, data, callback) {
 	});
 }
 
+
 if (fs.existsSync('storage.json')) {
 	console.log('Found Storage.json');
 	var storage = require('./storage.json')
 } else if (fs.existsSync('storage.json') === false) {
 	console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
+}
+
+function serverlist () {
+    console.log("Currently connected to these servers: ")
+    for (var serverID in bot.servers) {
+	console.log(bot.servers[serverID].name);
+	var names = bot.servers[serverID].name
+	storage.d.Servers.set(names,{'id': serverID})
+    }
+    writeJSON('./storage', storage)
 }
 
 function isInArray(value, array) {
@@ -93,8 +98,6 @@ function statusmsg(msg) {
 		game: msg
 	})
 }
-
-storage.test = {"count": 1}
 
 bot.on('disconnected', function() {
 	logger.error("Bot got disconnected, reconnecting")
