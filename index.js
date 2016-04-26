@@ -90,6 +90,8 @@ function statusmsg(msg) {
 	})
 }
 
+storage.test = {"count": 1}
+
 bot.on('disconnected', function() {
 	logger.error("Bot got disconnected, reconnecting")
 	bot.connect()
