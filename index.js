@@ -173,12 +173,15 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
+        console.log(user + " is now: " + status);
     } else if (status === 'idle') {
         lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
+        console.log(user + " is now: " + status);
     } else if (status === 'offline') {
         storage.d.Users[user].status = status
+        console.log(user + " is now: " + status);
     }
     //bot.sendMessage({
     //   to: logChan,
