@@ -209,7 +209,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         } else {
             mucount = storage.d.Users[user].messageCnt
             mucount = mucount + 1
-            storage.d.Users[cname].messageCnt = mucount
+            storage.d.Users[user].messageCnt = mucount
         }
     }
     if (cname !== undefined) {
