@@ -142,6 +142,7 @@ function cnsmsg(chan, msg) {
 
 function statusmsg(msg) {
   bot.setPresence({
+    idle_since: Date.now(),
     game: msg
   })
 }
