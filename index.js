@@ -172,20 +172,18 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
-        console.log(user + " is now: " + status);
-        console.log("Storage Reads: " + storage.d.Users[user].status)
+        logger.info(lastseen + ' : ' +user + " is now: " + status);
     }
     if (status === 'idle') {
         var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
-        console.log(user + " is now: " + status);
-        console.log("Storage Reads: " + storage.d.Users[user].status)
+        logger.info(lastseen + ' : ' +user + " is now: " + status);
     }
     if (status === 'online') {
+        var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].status = status
-        console.log(user + " is now: " + status);
-        console.log("Storage Reads: " + storage.d.Users[user].status)
+        logger.info(lastseen + ' : ' +user + " is now: " + status);
     }
     writeJSON('./storage', storage)
     //bot.sendMessage({
