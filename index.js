@@ -561,7 +561,7 @@ function consoleparse(line) {
       cnaid = line.replace('~cnaid ', '')
       console.log("Now talking in channel: " + cnaid)
     } else if (line.toLowerCase().indexOf('cnch') === 1) {
-      var cnch = line.replace('~chch ', '')
+      var cnch = line.substring(line.indexOf(' ') + 1)
       for (var channel in storage.d.Channels) {
         if (cnch === channel) {
           cnaid = storage.d.Channels[channel].id
