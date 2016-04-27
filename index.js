@@ -216,11 +216,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
   if (message.toLowerCase().indexOf('http') !== -1) {
     console.log("Link Posted, logging to file")
-    if (message.indexOf(' ') === -1) {
+    if (message.indexOf(' ', message.indexOf('http')) === -1) {
       var link = message.substring(message.indexOf('http'))
-    } else if (message.indexOf(' ') !== -1) {
-      var link = message.substring(message.indexOf('http'), message.indexOf(' '))
-    }
+      } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
+        var link = message.substring(message.indexOf('http'),message.indexOf(' ', message.indexOf('http')))
+      }
      fs.appendFile("logs/Links.txt", '\n' + link)
   } 
     if (cname !== undefined) {
