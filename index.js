@@ -216,7 +216,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
   if (message.toLowerCase().indexOf('http') !== -1) {
     console.log("Link Posted, logging to file")
-    var link = message.substring(message.indexOf('http'), message.indexOf(' '))
+    if (message.indexOf(' ') === -1) {
+      var link = message.substring(message.indexOf('http'))
+    } else if (message.indexOf(' ') !== -1) {
+      var link = message.substring(message.indexOf('http'), message.indexOf(' '))
+    }
      fs.appendFile("logs/Links.txt", '\n' + link)
   } 
     if (cname !== undefined) {
