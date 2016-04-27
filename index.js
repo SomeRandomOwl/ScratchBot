@@ -214,7 +214,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         writeJSON('./storage', storage)
     }
-  if (message.toLowerCase.indexOf('http') !== -1) {
+  if (message.toLowerCase().indexOf('http') !== -1) {
     console.log("Link Posted, logging to file")
     var link = message.substring(message.indexOf(http))
      fs.appendFile("logs/Links.txt", '\n' + link)
