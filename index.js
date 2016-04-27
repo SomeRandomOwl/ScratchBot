@@ -389,6 +389,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
       var statuscmd = message
       var statuscall = statuscmd.replace('!status ', '')
       console.log(statuscall)
+      try {
       if (statuscall.toLowerCase().indexOf('<@') === -1) {
         var status = storage.d.Users[statuscall].status
         if (status === 'idle') {
@@ -414,6 +415,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             console.log("Not " + user)
           }
         }
+      }
+      } catch(e) {
+        messageSend(channelID,"Error; No User specified, or invalid user")
       }
       rconcmd = 'Yes'
     }
