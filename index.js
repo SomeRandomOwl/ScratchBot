@@ -535,6 +535,15 @@ function consoleparse(line) {
         if (line.toLowerCase().indexOf('cnaid') === 1) {
             cnaid = line.replace('~cnaid ', '')
             console.log("Now talking in channel: " + cnaid)
+        } else if (line.toLowerCase().indexOf('cnch') === 1) {
+            chch = line.replace('~chch ', '')
+            for (var channel in storage.d.Channels) {
+                if (cnch === channel) {
+                    cnaid = storage.d.Channels[channel].id
+                    return
+                } else {
+                    continue
+                }
         } else if (line.toLowerCase().indexOf('debg') === 1) {
             debug === true
             console.log('Debug: ' + debug)
