@@ -211,6 +211,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mucount = mucount + 1
             storage.d.Users[user].messageCnt = mucount
         }
+        writeJSON('./storage', storage)
     }
     if (cname !== undefined) {
         if (storage.d.Channels[cname].messageCnt === undefined) {
