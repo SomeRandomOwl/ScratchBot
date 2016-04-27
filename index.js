@@ -203,6 +203,15 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     } catch (e) {
         console.log(e)
     }
+    if (storage.d.Users[user] !== undefined) {
+        if (storage.d.Users[user].messageCnt === undefined) {
+            storage.d.Users[user].messageCnt = 1
+        } else {
+            mucount = storage.d.Users[user].messageCnt
+            mucount = mucount + 1
+            storage.d.Users[cname].messageCnt = mucount
+        }
+    }
     if (cname !== undefined) {
         if (storage.d.Channels[cname].messageCnt === undefined) {
             storage.d.Channels[cname].messageCnt = 1
