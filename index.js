@@ -556,30 +556,29 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
 var cnaid = '162390519748624384'
 
 function consoleparse(line) {
-  if (line.toLowerCase().indexOf('~') !== 0) {
-    bot.sendMessage({
-      to: cnaid,
-      message: line,
-      typeing: true
-    })
-  } else if (line.toLowerCase().indexOf('~') === 0) {
+  if (line.toLowerCase().indexOf('~') === 0) {
     if (line.toLowerCase().indexOf('cnaid') === 1) {
-      var cnaid = line.replace('~cnaid ', '')
+      cnaid = line.replace('~cnaid ', '')
       console.log("Now talking in channel: " + cnaid)
     } else if (line.toLowerCase().indexOf('cnch') === 1) {
-      var cnch = line.substring(line.indexOf(' ')+1)
-      console.log(cnch)
+      var cnch = line.replace('~chch ', '')
       for (var channel in storage.d.Channels) {
         if (cnch === channel) {
-          var cnaid = storage.d.Channels[channel].id
-          console.log("Now talking in: " + channel + " Id: " + cnaid)
+          cnaid = storage.d.Channels[channel].id
+          continue
         } else {
-          console.log("Not " + channel)
+          continue
         }
       }
     } else {
       eval(line)
     }
+  } else if (line.toLowerCase().indexOf('~') !== 0) {
+    bot.sendMessage({
+      to: cnaid,
+      message: line,
+      typeing: true
+    })
   }
 }
 var rl = readline.createInterface({
