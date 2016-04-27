@@ -540,7 +540,7 @@ function consoleparse(line) {
             for (var channel in storage.d.Channels) {
                 if (cnch === channel) {
                     cnaid = storage.d.Channels[channel].id
-                    return
+                    continue
                 } else {
                     continue
                 }
