@@ -558,16 +558,16 @@ var cnaid = '162390519748624384'
 function consoleparse(line) {
   if (line.toLowerCase().indexOf('~') === 0) {
     if (line.toLowerCase().indexOf('cnaid') === 1) {
-      cnaid = line.replace('~cnaid ', '')
+      var cnaid = line.replace('~cnaid ', '')
       console.log("Now talking in channel: " + cnaid)
     } else if (line.toLowerCase().indexOf('cnch') === 1) {
       var cnch = line.replace('~chch ', '')
       for (var channel in storage.d.Channels) {
         if (cnch === channel) {
-          cnaid = storage.d.Channels[channel].id
-          continue
+          var cnaid = storage.d.Channels[channel].id
+          console.log("Now talking in: " + channel + " Id: " + cnaid)
         } else {
-          continue
+          console.log("Not " + channel)
         }
       }
     } else {
