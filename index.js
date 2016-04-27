@@ -40,6 +40,7 @@ bot.on('ready', function() {
 //Global variable setting
 imgur.setClientID(config.imgurId);
 
+var lastseen = null
 var logChan = config.logChan;
 var sentPrevId = null;
 var commandmod = config.cmdMod;
@@ -73,7 +74,7 @@ if (fs.existsSync('storage.json')) {
     var storage = require('./storage.json')
 } else if (fs.existsSync('storage.json') === false) {
     console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
-};
+}
 
 //Lists currently connected severs and writes them to json
 function serverlist() {
@@ -87,7 +88,7 @@ function serverlist() {
         }
     }
     writeJSON('./storage', storage)
-};
+}
 
 
 function channellist() {
@@ -109,7 +110,7 @@ function channellist() {
         }
     }
     writeJSON('./storage', storage)
-};
+}
 
 function userlist() {
     console.log("Currently seeing these users: ")
@@ -123,7 +124,7 @@ function userlist() {
         }
     }
     writeJSON('./storage', storage)
-};
+}
 
 //Quick way of checkin if something is in a array
 
@@ -137,13 +138,13 @@ function cnsmsg(chan, msg) {
         message: msg,
         typing: false
     })
-};
+}
 
 function statusmsg(msg) {
     bot.setPresence({
         game: msg
     })
-};
+}
 
 bot.on('disconnected', function() {
     logger.error("Bot got disconnected, reconnecting")
@@ -165,7 +166,7 @@ function messageSend(channelID, msg) {
         console.log('Last Message Sent ID: ' + response.id)
         sentPrevId = response.id
     });
-};
+}
 
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     if (status === 'offline') {
@@ -304,7 +305,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 });
             }
             //This is if theres more than one die thrown
-            if (dice.indexOf('d') != 0 && dice.indexOf('d') != -1) {
+            if (dice.indexOf('d') !== 0 && dice.indexOf('d') != -1) {
                 var numdie = dice.substring(0, dice.toLowerCase().indexOf('d'))
                     //This is to limit the number of die thrown
                 if (numdie < 21) {
@@ -369,32 +370,22 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var statuscall = statuscmd.replace('!status ', '')
             console.log(statuscall)
             if (statuscall.toLowerCase().indexOf('<@') === -1) {
-                console.log(storage.d.Users[statuscall].status)
                 var status = storage.d.Users[statuscall].status
-                console.log(status)
-                console.log(typeof status)
                 if (status === 'idle') {
-                    console.log('Idle, raw')
                     messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
                 } else if (status === 'offline') {
-                    console.log('Offline, raw')
                     messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
                 } else if (status === 'online') {
-                    console.log('Online, raw')
                     messageSend(channelID, statuscall + " Is currently online")
                 }
             } else {
                 var mentId = rawEvent.d.mentions[0].id
                 for (var user in storage.d.Users) {
                     if (mentId === storage.d.Users[user].id) {
-                        console.log(storage.d.Users[user].status)
                         var status = storage.d.Users[user].status
-                        console.log(status)
                         if (status === 'idle') {
-                            console.log('Idle, mention')
                             messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
                         } else if (status === 'offline') {
-                            console.log('Offline, mention')
                             messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
                         } else if (status === 'online') {
                             messageSend(channelID, statuscall + " Is currently online")
