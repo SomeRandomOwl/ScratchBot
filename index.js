@@ -556,7 +556,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
 var cnaid = '162390519748624384'
 
 function consoleparse(line) {
-  if (line.toLowerCase().indexOf('~') === 0) {
+  if (line.toLowerCase().indexOf('~') !== 0) {
+    bot.sendMessage({
+      to: cnaid,
+      message: line,
+      typeing: true
+    })
+  } else if (line.toLowerCase().indexOf('~') === 0) {
     if (line.toLowerCase().indexOf('cnaid') === 1) {
       var cnaid = line.replace('~cnaid ', '')
       console.log("Now talking in channel: " + cnaid)
@@ -574,12 +580,6 @@ function consoleparse(line) {
     } else {
       eval(line)
     }
-  } else if (line.toLowerCase().indexOf('~') !== 0) {
-    bot.sendMessage({
-      to: cnaid,
-      message: line,
-      typeing: true
-    })
   }
 }
 var rl = readline.createInterface({
