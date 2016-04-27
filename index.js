@@ -544,9 +544,6 @@ function consoleparse(line) {
                 } else {
                     continue
                 }
-            } else if (line.toLowerCase().indexOf('debg') === 1) {
-                debug === true
-                console.log('Debug: ' + debug)
             }
         } else {
             eval(line)
