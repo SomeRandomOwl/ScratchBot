@@ -172,18 +172,18 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
-        logger.info(lastseen + ' : ' +user + " is now: " + status);
+        logger.info(lastseen + ' : ' + user + " is now: " + status);
     }
     if (status === 'idle') {
         var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].lastseen = lastseen
         storage.d.Users[user].status = status
-        logger.info(lastseen + ' : ' +user + " is now: " + status);
+        logger.info(lastseen + ' : ' + user + " is now: " + status);
     }
     if (status === 'online') {
         var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
         storage.d.Users[user].status = status
-        logger.info(lastseen + ' : ' +user + " is now: " + status);
+        logger.info(lastseen + ' : ' + user + " is now: " + status);
     }
     writeJSON('./storage', storage)
     //bot.sendMessage({
@@ -544,9 +544,10 @@ function consoleparse(line) {
                 } else {
                     continue
                 }
-        } else if (line.toLowerCase().indexOf('debg') === 1) {
-            debug === true
-            console.log('Debug: ' + debug)
+            } else if (line.toLowerCase().indexOf('debg') === 1) {
+                debug === true
+                console.log('Debug: ' + debug)
+            }
         } else {
             eval(line)
         }
