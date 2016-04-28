@@ -216,7 +216,7 @@ function messageSend(channelID, msg) {
 
 function timecalc(times) {
     var timen = moment().format('MMMM Do YYYY, h:mm:ss a')
-    var secondsDiff = times.diff(timen, 'seconds')
+    var secondsDiff = timen.diff(times, 'seconds')
     console.log(secondsDiff)
 }
 
