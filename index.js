@@ -167,6 +167,24 @@ function cnsmsg(chan, msg) {
     })
 }
 
+function secondsToTime(secs)
+{
+    var hours = Math.floor(secs / (60 * 60));
+   
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+ 
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+   
+    var obj = {
+        "h": hours,
+        "m": minutes,
+        "s": seconds
+    };
+    return obj;
+}
+
 function statusmsg(msg) {
     bot.setPresence({
         idle_since: Date.now(),
@@ -197,7 +215,7 @@ function messageSend(channelID, msg) {
 }
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     if (status === 'offline') {
-        var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
+        var lastseen = moment().format('MMMM Do YYYY, H:mm:ss')
         storage.d.Users[user].lastseen = lastseen
         if (storage.d.Users[user].status !== 'offline') {
             logger.info(lastseen + ' : ' + user + " is now: " + status);
@@ -205,7 +223,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         storage.d.Users[user].status = status
     }
     if (status === 'idle') {
-        var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
+        var lastseen = moment().format('MMMM Do YYYY, H:mm:ss')
         storage.d.Users[user].lastseen = lastseen
         if (storage.d.Users[user].status !== 'idle') {
             logger.info(lastseen + ' : ' + user + " is now: " + status);
@@ -213,7 +231,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         storage.d.Users[user].status = status
     }
     if (status === 'online') {
-        var lastseen = moment().format('MMMM Do YYYY, h:mm:ss a')
+        var lastseen = moment().format('MMMM Do YYYY, H:mm:ss')
         if (storage.d.Users[user].status !== 'online') {
             logger.info(lastseen + ' : ' + user + " is now: " + status);
         }
