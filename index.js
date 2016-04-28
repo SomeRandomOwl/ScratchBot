@@ -119,10 +119,10 @@ function userlist() {
         for (var userID in bot.servers[serverID].members) {
             console.log(bot.servers[serverID].members[userID].username)
             var name = bot.servers[serverID].members[userID].username;
-            storage.d.Users[name] = {
-                "id": userID,
-                "messageCnt": 0,
-                "linkCnt": 0
+            if storage.d.Users[name] === undefined {
+                storage.d.Users[name]={"id":userID,"messageCnt":0,"linkCnt":0}
+            } else {
+              continue
             }
         }
     }
@@ -467,15 +467,15 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 typing: false
             })
             rconcmd = 'Yes'
-          }
+        }
         if (message.toLowerCase().indexOf('stats') === 1) {
             var len = message.length
             if (len === 6) {
-              try {
-                messageSend(channelID, "Your current stats are: \n" + "Messages Sent: " + storage.d.Users[user].messageCnt + "\nLinks Sent: " + storage.d.Users[user].linkCnt)
-              } catch (e) {
-                messageSend(channelID,'Um...There was a error doing that, probally because you havent sent any links yet')
-              }
+                try {
+                    messageSend(channelID, "Your current stats are: \n" + "Messages Sent: " + storage.d.Users[user].messageCnt + "\nLinks Sent: " + storage.d.Users[user].linkCnt)
+                } catch (e) {
+                    messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
+                }
             }
             rconcmd = 'Yes'
         }
