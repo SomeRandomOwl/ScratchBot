@@ -119,7 +119,7 @@ function userlist() {
         for (var userID in bot.servers[serverID].members) {
             console.log(bot.servers[serverID].members[userID].username)
             var name = bot.servers[serverID].members[userID].username;
-            if storage.d.Users[name] === undefined {
+            if (storage.d.Users[name] === undefined) {
                 storage.d.Users[name]={"id":userID,"messageCnt":0,"linkCnt":0}
             } else {
               continue
