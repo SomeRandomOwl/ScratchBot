@@ -87,8 +87,8 @@ function serverlist() {
         if (storage.d.Servers[name] === undefined) {
             storage.d.Servers[name]={'id':serverID}
         } else {
-            if (storage.d.Channels[name].messageCnt === undefined) {
-                  storage.d.Channels[name].messageCnt = 0
+            if (storage.d.Servers[name].messageCnt === undefined) {
+                  storage.d.Servers[name].messageCnt = 0
           }
         }
     }
@@ -126,17 +126,17 @@ function userlist() {
             if (storage.d.Users[name] === undefined) {
                 storage.d.Users[name]={"id":userID,"messageCnt":0,"linkCnt":0}
             } else {
-                if (storage.d.Channels[name].messageCnt === undefined) {
-                  storage.d.Channels[name].messageCnt = 0
+                if (storage.d.Users[name].messageCnt === undefined) {
+                  storage.d.Users[name].messageCnt = 0
                 }
-                if (storage.d.Channels[name].linkCnt === undefined) {
-                  storage.d.Channels[name].linkCnt = 0
+                if (storage.d.Users[name].linkCnt === undefined) {
+                  storage.d.Users[name].linkCnt = 0
                 }
-                if (storage.d.Channels[name].status === undefined) {
-                  storage.d.Channels[name].status = "Unknown"
+                if (storage.d.Users[name].status === undefined) {
+                  storage.d.Users[name].status = "Unknown"
                 } 
-                if (storage.d.Channels[name].lastseen === undefined) {
-                  storage.d.Channels[name].lastseen = "Unknown"
+                if (storage.d.Users[name].lastseen === undefined) {
+                  storage.d.Users[name].lastseen = "Unknown"
                 }
             }
         }
