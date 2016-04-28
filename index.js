@@ -215,7 +215,7 @@ function messageSend(channelID, msg) {
 }
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     if (status === 'offline') {
-        var lastseen = moment().format('MMMM Do YYYY, H:mm:ss')
+        var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
         storage.d.Users[user].lastseen = lastseen
         if (storage.d.Users[user].status !== 'offline') {
             logger.info(lastseen + ' : ' + user + " is now: " + status);
@@ -223,7 +223,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         storage.d.Users[user].status = status
     }
     if (status === 'idle') {
-        var lastseen = moment().format('MMMM Do YYYY, H:mm:ss')
+        var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
         storage.d.Users[user].lastseen = lastseen
         if (storage.d.Users[user].status !== 'idle') {
             logger.info(lastseen + ' : ' + user + " is now: " + status);
@@ -231,7 +231,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         storage.d.Users[user].status = status
     }
     if (status === 'online') {
-        var lastseen = moment().format('MMMM Do YYYY, H:mm:ss')
+        var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
         if (storage.d.Users[user].status !== 'online') {
             logger.info(lastseen + ' : ' + user + " is now: " + status);
         }
@@ -444,11 +444,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     var status = storage.d.Users[statuscall].status
                     if (status === 'idle') {
                         var ltsmsg = storage.d.Users[statuscall].lastseen
-                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, H:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
                         messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
                     } else if (status === 'offline') {
                         var ltsmsg = storage.d.Users[statuscall].lastseen
-                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, H:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
                         messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
                     } else if (status === 'online') {
                         messageSend(channelID, statuscall + " Is currently online")
@@ -462,11 +462,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             var status = storage.d.Users[usern].status
                             if (status === 'idle') {
                                 var ltsmsg = storage.d.Users[usern].lastseen
-                                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, H:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
                                 messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
                             } else if (status === 'offline') {
                                 var ltsmsg = storage.d.Users[usern].lastseen
-                                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, H:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
                                 messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
                             } else if (status === 'online') {
                                 messageSend(channelID, statuscall + " Is currently online")
