@@ -167,6 +167,24 @@ function cnsmsg(chan, msg) {
     })
 }
 
+function secondsToTime(secs)
+{
+    var hours = Math.floor(secs / (60 * 60));
+   
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+ 
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+   
+    var obj = {
+        "h": hours,
+        "m": minutes,
+        "s": seconds
+    };
+    return obj;
+}
+
 function statusmsg(msg) {
     bot.setPresence({
         idle_since: Date.now(),
@@ -194,6 +212,11 @@ function messageSend(channelID, msg) {
         console.log('Last Message Sent ID: ' + response.id)
         sentPrevId = response.id
     });
+}
+
+function timecalc(times,timed) {
+    var secondsDiff = times.diff(timed, 'seconds')
+    console.log(secondsDiff)
 }
 
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
