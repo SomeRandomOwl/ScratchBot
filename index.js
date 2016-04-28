@@ -39,7 +39,7 @@ bot.on('ready', function() {
 
 //Global variable setting
 imgur.setClientID(config.imgurId);
-
+var dateFormat = 'MMMM Do YYYY, h:mm:ss a'
 var lastseen = null
 var logChan = config.logChan;
 var sentPrevId = null;
@@ -215,8 +215,9 @@ function messageSend(channelID, msg) {
 }
 
 function timecalc(times) {
-    var timen = moment().format('MMMM Do YYYY, h:mm:ss a')
-    var secondsDiff = timen.diff(times, 'seconds')
+    var lasttime = moment().format(dateFormat);
+    var comparison = moment(lasttime).add(times, dateFormat).format(dateFormat);
+    var secondsDiff = moment().diff(comparison, 'seconds');
     console.log(secondsDiff)
 }
 
