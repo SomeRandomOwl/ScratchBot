@@ -214,12 +214,9 @@ function messageSend(channelID, msg) {
     });
 }
 
-function timen() {
-    return moment().format('MMMM Do YYYY, h:mm:ss a')
-}
-
-function timecalc(times,timed) {
-    var secondsDiff = times.diff(timed, 'seconds')
+function timecalc(times) {
+    var timen = moment().format('MMMM Do YYYY, h:mm:ss a')
+    var secondsDiff = times.diff(timen, 'seconds')
     console.log(secondsDiff)
 }
 
