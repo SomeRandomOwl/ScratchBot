@@ -52,6 +52,7 @@ var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!'];
 var debug = false;
 var serverID = null;
 
+var clistl = clist.length
 
 //Writes JSON to a file
 function writeJSON(path, data, callback) {
@@ -119,7 +120,9 @@ function userlist() {
       console.log(bot.servers[serverID].members[userID].username)
       var name = bot.servers[serverID].members[userID].username;
       storage.d.Users[name] = {
-        "id": userID
+          "id": userID,
+	  "messageCnt": 0,
+	  "linkCnt": 0
       }
     }
   }
@@ -464,6 +467,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         typing: false
       })
     }
+      if (message.toLowerCase().indexOf('stats') === 1) {
+	  var len = message.length
+	  if (len === 6) {
+	      messageSend(channelID,"Your current stats are: \n" + "Messages Sent: " + storage.d.Users[user].messageCnt + "\nLinks Sent: " + storage.d.Users[user].linkCnt)
+	  }
+      }
     if (message.toLowerCase().indexOf('yt') === 1) {
       var ytcmd = message
       var ytcall = ytcmd.replace('!yt ', '')
@@ -553,6 +562,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     logger.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
   }
 });
+
 var cnaid = '162390519748624384'
 
 function consoleparse(line) {
