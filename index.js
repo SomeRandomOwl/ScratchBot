@@ -84,8 +84,12 @@ function serverlist() {
     for (var serverID in bot.servers) {
         console.log(bot.servers[serverID].name);
         var name = bot.servers[serverID].name;
-        storage.d.Servers[name] = {
-            'id': serverID
+        if (storage.d.Servers[name] === undefined) {
+            storage.d.Servers[name]={'id':serverID}
+        } else {
+            if (storage.d.Channels[name].messageCnt === undefined) {
+                  storage.d.Channels[name].messageCnt = 0
+          }
         }
     }
     writeJSON('./storage', storage)
@@ -100,13 +104,13 @@ function channellist() {
             var name = bot.servers[serverID].channels[channelID].name;
             var type = bot.servers[serverID].channels[channelID].type;
             if (storage.d.Channels[name] === undefined) {
-                storage.d.Channels[name] = {
-                    "id": channelID,
-                    "type": type
-                }
+                storage.d.Channels[name]={"id":channelID,"type":type}
             } else {
                 storage.d.Channels[name].id = channelID
                 storage.d.Channels[name].type = type
+                if (storage.d.Channels[name].messageCnt === undefined) {
+                  storage.d.Channels[name].messageCnt = 0
+                }
             }
         }
     }
@@ -122,7 +126,18 @@ function userlist() {
             if (storage.d.Users[name] === undefined) {
                 storage.d.Users[name]={"id":userID,"messageCnt":0,"linkCnt":0}
             } else {
-              continue
+                if (storage.d.Channels[name].messageCnt === undefined) {
+                  storage.d.Channels[name].messageCnt = 0
+                }
+                if (storage.d.Channels[name].linkCnt === undefined) {
+                  storage.d.Channels[name].linkCnt = 0
+                }
+                if (storage.d.Channels[name].status === undefined) {
+                  storage.d.Channels[name].status = "Unknown"
+                } 
+                if (storage.d.Channels[name].lastseen === undefined) {
+                  storage.d.Channels[name].lastseen = "Unknown"
+                }
             }
         }
     }
