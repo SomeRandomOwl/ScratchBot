@@ -85,11 +85,13 @@ function serverlist() {
         console.log(bot.servers[serverID].name);
         var name = bot.servers[serverID].name;
         if (storage.d.Servers[name] === undefined) {
-            storage.d.Servers[name]={'id':serverID}
+            storage.d.Servers[name] = {
+                'id': serverID
+            }
         } else {
             if (storage.d.Servers[name].messageCnt === undefined) {
-                  storage.d.Servers[name].messageCnt = 0
-          }
+                storage.d.Servers[name].messageCnt = 0
+            }
         }
     }
     writeJSON('./storage', storage)
@@ -104,12 +106,15 @@ function channellist() {
             var name = bot.servers[serverID].channels[channelID].name;
             var type = bot.servers[serverID].channels[channelID].type;
             if (storage.d.Channels[name] === undefined) {
-                storage.d.Channels[name]={"id":channelID,"type":type}
+                storage.d.Channels[name] = {
+                    "id": channelID,
+                    "type": type
+                }
             } else {
                 storage.d.Channels[name].id = channelID
                 storage.d.Channels[name].type = type
                 if (storage.d.Channels[name].messageCnt === undefined) {
-                  storage.d.Channels[name].messageCnt = 0
+                    storage.d.Channels[name].messageCnt = 0
                 }
             }
         }
@@ -124,19 +129,23 @@ function userlist() {
             console.log(bot.servers[serverID].members[userID].username)
             var name = bot.servers[serverID].members[userID].username;
             if (storage.d.Users[name] === undefined) {
-                storage.d.Users[name]={"id":userID,"messageCnt":0,"linkCnt":0}
+                storage.d.Users[name] = {
+                    "id": userID,
+                    "messageCnt": 0,
+                    "linkCnt": 0
+                }
             } else {
                 if (storage.d.Users[name].messageCnt === undefined) {
-                  storage.d.Users[name].messageCnt = 0
+                    storage.d.Users[name].messageCnt = 0
                 }
                 if (storage.d.Users[name].linkCnt === undefined) {
-                  storage.d.Users[name].linkCnt = 0
+                    storage.d.Users[name].linkCnt = 0
                 }
                 if (storage.d.Users[name].status === undefined) {
-                  storage.d.Users[name].status = "Unknown"
-                } 
+                    storage.d.Users[name].status = "Unknown"
+                }
                 if (storage.d.Users[name].lastseen === undefined) {
-                  storage.d.Users[name].lastseen = "Unknown"
+                    storage.d.Users[name].lastseen = "Unknown"
                 }
             }
         }
@@ -416,6 +425,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
                     } else if (status === 'online') {
                         messageSend(channelID, statuscall + " Is currently online")
+                    } else if (status === 'unknown') {
+                        messageSend(channelID, "Oh...um, i dont know the last time " + statuscall + " was online...sorry :confounded:")
                     }
                 } else {
                     var mentId = rawEvent.d.mentions[0].id
@@ -428,6 +439,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                                 messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + storage.d.Users[usern].lastseen)
                             } else if (status === 'online') {
                                 messageSend(channelID, statuscall + " Is currently online")
+                            } else if (status === 'unknown') {
+                                messageSend(channelID, "Oh...um, i dont know the last time " + statuscall + " was online...sorry :confounded:")
                             }
                         } else {
                             continue
