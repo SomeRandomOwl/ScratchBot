@@ -419,6 +419,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             try {
                 if (statuscall.toLowerCase().indexOf('<@') === -1) {
                     var status = storage.d.Users[statuscall].status
+		    console.log(status)
                     if (status === 'idle') {
                         messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
                     } else if (status === 'offline') {
@@ -433,6 +434,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     for (var usern in storage.d.Users) {
                         if (mentId === storage.d.Users[usern].id) {
                             var status = storage.d.Users[usern].status
+			    console.log(status)
                             if (status === 'idle') {
                                 messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + storage.d.Users[usern].lastseen)
                             } else if (status === 'offline') {
