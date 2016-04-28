@@ -404,18 +404,18 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 } else {
                     var mentId = rawEvent.d.mentions[0].id
-                    for (var user in storage.d.Users) {
-                        if (mentId === storage.d.Users[user].id) {
-                            var status = storage.d.Users[user].status
+                    for (var usern in storage.d.Users) {
+                        if (mentId === storage.d.Users[usern].id) {
+                            var status = storage.d.Users[usern].status
                             if (status === 'idle') {
-                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
+                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + storage.d.Users[usern].lastseen)
                             } else if (status === 'offline') {
-                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[user].status + " And was last Seen: " + storage.d.Users[user].lastseen)
+                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + storage.d.Users[usern].lastseen)
                             } else if (status === 'online') {
                                 messageSend(channelID, statuscall + " Is currently online")
                             }
                         } else {
-                            console.log("Not " + user)
+                            console.log("Not " + usern)
                         }
                     }
                 }
