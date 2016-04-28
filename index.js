@@ -415,7 +415,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                                 messageSend(channelID, statuscall + " Is currently online")
                             }
                         } else {
-                            console.log("Not " + usern)
+                            continue
                         }
                     }
                 }
