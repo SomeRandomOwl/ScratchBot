@@ -472,6 +472,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
 	  if (len === 6) {
 	      messageSend(channelID,"Your current stats are: \n" + "Messages Sent: " + storage.d.Users[user].messageCnt + "\nLinks Sent: " + storage.d.Users[user].linkCnt)
 	  }
+	 rconcmd = 'Yes'
       }
     if (message.toLowerCase().indexOf('yt') === 1) {
       var ytcmd = message
