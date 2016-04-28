@@ -443,9 +443,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 if (statuscall.toLowerCase().indexOf('<@') === -1) {
                     var status = storage.d.Users[statuscall].status
                     if (status === 'idle') {
-                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
+                        var ltsmsg = storage.d.Users[statuscall].lastseen
+                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, H:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
                     } else if (status === 'offline') {
-                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + storage.d.Users[statuscall].lastseen)
+                        var stsmsg = storage.d.Users[statuscall].lastseen
+                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, H:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
                     } else if (status === 'online') {
                         messageSend(channelID, statuscall + " Is currently online")
                     } else if (status === 'Unknown') {
@@ -457,9 +461,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         if (mentId === storage.d.Users[usern].id) {
                             var status = storage.d.Users[usern].status
                             if (status === 'idle') {
-                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + storage.d.Users[usern].lastseen)
+                                var stsmsg = storage.d.Users[usern].lastseen
+                                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, H:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
                             } else if (status === 'offline') {
-                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + storage.d.Users[usern].lastseen)
+                                var stsmsg = storage.d.Users[usern].lastseen
+                                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, H:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
                             } else if (status === 'online') {
                                 messageSend(channelID, statuscall + " Is currently online")
                             } else if (status === 'Unknown') {
