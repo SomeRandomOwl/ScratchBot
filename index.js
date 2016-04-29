@@ -694,7 +694,7 @@ bot.on('debug', function(rawEvent) {
     //    //messageSend(rawEvent.d.channel_id, "Did you just update a message?")
     //}
     if (rawEvent.t === "GUILD_MEMBER_ADD") {
-        messageSend(cnaid, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to: " bot.servers[rawEvent.d.guild_id].name + "!")
+        messageSend(cnaid, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to: " + bot.servers[rawEvent.d.guild_id].name + "!")
     }
 });
 
