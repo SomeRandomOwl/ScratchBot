@@ -252,7 +252,7 @@ bot.on('debug', function(rawEvent) {
                     "status": "unknown",
                     "lastseen": "unknown"
                 }
-        messageSend(cnaid, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to: " + bot.servers[rawEvent.d.guild_id].name + "!")
+        messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to: " + bot.servers[rawEvent.d.guild_id].name + "!")
     }
 });
 bot.on('disconnected', function() {
