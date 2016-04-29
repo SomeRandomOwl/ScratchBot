@@ -247,6 +247,7 @@ function messageSend(channelID, msg) {
         console.log('Last Message Sent ID: ' + response.id)
         sentPrevId = response.id
     });
+    return sentPrevId
 }
 /*/Console related input functions/*/
 function consoleparse(line) {
@@ -275,7 +276,7 @@ function consoleparse(line) {
         })
     }
 }
-
+/*/Rolls dice/*/
 function diceroll(dice, userID, channelID) {
     if (dice.indexOf('d') === 0) {
         var dienum = roll.roll(dice);
@@ -299,7 +300,13 @@ function diceroll(dice, userID, channelID) {
         messageSend(channelID, '<@' + userID + '>' + ' How can i roll a die with no dice to roll? :disappointed:')
     }
 }
-
+/*/Quick way to delete messages/*/
+function messageDelete(channelID, messageID) {
+    bot.deleteMessage({
+        channel: channelID,
+        messageID: messageID
+    })
+}
 /* Bot on event functions */
 bot.on('debug', function(rawEvent) {
     try {
@@ -611,25 +618,14 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('triggers') === 1 && ignore !== true) {
-            messgnt("Check your PM's :mailbox_with_mail:")
-            bot.sendMessage({
-                to: userID,
-                message: "Here are my triggers!: \n\n```" + tlist + '```\n',
-                typing: false
-            });
+            messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+            messageSend(channelID, "Here are my triggers!: \n\n```" + tlist + '```\n')
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('commands') === 1 && ignore !== true) {
-            messgnt("Check your PM's :mailbox_with_mail:")
-            bot.sendMessage({
-                to: userID,
-                message: "Here are my commands!: \n\n```" + clist + '```\n',
-                typing: false
-            });
-            bot.deleteMessage({
-                channel: channelID,
-                messageID: messageID
-            })
+            messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+            messageSend(userID, "Here are my commands!: \n\n```" + clist + '```\n')
+            messageDelete(channelID, messageID)
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('poke') === 1 && ignore !== true) {
@@ -637,11 +633,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var pkcall = pkcmd.replace('!poke ', '')
             var pkcall = pkcall.replace('<@', '')
             var pkcall = pkcall.replace('>', '')
-            bot.sendMessage({
-                to: pkcall,
-                message: "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">",
-                typing: false
-            })
+            messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">")
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('stats') === 1 && ignore !== true) {
