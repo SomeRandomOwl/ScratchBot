@@ -230,15 +230,22 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     //});
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
+    if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
+        var ignore = true
+    }
     rconcmd = 'No'
+
+    //Gets the message id and server id
     var messageID = rawEvent.d.id
     var serverID = bot.serverFromChannel(channelID)
+    //gets the server and channel name
     try {
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
     } catch (e) {
         console.log(e)
     }
+    //Logging Related
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
             storage.d.Users[user].messageCnt = 1
@@ -288,6 +295,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         writeJSON('./storage', storage)
     }
+    //debug!
     if (debug === 1) {
         console.log(rawEvent)
     }
@@ -299,26 +307,27 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             typing: false
         });
     }
-    if (message.toLowerCase() === "ping") {
+    //Test Connectivity
+    if (message.toLowerCase() === "ping" && ignore !== true) {
         messgnt("pong")
         rconcmd = 'Yes'
     }
-    if (message.toLowerCase() === "rick" && userID != '167017777012408320' && user != 'ScratchBot') {
+    if (message.toLowerCase() === "rick" && userID != '167017777012408320' && user != 'ScratchBot' && ignore !== true) {
         var ricks = ["and morty!", "dont forget morty!", "uuuuur morty! er goota git outta here morty! They're onto us!", "Wubba-Lubba Dub Dub!"]
         var rickm = "Morty!"
         rickm = ricks[Math.floor(Math.random() * ricks.length)];
         messgnt(rickm)
         rconcmd = 'Yes'
     }
-    if (message.toLowerCase() === "thanks scratch") {
+    if (message.toLowerCase() === "thanks scratch" && ignore !== true) {
         messgnt("You're Welcome!")
         rconcmd = 'Yes'
     }
-    if (message.toLowerCase() === "say hello scratch") {
+    if (message.toLowerCase() === "say hello scratch" && ignore !== true) {
         messgnt("Hello World")
         rconcmd = 'Yes'
     }
-    if (message.toLowerCase() === "hey nice avatar scratch" || message.toLowerCase() === "nice avatar scratch") {
+    if (message.toLowerCase() === "hey nice avatar scratch" || message.toLowerCase() === "nice avatar scratch" && ignore !== true) {
         bot.uploadFile({
             to: channelID,
             file: "avatar.png",
@@ -328,7 +337,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         });
         rconcmd = 'Yes'
     }
-    if (isInArray(message, nighttig)) {
+    if (isInArray(message, nighttig) && ignore !== true) {
         var nights = ["Night! :zzz:", "Goodnight <@" + userID + "> :zzz:", "Sleep well <@" + userID + "> :zzz:", "Have a good sleep! :zzz:", "Don't let the bed bugs bite! :zzz:", "Nighty nite! :zzz:"]
         var nightm = "Night!"
         nightm = nights[Math.floor(Math.random() * nights.length)];
@@ -342,7 +351,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     //This tests for commands using the command mod set in the config
     if (message.indexOf(commandmod) != -1) {
         //This is the command for rolling dice
-        if (message.toLowerCase().indexOf('roll') === 1) {
+        if (message.toLowerCase().indexOf('roll') === 1 && ignore !== true) {
             //This pulls the entire message into a seperate variable
             var msg = message
                 //This removes the !roll
@@ -389,7 +398,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         //Makes scratch print out her avatar
-        if (message.indexOf("avatar") === 1) {
+        if (message.indexOf("avatar") === 1 && ignore !== true) {
             bot.uploadFile({
                 to: channelID,
                 file: "avatar.png",
@@ -400,7 +409,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         //Makes scratch print out channel id's and user id's
-        if (message.toLowerCase().indexOf('ids') === 1) {
+        if (message.toLowerCase().indexOf('ids') === 1 && ignore !== true) {
             bot.sendMessage({
                 to: channelID,
                 message: '<@' + userID + '>' + ' Your userID is: ' + userID + ' and your channelID is: ' + channelID,
@@ -408,7 +417,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('math') === 1) {
+        if (message.toLowerCase().indexOf('math') === 1 && ignore !== true) {
             var mathcmd = message
             var mathcall = mathcmd.replace('!math ', '')
             try {
@@ -419,7 +428,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = "Yes"
         }
-        if (message.toLowerCase().indexOf('status') === 1) {
+        if (message.toLowerCase().indexOf('status') === 1 && ignore !== true) {
             var statuscmd = message
             var statuscall = statuscmd.replace('!status ', '')
             console.log(statuscall)
@@ -467,7 +476,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('supportedmath') === 1) {
+        if (message.toLowerCase().indexOf('supportedmath') === 1 && ignore !== true) {
             bot.uploadFile({
                 to: channelID,
                 file: "math.png",
@@ -477,7 +486,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
             rconcmd = "Yes"
         }
-        if (message.toLowerCase().indexOf('triggers') === 1) {
+        if (message.toLowerCase().indexOf('triggers') === 1 && ignore !== true) {
             messgnt("Check your PM's :mailbox_with_mail:")
             bot.sendMessage({
                 to: userID,
@@ -486,7 +495,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('commands') === 1) {
+        if (message.toLowerCase().indexOf('commands') === 1 && ignore !== true) {
             messgnt("Check your PM's :mailbox_with_mail:")
             bot.sendMessage({
                 to: userID,
@@ -499,7 +508,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('poke') === 1) {
+        if (message.toLowerCase().indexOf('poke') === 1 && ignore !== true) {
             var pkcmd = message
             var pkcall = pkcmd.replace('!poke ', '')
             var pkcall = pkcall.replace('<@', '')
@@ -511,7 +520,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('stats') === 1) {
+        if (message.toLowerCase().indexOf('stats') === 1 && ignore !== true) {
             var len = message.length
             if (len === 6) {
                 try {
@@ -534,7 +543,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('yt') === 1) {
+        if (message.toLowerCase().indexOf('yt') === 1 && ignore !== true) {
             var ytcmd = message
             var ytcall = ytcmd.replace('!yt ', '')
             youTube.search(ytcall, 1, function(error, result) {
@@ -564,7 +573,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageID: messageID
             });
         }
-        if (message.toLowerCase().indexOf('skip') === 1) {
+        if (message.toLowerCase().indexOf('skip') === 1 && ignore !== true) {
             bot.deleteMessage({
                 channel: channelID,
                 messageID: messageID
