@@ -261,6 +261,15 @@ bot.on('disconnected', function() {
     logger.info("Reconnected")
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
+    if (storage.d.Users[user] === "undefined") {
+         storage.d.Users[user] = {
+                    "id": userID,
+                    "messageCnt": 0,
+                    "linkCnt": 0,
+                    "status": "unknown",
+                    "lastseen": "unknown"
+                }
+    }
     if (status === 'offline') {
         var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
         storage.d.Users[user].lastseen = lastseen
