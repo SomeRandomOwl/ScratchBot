@@ -1,4 +1,4 @@
-//Welcome, this is scratch bots source code, everything that makes her run and tick!
+/* Welcome, this is scratch bots source code, everything that makes her run and tick! */ 
 var DiscordClient = require('discord.io');
 var winston = require('winston');
 var config = require('../../config.json');
@@ -11,6 +11,13 @@ var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
 var moment = require('moment');
+/*/Loads Storage.json if it exists/*/
+if (fs.existsSync('storage.json')) {
+    console.log('Found Storage.json');
+    var storage = require('./storage.json')
+} else if (fs.existsSync('storage.json') === false) {
+    console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
+}
 youTube.setKey(config.youTubeApiKey);
 var logger = new(winston.Logger)({
     transports: [
@@ -20,19 +27,19 @@ var logger = new(winston.Logger)({
         })
     ]
 });
-//Bot credentials
+/*/Bot credentials/*/
 var bot = new DiscordClient({
     autorun: true,
     //email: config.email,
     //password: config.pass,
     token: config.token
 });
-//Start up console output
+/*/Start up console output/*/
 bot.on('ready', function() {
     logger.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
-//Global variable setting
-imgur.setClientID(config.imgurId);
+/*/Global variable setting/*/
+var cnaid = '162390519748624384'
 var dateFormat = 'MMMM Do YYYY, h:mm:ss a'
 var lastseen = null
 var logChan = config.logChan;
@@ -48,6 +55,9 @@ var serverID = null;
 var clistl = clist.length
     //Writes JSON to a file
 
+/* Start of function defining */
+
+/*/Function to write json to the storage file/*/
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data), function(error) {
         if (error) {
@@ -60,14 +70,7 @@ function writeJSON(path, data, callback) {
         });
     });
 }
-//Loads Storage.json if it exists
-if (fs.existsSync('storage.json')) {
-    console.log('Found Storage.json');
-    var storage = require('./storage.json')
-} else if (fs.existsSync('storage.json') === false) {
-    console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
-}
-//Lists currently connected severs and writes them to json
+/*/Lists currently connected severs and writes them to json/*/
 function serverlist(verb) {
     if (verb) {
         console.log("Currently connected to these servers: ")
@@ -89,7 +92,7 @@ function serverlist(verb) {
     }
     writeJSON('./storage', storage)
 }
-
+/*/Lists currencly seen channels/*/
 function channellist(verb) {
     if (verb) {
         console.log("Currently connected to these channels: ")
@@ -117,7 +120,7 @@ function channellist(verb) {
     }
     writeJSON('./storage', storage)
 }
-
+/*/List currently/*/
 function userlist(verb) {
     if (verb) {
         console.log("Currently seeing these users: ")
@@ -152,19 +155,11 @@ function userlist(verb) {
     }
     writeJSON('./storage', storage)
 }
-//Quick way of checkin if something is in a array
+/*/Quick way of checking if something is in a array/*/
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
-
-function cnsmsg(chan, msg) {
-    bot.sendMessage({
-        to: chan,
-        message: msg,
-        typing: false
-    })
-}
-
+/*/Used to Ignore Channels/*/
 function ignoreC(cID) {
     try {
         storage.settings.ignoredChannels.push(cID)
@@ -173,7 +168,7 @@ function ignoreC(cID) {
         return false
     }
 }
-
+/*/Used to unignore channels/*/
 function uningoreC(cID) {
     try {
         array = storage.settings.ignoredChannels
@@ -186,19 +181,14 @@ function uningoreC(cID) {
         return false
     }
 }
-
+/*/Used to change status message/*/
 function statusmsg(msg) {
     bot.setPresence({
         idle_since: Date.now(),
         game: msg
     })
 }
-bot.on('disconnected', function() {
-    logger.error("Bot got disconnected, reconnecting")
-    bot.connect()
-    logger.info("Reconnected")
-});
-
+/*/Used to send messages and keep tack of the message id/*/
 function messageSend(channelID, msg) {
     bot.sendMessage({
         to: channelID,
@@ -209,6 +199,40 @@ function messageSend(channelID, msg) {
         sentPrevId = response.id
     });
 }
+/*/Console related input functions/*/
+function consoleparse(line) {
+    if (line.toLowerCase().indexOf('~') === 0) {
+        if (line.toLowerCase().indexOf('cnaid') === 1) {
+            cnaid = line.replace('~cnaid ', '')
+            console.log("Now talking in channel: " + cnaid)
+        } else if (line.toLowerCase().indexOf('cnch') === 1) {
+            var cnch = line.substring(line.indexOf(' ') + 1)
+            for (var channel in storage.d.Channels) {
+                if (cnch === channel) {
+                    cnaid = storage.d.Channels[channel].id
+                    continue
+                } else {
+                    continue
+                }
+            }
+        } else {
+            eval(line)
+        }
+    } else if (line.toLowerCase().indexOf('~') !== 0) {
+        bot.sendMessage({
+            to: cnaid,
+            message: line,
+            typeing: true
+        })
+    }
+}
+
+/* Bot on event functions */
+bot.on('disconnected', function() {
+    logger.error("Bot got disconnected, reconnecting")
+    bot.connect()
+    logger.info("Reconnected")
+});
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     if (status === 'offline') {
         var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
@@ -665,34 +689,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
 });
-var cnaid = '162390519748624384'
 
-function consoleparse(line) {
-    if (line.toLowerCase().indexOf('~') === 0) {
-        if (line.toLowerCase().indexOf('cnaid') === 1) {
-            cnaid = line.replace('~cnaid ', '')
-            console.log("Now talking in channel: " + cnaid)
-        } else if (line.toLowerCase().indexOf('cnch') === 1) {
-            var cnch = line.substring(line.indexOf(' ') + 1)
-            for (var channel in storage.d.Channels) {
-                if (cnch === channel) {
-                    cnaid = storage.d.Channels[channel].id
-                    continue
-                } else {
-                    continue
-                }
-            }
-        } else {
-            eval(line)
-        }
-    } else if (line.toLowerCase().indexOf('~') !== 0) {
-        bot.sendMessage({
-            to: cnaid,
-            message: line,
-            typeing: true
-        })
-    }
-}
+/* Start of console input */
 var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
