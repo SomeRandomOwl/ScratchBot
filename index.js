@@ -186,6 +186,53 @@ function uningoreC(cID) {
         return false
     }
 }
+
+function yt(ytcall, userID, channelID) {
+    youTube.search(ytcall, 1, function(error, result) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(result.items[0])
+            try {
+                if (result.items[0].id.kind === 'youtube#video') {
+                    var description = result.items[0].snippet.description
+                    while (description.indexOf('http') !== -1) {
+                        description = description.replace('http://', '')
+                        description = description.replace('https://', '')
+                    }
+
+                    messageSend(channelID, '<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
+                } else if (result.items[0].id.kind === 'youtube#channel') {
+                    while (result.items[0].id.kind === 'youtube#video') {
+                        var description = result.items[0].snippet.description
+                        if (description.indexOf('http') !== -1) {
+                            description = description.replace('http://', '')
+                            description = description.replace('https://', '')
+                        }
+                    }
+                    messageSend(channelID, '<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + description + '\nhttps://www.youtube.com/channel/' + result.items[0].id.channelId)
+                } else if (result.items[0].id.kind === 'youtube#playlist') {
+                    if (result.items[0].id.kind === 'youtube#video') {
+                        var description = result.items[0].snippet.description
+                        while (description.indexOf('http') !== -1) {
+                            description = description.replace('http://', '')
+                            description = description.replace('https://', '')
+                        }
+                    }
+                    messageSend(channelID, '<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + description + '\nhttps://www.youtube.com/playlist?list=' + result.items[0].id.playlistId)
+                } else {
+                    messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
+                }
+            } catch (e) {
+                logger.error("Youtube Fetch Failed " + e + " | " + ytcall)
+                messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
+                console.log(e)
+            }
+        }
+    });
+
+}
+
 /*/Used to change status message/*/
 function statusmsg(msg) {
     bot.setPresence({
@@ -642,48 +689,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('yt') === 1 && ignore !== true) {
             var ytcmd = message
             var ytcall = ytcmd.replace('!yt ', '')
-            youTube.search(ytcall, 1, function(error, result) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log(result.items[0])
-                    try {
-                        if (result.items[0].id.kind === 'youtube#video') {
-                            var description = result.items[0].snippet.description
-                            while (description.indexOf('http') !== -1) {
-                                description = description.replace('http://', '')
-                                description = description.replace('https://', '')
-                            }
-
-                            messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
-                        } else if (result.items[0].id.kind === 'youtube#channel') {
-                            while (result.items[0].id.kind === 'youtube#video') {
-                                var description = result.items[0].snippet.description
-                                if (description.indexOf('http') !== -1) {
-                                    description = description.replace('http://', '')
-                                    description = description.replace('https://', '')
-                                }
-                            }
-                            messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + description + '\nhttps://www.youtube.com/channel/' + result.items[0].id.channelId)
-                        } else if (result.items[0].id.kind === 'youtube#playlist') {
-                            if (result.items[0].id.kind === 'youtube#video') {
-                                var description = result.items[0].snippet.description
-                                while (description.indexOf('http') !== -1) {
-                                    description = description.replace('http://', '')
-                                    description = description.replace('https://', '')
-                                }
-                            }
-                            messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + description + '\nhttps://www.youtube.com/playlist?list=' + result.items[0].id.playlistId)
-                        } else {
-                            messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
-                        }
-                    } catch (e) {
-                        logger.error("Youtube Fetch Failed " + e + " | " + ytcall)
-                        messgnt('<@' + userID + '> Sorry I could not retrieve that :confused:')
-                        console.log(e)
-                    }
-                }
-            });
+            yt(ytcall, userID, channelID)
             bot.deleteMessage({
                 channel: channelID,
                 messageID: messageID
