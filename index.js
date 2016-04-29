@@ -46,7 +46,8 @@ var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!'];
 var debug = false;
 var serverID = null;
 var clistl = clist.length
-//Writes JSON to a file
+    //Writes JSON to a file
+
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data), function(error) {
         if (error) {
@@ -85,6 +86,7 @@ function serverlist() {
     }
     writeJSON('./storage', storage)
 }
+
 function channellist() {
     console.log("Currently connected to these channels: ")
     for (var serverID in bot.servers) {
@@ -108,6 +110,7 @@ function channellist() {
     }
     writeJSON('./storage', storage)
 }
+
 function userlist() {
     console.log("Currently seeing these users: ")
     for (var serverID in bot.servers) {
@@ -142,6 +145,7 @@ function userlist() {
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
+
 function cnsmsg(chan, msg) {
     bot.sendMessage({
         to: chan,
@@ -149,6 +153,29 @@ function cnsmsg(chan, msg) {
         typing: false
     })
 }
+
+function ignoreC(cID) {
+    try {
+        storage.settings.ignoredChannels.push(cID)
+        return true
+    } catch (e) {
+        return false
+    }
+}
+
+function uningoreC(cID) {
+    try {
+        array = storage.settings.ignoredChannels
+        var index = array.indexOf(cID)
+        if (index > -1) {
+            array.splice(index, 1);
+        }
+        return true
+    } catch (e) {
+        return false
+    }
+}
+
 function statusmsg(msg) {
     bot.setPresence({
         idle_since: Date.now(),
@@ -160,6 +187,7 @@ bot.on('disconnected', function() {
     bot.connect()
     logger.info("Reconnected")
 });
+
 function messageSend(channelID, msg) {
     bot.sendMessage({
         to: channelID,
@@ -494,6 +522,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
+        if (message.toLowerCase().indexOf('ignore') === 1){
+            var igcmd = message
+            var igcall = igcmd.replace('!ignore ', '')
+            if (igcall.toLowerCase().indexOf('remove') !== -1) {
+                uningoreC(channelID)
+                messageSend('Ok no longer ignoring this channel')
+            } else {
+                ignoreC(channelID)
+            }
+            rconcmd = 'Yes'
+        }
         if (message.toLowerCase().indexOf('yt') === 1) {
             var ytcmd = message
             var ytcall = ytcmd.replace('!yt ', '')
@@ -584,6 +623,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
 });
 var cnaid = '162390519748624384'
+
 function consoleparse(line) {
     if (line.toLowerCase().indexOf('~') === 0) {
         if (line.toLowerCase().indexOf('cnaid') === 1) {
