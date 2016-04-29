@@ -238,7 +238,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     //Gets the message id and server id
     var messageID = rawEvent.d.id
     var serverID = bot.serverFromChannel(channelID)
-    //gets the server and channel name
+        //gets the server and channel name
     try {
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
@@ -531,7 +531,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0){
+        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0) {
             var igcmd = message
             var igcall = igcmd.replace('!ignore ', '')
             if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
@@ -629,7 +629,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             fs.appendFile("logs/" + servern + '.' + channeln + '.txt', '\n' + timed + user + ": " + message)
         }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes" && ignore !== true) {
-        logger.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
+        if (ignor !== true) {
+            logger.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
+        }
     }
 });
 var cnaid = '162390519748624384'
