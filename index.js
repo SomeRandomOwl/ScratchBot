@@ -111,11 +111,11 @@ function channellist() {
     writeJSON('./storage', storage)
 }
 
-function userlist() {
-    console.log("Currently seeing these users: ")
+function userlist(verb=true) {
+    if (verb) {console.log("Currently seeing these users: ")}
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
-            console.log(bot.servers[serverID].members[userID].username)
+            if (verb) {console.log(bot.servers[serverID].members[userID].username)}
             var name = bot.servers[serverID].members[userID].username;
             if (storage.d.Users[name] === undefined) {
                 storage.d.Users[name] = {
