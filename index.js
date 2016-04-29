@@ -266,7 +266,6 @@ bot.on('disconnected', function() {
     logger.info("Reconnected")
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
-    if (status !== undefined) {
         try {
             if (storage.d.Users[user] === "undefined") {
                 storage.d.Users[user] = {
@@ -316,9 +315,9 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 storage.d.Users[user].status = status
             }
         } catch (e) {
-            logger.error(e)
+            return
         }
-    }
+    
     writeJSON('./storage', storage)
     //bot.sendMessage({
     //   to: logChan,
