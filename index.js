@@ -88,6 +88,9 @@ function serverlist(verb) {
             if (storage.d.Servers[name].messageCnt === undefined) {
                 storage.d.Servers[name].messageCnt = 0
             }
+            if (storage.d.Servers[name].announceChan === undefined) {
+                storage.d.Servers[name].announceChan = null
+            }
         }
     }
     writeJSON('./storage', storage)
@@ -634,6 +637,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageID: messageID
             })
         }
+        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0) {
+            try {
+                storage.d.Servers[sname].announceChan = channelID
+            } catch (e) {
+                continue
+            }
+        }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
             var jscmd = message
@@ -646,7 +656,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf('70921043782402048') === -1) {
+        if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === -1) {
             messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
         } else if (rconcmd === 'no') {
             logger.info(commandmod + ' was said but there was No Detected command');
@@ -690,6 +700,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
 });
 bot.on('debug', function(rawEvent) {
+    try {
+        var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].announceChan
+    } catch(e) {
+        console.log(e)
+    }
     //if (rawEvent.t === "MESSAGE_UPDATE") {
     //    //messageSend(rawEvent.d.channel_id, "Did you just update a message?")
     //}
