@@ -640,9 +640,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0) {
             try {
                 storage.d.Servers[sname].announceChan = channelID
+                messageSend(channelID, "Ok now announcing user changes on this channel")
             } catch (e) {
                 console.log(e)
             }
+            rconcmd = "Yes"
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
