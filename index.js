@@ -252,7 +252,7 @@ bot.on('debug', function(rawEvent) {
                     "status": "unknown",
                     "lastseen": "unknown"
                 }
-        messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to: " + bot.servers[rawEvent.d.guild_id].name + "!")
+        messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to " + bot.servers[rawEvent.d.guild_id].name + "!")
     }
 });
 bot.on('disconnected', function() {
@@ -270,6 +270,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     "lastseen": "unknown"
                 }
     }
+    console.log(rawEvent)
     if (status === 'offline') {
         var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
         storage.d.Users[user].lastseen = lastseen
