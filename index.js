@@ -689,6 +689,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
 });
+bot.on('debug', function(rawEvent) {
+    if (rawEvent.t === "MESSAGE_UPDATE") {
+        messageSend(rawEvent.d.channel_id, "Did you just update a message?")
+    }
+});
 
 /* Start of console input */
 var rl = readline.createInterface({
