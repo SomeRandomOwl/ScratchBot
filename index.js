@@ -266,6 +266,7 @@ bot.on('disconnected', function() {
     logger.info("Reconnected")
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
+    console.log(rawEvent)
     try {
         if (storage.d.Users[user] === "undefined") {
             storage.d.Users[user] = {
