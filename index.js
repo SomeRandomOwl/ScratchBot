@@ -11,9 +11,7 @@ var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
 var moment = require('moment');
-
 youTube.setKey(config.youTubeApiKey);
-
 var logger = new(winston.Logger)({
     transports: [
         new(winston.transports.Console)(),
@@ -22,7 +20,6 @@ var logger = new(winston.Logger)({
         })
     ]
 });
-
 //Bot credentials
 var bot = new DiscordClient({
     autorun: true,
@@ -30,13 +27,10 @@ var bot = new DiscordClient({
     //password: config.pass,
     token: config.token
 });
-
 //Start up console output
 bot.on('ready', function() {
     logger.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
-
-
 //Global variable setting
 imgur.setClientID(config.imgurId);
 var dateFormat = 'MMMM Do YYYY, h:mm:ss a'
@@ -51,9 +45,7 @@ var tlist = '\nUtility: ping\nPolite replies: goodnight,  nite,  night, hi, hell
 var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!'];
 var debug = false;
 var serverID = null;
-
 var clistl = clist.length
-
 //Writes JSON to a file
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data), function(error) {
@@ -67,16 +59,13 @@ function writeJSON(path, data, callback) {
         });
     });
 }
-
 //Loads Storage.json if it exists
-
 if (fs.existsSync('storage.json')) {
     console.log('Found Storage.json');
     var storage = require('./storage.json')
 } else if (fs.existsSync('storage.json') === false) {
     console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
 }
-
 //Lists currently connected severs and writes them to json
 function serverlist() {
     console.log(typeof storage.d.Servers)
@@ -96,8 +85,6 @@ function serverlist() {
     }
     writeJSON('./storage', storage)
 }
-
-
 function channellist() {
     console.log("Currently connected to these channels: ")
     for (var serverID in bot.servers) {
@@ -121,7 +108,6 @@ function channellist() {
     }
     writeJSON('./storage', storage)
 }
-
 function userlist() {
     console.log("Currently seeing these users: ")
     for (var serverID in bot.servers) {
@@ -152,13 +138,10 @@ function userlist() {
     }
     writeJSON('./storage', storage)
 }
-
 //Quick way of checkin if something is in a array
-
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
-
 function cnsmsg(chan, msg) {
     bot.sendMessage({
         to: chan,
@@ -166,79 +149,17 @@ function cnsmsg(chan, msg) {
         typing: false
     })
 }
-
-function secondsToTime(secs)
-{
-    var hours = Math.floor(secs / (60 * 60));
-   
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
- 
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
-   
-    var obj = {
-        "h": hours,
-        "m": minutes,
-        "s": seconds
-    };
-    return obj;
-}
-
-function timecalc(time) {
-    var ctime = moment().format('MMMM Do YYYY, HH:mm:ss')
-
-    cdate = ctime.substring(0,ctime.indexOf(','))
-    date = time.substring(0,time.indexOf(','))
-
-    time = time.substring(time.indexOf(', ') + 2)
-    timeh = time.substring(0,2)
-    timem = time.substring(3,5)
-    times = time.substring(6)
-
-    ctime = ctime.substring(ctime.indexOf(', ') + 2)
-    ctimeh = ctime.substring(0,2)
-    ctimem = ctime.substring(3,5)
-    ctimes = ctime.substring(6)
-
-    if (cdate !== date) {
-        timemsg = "Greater than One Day"
-        return timemsg
-    } else {
-        timehs = timeh * 3600
-        ctimehs = ctimeh * 3600
-        timems = timem * 60
-        ctimems = ctimem * 60
-
-        ttime = timehs + timems + times
-        tctime = ctimehs + ctimems + ctimes
-
-        fttime = tctime - ttime
-
-        timemsg = secondsToTime(fttime)
-        timemsg = timemsg.h + " Hours " + timemsg.m + " Minutes " + timemsg.s + " Seconds"
-        return timemsg
-    }
-}
-
 function statusmsg(msg) {
     bot.setPresence({
         idle_since: Date.now(),
         game: msg
     })
 }
-
 bot.on('disconnected', function() {
     logger.error("Bot got disconnected, reconnecting")
     bot.connect()
     logger.info("Reconnected")
-    //bot.sendMessage({
-    //  to: logChan,
-    //  message: "Got disconneted, Reconnected now",
-    //  typeing: false
-    //})
 });
-
 function messageSend(channelID, msg) {
     bot.sendMessage({
         to: channelID,
@@ -280,7 +201,6 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     //   typing: false
     //});
 });
-
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     rconcmd = 'No'
     var messageID = rawEvent.d.id
@@ -663,9 +583,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         logger.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
     }
 });
-
 var cnaid = '162390519748624384'
-
 function consoleparse(line) {
     if (line.toLowerCase().indexOf('~') === 0) {
         if (line.toLowerCase().indexOf('cnaid') === 1) {
