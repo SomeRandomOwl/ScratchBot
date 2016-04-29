@@ -691,7 +691,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
 });
 bot.on('debug', function(rawEvent) {
     if (rawEvent.t === "MESSAGE_UPDATE") {
-        messageSend(rawEvent.d.channel_id, "Did you just update a message?")
+        //messageSend(rawEvent.d.channel_id, "Did you just update a message?")
     }
 });
 
