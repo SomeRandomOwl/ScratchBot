@@ -254,6 +254,11 @@ bot.on('debug', function(rawEvent) {
         }
         messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to " + bot.servers[rawEvent.d.guild_id].name + "!")
     }
+    if (rawEvent.t === "GUILD_MEMBER_REMOVE") {
+        var name = rawEvent.d.user.username
+        var userID = rawEvent.d.user.id
+        messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just left the server! :cold_sweat:")
+    }
 });
 bot.on('disconnected', function() {
     logger.error("Bot got disconnected, reconnecting")
@@ -270,7 +275,6 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             "lastseen": "unknown"
         }
     }
-    console.log(rawEvent)
     if (status === 'offline') {
         if (user !== undefined) {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
