@@ -245,13 +245,13 @@ bot.on('debug', function(rawEvent) {
     if (rawEvent.t === "GUILD_MEMBER_ADD") {
         var name = rawEvent.d.user.username
         var userID = rawEvent.d.user.id
-         storage.d.Users[name] = {
-                    "id": userID,
-                    "messageCnt": 0,
-                    "linkCnt": 0,
-                    "status": "unknown",
-                    "lastseen": "unknown"
-                }
+        storage.d.Users[name] = {
+            "id": userID,
+            "messageCnt": 0,
+            "linkCnt": 0,
+            "status": "unknown",
+            "lastseen": "unknown"
+        }
         messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to " + bot.servers[rawEvent.d.guild_id].name + "!")
     }
 });
@@ -262,23 +262,37 @@ bot.on('disconnected', function() {
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     if (storage.d.Users[user] === "undefined") {
-         storage.d.Users[user] = {
-                    "id": userID,
-                    "messageCnt": 0,
-                    "linkCnt": 0,
-                    "status": "unknown",
-                    "lastseen": "unknown"
-                }
+        storage.d.Users[user] = {
+            "id": userID,
+            "messageCnt": 0,
+            "linkCnt": 0,
+            "status": "unknown",
+            "lastseen": "unknown"
+        }
     }
-    console.log(userID)
     console.log(rawEvent)
     if (status === 'offline') {
-        var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
-        storage.d.Users[user].lastseen = lastseen
-        if (storage.d.Users[user].status !== 'offline') {
-            logger.info(lastseen + ' : ' + user + " is now: " + status);
+        if (user !== undefined) {
+            var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
+            storage.d.Users[user].lastseen = lastseen
+            if (storage.d.Users[user].status !== 'offline') {
+                logger.info(lastseen + ' : ' + user + " is now: " + status);
+            }
+            storage.d.Users[user].status = status
+        } else if (user === undefined) {
+            var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
+            for (var user in storage.d.Users) {
+                if (userID === storage.d.Users[user].id) {
+                    storage.d.Users[user].lastseen = lastseen
+                    if (storage.d.Users[user].status !== 'offline') {
+                        logger.info(lastseen + ' : ' + user + " is now: " + status);
+                    }
+                    storage.d.Users[user].status = status
+                } else {
+                    continue
+                }
+            } 
         }
-        storage.d.Users[user].status = status
     }
     if (status === 'idle') {
         var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
