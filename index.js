@@ -234,9 +234,6 @@ function consoleparse(line) {
 
 /* Bot on event functions */
 bot.on('debug', function(rawEvent) {
-    userlist()
-    channellist()
-    serverlist()
     try {
         var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].announceChan
     } catch (e) {
@@ -246,6 +243,15 @@ bot.on('debug', function(rawEvent) {
     //    //messageSend(rawEvent.d.channel_id, "Did you just update a message?")
     //}
     if (rawEvent.t === "GUILD_MEMBER_ADD") {
+        var name = rawEvent.d.user.username
+        var userID = rawEvent.d.user.id
+         storage.d.Users[name] = {
+                    "id": userID,
+                    "messageCnt": 0,
+                    "linkCnt": 0,
+                    "status": "unknown",
+                    "lastseen": "unknown"
+                }
         messageSend(cnaid, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to: " + bot.servers[rawEvent.d.guild_id].name + "!")
     }
 });
