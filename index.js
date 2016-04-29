@@ -629,7 +629,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             fs.appendFile("logs/" + servern + '.' + channeln + '.txt', '\n' + timed + user + ": " + message)
         }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes" && ignore !== true) {
-        if (ignor !== true) {
+        if (ignore !== true) {
             logger.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
         }
     }
