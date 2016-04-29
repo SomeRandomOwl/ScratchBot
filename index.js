@@ -315,7 +315,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             storage.d.Users[user].status = status
         }
     } catch (e) {
-        console.log(e)
+        logger.error(e)
     }
     writeJSON('./storage', storage)
     //bot.sendMessage({
