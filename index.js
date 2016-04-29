@@ -186,7 +186,7 @@ function uningoreC(cID) {
         return false
     }
 }
-
+/*/YouTube Search/*/
 function yt(ytcall, userID, channelID) {
     youTube.search(ytcall, 1, function(error, result) {
         if (error) {
@@ -229,9 +229,7 @@ function yt(ytcall, userID, channelID) {
             }
         }
     });
-
 }
-
 /*/Used to change status message/*/
 function statusmsg(msg) {
     bot.setPresence({
@@ -275,6 +273,30 @@ function consoleparse(line) {
             message: line,
             typeing: true
         })
+    }
+}
+
+function diceroll(dice, userID, channelID) {
+    if (dice.indexOf('d') === 0) {
+        var dienum = roll.roll(dice);
+        console.log(dienum);
+        messageSend(channelID, '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString())
+    }
+    //This is if theres more than one die thrown
+    if (dice.indexOf('d') !== 0 && dice.indexOf('d') != -1) {
+        var numdie = dice.substring(0, dice.toLowerCase().indexOf('d'))
+            //This is to limit the number of die thrown
+        if (numdie < 21) {
+            var dienum = roll.roll(dice);
+            console.log(dienum);
+            messageSend(channelID, '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString() + ' For a total of: ' + dienum.result)
+        } else if (numdie > 21) {
+            messageSend(channelID, '<@' + userID + '>' + ' Please roll no more than 20 dice')
+        }
+    }
+    //If now die are thrown toss this
+    if (dice.indexOf('d') === -1) {
+        messageSend(channelID, '<@' + userID + '>' + ' How can i roll a die with no dice to roll? :disappointed:')
     }
 }
 
@@ -494,49 +516,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (message.indexOf(commandmod) != -1) {
         //This is the command for rolling dice
         if (message.toLowerCase().indexOf('roll') === 1 && ignore !== true) {
-            //This pulls the entire message into a seperate variable
             var msg = message
-                //This removes the !roll
             var dice = msg.replace('!roll ', '')
-                //this retrieves what kind of die it is currently unused, but will be implimented to limit it to a d100
-            var typedie = dice.substring(dice.toLowerCase().indexOf('d') + 1)
-            if (dice.indexOf('d') === 0) {
-                var dienum = roll.roll(dice);
-                console.log(dienum);
-                bot.sendMessage({
-                    to: channelID,
-                    message: '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString(),
-                    typing: false
-                });
-            }
-            //This is if theres more than one die thrown
-            if (dice.indexOf('d') !== 0 && dice.indexOf('d') != -1) {
-                var numdie = dice.substring(0, dice.toLowerCase().indexOf('d'))
-                    //This is to limit the number of die thrown
-                if (numdie < 21) {
-                    var dienum = roll.roll(dice);
-                    console.log(dienum);
-                    bot.sendMessage({
-                        to: channelID,
-                        message: '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString() + ' For a total of: ' + dienum.result,
-                        typing: false
-                    });
-                } else if (numdie > 21) {
-                    bot.sendMessage({
-                        to: channelID,
-                        message: '<@' + userID + '>' + ' Please roll no more than 20 dice',
-                        typing: false
-                    });
-                }
-            }
-            //If now die are thrown toss this
-            if (dice.indexOf('d') === -1) {
-                bot.sendMessage({
-                    to: channelID,
-                    message: '<@' + userID + '>' + ' How can i roll a die with no dice to roll? :disappointed:',
-                    typing: false
-                });
-            }
+            diceroll(dice, userID, channelID)
             rconcmd = 'Yes'
         }
         //Makes scratch print out her avatar
