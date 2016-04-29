@@ -270,6 +270,8 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     "lastseen": "unknown"
                 }
     }
+    user = rawEvent.d.user.username
+    userID = rawEvent.d.user.id
     console.log(rawEvent)
     if (status === 'offline') {
         var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
