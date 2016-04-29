@@ -614,7 +614,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         } else if (channelID.indexOf('167855344129802241')) {
             console.log('Message from Unknown chat, logging to file space.txt');
         }
-    } else if (rconcmd === "No") {
+    } else if (rconcmd === "No" && ignore !== true) {
         var timed = Date()
         timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
         timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
