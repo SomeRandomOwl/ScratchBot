@@ -565,14 +565,14 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     try {
                         if (result.items[0].id.kind === 'youtube#video') {
                             var description = result.items[0].snippet.description
-                            if (description.indexOf('http') !== -1) {
+                            while (description.indexOf('http') !== -1) {
                                 description = description.replace('http://', '')
                                 description = description.replace('https://', '')
                             }
 
                             messgnt('<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
                         } else if (result.items[0].id.kind === 'youtube#channel') {
-                            if (result.items[0].id.kind === 'youtube#video') {
+                            while (result.items[0].id.kind === 'youtube#video') {
                                 var description = result.items[0].snippet.description
                                 if (description.indexOf('http') !== -1) {
                                     description = description.replace('http://', '')
@@ -583,7 +583,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         } else if (result.items[0].id.kind === 'youtube#playlist') {
                             if (result.items[0].id.kind === 'youtube#video') {
                                 var description = result.items[0].snippet.description
-                                if (description.indexOf('http') !== -1) {
+                                while (description.indexOf('http') !== -1) {
                                     description = description.replace('http://', '')
                                     description = description.replace('https://', '')
                                 }
