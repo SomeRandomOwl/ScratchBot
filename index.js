@@ -39,7 +39,7 @@ bot.on('ready', function() {
     logger.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
 /*/Global variable setting/*/
-var cnaid = '162390519748624384'
+var cnaid = '171798432749584387'
 var dateFormat = 'MMMM Do YYYY, h:mm:ss a'
 var lastseen = null
 var logChan = config.logChan;
@@ -692,6 +692,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
 bot.on('debug', function(rawEvent) {
     if (rawEvent.t === "MESSAGE_UPDATE") {
         //messageSend(rawEvent.d.channel_id, "Did you just update a message?")
+    }
+    if (rawEvent.t === "GUILD_MEMBER_ADD") {
+        messageSend(cnaid, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to: " bot.servers[rawEvent.d.guild_id].name + "!")
     }
 });
 
