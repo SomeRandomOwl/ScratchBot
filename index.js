@@ -192,7 +192,6 @@ function yt(ytcall, userID, channelID) {
         if (error) {
             console.log(error);
         } else {
-            console.log(result.items[0])
             try {
                 if (result.items[0].id.kind === 'youtube#video') {
                     var description = result.items[0].snippet.description
