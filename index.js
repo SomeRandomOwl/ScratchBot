@@ -185,6 +185,42 @@ function secondsToTime(secs)
     return obj;
 }
 
+function timecalc(time) {
+    var ctime = moment().format('MMMM Do YYYY, HH:mm:ss')
+
+    cdate = ctime.substring(0,ctime.indexOf(','))
+    date = time.substring(0,time.indexOf(','))
+
+    time = time.substring(time.indexOf(', ') + 2)
+    timeh = time.substring(0,2)
+    timem = time.substring(3,5)
+    times = time.substring(6)
+
+    ctime = ctime.substring(ctime.indexOf(', ') + 2)
+    ctimeh = ctime.substring(0,2)
+    ctimem = ctime.substring(3,5)
+    ctimes = ctime.substring(6)
+
+    if (cdate !== date) {
+        timemsg = "Greater than One Day"
+        return timemsg
+    } else {
+        timehs = timeh * 3600
+        ctimehs = ctimeh * 3600
+        timems = timem * 60
+        ctimems = ctimem * 60
+
+        ttime = timehs + timems + times
+        tctime = ctimehs + ctimems + ctimes
+
+        fttime = tctime - ttime
+
+        timemsg = secondsToTime(fttime)
+        timemsg = timemsg.h + " Hours " + timemsg.m + " Minutes " + timemsg.s + " Seconds"
+        return timemsg
+    }
+}
+
 function statusmsg(msg) {
     bot.setPresence({
         idle_since: Date.now(),
