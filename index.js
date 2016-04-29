@@ -531,10 +531,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('ignore') === 1){
+        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0){
             var igcmd = message
             var igcall = igcmd.replace('!ignore ', '')
-            if (igcall.toLowerCase().indexOf('remove') !== -1) {
+            if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
                 uningoreC(channelID)
                 messageSend(channelID, 'Ok no longer ignoring this channel')
             } else {
