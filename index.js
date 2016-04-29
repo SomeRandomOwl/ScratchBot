@@ -1,4 +1,4 @@
-/* Welcome, this is scratch bots source code, everything that makes her run and tick! */ 
+/* Welcome, this is scratch bots source code, everything that makes her run and tick! */
 var DiscordClient = require('discord.io');
 var winston = require('winston');
 var config = require('../../config.json');
@@ -138,7 +138,9 @@ function userlist(verb) {
                 storage.d.Users[name] = {
                     "id": userID,
                     "messageCnt": 0,
-                    "linkCnt": 0
+                    "linkCnt": 0,
+                    "status": "unknown",
+                    "lastseen": "unknown"
                 }
             } else {
                 if (storage.d.Users[name].messageCnt === undefined) {
@@ -231,6 +233,22 @@ function consoleparse(line) {
 }
 
 /* Bot on event functions */
+bot.on('debug', function(rawEvent) {
+    userlist()
+    channellist()
+    serverlist()
+    try {
+        var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].announceChan
+    } catch (e) {
+        return
+    }
+    //if (rawEvent.t === "MESSAGE_UPDATE") {
+    //    //messageSend(rawEvent.d.channel_id, "Did you just update a message?")
+    //}
+    if (rawEvent.t === "GUILD_MEMBER_ADD") {
+        messageSend(cnaid, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to: " + bot.servers[rawEvent.d.guild_id].name + "!")
+    }
+});
 bot.on('disconnected', function() {
     logger.error("Bot got disconnected, reconnecting")
     bot.connect()
@@ -701,22 +719,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
 });
-bot.on('debug', function(rawEvent) {
-    channellist()
-    userlist()
-    serverlist()
-    try {
-        var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].announceChan
-    } catch(e) {
-        return
-    }
-    //if (rawEvent.t === "MESSAGE_UPDATE") {
-    //    //messageSend(rawEvent.d.channel_id, "Did you just update a message?")
-    //}
-    if (rawEvent.t === "GUILD_MEMBER_ADD") {
-        messageSend(cnaid, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to: " + bot.servers[rawEvent.d.guild_id].name + "!")
-    }
-});
+
 
 /* Start of console input */
 var rl = readline.createInterface({
