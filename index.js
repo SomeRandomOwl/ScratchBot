@@ -68,11 +68,10 @@ if (fs.existsSync('storage.json')) {
     console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
 }
 //Lists currently connected severs and writes them to json
-function serverlist() {
-    console.log(typeof storage.d.Servers)
-    console.log("Currently connected to these servers: ")
+function serverlist(verb) {
+    if (verb) {console.log("Currently connected to these servers: ")}
     for (var serverID in bot.servers) {
-        console.log(bot.servers[serverID].name);
+        if (verb) {console.log(bot.servers[serverID].name)}
         var name = bot.servers[serverID].name;
         if (storage.d.Servers[name] === undefined) {
             storage.d.Servers[name] = {
@@ -87,11 +86,11 @@ function serverlist() {
     writeJSON('./storage', storage)
 }
 
-function channellist() {
-    console.log("Currently connected to these channels: ")
+function channellist(verb) {
+    if (verb) {console.log("Currently connected to these channels: ")}
     for (var serverID in bot.servers) {
         for (var channelID in bot.servers[serverID].channels) {
-            console.log(bot.servers[serverID].channels[channelID].name)
+            if (verb) {console.log(bot.servers[serverID].channels[channelID].name)}
             var name = bot.servers[serverID].channels[channelID].name;
             var type = bot.servers[serverID].channels[channelID].type;
             if (storage.d.Channels[name] === undefined) {
@@ -111,7 +110,7 @@ function channellist() {
     writeJSON('./storage', storage)
 }
 
-function userlist(verb=true) {
+function userlist(verb) {
     if (verb) {console.log("Currently seeing these users: ")}
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
