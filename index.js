@@ -702,6 +702,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
 });
 bot.on('debug', function(rawEvent) {
+    channellist()
+    userlist()
+    serverlist()
     try {
         var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].announceChan
     } catch(e) {
