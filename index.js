@@ -321,7 +321,7 @@ function messageDelete(channelID, messageID) {
 function relxkcd(quer) {
     request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log(body)
+            console.log(body[1])
         }
     })
 }
