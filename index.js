@@ -171,8 +171,12 @@ function isInArray(value, array) {
 /*/Used to Ignore Channels/*/
 function ignoreC(cID) {
     try {
-        storage.settings.ignoredChannels.push(cID)
-        return true
+        array = storage.settings.monitoredChan
+        var index = array.indexOf(cID)
+        if (index === -1) {
+            storage.settings.ignoredChannels.push(cID)
+            return true
+        }
     } catch (e) {
         return false
     }
@@ -191,25 +195,29 @@ function uningoreC(cID) {
     }
 }
 
-function monitor(channelID, fun) {
-    if (fun = 'add') {
+function monitora(channelID) {
+    array = storage.settings.monitoredChan
+    var index = array.indexOf(channelID)
+    if (index === -1) {
         try {
             storage.settings.monitoredChan.push(channelID)
             return true
-        } catch (e) {
-            return false
         }
-    } else if (fun = 'remove') {
-        try {
-            array = storage.settings.monitoredChan
-            var index = array.indexOf(channelID)
-            if (index > -1) {
-                array.splice(index, 1);
-            }
-            return true
-        } catch (e) {
-            return false
+    } catch (e) {
+        return false
+    }
+}
+
+function monitorr(channelID) {
+    try {
+        array = storage.settings.monitoredChan
+        var index = array.indexOf(channelID)
+        if (index > -1) {
+            array.splice(index, 1);
         }
+        return true
+    } catch (e) {
+        return false
     }
 }
 /*/YouTube Search/*/
@@ -690,10 +698,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var mtmsg = message
             var mtcall = mtmsg.replace('!ignore ', '')
             if (mtcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
-                mon = monitor(channelID,'remove')
+                mon = monitorr(channelID)
                 messageSend(channelID, 'Ok no longer monitoring this channel status: ' + mon)
             } else {
-                mon = monitor(channelID,'add')
+                mon = monitora(channelID)
                 messageSend(channelID, 'Ok monitoring this channel to log into a special text file status: ' + mon)
             }
             rconcmd = 'Yes'
