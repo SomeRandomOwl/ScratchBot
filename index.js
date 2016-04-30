@@ -319,11 +319,12 @@ function messageDelete(channelID, messageID) {
 
 function relxkcd(quer) {
     quer.http("https://relevantxkcd.appspot.com/process?action=xkcd&query=#phrase").get()(function(err, res, body) {
+        console.log('http')
         var comicNumber
         var percentageCertainty
         var responseData
         if (res.statusCode !== 200) {
-            return
+            console.log('error')
         } else {
             responseData = body.match(/(0.\d+) 0 (\d+) .*/i);
             percentageCertainty = responseData[1];
@@ -331,8 +332,9 @@ function relxkcd(quer) {
             return quer.http("http://xkcd.com/" + comicNumber + "/info.0.json").get()(function(err, res, body) {
                 var object;
                 if (res.statusCode === 404) {
-                    return msg.send('Comic #{num} not found.');
+                    console.log('ok?')
                 } else {
+                    console.log('it wokred?')
                     object = JSON.parse(body);
                     return object
                 }
