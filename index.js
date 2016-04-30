@@ -318,16 +318,13 @@ function messageDelete(channelID, messageID) {
 }
 
 function xkcdImg() {
-    var xkcdimage = null
     xkcd.img(function(err, res) {
         if (!err) {
-            console.log(res)
-            xkcdimage = res
+            return res
         } else {
             return err
         }
     });
-
 }
 
 /* Bot on event functions */
@@ -693,7 +690,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
             var xkcdret = xkcdImg()
-            console.log(xkcd)
+            console.log(xkcdret)
             messageSend(channelID, xkcdret.title + "\n" + xkcdret.url)
         }
         if (message.toLowerCase().indexOf('skip') === 1 && ignore !== true) {
