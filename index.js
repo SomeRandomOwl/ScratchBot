@@ -11,6 +11,7 @@ var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
 var moment = require('moment');
+
 /*/Loads Storage.json if it exists/*/
 if (fs.existsSync('storage.json')) {
     console.log('Found Storage.json');
@@ -18,7 +19,9 @@ if (fs.existsSync('storage.json')) {
 } else if (fs.existsSync('storage.json') === false) {
     console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
 }
+/*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
+/*/Set up logging/*/
 var logger = new(winston.Logger)({
     transports: [
         new(winston.transports.Console)(),
@@ -38,7 +41,8 @@ var bot = new DiscordClient({
 bot.on('ready', function() {
     logger.info(bot.username + " - (" + bot.id + ")" + " Is now running");
 });
-/*/Global variable setting/*/
+
+/* Global variable setting */
 var cnaid = '171798432749584387'
 var dateFormat = 'MMMM Do YYYY, h:mm:ss a'
 var lastseen = null
@@ -307,6 +311,7 @@ function messageDelete(channelID, messageID) {
         messageID: messageID
     })
 }
+
 /* Bot on event functions */
 bot.on('debug', function(rawEvent) {
     try {
