@@ -325,7 +325,6 @@ function relxkcd(quer) {
     })
 }
 
-
 /* Bot on event functions */
 bot.on('debug', function(rawEvent) {
     try {
