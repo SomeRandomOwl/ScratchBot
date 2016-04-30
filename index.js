@@ -12,13 +12,14 @@ var youTube = new YouTube();
 var imgur = require('imgur-node-api');
 var moment = require('moment');
 var xkcd = require('xkcd-imgs');
+var chalk = require('chalk');
 
 /*/Loads Storage.json if it exists/*/
 if (fs.existsSync('storage.json')) {
     console.log('Found Storage.json');
     var storage = require('./storage.json')
 } else if (fs.existsSync('storage.json') === false) {
-    console.log('Didnt Find Storage.json, Please run generateStorageFile.js')
+    console.log(chalk.underline.blue('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
@@ -40,7 +41,7 @@ var bot = new DiscordClient({
 });
 /*/Start up console output/*/
 bot.on('ready', function() {
-    logger.info(bot.username + " - (" + bot.id + ")" + " Is now running");
+    logger.info(chalk.bold.italic.blue(bot.username + " - (" + bot.id + ")" + " Is now running"));
 });
 
 /* Global variable setting */
@@ -751,7 +752,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes" && ignore !== true) {
         if (ignore !== true) {
-            logger.info('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message);
+            logger.info(chalk.dim('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
         }
     }
 });
