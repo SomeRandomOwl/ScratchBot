@@ -11,6 +11,7 @@ var YouTube = require('youtube-node');
 var youTube = new YouTube();
 var imgur = require('imgur-node-api');
 var moment = require('moment');
+var xkcd = require('xkcd-imgs');
 
 /*/Loads Storage.json if it exists/*/
 if (fs.existsSync('storage.json')) {
@@ -314,6 +315,16 @@ function messageDelete(channelID, messageID) {
         channel: channelID,
         messageID: messageID
     })
+}
+
+function xkcdImg() {
+    xkcd.img(function(err, res) {
+        if (!err) {
+            return res
+        } else {
+            return err
+        }
+    });
 }
 
 /* Bot on event functions */
@@ -676,6 +687,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 channel: channelID,
                 messageID: messageID
             });
+        }
+        if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
+            var xkcdret = xkcdImg()
+            messageSend(channelID, xkcdret.title + "\n" + xkcdret.url)
         }
         if (message.toLowerCase().indexOf('skip') === 1 && ignore !== true) {
             bot.deleteMessage({
