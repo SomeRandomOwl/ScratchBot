@@ -61,7 +61,7 @@ var debug = false;
 var serverID = null;
 var clistl = clist.length
     //Writes JSON to a file
-
+var xkcdJson = null
 /* Start of function defining */
 
 /*/Function to write json to the storage file/*/
