@@ -764,4 +764,4 @@ var rl = readline.createInterface({
 });
 /*rl.on('line', function(line) {
     consoleparse(line);
-})
+})*/
