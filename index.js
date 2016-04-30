@@ -744,7 +744,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         } else {
             servern = bot.servers[serverID].name
             channeln = bot.servers[serverID].channels[channelID].name
-            console.log(chalk.italic(imed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message))
+            console.log(chalk.italic(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message))
             //fs.appendFile("logs/Main LOG.txt", '\n' + timed + user + ": " + message)
             fs.appendFile("logs/" + servern + '.' + channeln + '.txt', '\n' + timed + user + ": " + message)
         }
