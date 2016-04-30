@@ -248,8 +248,12 @@ function messageSend(channelID, msg) {
         message: msg,
         typing: false
     }, function(error, response) {
-        console.log('Last Message Sent ID: ' + response.id)
-        sentPrevId = response.id
+        try {
+            console.log('Last Message Sent ID: ' + response.id)
+            sentPrevId = response.id
+        } catch (e) {
+            return
+        }
     });
     return sentPrevId
 }
@@ -752,5 +756,4 @@ var rl = readline.createInterface({
     terminal: false
 });
 rl.on('line', function(line) {
-    consoleparse(line);
-})
+        consoleparse(line);
