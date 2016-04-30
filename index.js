@@ -718,11 +718,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
     if (channelID === '164845697508704257') {
-        console.log(chalk.white.italic(message)
+        console.log(chalk.white.italic(message))
         fs.appendFile("logs/space.txt", '\n\n' + message)
     }
     if (channelID === '167855344129802241') {
-        console.log(chalk.white.italic(message)
+        console.log(chalk.white.italic(message))
         fs.appendFile("logs/unknown.txt", '\n\n' + message)
     }
     //Special conditions to prevent the logging of bots and specially monitored chats
