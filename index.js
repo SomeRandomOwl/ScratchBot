@@ -690,6 +690,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
             var xkcdret = xkcdImg()
+            console.log(xkcd)
             messageSend(channelID, xkcdret.title + "\n" + xkcdret.url)
         }
         if (message.toLowerCase().indexOf('skip') === 1 && ignore !== true) {
