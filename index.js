@@ -689,7 +689,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('monitor') === 1 && userID.indexOf(ownerId) === 0) {
             var mtmsg = message
             var mtcall = mtmsg.replace('!ignore ', '')
-            if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
+            if (mtcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
                 monitor(channelID,'remove')
                 messageSend(channelID, 'Ok no longer monitoring this channel')
             } else {
