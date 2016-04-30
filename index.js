@@ -321,11 +321,13 @@ function messageDelete(channelID, messageID) {
 function relxkcd(quer) {
     request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log(body.indexOf('\n'))
-            console.log(body[1])
+            comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
             console.log(body)
-            bud = body.substring(0,body.indexOf('\n'))
-            console.log(bud)
+            request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var xkcdJson = JSON.parse(body)
+                }
+            })
         }
     })
 }
@@ -691,11 +693,18 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
-            xkcd.img(function(err, res) {
-                if (!err) {
-                    messageSend(channelID, res.title + "\n" + res.url)
-                }
-            });
+            if (message.indexOf(' ') === -1) {
+                xkcd.img(function(err, res) {
+                    if (!err) {
+                        messageSend(channelID, res.title + "\n" + res.url)
+                    }
+                });
+            } else {
+                var xkcdcmd = message
+                var xkcdcall = xkcdcmd.replace('!xkcd ', '')
+                relxkcd(xkcdcall)
+                messageSend(channelID,xkcdJson.title + '\n' + xkcdJson.alt + '\n' + xkcdJson.img)
+            }
         }
         if (message.toLowerCase().indexOf('skip') === 1 && ignore !== true) {
             bot.deleteMessage({
