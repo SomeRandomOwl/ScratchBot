@@ -190,6 +190,28 @@ function uningoreC(cID) {
         return false
     }
 }
+
+function monitor(channelID, fun) {
+    if (fun = 'add') {
+        try {
+            storage.settings.monitoredChan.push(channelID)
+            return true
+        } catch (e) {
+            return false
+        }
+    } else if (fun = 'remove') {
+        try {
+            array = storage.settings.monitoredChan
+            var index = array.indexOf(channelID)
+            if (index > -1) {
+                array.splice(index, 1);
+            }
+            return true
+        } catch (e) {
+            return false
+        }
+    }
+}
 /*/YouTube Search/*/
 function yt(ytcall, userID, channelID) {
     youTube.search(ytcall, 1, function(error, result) {
@@ -661,6 +683,18 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else {
                 ignoreC(channelID)
                 messageSend(channelID, 'Ok ignoring this channel')
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('monitor') === 1 && userID.indexOf(ownerId) === 0) {
+            var mtmsg = message
+            var mtcall = mtmsg.replace('!ignore ', '')
+            if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
+                monitor(channelID,'remove')
+                messageSend(channelID, 'Ok no longer monitoring this channel')
+            } else {
+                monitor(channelID,'add')
+                messageSend(channelID, 'Ok monitoring this channel to log into a special text file')
             }
             rconcmd = 'Yes'
         }
