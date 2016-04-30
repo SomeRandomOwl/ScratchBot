@@ -762,6 +762,6 @@ var rl = readline.createInterface({
     output: process.stdout,
     terminal: false
 });
-rl.on('line', function(line) {
+/*rl.on('line', function(line) {
     consoleparse(line);
 })
