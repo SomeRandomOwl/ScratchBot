@@ -13,7 +13,6 @@ var imgur = require('imgur-node-api');
 var moment = require('moment');
 var xkcd = require('xkcd-imgs');
 var chalk = require('chalk');
-var request = require('request');
 
 /*/Loads Storage.json if it exists/*/
 if (fs.existsSync('storage.json')) {
@@ -319,11 +318,29 @@ function messageDelete(channelID, messageID) {
 }
 
 function relxkcd(quer) {
-    request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log(body)
+    quer.http("https://relevantxkcd.appspot.com/process?action=xkcd&query=#phrase").get()(function(err, res, body) {
+        console.log('http')
+        var comicNumber
+        var percentageCertainty
+        var responseData
+        if (res.statusCode !== 200) {
+            console.log('error')
+        } else {
+            responseData = body.match(/(0.\d+) 0 (\d+) .*/i);
+            percentageCertainty = responseData[1];
+            comicNumber = "" + responseData[2];
+            return quer.http("http://xkcd.com/" + comicNumber + "/info.0.json").get()(function(err, res, body) {
+                var object;
+                if (res.statusCode === 404) {
+                    console.log('ok?')
+                } else {
+                    console.log('it wokred?')
+                    object = JSON.parse(body);
+                    return object
+                }
+            });
         }
-    })
+    });
 }
 
 /* Bot on event functions */
@@ -771,6 +788,6 @@ var rl = readline.createInterface({
     output: process.stdout,
     terminal: false
 });
-/*rl.on('line', function(line) {
+rl.on('line', function(line) {
     consoleparse(line);
-})*/
+})
