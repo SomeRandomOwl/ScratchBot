@@ -320,7 +320,7 @@ function messageDelete(channelID, messageID) {
 function xkcdImg() {
     xkcd.img(function(err, res) {
         if (!err) {
-            return res
+            var image = res
         } else {
             return err
         }
@@ -689,9 +689,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
-            var xkcdret = xkcdImg()
-            console.log(xkcdret)
-            messageSend(channelID, xkcdret.title + "\n" + xkcdret.url)
+            xkcdImg()
+            console.log(image)
+            messageSend(channelID, image.title + "\n" + image.url)
         }
         if (message.toLowerCase().indexOf('skip') === 1 && ignore !== true) {
             bot.deleteMessage({
