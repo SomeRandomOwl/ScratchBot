@@ -13,6 +13,7 @@ var imgur = require('imgur-node-api');
 var moment = require('moment');
 var xkcd = require('xkcd-imgs');
 var chalk = require('chalk');
+var request = require('request');
 
 /*/Loads Storage.json if it exists/*/
 if (fs.existsSync('storage.json')) {
