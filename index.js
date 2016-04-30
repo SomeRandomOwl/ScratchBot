@@ -326,7 +326,7 @@ function relxkcd(quer, channelID) {
             request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     xkcdJson = JSON.parse(body)
-                    messageSend(channelID, '\n' + xkcdJson.title + '\n ____________________________ \n' + xkcdJson.alt + '\n ____________________________ \n' + xkcdJson.img)
+                    messageSend(channelID, '\n' + xkcdJson.title + '\n\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
                 }
             })
         }
