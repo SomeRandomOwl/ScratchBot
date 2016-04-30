@@ -690,11 +690,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var mtmsg = message
             var mtcall = mtmsg.replace('!ignore ', '')
             if (mtcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
-                monitor(channelID,'remove')
-                messageSend(channelID, 'Ok no longer monitoring this channel')
+                mon = monitor(channelID,'remove')
+                messageSend(channelID, 'Ok no longer monitoring this channel status: ' + mon)
             } else {
-                monitor(channelID,'add')
-                messageSend(channelID, 'Ok monitoring this channel to log into a special text file')
+                mon = monitor(channelID,'add')
+                messageSend(channelID, 'Ok monitoring this channel to log into a special text file status: ' + mon)
             }
             rconcmd = 'Yes'
         }
