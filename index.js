@@ -176,6 +176,8 @@ function ignoreC(cID) {
         if (index === -1) {
             storage.settings.ignoredChannels.push(cID)
             return true
+        } else {
+            return false
         }
     } catch (e) {
         return false
@@ -196,12 +198,14 @@ function uningoreC(cID) {
 }
 
 function monitora(channelID) {
-    array = storage.settings.monitoredChan
-    var index = array.indexOf(channelID)
-    if (index === -1) {
-        try {
+    try {
+        array = storage.settings.monitoredChan
+        var index = array.indexOf(channelID)
+        if (index === -1) {
             storage.settings.monitoredChan.push(channelID)
             return true
+        } else {
+            return false
         }
     } catch (e) {
         return false
