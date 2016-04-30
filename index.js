@@ -171,14 +171,8 @@ function isInArray(value, array) {
 /*/Used to Ignore Channels/*/
 function ignoreC(cID) {
     try {
-        array = storage.settings.monitoredChan
-        var index = array.indexOf(cID)
-        if (index === -1) {
-            storage.settings.ignoredChannels.push(cID)
-            return true
-        } else {
-            return false
-        }
+        storage.settings.ignoredChannels.push(cID)
+        return true
     } catch (e) {
         return false
     }
@@ -188,34 +182,6 @@ function uningoreC(cID) {
     try {
         array = storage.settings.ignoredChannels
         var index = array.indexOf(cID)
-        if (index > -1) {
-            array.splice(index, 1);
-        }
-        return true
-    } catch (e) {
-        return false
-    }
-}
-
-function monitora(channelID) {
-    try {
-        array = storage.settings.monitoredChan
-        var index = array.indexOf(channelID)
-        if (index === -1) {
-            storage.settings.monitoredChan.push(channelID)
-            return true
-        } else {
-            return false
-        }
-    } catch (e) {
-        return false
-    }
-}
-
-function monitorr(channelID) {
-    try {
-        array = storage.settings.monitoredChan
-        var index = array.indexOf(channelID)
         if (index > -1) {
             array.splice(index, 1);
         }
@@ -282,12 +248,8 @@ function messageSend(channelID, msg) {
         message: msg,
         typing: false
     }, function(error, response) {
-        try {
-            console.log('Last Message Sent ID: ' + response.id)
-            sentPrevId = response.id
-        } catch (e) {
-            return
-        }
+        console.log('Last Message Sent ID: ' + response.id)
+        sentPrevId = response.id
     });
     return sentPrevId
 }
@@ -699,18 +661,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else {
                 ignoreC(channelID)
                 messageSend(channelID, 'Ok ignoring this channel')
-            }
-            rconcmd = 'Yes'
-        }
-        if (message.toLowerCase().indexOf('monitor') === 1 && userID.indexOf(ownerId) === 0) {
-            var mtmsg = message
-            var mtcall = mtmsg.replace('!ignore ', '')
-            if (mtcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
-                mon = monitorr(channelID)
-                messageSend(channelID, 'Ok no longer monitoring this channel status: ' + mon)
-            } else {
-                mon = monitora(channelID)
-                messageSend(channelID, 'Ok monitoring this channel to log into a special text file status: ' + mon)
             }
             rconcmd = 'Yes'
         }
