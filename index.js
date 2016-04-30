@@ -317,6 +317,30 @@ function messageDelete(channelID, messageID) {
     })
 }
 
+function relxkcd(quer) {
+    quer.http("https://relevantxkcd.appspot.com/process?action=xkcd&query=#phrase").get()(function(err, res, body) {
+        var comicNumber
+        var percentageCertainty
+        var responseData
+        if (res.statusCode !== 200) {
+            return
+        } else {
+            responseData = body.match(/(0.\d+) 0 (\d+) .*/i);
+            percentageCertainty = responseData[1];
+            comicNumber = "" + responseData[2];
+            return quer.http("http://xkcd.com/" + comicNumber + "/info.0.json").get()(function(err, res, body) {
+                var object;
+                if (res.statusCode === 404) {
+                    return msg.send('Comic #{num} not found.');
+                } else {
+                    object = JSON.parse(body);
+                    return object
+                }
+            });
+        }
+    });
+}
+
 /* Bot on event functions */
 bot.on('debug', function(rawEvent) {
     try {
@@ -680,7 +704,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
             xkcd.img(function(err, res) {
                 if (!err) {
-                     messageSend(channelID, res.title + "\n" + res.url)
+                    messageSend(channelID, res.title + "\n" + res.url)
                 }
             });
         }
