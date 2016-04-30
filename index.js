@@ -323,6 +323,9 @@ function relxkcd(quer) {
         if (!error && response.statusCode == 200) {
             console.log(body.indexOf('\n'))
             console.log(body[1])
+            console.log(body)
+            bud = body.substring(0,body.indexOf('\n'))
+            console.log(bud)
         }
     })
 }
