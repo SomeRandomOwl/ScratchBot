@@ -325,7 +325,8 @@ function relxkcd(quer) {
             console.log(body)
             request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    var xkcdJson = JSON.parse(body)
+                    xkcdJson = JSON.parse(body)
+                    console.log(xkcdJson)
                 }
             })
         }
