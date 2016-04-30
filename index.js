@@ -318,13 +318,15 @@ function messageDelete(channelID, messageID) {
 }
 
 function xkcdImg() {
+    var xkcdimage = null
     xkcd.img(function(err, res) {
         if (!err) {
-            return res
+            xkcdimage = res
         } else {
             return err
         }
     });
+    return xkcdimage
 }
 
 /* Bot on event functions */
