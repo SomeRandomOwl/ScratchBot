@@ -19,7 +19,7 @@ if (fs.existsSync('storage.json')) {
     console.log('Found Storage.json');
     var storage = require('./storage.json')
 } else if (fs.existsSync('storage.json') === false) {
-    console.log(chalk.underline.blue('Didnt Find Storage.json, Please run generateStorageFile.js'))
+    logger.info(chalk.underline.blue('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
@@ -41,7 +41,7 @@ var bot = new DiscordClient({
 });
 /*/Start up console output/*/
 bot.on('ready', function() {
-    logger.info(chalk.bold.italic.blue(bot.username + " - (" + bot.id + ")" + " Is now running"));
+    logger.info(chalk.bold.italic.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"));
 });
 
 /* Global variable setting */
@@ -79,7 +79,7 @@ function writeJSON(path, data, callback) {
 /*/Lists currently connected severs and writes them to json/*/
 function serverlist(verb) {
     if (verb) {
-        console.log("Currently connected to these servers: ")
+        logger.info(chalk.bold.italic.underline("Currently connected to these servers: "))
     }
     for (var serverID in bot.servers) {
         if (verb) {
@@ -104,7 +104,7 @@ function serverlist(verb) {
 /*/Lists currencly seen channels/*/
 function channellist(verb) {
     if (verb) {
-        console.log("Currently connected to these channels: ")
+        logger.info(chalk.bold.italic.underline("Currently connected to these channels: "))
     }
     for (var serverID in bot.servers) {
         for (var channelID in bot.servers[serverID].channels) {
@@ -132,7 +132,7 @@ function channellist(verb) {
 /*/List currently/*/
 function userlist(verb) {
     if (verb) {
-        console.log("Currently seeing these users: ")
+        logger.info(chalk.bold.italic.underline("Currently seeing these users: "))
     }
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
@@ -196,7 +196,7 @@ function uningoreC(cID) {
 function yt(ytcall, userID, channelID) {
     youTube.search(ytcall, 1, function(error, result) {
         if (error) {
-            console.log(error);
+            logger.error(chalk.red(error));
         } else {
             try {
                 if (result.items[0].id.kind === 'youtube#video') {
@@ -231,7 +231,7 @@ function yt(ytcall, userID, channelID) {
             } catch (e) {
                 logger.error("Youtube Fetch Failed " + e + " | " + ytcall)
                 messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
-                console.log(e)
+                logger.error(chalk.red(e))
             }
         }
     });
@@ -251,7 +251,7 @@ function messageSend(channelID, msg) {
         typing: false
     }, function(error, response) {
         try {
-            console.log('Last Message Sent ID: ' + response.id)
+            logger.info(chalk.dim('Last Message Sent ID: ' + response.id))
             sentPrevId = response.id
         } catch (e) {
             return
@@ -264,12 +264,13 @@ function consoleparse(line) {
     if (line.toLowerCase().indexOf('~') === 0) {
         if (line.toLowerCase().indexOf('cnaid') === 1) {
             cnaid = line.replace('~cnaid ', '')
-            console.log("Now talking in channel: " + cnaid)
+            logger.info(chalk.dim("Now talking in channel: " + cnaid))
         } else if (line.toLowerCase().indexOf('cnch') === 1) {
             var cnch = line.substring(line.indexOf(' ') + 1)
             for (var channel in storage.d.Channels) {
                 if (cnch === channel) {
                     cnaid = storage.d.Channels[channel].id
+                    logger.info(chalk.dim("Now talking in channel: " + cnaid))
                     continue
                 } else {
                     continue
@@ -290,7 +291,6 @@ function consoleparse(line) {
 function diceroll(dice, userID, channelID) {
     if (dice.indexOf('d') === 0) {
         var dienum = roll.roll(dice);
-        console.log(dienum);
         messageSend(channelID, '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString())
     }
     //This is if theres more than one die thrown
@@ -299,7 +299,6 @@ function diceroll(dice, userID, channelID) {
             //This is to limit the number of die thrown
         if (numdie < 21) {
             var dienum = roll.roll(dice);
-            console.log(dienum);
             messageSend(channelID, '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString() + ' For a total of: ' + dienum.result)
         } else if (numdie > 21) {
             messageSend(channelID, '<@' + userID + '>' + ' Please roll no more than 20 dice')
@@ -425,7 +424,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
     } catch (e) {
-        console.log(e)
+        logger.error(chalk.red(e))
     }
     //Logging Related
     if (storage.d.Users[user] !== undefined) {
@@ -439,7 +438,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         writeJSON('./storage', storage)
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
-        console.log("Link Posted, logging to file")
+        logger.info(chalk.dim("Link Posted, logging to file"))
         if (message.indexOf(' ', message.indexOf('http')) === -1) {
             var link = message.substring(message.indexOf('http'))
         } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
@@ -573,7 +572,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('status') === 1 && ignore !== true) {
             var statuscmd = message
             var statuscall = statuscmd.replace('!status ', '')
-            console.log(statuscall)
             try {
                 if (statuscall.toLowerCase().indexOf('<@') === -1) {
                     var status = storage.d.Users[statuscall].status
@@ -697,7 +695,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 storage.d.Servers[sname].announceChan = channelID
                 messageSend(channelID, "Ok now announcing user changes on this channel")
             } catch (e) {
-                console.log(e)
+                logger.error(chalk.red(e))
             }
             rconcmd = "Yes"
         }
@@ -720,11 +718,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
     if (channelID === '164845697508704257') {
-        console.log(message)
+        console.log(chalk.white.italic(message)
         fs.appendFile("logs/space.txt", '\n\n' + message)
     }
     if (channelID === '167855344129802241') {
-        console.log(message)
+        console.log(chalk.white.italic(message)
         fs.appendFile("logs/unknown.txt", '\n\n' + message)
     }
     //Special conditions to prevent the logging of bots and specially monitored chats
@@ -741,12 +739,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
         timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
         if (channelID in bot.directMessages) {
-            console.log(timed + 'Channel: ' + 'PM | ' + user + ': ' + message)
+            console.log(chalk.italic(timed + 'Channel: ' + 'PM | ' + user + ': ' + message))
             fs.appendFile("logs/" + user + ".txt", '\n' + timed + user + ": " + message)
         } else {
             servern = bot.servers[serverID].name
             channeln = bot.servers[serverID].channels[channelID].name
-            console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
+            console.log(chalk.italic(imed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message))
             //fs.appendFile("logs/Main LOG.txt", '\n' + timed + user + ": " + message)
             fs.appendFile("logs/" + servern + '.' + channeln + '.txt', '\n' + timed + user + ": " + message)
         }
