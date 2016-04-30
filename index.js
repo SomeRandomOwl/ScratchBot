@@ -321,12 +321,13 @@ function xkcdImg() {
     var xkcdimage = null
     xkcd.img(function(err, res) {
         if (!err) {
+            console.log(res)
             xkcdimage = res
         } else {
             return err
         }
     });
-    return xkcdimage
+
 }
 
 /* Bot on event functions */
