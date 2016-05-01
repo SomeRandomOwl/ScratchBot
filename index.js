@@ -328,7 +328,7 @@ function relxkcd(quer, channelID, name) {
         storage.d.Channels[name].lastComicActt = null
     }
     if (comictime !== lastcomictime) {
-        var comicacttime = moment().format('h:mm')
+        var comicacttime = moment().format('h:mm a')
         storage.d.Channels[name].lastComicActt = comicacttime
         request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
             if (!error && response.statusCode == 200) {
