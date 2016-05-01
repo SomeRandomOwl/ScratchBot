@@ -349,7 +349,7 @@ function relxkcd(quer, channelID, name) {
     }
 }
 
-function status(statuscall, channelID) {
+function status(statuscall, channelID, rawEvent) {
     try {
         if (statuscall.toLowerCase().indexOf('<@') === -1) {
             var status = storage.d.Users[statuscall].status
@@ -649,7 +649,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('status') === 1 && ignore !== true) {
             var statuscmd = message
             var statuscall = statuscmd.replace('!status ', '')
-            status(statuscall, channelID)
+            status(statuscall, channelID, rawEvent)
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('supportedmath') === 1 && ignore !== true) {
