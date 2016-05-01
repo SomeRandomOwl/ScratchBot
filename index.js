@@ -80,7 +80,7 @@ function writeJSON(path, data, callback) {
 /*/Lists currently connected severs and writes them to json/*/
 function serverlist(verb) {
     if (verb) {
-        logger.info(chalk.underline("Currently connected to these servers: "))
+        logger.info(chalk.underline("Currently connected to these servers: \n"))
     }
     for (var serverID in bot.servers) {
         if (verb) {
@@ -105,7 +105,7 @@ function serverlist(verb) {
 /*/Lists currencly seen channels/*/
 function channellist(verb) {
     if (verb) {
-        logger.info(chalk.underline("Currently connected to these channels: "))
+        logger.info(chalk.underline("Currently connected to these channels: \n"))
     }
     for (var serverID in bot.servers) {
         for (var channelID in bot.servers[serverID].channels) {
@@ -133,7 +133,7 @@ function channellist(verb) {
 /*/List currently/*/
 function userlist(verb) {
     if (verb) {
-        logger.info(chalk.underline("Currently seeing these users: "))
+        logger.info(chalk.underline("Currently seeing these users: \n"))
     }
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
@@ -398,7 +398,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
                 storage.d.Users[user].lastseen = lastseen
                 if (storage.d.Users[user].status !== 'offline') {
-                    logger.info(lastseen + ' : ' + user + " is now: " + status);
+                    logger.info(lastseen + ' : ' + user + " is now: " + chalk.underline(status));
                 }
                 storage.d.Users[user].status = status
             } else if (user === undefined) {
@@ -407,7 +407,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     if (userID === storage.d.Users[user].id) {
                         storage.d.Users[user].lastseen = lastseen
                         if (storage.d.Users[user].status !== 'offline') {
-                            logger.info(lastseen + ' : ' + user + " is now: " + status);
+                            logger.info(lastseen + ' : ' + user + " is now: " + chalk.underline(status));
                         }
                         storage.d.Users[user].status = status
                     } else {
