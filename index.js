@@ -711,11 +711,28 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
             if (message.indexOf(' ') === -1) {
-                xkcd.img(function(err, res) {
-                    if (!err) {
-                        messageSend(channelID, res.title + "\n" + res.url)
-                    }
-                });
+                var comictime = moment().format('HH')
+                try {
+                    lastcomictime = storage.d.Channels[name].lastComic
+                    comicacttime = storage.d.Channels[name].lastComicActt
+                } catch (e) {
+                    storage.d.Channels[name].lastComic = null
+                    storage.d.Channels[name].lastComicActt = null
+                }
+                if (lastcomictime !== comictime) {
+                    var comicacttime = moment().format('h:mm a')
+                    storage.d.Channels[name].lastComicActt = comicacttime
+                    xkcd.img(function(err, res) {
+                        if (!err) {
+                            messageSend(channelID, res.title + "\n" + res.url)
+                        }
+                    });
+                    var lastcomictime = moment().format('HH')
+                    storage.d.Channels[name].lastComic = lastcomictime
+                } else {
+                    messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
+
+                }
             } else {
                 var xkcdcmd = message
                 var xkcdcall = xkcdcmd.replace('!xkcd ', '')
