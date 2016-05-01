@@ -349,6 +349,51 @@ function relxkcd(quer, channelID, name) {
     }
 }
 
+function status(statuscall, channelID) {
+    try {
+        if (statuscall.toLowerCase().indexOf('<@') === -1) {
+            var status = storage.d.Users[statuscall].status
+            if (status === 'idle') {
+                var ltsmsg = storage.d.Users[statuscall].lastseen
+                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
+            } else if (status === 'offline') {
+                var ltsmsg = storage.d.Users[statuscall].lastseen
+                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
+            } else if (status === 'online') {
+                messageSend(channelID, statuscall + " Is currently online")
+            } else if (status === 'Unknown') {
+                messageSend(channelID, "Oh...um, i dont know the last time " + statuscall + " was online...sorry :confounded:")
+            }
+        } else {
+            var mentId = rawEvent.d.mentions[0].id
+            for (var usern in storage.d.Users) {
+                if (mentId === storage.d.Users[usern].id) {
+                    var status = storage.d.Users[usern].status
+                    if (status === 'idle') {
+                        var ltsmsg = storage.d.Users[usern].lastseen
+                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
+                    } else if (status === 'offline') {
+                        var ltsmsg = storage.d.Users[usern].lastseen
+                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
+                    } else if (status === 'online') {
+                        messageSend(channelID, statuscall + " Is currently online")
+                    } else if (status === 'Unknown') {
+                        messageSend(channelID, "Oh...um, i dont know the last time " + statuscall + " was online...sorry :confounded:")
+                    }
+                } else {
+                    continue
+                }
+            }
+        }
+    } catch (e) {
+        messageSend(channelID, "Error; No User specified, or invalid user")
+    }
+}
+
 /* Bot on event functions */
 bot.on('debug', function(rawEvent) {
     try {
@@ -604,48 +649,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('status') === 1 && ignore !== true) {
             var statuscmd = message
             var statuscall = statuscmd.replace('!status ', '')
-            try {
-                if (statuscall.toLowerCase().indexOf('<@') === -1) {
-                    var status = storage.d.Users[statuscall].status
-                    if (status === 'idle') {
-                        var ltsmsg = storage.d.Users[statuscall].lastseen
-                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
-                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
-                    } else if (status === 'offline') {
-                        var ltsmsg = storage.d.Users[statuscall].lastseen
-                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
-                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
-                    } else if (status === 'online') {
-                        messageSend(channelID, statuscall + " Is currently online")
-                    } else if (status === 'Unknown') {
-                        messageSend(channelID, "Oh...um, i dont know the last time " + statuscall + " was online...sorry :confounded:")
-                    }
-                } else {
-                    var mentId = rawEvent.d.mentions[0].id
-                    for (var usern in storage.d.Users) {
-                        if (mentId === storage.d.Users[usern].id) {
-                            var status = storage.d.Users[usern].status
-                            if (status === 'idle') {
-                                var ltsmsg = storage.d.Users[usern].lastseen
-                                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
-                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
-                            } else if (status === 'offline') {
-                                var ltsmsg = storage.d.Users[usern].lastseen
-                                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
-                                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
-                            } else if (status === 'online') {
-                                messageSend(channelID, statuscall + " Is currently online")
-                            } else if (status === 'Unknown') {
-                                messageSend(channelID, "Oh...um, i dont know the last time " + statuscall + " was online...sorry :confounded:")
-                            }
-                        } else {
-                            continue
-                        }
-                    }
-                }
-            } catch (e) {
-                messageSend(channelID, "Error; No User specified, or invalid user")
-            }
+            status(statuscall, channelID)
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('supportedmath') === 1 && ignore !== true) {
@@ -708,6 +712,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 channel: channelID,
                 messageID: messageID
             });
+            rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
             if (message.indexOf(' ') === -1) {
@@ -810,7 +815,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
 });
-
 
 /* Start of console input */
 var rl = readline.createInterface({
