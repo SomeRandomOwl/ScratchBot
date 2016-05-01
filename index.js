@@ -333,11 +333,11 @@ function relxkcd(quer, channelID, name) {
         request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
-                console.log(body)
+                precent = body.substring(body.indexOf('\n'))
                 request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
                     if (!error && response.statusCode == 200) {
                         xkcdJson = JSON.parse(body)
-                        messageSend(channelID, xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
+                        messageSend(channelID, 'Similarity %:' + precent + '\n' + xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
                     }
                 })
             }
