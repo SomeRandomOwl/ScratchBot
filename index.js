@@ -320,8 +320,13 @@ function messageDelete(channelID, messageID) {
 
 function relxkcd(quer, channelID) {
     var comictime = moment().format('HH')
-    lastcomictime = storage.d.Channels[channelID].lastComic
-    comicacttime = storage.d.Channels[channelID].lastComicActt
+    try {
+        lastcomictime = storage.d.Channels[channelID].lastComic
+        comicacttime = storage.d.Channels[channelID].lastComicActt
+    } catch (e) {
+        storage.d.Channels[channelID].lastComic = null
+        storage.d.Channels[channelID].lastComicActt = null
+    }
     if (comictime !== lastcomictime) {
         var comicacttime = moment().format('h:mm')
         storage.d.Channels[channelID].lastComicActt = comicacttime
