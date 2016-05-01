@@ -320,7 +320,7 @@ function messageDelete(channelID, messageID) {
 
 function relxkcd(quer, channelID) {
     var comictime = moment().format('HH')
-
+    lastcomictime = storage.settings.lastComic
     if (comictime !== lastcomictime) {
         var comicacttime = moment().format('h:mm')
         request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
@@ -336,6 +336,7 @@ function relxkcd(quer, channelID) {
             }
         })
         var lastcomictime = moment().format('HH')
+        storage.settings.lastComic = lastcomictime
     } else {
         messageSend(channelID, ":rage: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
     }
