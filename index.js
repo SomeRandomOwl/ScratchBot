@@ -319,18 +319,26 @@ function messageDelete(channelID, messageID) {
 }
 
 function relxkcd(quer, channelID) {
-    request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
-            console.log(body)
-            request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    xkcdJson = JSON.parse(body)
-                    messageSend(channelID, '\n' + xkcdJson.title + '\n ```' + xkcdJson.alt + '```' + xkcdJson.img)
-                }
-            })
-        }
-    })
+    var comictime = moment().format('HH')
+
+    if (comictime !== lastcomictime) {
+        var comicacttime = moment().format('h:mm')
+        request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
+                console.log(body)
+                request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
+                    if (!error && response.statusCode == 200) {
+                        xkcdJson = JSON.parse(body)
+                        messageSend(channelID, '\n' + xkcdJson.title + '\n ```' + xkcdJson.alt + '```' + xkcdJson.img)
+                    }
+                })
+            }
+        })
+        var lastcomictime = moment().format('HH')
+    } else {
+        messageSend(channelID, ":rage: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
+    }
 }
 
 /* Bot on event functions */
