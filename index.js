@@ -398,7 +398,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
                 storage.d.Users[user].lastseen = lastseen
                 if (storage.d.Users[user].status !== 'offline') {
-                    logger.info(lastseen + ' : ' + user + " is now: " + chalk.underline(status));
+                    logger.info(chalk.dim(lastseen + ' : ' + user + " is now: " + chalk.underline(status)));
                 }
                 storage.d.Users[user].status = status
             } else if (user === undefined) {
@@ -407,7 +407,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     if (userID === storage.d.Users[user].id) {
                         storage.d.Users[user].lastseen = lastseen
                         if (storage.d.Users[user].status !== 'offline') {
-                            logger.info(lastseen + ' : ' + user + " is now: " + chalk.underline(status));
+                            logger.info(chalk.dim(lastseen + ' : ' + user + " is now: " + chalk.underline(status)));
                         }
                         storage.d.Users[user].status = status
                     } else {
@@ -420,14 +420,14 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
             storage.d.Users[user].lastseen = lastseen
             if (storage.d.Users[user].status !== 'idle') {
-                logger.info(lastseen + ' : ' + user + " is now: " + status);
+                logger.info(chalk.dim(lastseen + ' : ' + user + " is now: " + chalk.underline(status)));
             }
             storage.d.Users[user].status = status
         }
         if (status === 'online') {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
             if (storage.d.Users[user].status !== 'online') {
-                logger.info(lastseen + ' : ' + user + " is now: " + status);
+                logger.info(chalk.dim(lastseen + ' : ' + user + " is now: " + chalk.underline(status)));
             }
             storage.d.Users[user].status = status
         }
