@@ -713,22 +713,22 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (message.indexOf(' ') === -1) {
                 var comictime = moment().format('HH')
                 try {
-                    lastcomictime = storage.d.Channels[name].lastComic
-                    comicacttime = storage.d.Channels[name].lastComicActt
+                    lastcomictime = storage.d.Channels[cname].lastComic
+                    comicacttime = storage.d.Channels[cname].lastComicActt
                 } catch (e) {
-                    storage.d.Channels[name].lastComic = null
-                    storage.d.Channels[name].lastComicActt = null
+                    storage.d.Channels[cname].lastComic = null
+                    storage.d.Channels[cname].lastComicActt = null
                 }
                 if (lastcomictime !== comictime) {
                     var comicacttime = moment().format('h:mm a')
-                    storage.d.Channels[name].lastComicActt = comicacttime
+                    storage.d.Channels[cname].lastComicActt = comicacttime
                     xkcd.img(function(err, res) {
                         if (!err) {
                             messageSend(channelID, res.title + "\n" + res.url)
                         }
                     });
                     var lastcomictime = moment().format('HH')
-                    storage.d.Channels[name].lastComic = lastcomictime
+                    storage.d.Channels[cname].lastComic = lastcomictime
                 } else {
                     messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
 
