@@ -42,7 +42,7 @@ var bot = new DiscordClient({
 });
 /*/Start up console output/*/
 bot.on('ready', function() {
-    console.log(chalk.bold.italic.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"));
+    console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"));
 });
 
 /* Global variable setting */
