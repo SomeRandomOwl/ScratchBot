@@ -321,8 +321,10 @@ function messageDelete(channelID, messageID) {
 function relxkcd(quer, channelID) {
     var comictime = moment().format('HH')
     lastcomictime = storage.settings.lastComic
+    comicacttime = storage.settings.lastComicActt
     if (comictime !== lastcomictime) {
         var comicacttime = moment().format('h:mm')
+        storage.settings.lastComicActt = comicacttime
         request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
