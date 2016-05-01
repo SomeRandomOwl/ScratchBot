@@ -80,7 +80,7 @@ function writeJSON(path, data, callback) {
 /*/Lists currently connected severs and writes them to json/*/
 function serverlist(verb) {
     if (verb) {
-        logger.info(chalk.bold.italic.underline("Currently connected to these servers: "))
+        logger.info(chalk.underline("Currently connected to these servers: "))
     }
     for (var serverID in bot.servers) {
         if (verb) {
@@ -105,7 +105,7 @@ function serverlist(verb) {
 /*/Lists currencly seen channels/*/
 function channellist(verb) {
     if (verb) {
-        logger.info(chalk.bold.italic.underline("Currently connected to these channels: "))
+        logger.info(chalk.underline("Currently connected to these channels: "))
     }
     for (var serverID in bot.servers) {
         for (var channelID in bot.servers[serverID].channels) {
@@ -133,7 +133,7 @@ function channellist(verb) {
 /*/List currently/*/
 function userlist(verb) {
     if (verb) {
-        logger.info(chalk.bold.italic.underline("Currently seeing these users: "))
+        logger.info(chalk.underline("Currently seeing these users: "))
     }
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
@@ -774,11 +774,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
     if (channelID === '164845697508704257') {
-        console.log(chalk.white.italic(message))
+        console.log(chalk.white.message))
         fs.appendFile("logs/space.txt", '\n\n' + message)
     }
     if (channelID === '167855344129802241') {
-        console.log(chalk.white.italic(message))
+        console.log(chalk.white.message))
         fs.appendFile("logs/unknown.txt", '\n\n' + message)
     }
     //Special conditions to prevent the logging of bots and specially monitored chats
