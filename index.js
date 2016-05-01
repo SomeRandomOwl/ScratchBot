@@ -318,18 +318,18 @@ function messageDelete(channelID, messageID) {
     })
 }
 
-function relxkcd(quer, channelID) {
+function relxkcd(quer, channelID, name) {
     var comictime = moment().format('HH')
     try {
-        lastcomictime = storage.d.Channels[channelID].lastComic
-        comicacttime = storage.d.Channels[channelID].lastComicActt
+        lastcomictime = storage.d.Channels[name].lastComic
+        comicacttime = storage.d.Channels[name].lastComicActt
     } catch (e) {
-        storage.d.Channels[channelID].lastComic = null
-        storage.d.Channels[channelID].lastComicActt = null
+        storage.d.Channels[name].lastComic = null
+        storage.d.Channels[name].lastComicActt = null
     }
     if (comictime !== lastcomictime) {
         var comicacttime = moment().format('h:mm')
-        storage.d.Channels[channelID].lastComicActt = comicacttime
+        storage.d.Channels[name].lastComicActt = comicacttime
         request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
@@ -343,7 +343,7 @@ function relxkcd(quer, channelID) {
             }
         })
         var lastcomictime = moment().format('HH')
-        storage.d.Channels[channelID].lastComic = lastcomictime
+        storage.d.Channels[name].lastComic = lastcomictime
     } else {
         messageSend(channelID, ":rage: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
     }
@@ -719,7 +719,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else {
                 var xkcdcmd = message
                 var xkcdcall = xkcdcmd.replace('!xkcd ', '')
-                relxkcd(xkcdcall, channelID)
+                relxkcd(xkcdcall, channelID, cname)
             }
             rconcmd = 'Yes'
         }
