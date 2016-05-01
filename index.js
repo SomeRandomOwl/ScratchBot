@@ -345,7 +345,7 @@ function relxkcd(quer, channelID, name) {
         var lastcomictime = moment().format('HH')
         storage.d.Channels[name].lastComic = lastcomictime
     } else {
-        messageSend(channelID, ":rage: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
+        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
     }
 }
 
