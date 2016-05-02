@@ -77,6 +77,27 @@ function writeJSON(path, data, callback) {
         });
     });
 }
+
+function secondsToTime(secs) {
+    var hours = Math.floor(secs / (60 * 60));
+
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+
+    var obj = {
+        "h": hours,
+        "m": minutes,
+        "s": seconds
+    };
+    return obj;
+}
+function gettime() {
+    var timenow = Math.floor(Date.now()/1000)
+    return timenow
+}
 /*/Lists currently connected severs and writes them to json/*/
 function serverlist(verb) {
     if (verb) {
@@ -820,7 +841,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
 var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-    terminal: false
+    terminal: true
 });
 rl.on('line', function(line) {
     consoleparse(line);
