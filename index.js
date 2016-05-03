@@ -346,6 +346,7 @@ function relxkcd(quer, channelID, name) {
         elapsed = comictime - comictime
         elapsed = secondsToTime(elapsed)
         comicacttime = storage.d.Channels[name].lastComicActt
+        console.log("Comic elapsed: " + elapsed)
     } catch (e) {
         storage.d.Channels[name].lastComic = null
         storage.d.Channels[name].lastComicActt = null
@@ -746,6 +747,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     elapsed = comictime - comictime
                     elapsed = secondsToTime(elapsed)
                     comicacttime = storage.d.Channels[name].lastComicActt
+                    console.log("Comic elapsed: " + elapsed)
                 } catch (e) {
                     storage.d.Channels[name].lastComic = null
                     storage.d.Channels[name].lastComicActt = null
@@ -758,7 +760,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             messageSend(channelID, res.title + "\n" + res.url)
                         }
                     });
-                    var lastcomictime = moment().format('HH')
+                    var lastcomictime = gettime()
                     storage.d.Channels[cname].lastComic = lastcomictime
                 } else {
                     messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
