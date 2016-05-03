@@ -343,7 +343,7 @@ function relxkcd(quer, channelID, name) {
     var comictime = gettime()
     try {
         lastcomictime = storage.d.Channels[name].lastComic
-        elapsed = comictime - comictime
+        elapsed = comictime - lastcomictime
         elapsed = secondsToTime(elapsed)
         comicacttime = storage.d.Channels[name].lastComicActt
         console.log("Comic elapsed: " + elapsed)
@@ -744,7 +744,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 var comictime = gettime()
                 try {
                     lastcomictime = storage.d.Channels[cname].lastComic
-                    elapsed = comictime - comictime
+                    elapsed = comictime - lastcomictime
                     elapsed = secondsToTime(elapsed)
                     comicacttime = storage.d.Channels[cname].lastComicActt
                     console.log("Comic elapsed: " + elapsed)
