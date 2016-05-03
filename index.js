@@ -341,7 +341,6 @@ function messageDelete(channelID, messageID) {
 /*/Retrieves a relavant xkcd comic from a query/*/
 function relxkcd(quer, channelID, name) {
     var comictime = gettime()
-
     try {
         lastcomictime = storage.d.Channels[name].lastComic
         elapsed = comictime - comictime
@@ -351,7 +350,7 @@ function relxkcd(quer, channelID, name) {
         storage.d.Channels[name].lastComic = null
         storage.d.Channels[name].lastComicActt = null
     }
-    if (elapsed > 0) {
+    if (elapsed.h > 0) {
         var comicacttime = moment().format('h:mm a')
         storage.d.Channels[name].lastComicActt = comicacttime
         request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
@@ -741,15 +740,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
             if (message.indexOf(' ') === -1) {
-                var comictime = moment().format('HH')
+                var comictime = gettime()
                 try {
-                    lastcomictime = storage.d.Channels[cname].lastComic
-                    comicacttime = storage.d.Channels[cname].lastComicActt
+                    lastcomictime = storage.d.Channels[name].lastComic
+                    elapsed = comictime - comictime
+                    elapsed = secondsToTime(elapsed)
+                    comicacttime = storage.d.Channels[name].lastComicActt
                 } catch (e) {
-                    storage.d.Channels[cname].lastComic = null
-                    storage.d.Channels[cname].lastComicActt = null
+                    storage.d.Channels[name].lastComic = null
+                    storage.d.Channels[name].lastComicActt = null
                 }
-                if (lastcomictime !== comictime) {
+                if (elapsed.h > 0) {
                     var comicacttime = moment().format('h:mm a')
                     storage.d.Channels[cname].lastComicActt = comicacttime
                     xkcd.img(function(err, res) {
