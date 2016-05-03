@@ -346,32 +346,32 @@ function relxkcd(quer, channelID, name) {
         elapsed = comictime - lastcomictime
         elapsed = secondsToTime(elapsed)
         comicacttime = storage.d.Channels[name].lastComicActt
-        console.log("Comic elapsed: " + elapsed)
-    } catch (e) {
-        storage.d.Channels[name].lastComic = null
-        storage.d.Channels[name].lastComicActt = null
-    }
-    if (elapsed.h > 0) {
-        var comicacttime = moment().format('h:mm a')
-        storage.d.Channels[name].lastComicActt = comicacttime
-        request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
-            if (!error && response.statusCode == 200) {
-                comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
-                precent = body.substring(body.indexOf('\n'))
-                request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
-                    if (!error && response.statusCode == 200) {
-                        xkcdJson = JSON.parse(body)
-                        messageSend(channelID, 'Similarity %:' + precent + '\n' + xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
-                    }
-                })
-            }
-        })
-        var lastcomictime = gettime()
-        storage.d.Channels[name].lastComic = lastcomictime
-    } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
-    }
-    writeJSON('./storage', storage)
+        console.log("Comic elapsed: " + JSON.stringify(elapsed)))
+} catch (e) {
+    storage.d.Channels[name].lastComic = null
+    storage.d.Channels[name].lastComicActt = null
+}
+if (elapsed.h > 0) {
+    var comicacttime = moment().format('h:mm a')
+    storage.d.Channels[name].lastComicActt = comicacttime
+    request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
+            precent = body.substring(body.indexOf('\n'))
+            request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    xkcdJson = JSON.parse(body)
+                    messageSend(channelID, 'Similarity %:' + precent + '\n' + xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
+                }
+            })
+        }
+    })
+    var lastcomictime = gettime()
+    storage.d.Channels[name].lastComic = lastcomictime
+} else {
+    messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
+}
+writeJSON('./storage', storage)
 }
 /*/Retrieves a current status of a user/*/
 function status(statuscall, channelID, rawEvent) {
@@ -747,7 +747,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     elapsed = comictime - lastcomictime
                     elapsed = secondsToTime(elapsed)
                     comicacttime = storage.d.Channels[cname].lastComicActt
-                    console.log("Comic elapsed: " + elapsed)
+                    console.log("Comic elapsed: " + JSON.stringify(elapsed))
                 } catch (e) {
                     storage.d.Channels[cname].lastComic = null
                     storage.d.Channels[cname].lastComicActt = null
