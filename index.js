@@ -299,7 +299,11 @@ function consoleparse(line) {
                 }
             }
         } else {
-            eval(line)
+            try {
+                eval(line)
+            } catch (e) {
+                logger.error(chalk.red("Bad JS Command " + e))
+            }
         }
     } else if (line.toLowerCase().indexOf('~') !== 0) {
         bot.sendMessage({
@@ -796,7 +800,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             try {
                 eval(jscall)
             } catch (e) {
-                logger.error("Bad JS Command " + e)
+                logger.error(chalk.red("Bad JS Command " + e))
                 messgnt("Err...I'm sorry...that results in a error")
             }
             rconcmd = 'Yes'
