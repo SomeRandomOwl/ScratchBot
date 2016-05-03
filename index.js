@@ -362,6 +362,7 @@ function relxkcd(quer, channelID, name) {
                     if (!error && response.statusCode == 200) {
                         xkcdJson = JSON.parse(body)
                         messageSend(channelID, xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
+			return elapsed
                     }
                 })
             }
