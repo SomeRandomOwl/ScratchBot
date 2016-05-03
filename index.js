@@ -372,6 +372,7 @@ function relxkcd(quer, channelID, name) {
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
     }
+    writeJSON('./storage', storage)
 }
 /*/Retrieves a current status of a user/*/
 function status(statuscall, channelID, rawEvent) {
