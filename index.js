@@ -370,6 +370,7 @@ function relxkcd(quer, channelID, name) {
         storage.d.Channels[name].lastComic = lastcomictime
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
+        return elapsed
     }
     writeJSON('./storage', storage)
 }
@@ -764,7 +765,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     storage.d.Channels[cname].lastComic = lastcomictime
                 } else {
                     messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
-
                 }
             } else {
                 var xkcdcmd = message
