@@ -9,7 +9,6 @@ var math = require('mathjs');
 var readline = require('readline');
 var YouTube = require('youtube-node');
 var youTube = new YouTube();
-var imgur = require('imgur-node-api');
 var moment = require('moment');
 var xkcd = require('xkcd-imgs');
 var chalk = require('chalk');
