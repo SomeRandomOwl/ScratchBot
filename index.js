@@ -76,7 +76,7 @@ function writeJSON(path, data, callback) {
         });
     });
 }
-
+/*/Converts Seconds to hh mm ss/*/
 function secondsToTime(secs) {
     var hours = Math.floor(secs / (60 * 60));
 
@@ -93,8 +93,9 @@ function secondsToTime(secs) {
     };
     return obj;
 }
+/*/Gets seconds using Date.now()/*/
 function gettime() {
-    var timenow = Math.floor(Date.now()/1000)
+    var timenow = Math.floor(Date.now() / 1000)
     return timenow
 }
 /*/Lists currently connected severs and writes them to json/*/
@@ -337,17 +338,20 @@ function messageDelete(channelID, messageID) {
         messageID: messageID
     })
 }
-
+/*/Retrieves a relavant xkcd comic from a query/*/
 function relxkcd(quer, channelID, name) {
-    var comictime = moment().format('HH')
+    var comictime = gettime()
+
     try {
         lastcomictime = storage.d.Channels[name].lastComic
+        elapsed = comictime - comictime
+        elapsed = secondsToTime(elapsed)
         comicacttime = storage.d.Channels[name].lastComicActt
     } catch (e) {
         storage.d.Channels[name].lastComic = null
         storage.d.Channels[name].lastComicActt = null
     }
-    if (comictime !== lastcomictime) {
+    if (elapsed > 0) {
         var comicacttime = moment().format('h:mm a')
         storage.d.Channels[name].lastComicActt = comicacttime
         request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
@@ -362,13 +366,13 @@ function relxkcd(quer, channelID, name) {
                 })
             }
         })
-        var lastcomictime = moment().format('HH')
+        var lastcomictime = gettime()
         storage.d.Channels[name].lastComic = lastcomictime
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
     }
 }
-
+/*/Retrieves a current status of a user/*/
 function status(statuscall, channelID, rawEvent) {
     try {
         if (statuscall.toLowerCase().indexOf('<@') === -1) {
