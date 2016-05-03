@@ -743,14 +743,14 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (message.indexOf(' ') === -1) {
                 var comictime = gettime()
                 try {
-                    lastcomictime = storage.d.Channels[name].lastComic
+                    lastcomictime = storage.d.Channels[cname].lastComic
                     elapsed = comictime - comictime
                     elapsed = secondsToTime(elapsed)
-                    comicacttime = storage.d.Channels[name].lastComicActt
+                    comicacttime = storage.d.Channels[cname].lastComicActt
                     console.log("Comic elapsed: " + elapsed)
                 } catch (e) {
-                    storage.d.Channels[name].lastComic = null
-                    storage.d.Channels[name].lastComicActt = null
+                    storage.d.Channels[cname].lastComic = null
+                    storage.d.Channels[cname].lastComicActt = null
                 }
                 if (elapsed.h > 0) {
                     var comicacttime = moment().format('h:mm a')
