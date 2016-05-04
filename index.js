@@ -192,6 +192,9 @@ function userlist(verb) {
                 if (storage.d.Users[name].lastseen === undefined) {
                     storage.d.Users[name].lastseen = "Unknown"
                 }
+                if (storage.d.Users[name].rawLastSeen === undefined) {
+                    storage.d.Users[name].rawLastSeen = 0
+                }
             }
         }
     }
