@@ -143,8 +143,16 @@ function channellist(verb) {
             } else {
                 storage.d.Channels[name].id = channelID
                 storage.d.Channels[name].type = type
-                if (storage.d.Channels[name].messageCnt === undefined) {
-                    storage.d.Channels[name].messageCnt = 0
+                if (type !== "voice") {
+                    if (storage.d.Channels[name].messageCnt === undefined) {
+                        storage.d.Channels[name].messageCnt = 0
+                    }
+                    if (storage.d.Channels[name].lastComicActt === undefined) {
+                        storage.d.Channels[name].lastComicActt = null
+                    }
+                    if (storage.d.Channels[name].lastComic === undefined) {
+                        storage.d.Channels[name].lastComic = null
+                    }
                 }
             }
         }
