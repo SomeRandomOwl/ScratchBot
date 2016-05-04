@@ -176,7 +176,8 @@ function userlist(verb) {
                     "messageCnt": 0,
                     "linkCnt": 0,
                     "status": "unknown",
-                    "lastseen": "unknown"
+                    "lastseen": "unknown",
+                    "rawLastSeen": 0
                 }
             } else {
                 if (storage.d.Users[name].messageCnt === undefined) {
@@ -393,13 +394,33 @@ function status(statuscall, channelID, rawEvent) {
         if (statuscall.toLowerCase().indexOf('<@') === -1) {
             var status = storage.d.Users[statuscall].status
             if (status === 'idle') {
+                rawLastSeen = storage.d.Users[statuscall].rawLastSeen
                 var ltsmsg = storage.d.Users[statuscall].lastseen
                 ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
-                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
+                var timeIdle = gettime() - rawLastSeen
+                timeIdle = secondsToTime(timeIdle)
+                if (timeIdle.h === 0) {
+                    timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                } else if timeIdle.h === 1 {
+                    timeIdle = timeIdle.h + " Hour" + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                } else {
+                    timeIdle = timeIdle.h + " Hours" + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                }
+                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + "and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
             } else if (status === 'offline') {
+                rawLastSeen = storage.d.Users[statuscall].rawLastSeen
                 var ltsmsg = storage.d.Users[statuscall].lastseen
                 ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
-                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " And was last Seen: " + ltsmsg)
+                var timeIdle = gettime() - rawLastSeen
+                timeIdle = secondsToTime(timeIdle)
+                if (timeIdle.h === 0) {
+                    timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                } else if timeIdle.h === 1 {
+                    timeIdle = timeIdle.h + " Hour" + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                } else {
+                    timeIdle = timeIdle.h + " Hours" + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                }
+                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + "and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
             } else if (status === 'online') {
                 messageSend(channelID, statuscall + " Is currently online")
             } else if (status === 'Unknown') {
@@ -411,13 +432,33 @@ function status(statuscall, channelID, rawEvent) {
                 if (mentId === storage.d.Users[usern].id) {
                     var status = storage.d.Users[usern].status
                     if (status === 'idle') {
+                        rawLastSeen = storage.d.Users[usern].rawLastSeen
                         var ltsmsg = storage.d.Users[usern].lastseen
                         ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
-                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
+                        var timeIdle = gettime() - rawLastSeen
+                        timeIdle = secondsToTime(timeIdle)
+                        if (timeIdle.h === 0) {
+                            timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        } else if timeIdle.h === 1 {
+                            timeIdle = timeIdle.h + " Hour" + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        } else {
+                            timeIdle = timeIdle.h + " Hours" + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        }
+                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + "and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
                     } else if (status === 'offline') {
+                        rawLastSeen = storage.d.Users[usern].rawLastSeen
                         var ltsmsg = storage.d.Users[usern].lastseen
                         ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
-                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " And was last Seen: " + ltsmsg)
+                        var timeIdle = gettime() - rawLastSeen
+                        timeIdle = secondsToTime(timeIdle)
+                        if (timeIdle.h === 0) {
+                            timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        } else if timeIdle.h === 1 {
+                            timeIdle = timeIdle.h + " Hour" + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        } else {
+                            timeIdle = timeIdle.h + " Hours" + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        }
+                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + "and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
                     } else if (status === 'online') {
                         messageSend(channelID, statuscall + " Is currently online")
                     } else if (status === 'Unknown') {
@@ -474,13 +515,15 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 "messageCnt": 0,
                 "linkCnt": 0,
                 "status": "unknown",
-                "lastseen": "unknown"
+                "lastseen": "unknown",
+                "rawLastSeen": 0
             }
         }
         if (status === 'offline') {
             if (user !== undefined) {
                 var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
                 storage.d.Users[user].lastseen = lastseen
+                storage.d.Users[user].rawLastSeen = gettime()
                 if (storage.d.Users[user].status !== 'offline') {
                     logger.info(chalk.dim(lastseen + ' : ' + user + " is now: " + chalk.underline(status)));
                 }
@@ -490,6 +533,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 for (var user in storage.d.Users) {
                     if (userID === storage.d.Users[user].id) {
                         storage.d.Users[user].lastseen = lastseen
+                        storage.d.Users[user].rawLastSeen = gettime()
                         if (storage.d.Users[user].status !== 'offline') {
                             logger.info(chalk.dim(lastseen + ' : ' + chalk.magenta(user + " is now: " + chalk.underline(status))));
                         }
