@@ -519,89 +519,89 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     //});
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
-        if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
-            var ignore = true
-        }
-        rconcmd = 'No'
+    if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
+        var ignore = true
+    }
+    rconcmd = 'No'
 
-        //Gets the message id and server id
-        var messageID = rawEvent.d.id
-        var serverID = bot.serverFromChannel(channelID)
-            //gets the server and channel name
-        try {
-            var cname = bot.servers[serverID].channels[channelID].name
-            var sname = bot.servers[serverID].name
-        } catch (e) {
-            logger.error(chalk.red(e))
+    //Gets the message id and server id
+    var messageID = rawEvent.d.id
+    var serverID = bot.serverFromChannel(channelID)
+        //gets the server and channel name
+    try {
+        var cname = bot.servers[serverID].channels[channelID].name
+        var sname = bot.servers[serverID].name
+    } catch (e) {
+        logger.error(chalk.red(e))
+    }
+    //Logging Related
+    if (storage.d.Users[user] !== undefined) {
+        if (storage.d.Users[user].messageCnt === undefined) {
+            storage.d.Users[user].messageCnt = 1
+        } else {
+            mucount = storage.d.Users[user].messageCnt
+            mucount = mucount + 1
+            storage.d.Users[user].messageCnt = mucount
         }
-        //Logging Related
+        writeJSON('./storage', storage)
+    }
+    if (message.toLowerCase().indexOf('http') !== -1) {
+        logger.info(chalk.dim("Link Posted, logging to file"))
+        if (message.indexOf(' ', message.indexOf('http')) === -1) {
+            var link = message.substring(message.indexOf('http'))
+        } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
+            var link = message.substring(message.indexOf('http'), message.indexOf(' ', message.indexOf('http')))
+        }
         if (storage.d.Users[user] !== undefined) {
-            if (storage.d.Users[user].messageCnt === undefined) {
-                storage.d.Users[user].messageCnt = 1
+            if (storage.d.Users[user].linkCnt === undefined) {
+                storage.d.Users[user].linkCnt = 1
             } else {
-                mucount = storage.d.Users[user].messageCnt
-                mucount = mucount + 1
-                storage.d.Users[user].messageCnt = mucount
+                lucount = storage.d.Users[user].linkCnt
+                lucount = lucount + 1
+                storage.d.Users[user].linkCnt = lucount
             }
             writeJSON('./storage', storage)
         }
-        if (message.toLowerCase().indexOf('http') !== -1) {
-            logger.info(chalk.dim("Link Posted, logging to file"))
-            if (message.indexOf(' ', message.indexOf('http')) === -1) {
-                var link = message.substring(message.indexOf('http'))
-            } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
-                var link = message.substring(message.indexOf('http'), message.indexOf(' ', message.indexOf('http')))
-            }
-            if (storage.d.Users[user] !== undefined) {
-                if (storage.d.Users[user].linkCnt === undefined) {
-                    storage.d.Users[user].linkCnt = 1
-                } else {
-                    lucount = storage.d.Users[user].linkCnt
-                    lucount = lucount + 1
-                    storage.d.Users[user].linkCnt = lucount
-                }
-                writeJSON('./storage', storage)
-            }
-            fs.appendFile("logs/Links.txt", '\n' + link)
+        fs.appendFile("logs/Links.txt", '\n' + link)
+    }
+    if (cname !== undefined) {
+        if (storage.d.Channels[cname].messageCnt === undefined) {
+            storage.d.Channels[cname].messageCnt = 1
+        } else {
+            mccount = storage.d.Channels[cname].messageCnt
+            mccount = mccount + 1
+            storage.d.Channels[cname].messageCnt = mccount
         }
-        if (cname !== undefined) {
-            if (storage.d.Channels[cname].messageCnt === undefined) {
-                storage.d.Channels[cname].messageCnt = 1
-            } else {
-                mccount = storage.d.Channels[cname].messageCnt
-                mccount = mccount + 1
-                storage.d.Channels[cname].messageCnt = mccount
-            }
-            writeJSON('./storage', storage)
+        writeJSON('./storage', storage)
+    }
+    if (sname !== undefined) {
+        if (storage.d.Servers[sname].messageCnt === undefined) {
+            storage.d.Servers[sname].messageCnt = 1
+        } else {
+            mscount = storage.d.Servers[sname].messageCnt
+            mscount = mscount + 1
+            storage.d.Servers[sname].messageCnt = mscount
         }
-        if (sname !== undefined) {
-            if (storage.d.Servers[sname].messageCnt === undefined) {
-                storage.d.Servers[sname].messageCnt = 1
-            } else {
-                mscount = storage.d.Servers[sname].messageCnt
-                mscount = mscount + 1
-                storage.d.Servers[sname].messageCnt = mscount
-            }
-            writeJSON('./storage', storage)
-        }
-        //debug!
-        if (debug === 1) {
-            console.log(rawEvent)
-        }
-        //function to quick call message sending to minimize code
-        function messgnt(msg) {
-            bot.sendMessage({
-                to: channelID,
-                message: msg,
-                typing: false
-            });
-        }
-        //Test Connectivity
-        /*if (message.toLowerCase() === "ping" && ignore !== true) {
+        writeJSON('./storage', storage)
+    }
+    //debug!
+    if (debug === 1) {
+        console.log(rawEvent)
+    }
+    //function to quick call message sending to minimize code
+    function messgnt(msg) {
+        bot.sendMessage({
+            to: channelID,
+            message: msg,
+            typing: false
+        });
+    }
+    //Test Connectivity
+    /*if (message.toLowerCase() === "ping" && ignore !== true) {
         messgnt("pong")
         rconcmd = 'Yes'
     }*/
-        /*if (isInArray(message, nighttig) && ignore !== true) {
+    /*if (isInArray(message, nighttig) && ignore !== true) {
         var nights = ["Night! :zzz:", "Goodnight <@" + userID + "> :zzz:", "Sleep well <@" + userID + "> :zzz:", "Have a good sleep! :zzz:", "Don't let the bed bugs bite! :zzz:", "Nighty nite! :zzz:"]
         var nightm = "Night!"
         nightm = nights[Math.floor(Math.random() * nights.length)];
@@ -612,193 +612,201 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         });
         rconcmd = 'Yes'
     }*/
-        //This tests for commands using the command mod set in the config
-        if (message.indexOf(commandmod) != -1) {
-            if (message.toLowerCase().indexOf('ping') === 1 && ignore !== true) {
-                messageSend(channelID, 'pong')
-            }
-            //This is the command for rolling dice
-            if (message.toLowerCase().indexOf('roll') === 1 && ignore !== true) {
-                var msg = message
-                var dice = msg.replace('!roll ', '')
-                diceroll(dice, userID, channelID)
-                rconcmd = 'Yes'
-            }
-            //Makes scratch print out her avatar
-            if (message.indexOf("avatar") === 1 && ignore !== true) {
-                bot.uploadFile({
-                    to: channelID,
-                    file: "avatar.png",
-                    filename: "avatar.png",
-                    message: "Here you go!",
-                    typing: true
-                });
-                rconcmd = 'Yes'
-            }
-            //Makes scratch print out channel id's and user id's
-            if (message.toLowerCase().indexOf('ids') === 1 && ignore !== true) {
-                bot.sendMessage({
-                    to: channelID,
-                    message: '<@' + userID + '>' + ' Your userID is: ' + userID + ' and your channelID is: ' + channelID,
-                    typing: false
-                });
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('math') === 1 && ignore !== true) {
-                var mathcmd = message
-                var mathcall = mathcmd.replace('!math ', '')
-                try {
-                    messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
-                } catch (e) {
-                    logger.error("Bad Math Command " + mathcall + " | " + e)
-                    messgnt("Sorry I'm unable to run that")
-                }
-                rconcmd = "Yes"
-            }
-            if (message.toLowerCase().indexOf('status') === 1 && ignore !== true) {
-                var statuscmd = message
-                var statuscall = statuscmd.replace('!status ', '')
-                status(statuscall, channelID, rawEvent)
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('supportedmath') === 1 && ignore !== true) {
-                bot.uploadFile({
-                    to: channelID,
-                    file: "math.png",
-                    filename: "math.png",
-                    message: "This is a picture of what shouldent crash me currently",
-                    typing: false
-                });
-                rconcmd = "Yes"
-            }
-            if (message.toLowerCase().indexOf('triggers') === 1 && ignore !== true) {
-                messageSend(channelID, "Check your PM's :mailbox_with_mail:")
-                messageSend(channelID, "Here are my triggers!: \n\n```" + tlist + '```\n')
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('commands') === 1 && ignore !== true) {
-                messageSend(channelID, "Check your PM's :mailbox_with_mail:")
-                messageSend(userID, "Here are my commands!: \n\n```" + clist + '```\n')
-                messageDelete(channelID, messageID)
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('poke') === 1 && ignore !== true) {
-                var pkcmd = message
-                var pkcall = pkcmd.replace('!poke ', '')
-                var pkcall = pkcall.replace('<@', '')
-                var pkcall = pkcall.replace('>', '')
-                messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">")
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('stats') === 1 && ignore !== true) {
-                var len = message.length
-                if (len === 6) {
-                    try {
-                        messageSend(channelID, "Your current stats are: \n" + "Messages Sent: " + storage.d.Users[user].messageCnt + "\nLinks Sent: " + storage.d.Users[user].linkCnt)
-                    } catch (e) {
-                        messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
-                    }
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0) {
-                var igcmd = message
-                var igcall = igcmd.replace('!ignore ', '')
-                if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
-                    uningoreC(channelID)
-                    messageSend(channelID, 'Ok no longer ignoring this channel')
-                } else {
-                    ignoreC(channelID)
-                    messageSend(channelID, 'Ok ignoring this channel')
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('yt') === 1 && ignore !== true) {
-                var ytcmd = message
-                var ytcall = ytcmd.replace('!yt ', '')
-                yt(ytcall, userID, channelID)
-                bot.deleteMessage({
-                    channel: channelID,
-                    messageID: messageID
-                });
-                rconcmd = "Yes"
-            }
-            if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
-                if (message.indexOf(' ') === -1) {
-                    var comictime = gettime()
-                    try {
-                        lastcomictime = storage.d.Channels[cname].lastComic
-                        elapsed = comictime - lastcomictime
-                        elapsed = secondsToTime(elapsed)
-                        comicacttime = storage.d.Channels[cname].lastComicActt
-                        console.log("Comic elapsed: " + JSON.stringify(elapsed))
-                    } catch (e) {
-                        storage.d.Channels[cname].lastComic = null
-                        storage.d.Channels[cname].lastComicActt = null
-                    }
-                    if (elapsed.h > 0) {
-                        var comicacttime = moment().format('h:mm a')
-                        storage.d.Channels[cname].lastComicActt = comicacttime
-                        xkcd.img(function(err, res) {
-                            if (!err) {
-                                messageSend(channelID, res.title + "\n" + res.url)
-                            }
-                        });
-                        var lastcomictime = gettime()
-                        storage.d.Channels[cname].lastComic = lastcomictime
-                    } else {
-                        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
-                    }
-                } else {
-                    var xkcdcmd = message
-                    var xkcdcall = xkcdcmd.replace('!xkcd ', '')
-                    relxkcd(xkcdcall, channelID, cname)
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('skip') === 1 && ignore !== true) {
-                bot.deleteMessage({
-                    channel: channelID,
-                    messageID: messageID
-                })
-            }
-            if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0) {
-                try {
-                    storage.d.Servers[sname].announceChan = channelID
-                    messageSend(channelID, "Ok now announcing user changes on this channel")
-                } catch (e) {
-                    logger.error(chalk.red(e))
-                }
-                rconcmd = "Yes"
-            }
-            //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
-            if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
-                var jscmd = message
-                var jscall = jscmd.replace('!js ', '')
-                try {
-                    eval(jscall)
-                } catch (e) {
-                    logger.error(chalk.red("Bad JS Command " + e))
-                    messgnt("Err...I'm sorry...that results in a error")
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === -1) {
-                messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
-            } else if (rconcmd === 'no') {
-                logger.info(commandmod + ' was said but there was No Detected command');
-            }
+    //This tests for commands using the command mod set in the config
+    if (message.indexOf(commandmod) != -1) {
+        if (message.toLowerCase().indexOf('ping') === 1 && ignore !== true) {
+            messageSend(channelID, 'pong')
         }
-        if (channelID === '164845697508704257') {
-            console.log(chalk.dim(message))
-            fs.appendFile("logs/space.txt", '\n\n' + message)
+        //This is the command for rolling dice
+        if (message.toLowerCase().indexOf('roll') === 1 && ignore !== true) {
+            var msg = message
+            var dice = msg.replace('!roll ', '')
+            diceroll(dice, userID, channelID)
+            rconcmd = 'Yes'
         }
-        if (channelID === '167855344129802241') {
-            console.log(chalk.dim(message))
-            fs.appendFile("logs/unknown.txt", '\n\n' + message)
+        //Makes scratch print out her avatar
+        if (message.indexOf("avatar") === 1 && ignore !== true) {
+            bot.uploadFile({
+                to: channelID,
+                file: "avatar.png",
+                filename: "avatar.png",
+                message: "Here you go!",
+                typing: true
+            });
+            rconcmd = 'Yes'
+        }
+        //Makes scratch print out channel id's and user id's
+        if (message.toLowerCase().indexOf('ids') === 1 && ignore !== true) {
+            bot.sendMessage({
+                to: channelID,
+                message: '<@' + userID + '>' + ' Your userID is: ' + userID + ' and your channelID is: ' + channelID,
+                typing: false
+            });
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('math') === 1 && ignore !== true) {
+            var mathcmd = message
+            var mathcall = mathcmd.replace('!math ', '')
+            try {
+                messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
+            } catch (e) {
+                logger.error("Bad Math Command " + mathcall + " | " + e)
+                messgnt("Sorry I'm unable to run that")
+            }
+            rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('status') === 1 && ignore !== true) {
+            var statuscmd = message
+            var statuscall = statuscmd.replace('!status ', '')
+            status(statuscall, channelID, rawEvent)
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('supportedmath') === 1 && ignore !== true) {
+            bot.uploadFile({
+                to: channelID,
+                file: "math.png",
+                filename: "math.png",
+                message: "This is a picture of what shouldent crash me currently",
+                typing: false
+            });
+            rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('triggers') === 1 && ignore !== true) {
+            messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+            messageSend(channelID, "Here are my triggers!: \n\n```" + tlist + '```\n')
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('commands') === 1 && ignore !== true) {
+            messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+            messageSend(userID, "Here are my commands!: \n\n```" + clist + '```\n')
+            messageDelete(channelID, messageID)
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('poke') === 1 && ignore !== true) {
+            var pkcmd = message
+            var pkcall = pkcmd.replace('!poke ', '')
+            var pkcall = pkcall.replace('<@', '')
+            var pkcall = pkcall.replace('>', '')
+            messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">")
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('stats') === 1 && ignore !== true) {
+            var len = message.length
+            if (len === 6) {
+                try {
+                    messageSend(channelID, "Your current stats are: \n" + "Messages Sent: " + storage.d.Users[user].messageCnt + "\nLinks Sent: " + storage.d.Users[user].linkCnt)
+                } catch (e) {
+                    messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
+                }
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0) {
+            var igcmd = message
+            var igcall = igcmd.replace('!ignore ', '')
+            if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
+                uningoreC(channelID)
+                messageSend(channelID, 'Ok no longer ignoring this channel')
+            } else {
+                ignoreC(channelID)
+                messageSend(channelID, 'Ok ignoring this channel')
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('yt') === 1 && ignore !== true) {
+            var ytcmd = message
+            var ytcall = ytcmd.replace('!yt ', '')
+            yt(ytcall, userID, channelID)
+            bot.deleteMessage({
+                channel: channelID,
+                messageID: messageID
+            });
+            rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
+            if (message.indexOf(' ') === -1) {
+                var comictime = gettime()
+                try {
+                    lastcomictime = storage.d.Channels[cname].lastComic
+                    elapsed = comictime - lastcomictime
+                    elapsed = secondsToTime(elapsed)
+                    comicacttime = storage.d.Channels[cname].lastComicActt
+                    console.log("Comic elapsed: " + JSON.stringify(elapsed))
+                } catch (e) {
+                    storage.d.Channels[cname].lastComic = null
+                    storage.d.Channels[cname].lastComicActt = null
+                }
+                if (elapsed.h > 0) {
+                    var comicacttime = moment().format('h:mm a')
+                    storage.d.Channels[cname].lastComicActt = comicacttime
+                    xkcd.img(function(err, res) {
+                        if (!err) {
+                            messageSend(channelID, res.title + "\n" + res.url)
+                        }
+                    });
+                    var lastcomictime = gettime()
+                    storage.d.Channels[cname].lastComic = lastcomictime
+                } else {
+                    messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
+                }
+            } else {
+                var xkcdcmd = message
+                var xkcdcall = xkcdcmd.replace('!xkcd ', '')
+                relxkcd(xkcdcall, channelID, cname)
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('skip') === 1 && ignore !== true) {
+            bot.deleteMessage({
+                channel: channelID,
+                messageID: messageID
+            })
+        }
+        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0) {
+            try {
+                storage.d.Servers[sname].announceChan = channelID
+                messageSend(channelID, "Ok now announcing user changes on this channel")
+            } catch (e) {
+                logger.error(chalk.red(e))
+            }
+            rconcmd = "Yes"
+        }
+        //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
+        if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
+            var jscmd = message
+            var jscall = jscmd.replace('!js ', '')
+            try {
+                eval(jscall)
+            } catch (e) {
+                logger.error(chalk.red("Bad JS Command " + e))
+                messgnt("Err...I'm sorry...that results in a error")
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === -1) {
+            messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
+        } else if (rconcmd === 'no') {
+            logger.info(commandmod + ' was said but there was No Detected command');
         }
     }
-    if (rconcmd === "No" && ignore !== true) {
+    if (channelID === '164845697508704257') {
+        console.log(chalk.dim(message))
+        fs.appendFile("logs/space.txt", '\n\n' + message)
+    }
+    if (channelID === '167855344129802241') {
+        console.log(chalk.dim(message))
+        fs.appendFile("logs/unknown.txt", '\n\n' + message)
+    }
+    //Special conditions to prevent the logging of bots and specially monitored chats
+    if (userID.indexOf('104867073343127552') === 0 || channelID.indexOf('164845697508704257') === 0 || channelID.indexOf('167855344129802241') === 0) {
+        if (userID === '104867073343127552') {
+            return
+        } else if (channelID.indexOf('164845697508704257') === 0) {
+            return
+        } else if (channelID.indexOf('167855344129802241')) {
+            return
+        }
+    } else if (rconcmd === "No" && ignore !== true) {
         var timed = Date()
         timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
         timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
