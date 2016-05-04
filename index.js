@@ -366,7 +366,7 @@ function relxkcd(quer, channelID, name) {
                     if (!error && response.statusCode == 200) {
                         xkcdJson = JSON.parse(body)
                         messageSend(channelID, xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
-			return elapsed
+                        return elapsed
                     }
                 })
             }
@@ -597,36 +597,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         });
     }
     //Test Connectivity
-    if (message.toLowerCase() === "ping" && ignore !== true) {
+    /*if (message.toLowerCase() === "ping" && ignore !== true) {
         messgnt("pong")
         rconcmd = 'Yes'
-    }
-    if (message.toLowerCase() === "rick" && userID != '167017777012408320' && user != 'ScratchBot' && ignore !== true) {
-        var ricks = ["and morty!", "dont forget morty!", "uuuuur morty! er goota git outta here morty! They're onto us!", "Wubba-Lubba Dub Dub!"]
-        var rickm = "Morty!"
-        rickm = ricks[Math.floor(Math.random() * ricks.length)];
-        messgnt(rickm)
-        rconcmd = 'Yes'
-    }
-    if (message.toLowerCase() === "thanks scratch" && ignore !== true) {
-        messgnt("You're Welcome!")
-        rconcmd = 'Yes'
-    }
-    if (message.toLowerCase() === "say hello scratch" && ignore !== true) {
-        messgnt("Hello World")
-        rconcmd = 'Yes'
-    }
-    if (message.toLowerCase() === "hey nice avatar scratch" || message.toLowerCase() === "nice avatar scratch" && ignore !== true) {
-        bot.uploadFile({
-            to: channelID,
-            file: "avatar.png",
-            filename: "avatar.png",
-            message: "Thanks! Heres a bigger version!",
-            typing: true
-        });
-        rconcmd = 'Yes'
-    }
-    if (isInArray(message, nighttig) && ignore !== true) {
+    }*/
+    /*if (isInArray(message, nighttig) && ignore !== true) {
         var nights = ["Night! :zzz:", "Goodnight <@" + userID + "> :zzz:", "Sleep well <@" + userID + "> :zzz:", "Have a good sleep! :zzz:", "Don't let the bed bugs bite! :zzz:", "Nighty nite! :zzz:"]
         var nightm = "Night!"
         nightm = nights[Math.floor(Math.random() * nights.length)];
@@ -636,9 +611,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             typing: true
         });
         rconcmd = 'Yes'
-    }
+    }*/
     //This tests for commands using the command mod set in the config
     if (message.indexOf(commandmod) != -1) {
+        if (message.toLowerCase().indexOf('ping') === 1 && ignore !== true) {
+            messageSend(channelID, 'pong')
+        }
         //This is the command for rolling dice
         if (message.toLowerCase().indexOf('roll') === 1 && ignore !== true) {
             var msg = message
@@ -812,11 +790,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
     if (channelID === '164845697508704257') {
-        console.log(chalk.white(message))
+        console.log(chalk.dim(message))
         fs.appendFile("logs/space.txt", '\n\n' + message)
     }
     if (channelID === '167855344129802241') {
-        console.log(chalk.whiten(message))
+        console.log(chalk.dim(message))
         fs.appendFile("logs/unknown.txt", '\n\n' + message)
     }
     //Special conditions to prevent the logging of bots and specially monitored chats
