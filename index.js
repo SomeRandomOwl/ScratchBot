@@ -499,11 +499,9 @@ function cat() {
                 return elapsed
             }
         })
-    }
-
-    var lastcattime = gettime()
-    storage.d.Channels[name].lastCat = lastcattime
-    else {
+        var lastcattime = gettime()
+        storage.d.Channels[name].lastCat = lastcattime
+    } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime)
         return elapsed
     }
