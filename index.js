@@ -486,8 +486,8 @@ function cat(channelID, name) {
         catacttime = storage.d.Channels[name].lastCatActt
         console.log("Comic elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
-        storage.d.Channels[name].lastCat = null
-        storage.d.Channels[name].lastCatActt = null
+        storage.d.Channels[name].lastCat = 0
+        storage.d.Channels[name].lastCatActt = 0
     }
     if (elapsed.h > 0) {
         var comicacttime = moment().format('h:mm a')
