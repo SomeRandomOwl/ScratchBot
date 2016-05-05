@@ -479,6 +479,10 @@ function status(statuscall, channelID, rawEvent) {
 
 function cat(channelID, name) {
     var cattime = gettime()
+    if (storage.d.Channels[name].lastCat === undefined) {
+        storage.d.Channels[name].lastCat = 0
+        storage.d.Channels[name].lastCatActt = 0
+    }
     try {
         console.log('yes')
         lastcattime = storage.d.Channels[name].lastCat
