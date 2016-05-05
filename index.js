@@ -551,9 +551,9 @@ bot.on('debug', function(rawEvent) {
     }
 });
 bot.on('disconnected', function() {
-    logger.error("Bot got disconnected, reconnecting")
+    logger.error(chalk.red("Bot got disconnected, reconnecting"))
     bot.connect()
-    logger.info("Reconnected")
+    logger.info(chalk.green("Reconnected"))
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     try {
