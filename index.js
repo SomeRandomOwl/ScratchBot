@@ -498,7 +498,7 @@ function cat(channelID, name) {
     if (elapsed.h > 0) {
         var comicacttime = moment().format('h:mm a')
         storage.d.Channels[name].lastComicActt = comicacttime
-        request('http://random.cat/meow' + quer, function(error, response, body) {
+        request('http://random.cat/meow', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 catJson = JSON.parse(body)
                 messageSend(channelID, "Heres a cat!" + catJson.file)
