@@ -390,7 +390,7 @@ function relxkcd(quer, channelID, name) {
         var lastcomictime = gettime()
         storage.d.Channels[name].lastComic = lastcomictime
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + " time untill next post is allowed: " + nextTime)
+        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
     writeJSON('./storage', storage)
@@ -516,7 +516,7 @@ function cat(channelID, name) {
         var lastcattime = gettime()
         storage.d.Channels[name].lastCat = lastcattime
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + catacttime + " time untill next post is allowed: " + nextTime)
+        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + catacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
     writeJSON('./storage', storage)
