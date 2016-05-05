@@ -497,16 +497,15 @@ function cat(channelID, name) {
     }
     if (elapsed.h > 0) {
         var catacttime = moment().format('h:mm a')
-        storage.d.Channels[name].lastComicActt = catacttime
+        storage.d.Channels[name].lastCatActt = catacttime
         request('http://random.cat/meow', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 catJson = JSON.parse(body)
-                messageSend(channelID, "Heres a cat!" + catJson.file)
+                messageSend(channelID, "Heres a cat! " + catJson.file)
                 return elapsed
             }
         })
         var lastcattime = gettime()
-
         storage.d.Channels[name].lastCat = lastcattime
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime)
