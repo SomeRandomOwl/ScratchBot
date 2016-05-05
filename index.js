@@ -365,6 +365,7 @@ function relxkcd(quer, channelID, name) {
         nextTime = lastcattime + 3600
         nextTime = nextTime - cattime
         nextTime = secondsToTime(nextTime)
+        nextTime = nextTime.m + " Minutes and " + nextTime.s " Seconds"
         console.log("Comic elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
         storage.d.Channels[name].lastComic = 0
@@ -389,7 +390,7 @@ function relxkcd(quer, channelID, name) {
         var lastcomictime = gettime()
         storage.d.Channels[name].lastComic = lastcomictime
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
+        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + " time untill next post is allowed: " + nextTime)
         return elapsed
     }
     writeJSON('./storage', storage)
@@ -494,6 +495,7 @@ function cat(channelID, name) {
         nextTime = nextTime - cattime
         nextTime = secondsToTime(nextTime)
         elapsed = secondsToTime(elapsed)
+        nextTime = nextTime.m + " Minutes and " + nextTime.s " Seconds"
         catacttime = storage.d.Channels[name].lastCatActt
         console.log("cat elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
@@ -514,7 +516,7 @@ function cat(channelID, name) {
         var lastcattime = gettime()
         storage.d.Channels[name].lastCat = lastcattime
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime)
+        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + catacttime + " time untill next post is allowed: " + nextTime)
         return elapsed
     }
     writeJSON('./storage', storage)
