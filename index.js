@@ -362,6 +362,9 @@ function relxkcd(quer, channelID, name) {
         elapsed = comictime - lastcomictime
         elapsed = secondsToTime(elapsed)
         comicacttime = storage.d.Channels[name].lastComicActt
+        nextTime = lastcattime + 3600
+        nextTime = nextTime - cattime
+        nextTime = secondsToTime(nextTime)
         console.log("Comic elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
         storage.d.Channels[name].lastComic = 0
@@ -487,6 +490,9 @@ function cat(channelID, name) {
         console.log('yes')
         lastcattime = storage.d.Channels[name].lastCat
         elapsed = cattime - lastcattime
+        nextTime = lastcattime + 3600
+        nextTime = nextTime - cattime
+        nextTime = secondsToTime(nextTime)
         elapsed = secondsToTime(elapsed)
         catacttime = storage.d.Channels[name].lastCatActt
         console.log("cat elapsed: " + JSON.stringify(elapsed))
