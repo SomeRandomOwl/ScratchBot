@@ -1,3 +1,4 @@
+clear
 echo "$!"
 python3 logclean.py
 while :
