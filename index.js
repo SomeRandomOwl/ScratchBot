@@ -522,6 +522,88 @@ function cat(channelID, name) {
     writeJSON('./storage', storage)
 }
 
+function snake(channelID, name) {
+    var Snaketime = gettime()
+    if (storage.d.Channels[name].lastSnake === undefined) {
+        storage.d.Channels[name].lastSnake = 0
+        storage.d.Channels[name].lastSnakeActt = 0
+    }
+    try {
+        console.log('yes')
+        lastSnaketime = storage.d.Channels[name].lastSnake
+        elapsed = Snaketime - lastSnaketime
+        nextTime = lastSnaketime + 3600
+        nextTime = nextTime - Snaketime
+        nextTime = secondsToTime(nextTime)
+        elapsed = secondsToTime(elapsed)
+        nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
+        Snakeacttime = storage.d.Channels[name].lastSnakeActt
+        console.log("Snake elapsed: " + JSON.stringify(elapsed))
+    } catch (e) {
+        console.log('no')
+        storage.d.Channels[name].lastsnake = 0
+        storage.d.Channels[name].lastsnakeActt = 0
+    }
+    if (elapsed.h > 0) {
+        var snakeacttime = moment().format('h:mm a')
+        storage.d.Channels[name].lastsnakeActt = snakeacttime
+        request('http://fur.im/snek/snek.php', function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                snakeJson = JSON.parse(body)
+                messageSend(channelID, "Heres a snake! " + snakeJson.file)
+                return elapsed
+            }
+        })
+        var lastsnaketime = gettime()
+        storage.d.Channels[name].lastsnake = lastsnaketime
+    } else {
+        messageSend(channelID, ":no_entry: Hey hold up, only one snake per hour, last snake was posted: " + snakeacttime + ", time untill next post is allowed: " + nextTime)
+        return elapsed
+    }
+    writeJSON('./storage', storage)
+}
+
+function pug(channelID, name) {
+    var pugtime = gettime()
+    if (storage.d.Channels[name].lastpug === undefined) {
+        storage.d.Channels[name].lastpug = 0
+        storage.d.Channels[name].lastpugActt = 0
+    }
+    try {
+        console.log('yes')
+        lastpugtime = storage.d.Channels[name].lastpug
+        elapsed = pugtime - lastpugtime
+        nextTime = lastpugtime + 3600
+        nextTime = nextTime - pugtime
+        nextTime = secondsToTime(nextTime)
+        elapsed = secondsToTime(elapsed)
+        nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
+        pugacttime = storage.d.Channels[name].lastpugActt
+        console.log("pug elapsed: " + JSON.stringify(elapsed))
+    } catch (e) {
+        console.log('no')
+        storage.d.Channels[name].lastpug = 0
+        storage.d.Channels[name].lastpugActt = 0
+    }
+    if (elapsed.h > 0) {
+        var pugacttime = moment().format('h:mm a')
+        storage.d.Channels[name].lastpugActt = pugacttime
+        request('http://pugme.herokuapp.com/bomb?count=1', function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                pugJson = JSON.parse(body)
+                messageSend(channelID, "Heres a pug! " + pugJson.pugs[0])
+                return elapsed
+            }
+        })
+        var lastpugtime = gettime()
+        storage.d.Channels[name].lastpug = lastpugtime
+    } else {
+        messageSend(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime)
+        return elapsed
+    }
+    writeJSON('./storage', storage)
+}
+
 /* Bot on event functions */
 bot.on('debug', function(rawEvent) {
     try {
@@ -875,6 +957,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('cat') === 1 && ignore !== true) {
             cat(channelID, cname)
+        }
+        if (message.toLowerCase().indexOf('snake') === 1 && ignore !== true) {
+            snake(channelID, cname)
+        }
+        if (message.toLowerCase().indexOf('pug') === 1 && ignore !== true) {
+            pug(channelID, cname)
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
