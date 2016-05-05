@@ -477,7 +477,7 @@ function status(statuscall, channelID, rawEvent) {
     }
 }
 
-function cat(ChannelID, name) {
+function cat(channelID, name) {
     var cattime = gettime()
     try {
         lastcattime = storage.d.Channels[name].lastCat
