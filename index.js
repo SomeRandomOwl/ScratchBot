@@ -573,7 +573,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 storage.d.Users[user].lastseen = lastseen
                 storage.d.Users[user].rawLastSeen = gettime()
                 if (storage.d.Users[user].status !== 'offline') {
-                    logger.info(chalk.dim(lastseen + ' : ' + user + " is now: " + chalk.underline(status)));
+                    logger.info(chalk.dim.magenta(lastseen + ' : ' + user + " is now: " + chalk.underline(status)));
                 }
                 storage.d.Users[user].status = status
             } else if (user === undefined) {
@@ -584,7 +584,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                         storage.d.Users[user].lastseen = lastseen
                         storage.d.Users[user].rawLastSeen = gettime()
                         if (storage.d.Users[user].status !== 'offline') {
-                            logger.info(chalk.dim(lastseen + ' : ' + chalk.magenta(user + " is now: " + chalk.underline(status))));
+                            logger.info(chalk.dim.magenta(lastseen + ' : ' + chalk.magenta(user + " is now: " + chalk.underline(status))));
                         }
                         storage.d.Users[user].status = status
                     } else {
