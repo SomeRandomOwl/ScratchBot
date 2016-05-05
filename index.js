@@ -480,12 +480,14 @@ function status(statuscall, channelID, rawEvent) {
 function cat(channelID, name) {
     var cattime = gettime()
     try {
+        console.log('yes')
         lastcattime = storage.d.Channels[name].lastCat
         elapsed = cattime - lastcattime
         elapsed = secondsToTime(elapsed)
         catacttime = storage.d.Channels[name].lastCatActt
-        console.log("Comic elapsed: " + JSON.stringify(elapsed))
+        console.log("cat elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
+        console.log('no')
         storage.d.Channels[name].lastCat = 0
         storage.d.Channels[name].lastCatActt = 0
     }
