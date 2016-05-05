@@ -516,7 +516,7 @@ function cat(channelID, name) {
         var lastcattime = gettime()
         storage.d.Channels[name].lastCat = lastcattime
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + catacttime + ", time untill next post is allowed: " + nextTime)
+        messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
     writeJSON('./storage', storage)
