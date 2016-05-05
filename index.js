@@ -477,6 +477,39 @@ function status(statuscall, channelID, rawEvent) {
     }
 }
 
+function cat() {
+    var cattime = gettime()
+    try {
+        lastcattime = storage.d.Channels[name].lastCat
+        elapsed = cattime - lastcattime
+        elapsed = secondsToTime(elapsed)
+        catacttime = storage.d.Channels[name].lastCatActt
+        console.log("Comic elapsed: " + JSON.stringify(elapsed))
+    } catch (e) {
+        storage.d.Channels[name].lastCat = null
+        storage.d.Channels[name].lastCatActt = null
+    }
+    if (elapsed.h > 0) {
+        var comicacttime = moment().format('h:mm a')
+        storage.d.Channels[name].lastComicActt = comicacttime
+        request('http://random.cat/meow' + quer, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                catJson = JSON.parse(body)
+                messageSend(channelID, "Heres a cat!" + catJson.file)
+                return elapsed
+            }
+        })
+    }
+
+    var lastcattime = gettime()
+    storage.d.Channels[name].lastCat = lastcattime
+    else {
+        messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime)
+        return elapsed
+    }
+    writeJSON('./storage', storage)
+}
+
 /* Bot on event functions */
 bot.on('debug', function(rawEvent) {
     try {
@@ -827,6 +860,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 logger.error(chalk.red(e))
             }
             rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('cat') === 1 && ignore !== true) {
+            cat()
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
