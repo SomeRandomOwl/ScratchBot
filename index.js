@@ -364,8 +364,8 @@ function relxkcd(quer, channelID, name) {
         comicacttime = storage.d.Channels[name].lastComicActt
         console.log("Comic elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
-        storage.d.Channels[name].lastComic = null
-        storage.d.Channels[name].lastComicActt = null
+        storage.d.Channels[name].lastComic = 0
+        storage.d.Channels[name].lastComicActt = 0
     }
     if (elapsed.h > 0) {
         var comicacttime = moment().format('h:mm a')
