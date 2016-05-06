@@ -53,7 +53,7 @@ var sentPrevId = null;
 var commandmod = config.cmdMod;
 var ownerId = config.ownerId;
 var rconcmd = 'No';
-var clist = '\nUtility: !commands, !math, !ids, !supportedmath, !yt, !triggers\nOther: !picture';
+var clist = '\n!commands, !math, !ids, !supportedmath, !yt, !triggers, !picture, !cat, !snake, !pug, !redditscenery, !xkcd, !status, !stats';
 var tlist = '\nUtility: ping\nPolite replies: goodnight,  nite,  night, hi, hello';
 var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!'];
 var debug = false;
@@ -618,7 +618,7 @@ function pug(channelID, name) {
     writeJSON('./storage', storage)
 }
 
-function reddit(channelID, reddit, name) {
+function redditScenery(channelID, reddit, name) {
     /*var reddittime = gettime()
     if (storage.d.Channels[name].lastreddit === undefined) {
         storage.d.Channels[name].lastreddit = 0
@@ -1025,7 +1025,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('pug') === 1 && ignore !== true) {
             pug(channelID, cname)
         }
-        if (message.toLowerCase().indexOf('reddit') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('redditscenery') === 1 && ignore !== true) {
             var redditcmd = message
             var redditcall = redditcmd.replace('!reddit ', '')
             if (redditcall.toLowerCase().indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
@@ -1039,7 +1039,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageSend(channelID, "Check your PM's :mailbox_with_mail:")
                 messageSend(userID, "Here are my tracked subreddits!: \n\n```" + redditNList + '```\n')
             } else {
-                reddit(channelID, redditcall.toLowerCase())
+                redditScenery(channelID, redditcall.toLowerCase())
             }
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
