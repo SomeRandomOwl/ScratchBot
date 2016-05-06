@@ -62,11 +62,13 @@ var clistl = clist.length
     //Writes JSON to a file
 var xkcdJson = null
     /* Start of function defining */
-try {
-    redditList = storage.settings.redditList
-} catch (e) {
+
+if (storage.settings.redditList === undefined) {
     storage.settings.redditList = []
+} else {
+    redditList = storage.settings.redditList
 }
+
 /*/Function to write json to the storage file/*/
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data), function(error) {
