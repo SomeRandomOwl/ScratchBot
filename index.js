@@ -29,12 +29,12 @@ var logger = new(winston.Logger)({
         new(winston.transports.Console)(),
         new(winston.transports.File)({
             name: 'info-file',
-            filename: 'filelog-info.log',
+            filename: './logs/filelog-info.log',
             level: 'info'
         }),
         new(winston.transports.File)({
             name: 'error-file',
-            filename: 'filelog-error.log',
+            filename: './logs/filelog-error.log',
             level: 'error',
             handleExceptions: true,
             humanReadableUnhandledException: true
@@ -49,20 +49,10 @@ var story = new(winston.Logger)({
     },
     transports: [
         new(winston.transports.File)({
-            name: 'space-file',
-            filename: 'space.log',
-            level: 'space'
-        }),
-        new(winston.transports.File)({
-            name: 'unknown-file',
-            filename: 'unknown.log',
-            level: 'unknown'
-        }),
-        new(winston.transports.File)({
-            name: 'laderis-file',
-            filename: 'laderis.log',
+            name: 'stoey-file',
+            filename: './logs/story.log',
             level: 'laderis'
-        })
+        }),
     ]
 });
 
