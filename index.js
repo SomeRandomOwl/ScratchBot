@@ -1027,7 +1027,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else if (redditcall.toLowerCase().indexOf('list') !== -1) {
                 redditNList = ""
                 for (var i = redditList.length - 1; i >= 0; i--) {
-                    redditNList = redditNList + ", " + redditList[i]
+                    redditNList = redditNList + redditList[i] + ", "
                 }
                 messageSend(channelID, "Check your PM's :mailbox_with_mail:")
                 messageSend(userID, "Here are my tracked subreddits!: \n\n```" + redditNList + '```\n')
