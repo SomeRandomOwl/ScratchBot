@@ -657,9 +657,10 @@ function redditScenery(channelID, reddit, name) {
             if (!error && response.statusCode == 200) {
                 redditJson = JSON.parse(body)
                 posts = redditJson.data.children
-                redditimg = posts[Math.floor(Math.random() * posts.length)];
-                redditimg = redditimg.data.url
-                messageSend(channelID, "Heres a image from " + reddit + ": " + redditimg)
+                redditP = posts[Math.floor(Math.random() * posts.length)];
+                img = redditP.data.url
+                title = redditP.data.title
+                messageSend(channelID, title + '\n' + img)
             }
         })
     } else {
