@@ -28,10 +28,43 @@ var logger = new(winston.Logger)({
     transports: [
         new(winston.transports.Console)(),
         new(winston.transports.File)({
-            filename: 'logs/Command.log'
+            name: 'info-file',
+            filename: 'filelog-info.log',
+            level: 'info'
+        }),
+        new(winston.transports.File)({
+            name: 'error-file',
+            filename: 'filelog-error.log',
+            level: 'error'
         })
     ]
 });
+var story = new(winston.logger) {
+    levels: {
+        space: 0,
+        unknown: 1,
+        laderis: 2,
+    }
+    transports: [
+        new(winston.transports.File)({
+            name: 'space-file',
+            filename: 'space.log',
+            level: 'space'
+        }),
+        new(winston.transports.File)({
+            name: 'unknown-file',
+            filename: 'unknown.log',
+            level: 'unknown'
+        }),
+        new(winston.transports.File)({
+            name: 'laderis-file',
+            filename: 'laderis.log',
+            level: 'laderis'
+        })
+    ]
+}
+
+
 /*/Bot credentials/*/
 var bot = new DiscordClient({
     autorun: true,
@@ -1065,10 +1098,26 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (channelID === '164845697508704257') {
         console.log(chalk.dim(message))
         fs.appendFile("logs/space.txt", '\n\n' + message)
+        story.space(message, {
+            mID: messageID,
+            username: user
+        })
     }
     if (channelID === '167855344129802241') {
         console.log(chalk.dim(message))
         fs.appendFile("logs/unknown.txt", '\n\n' + message)
+        story.unknown(message, {
+            mID: messageID,
+            username: user
+        })
+    }
+    if (channelID === '177624925794861056') {
+        console.log(chalk.dim(message))
+        fs.appendFile("logs/laderis.txt", '\n\n' + message)
+        story.laderis(message, {
+            mID: messageID,
+            username: user
+        })
     }
     //Special conditions to prevent the logging of bots and specially monitored chats
     if (userID.indexOf('104867073343127552') === 0 || channelID.indexOf('164845697508704257') === 0 || channelID.indexOf('167855344129802241') === 0) {
