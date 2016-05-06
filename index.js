@@ -1021,10 +1021,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('reddit') === 1 && ignore !== true) {
             var redditcmd = message
             var redditcall = redditcmd.replace('!reddit ', '')
-            if (redditcall.toLowerCase.indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
+            if (redditcall.toLowerCase().indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
                 var redditcall = redditcmd.replace('add  ', '')
                 storage.settings.redditList.push(redditcall)
-            } else if (redditcall.toLowerCase.indexOf('list') !== -1) {
+            } else if (redditcall.toLowerCase().indexOf('list') !== -1) {
                 redditNList = ""
                 for (var i = redditList.length - 1; i >= 0; i--) {
                     redditNList = redditNList + ", " + redditList[i]
