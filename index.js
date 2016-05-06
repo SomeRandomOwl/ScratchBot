@@ -610,6 +610,53 @@ function pug(channelID, name) {
     writeJSON('./storage', storage)
 }
 
+function reddit(channelID, reddit, name) {
+    /*var reddittime = gettime()
+    if (storage.d.Channels[name].lastreddit === undefined) {
+        storage.d.Channels[name].lastreddit = 0
+        storage.d.Channels[name].lastredditActt = 0
+    }
+    try {
+        console.log('yes')
+        lastreddittime = storage.d.Channels[name].lastreddit
+        elapsed = reddittime - lastreddittime
+        nextTime = lastreddittime + 3600
+        nextTime = nextTime - reddittime
+        nextTime = secondsToTime(nextTime)
+        elapsed = secondsToTime(elapsed)
+        nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
+        redditacttime = storage.d.Channels[name].lastredditActt
+        console.log("reddit elapsed: " + JSON.stringify(elapsed))
+    } catch (e) {
+        console.log('no')
+        storage.d.Channels[name].lastreddit = 0
+        storage.d.Channels[name].lastredditActt = 0
+    }*/
+    /*if (elapsed.h > 0) {
+        var redditacttime = moment().format('h:mm a')
+        storage.d.Channels[name].lastredditActt = redditacttime
+        
+        var lastreddittime = gettime()
+        storage.d.Channels[name].lastreddit = lastreddittime
+    } else {
+        messageSend(channelID, ":no_entry: Hey hold up, only one reddit image per hour, last reddit image was posted: " + redditacttime + ", time untill next post is allowed: " + nextTime)
+        return elapsed
+    }*/
+    if (isInArray(reddit, redditList)) {
+        request('https://www.reddit.com/r/' + reddit + '.json', function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                redditJson = JSON.parse(body)
+                posts = redditJson.data.children
+                redditimg = posts[Math.floor(Math.random() * posts.length)];
+                redditimg = redditimg.url
+                messageSend(channelID, "Heres a image from " + reddit + ": " + redditimg)
+            }
+        })
+    } else {
+        messageSend(channelID, "Not a recgonized image subreddit")
+    }
+    writeJSON('./storage', storage)
+}
 /* Bot on event functions */
 bot.on('debug', function(rawEvent) {
     try {
