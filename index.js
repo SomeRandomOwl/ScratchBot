@@ -654,7 +654,7 @@ function reddit(channelID, reddit, name) {
             }
         })
     } else {
-        messageSend(channelID, "Not a recgonized image subreddit to see recgonized reddits type " + commandmod "reddit list")
+        messageSend(channelID, "Not a recgonized image subreddit to see recgonized reddits type " + commandmod + "reddit list")
     }
     writeJSON('./storage', storage)
 }
