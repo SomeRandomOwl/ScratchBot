@@ -651,7 +651,7 @@ function reddit(channelID, reddit, name) {
                 console.log(posts)
                 redditimg = posts[Math.floor(Math.random() * posts.length)];
                 console.log(redditimg)
-                redditimg = redditimg.url
+                redditimg = redditimg.data.url
                 messageSend(channelID, "Heres a image from " + reddit + ": " + redditimg)
             }
         })
