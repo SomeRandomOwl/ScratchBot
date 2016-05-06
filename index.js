@@ -644,7 +644,7 @@ function reddit(channelID, reddit, name) {
         return elapsed
     }*/
     if (isInArray(reddit, redditList)) {
-        request('https://www.reddit.com/r/' + reddit + '.json', function(error, response, body) {
+        request('https://www.reddit.com/r/' + reddit + 'porn' + '.json', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 redditJson = JSON.parse(body)
                 posts = redditJson.data.children
