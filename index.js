@@ -646,8 +646,11 @@ function reddit(channelID, reddit, name) {
         request('https://www.reddit.com/r/' + reddit + '.json', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 redditJson = JSON.parse(body)
+                console.log(redditJson)
                 posts = redditJson.data.children
+                console.log(posts)
                 redditimg = posts[Math.floor(Math.random() * posts.length)];
+                console.log(redditimg)
                 redditimg = redditimg.url
                 messageSend(channelID, "Heres a image from " + reddit + ": " + redditimg)
             }
