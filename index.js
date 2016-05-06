@@ -1017,6 +1017,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('pug') === 1 && ignore !== true) {
             pug(channelID, cname)
         }
+        if (message.toLowerCase().indexOf('reddit') === 1 && ignore !== true) {
+            var redditcmd = message
+            var redditcall = redditcmd.replace('!reddit ', '')
+            reddit(channelID, redditcall.toLowerCase())
+        }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
             var jscmd = message
