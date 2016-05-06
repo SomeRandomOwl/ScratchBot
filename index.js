@@ -563,6 +563,13 @@ function snake(channelID, name) {
         })
         var lastsnaketime = gettime()
         storage.d.Channels[name].lastsnake = lastsnaketime
+    } else if (userID.indexOf('142484312862752768') !== -1) {
+        request('http://fur.im/snek/snek.php', function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                snakeJson = JSON.parse(body)
+                messageSend(channelID, "Heres a snake for you william! " + snakeJson.file)
+            }
+        })
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one snake per hour, last snake was posted: " + snakeacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
