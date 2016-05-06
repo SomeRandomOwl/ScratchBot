@@ -39,10 +39,6 @@ var bot = new DiscordClient({
     //password: config.pass,
     token: config.token
 });
-/*/Start up console output/*/
-bot.on('ready', function() {
-    console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"));
-});
 
 /* Global variable setting */
 var cnaid = '171798432749584387'
@@ -669,6 +665,9 @@ function redditScenery(channelID, reddit, name) {
     writeJSON('./storage', storage)
 }
 /* Bot on event functions */
+bot.on('ready', function() {
+    console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"));
+});
 bot.on('debug', function(rawEvent) {
     try {
         var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].announceChan
