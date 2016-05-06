@@ -39,7 +39,7 @@ var logger = new(winston.Logger)({
         })
     ]
 });
-var story = new(winston.logger)({
+var story = new(winston.Logger)({
     levels: {
         space: 0,
         unknown: 1,
