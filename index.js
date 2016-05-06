@@ -523,22 +523,22 @@ function cat(channelID, name) {
 }
 
 function snake(channelID, name) {
-    var Snaketime = gettime()
-    if (storage.d.Channels[name].lastSnake === undefined) {
-        storage.d.Channels[name].lastSnake = 0
-        storage.d.Channels[name].lastSnakeActt = 0
+    var snaketime = gettime()
+    if (storage.d.Channels[name].lastsnake === undefined) {
+        storage.d.Channels[name].lastsnake = 0
+        storage.d.Channels[name].lastsnakeActt = 0
     }
     try {
         console.log('yes')
-        lastSnaketime = storage.d.Channels[name].lastSnake
-        elapsed = Snaketime - lastSnaketime
-        nextTime = lastSnaketime + 3600
-        nextTime = nextTime - Snaketime
+        lastsnaketime = storage.d.Channels[name].lastsnake
+        elapsed = snaketime - lastsnaketime
+        nextTime = lastsnaketime + 3600
+        nextTime = nextTime - snaketime
         nextTime = secondsToTime(nextTime)
         elapsed = secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
-        Snakeacttime = storage.d.Channels[name].lastSnakeActt
-        console.log("Snake elapsed: " + JSON.stringify(elapsed))
+        snakeacttime = storage.d.Channels[name].lastsnakeActt
+        console.log("snake elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
         console.log('no')
         storage.d.Channels[name].lastsnake = 0
