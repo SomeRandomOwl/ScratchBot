@@ -529,7 +529,7 @@ function cat(channelID, name) {
     writeJSON('./storage', storage)
 }
 
-function snake(channelID, name) {
+function snake(channelID, name, userID) {
     var snaketime = gettime()
     if (storage.d.Channels[name].lastsnake === undefined) {
         storage.d.Channels[name].lastsnake = 0
@@ -1020,7 +1020,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cat(channelID, cname)
         }
         if (message.toLowerCase().indexOf('snake') === 1 && ignore !== true) {
-            snake(channelID, cname)
+            snake(channelID, cname, userID)
         }
         if (message.toLowerCase().indexOf('pug') === 1 && ignore !== true) {
             pug(channelID, cname)
