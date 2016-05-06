@@ -65,6 +65,7 @@ var xkcdJson = null
 
 if (storage.settings.redditList === undefined) {
     storage.settings.redditList = []
+    redditList = storage.settings.redditList
 } else {
     redditList = storage.settings.redditList
 }
@@ -1020,7 +1021,19 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('reddit') === 1 && ignore !== true) {
             var redditcmd = message
             var redditcall = redditcmd.replace('!reddit ', '')
-            reddit(channelID, redditcall.toLowerCase())
+            if (redditcall.toLowerCase.indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
+                var redditcall = redditcmd.replace('add  ', '')
+                storage.settings.redditList.push(redditcall)
+            } else if (redditcall.toLowerCase.indexOf('list') !== -1) {
+                redditNList = ""
+                for (var i = redditList.length - 1; i >= 0; i--) {
+                    redditNList = redditNList + ", " + redditList[i]
+                }
+                messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+                messageSend(userID, "Here are my tracked subreddits!: \n\n```" + redditNList + '```\n')
+            } else {
+                reddit(channelID, redditcall.toLowerCase())
+            }
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
