@@ -44,7 +44,7 @@ var story = new(winston.logger)({
                 space: 0,
                 unknown: 1,
                 laderis: 2,
-            }
+            },
             transports: [
                 new(winston.transports.File)({
                     name: 'space-file',
