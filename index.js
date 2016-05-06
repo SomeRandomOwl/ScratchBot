@@ -487,7 +487,7 @@ function status(statuscall, channelID, rawEvent) {
         messageSend(channelID, "Error; No User specified, or invalid user")
     }
 }
-
+/*/Posts a random cat picture, limit 1 per hour/*/
 function cat(channelID, name) {
     var cattime = gettime()
     if (storage.d.Channels[name].lastCat === undefined) {
@@ -528,7 +528,7 @@ function cat(channelID, name) {
     }
     writeJSON('./storage', storage)
 }
-
+/*/Posts a random snake picture, limit 1 per hour/*/
 function snake(channelID, name, userID) {
     var snaketime = gettime()
     if (storage.d.Channels[name].lastsnake === undefined) {
@@ -576,7 +576,7 @@ function snake(channelID, name, userID) {
     }
     writeJSON('./storage', storage)
 }
-
+/*/Posts a random pug picture, limit 1 per hour/*/
 function pug(channelID, name) {
     var pugtime = gettime()
     if (storage.d.Channels[name].lastpug === undefined) {
@@ -617,8 +617,9 @@ function pug(channelID, name) {
     }
     writeJSON('./storage', storage)
 }
-
+/*/Posts a random image from a SFW scenery subreddit/*/
 function redditScenery(channelID, reddit, name) {
+
     /*var reddittime = gettime()
     if (storage.d.Channels[name].lastreddit === undefined) {
         storage.d.Channels[name].lastreddit = 0
@@ -650,6 +651,7 @@ function redditScenery(channelID, reddit, name) {
         messageSend(channelID, ":no_entry: Hey hold up, only one reddit image per hour, last reddit image was posted: " + redditacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }*/
+
     if (isInArray(reddit, redditList)) {
         request('https://www.reddit.com/r/' + reddit + 'porn' + '.json', function(error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -661,7 +663,7 @@ function redditScenery(channelID, reddit, name) {
             }
         })
     } else {
-        messageSend(channelID, "Not a recgonized image subreddit to see recgonized reddits type " + commandmod + "reddit list")
+        messageSend(channelID, "Not a recgonized image subreddit to see recgonized reddits type " + commandmod + "redditscenery list")
     }
     writeJSON('./storage', storage)
 }
@@ -1027,7 +1029,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('redditscenery') === 1 && ignore !== true) {
             var redditcmd = message
-            var redditcall = redditcmd.replace('!reddit ', '')
+            var redditcall = redditcmd.replace('!redditscenery ', '')
             if (redditcall.toLowerCase().indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
                 var redditcall = redditcmd.replace('add  ', '')
                 storage.settings.redditList.push(redditcall)
