@@ -36,6 +36,8 @@ var logger = new(winston.Logger)({
             name: 'error-file',
             filename: 'filelog-error.log',
             level: 'error'
+            handleExceptions: true,
+            humanReadableUnhandledException: true
         })
     ]
 });
