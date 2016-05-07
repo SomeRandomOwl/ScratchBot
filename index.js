@@ -1178,13 +1178,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
         if (channelID in bot.directMessages) {
             console.log(timed + 'Channel: ' + 'PM | ' + user + ': ' + message)
-            fs.appendFile("logs/" + user + ".txt", '\n' + timed + user + ": " + message)
+            fs.appendFile("logs/DM/" + user + ".txt", '\n' + timed + user + ": " + message)
         } else {
             servern = bot.servers[serverID].name
             channeln = bot.servers[serverID].channels[channelID].name
             console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
             //fs.appendFile("logs/Main LOG.txt", '\n' + timed + user + ": " + message)
-            fs.appendFile("logs/" + servern + '.' + channeln + '.txt', '\n' + timed + user + ": " + message)
+            fs.appendFile("logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
         }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes" && ignore !== true) {
         if (ignore !== true) {
