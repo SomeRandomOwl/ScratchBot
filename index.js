@@ -36,8 +36,8 @@ var logger = new(winston.Logger)({
             name: 'error-file',
             filename: './logs/filelog-error.log',
             level: 'error',
-           // handleExceptions: true,
-           // humanReadableUnhandledException: true
+            // handleExceptions: true,
+            // humanReadableUnhandledException: true
         })
     ]
 });
@@ -679,15 +679,15 @@ function redditScenery(channelID, reddit, name) {
     }*/
 
     if (isInArray(reddit, redditList)) {
-	var notif = messageSend(channelID,"Grabbing a image from reddit, this might take a few seconds...")
-	request('https://www.reddit.com/r/' + reddit + 'porn' + '.json', function(error, response, body) {
+        var notif = messageSend(channelID, "Grabbing a image from reddit, this might take a few seconds...")
+        request('https://www.reddit.com/r/' + reddit + 'porn' + '.json', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 redditJson = JSON.parse(body)
                 posts = redditJson.data.children
                 redditP = posts[Math.floor(Math.random() * posts.length)];
                 img = redditP.data.url
                 title = redditP.data.title
-		messageDelete(channelID,sentPrevId)
+                messageDelete(channelID, sentPrevId)
                 messageSend(channelID, title + '\n' + img)
             }
         })
@@ -998,7 +998,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0) {
+        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0 || userID.indexOf(SownerId) === 0) {
             var igcmd = message
             var igcall = igcmd.replace(commandmod + 'ignore ', '')
             if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
@@ -1059,7 +1059,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageID: messageID
             })
         }
-        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0) {
+        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0 || userID.indexOf(SownerId) === 0) {
             try {
                 storage.d.Servers[sname].announceChan = channelID
                 messageSend(channelID, "Ok now announcing user changes on this channel")
@@ -1078,7 +1078,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             pug(channelID, cname)
         }
         if (message.toLowerCase().indexOf('redditscenery') === 1 && ignore !== true) {
-	    var random = redditList[Math.floor(Math.random() * redditList.length)]
+            var random = redditList[Math.floor(Math.random() * redditList.length)]
             var redditcmd = message
             var redditcall = redditcmd.replace(commandmod + 'redditscenery ', '')
             if (redditcall.toLowerCase().indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
@@ -1091,13 +1091,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 }
                 messageSend(channelID, "Check your PM's :mailbox_with_mail:")
                 messageSend(userID, "Here are my tracked subreddits!: \n\n```" + redditNList + '```\n')
-            } else if (redditcmd.indexOf(' ') !== -1){
+            } else if (redditcmd.indexOf(' ') !== -1) {
                 redditScenery(channelID, redditcall.toLowerCase())
             } else {
-		messgnt("Ok heres a " + random + " related picture")
-		console.log('Random')
-		redditScenery(channelID,random)
-	    }
+                messgnt("Ok heres a " + random + " related picture")
+                console.log('Random')
+                redditScenery(channelID, random)
+            }
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
