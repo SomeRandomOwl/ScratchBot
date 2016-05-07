@@ -1014,6 +1014,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
+        if (message.toLowerCase().indexOf('prefix') === 1 && userID.indexOf(ownerId) === 0 || userID.indexOf(SownerId) === 0) {
+            var prefixcmd = message
+            var prefixcall = prefixcmd.replace(commandmod + 'prefix ', '')
+            storage.d.Servers.prefixOvrid = prefixcall
+        }
         if (message.toLowerCase().indexOf('yt') === 1 && ignore !== true) {
             var ytcmd = message
             var ytcall = ytcmd.replace(commandmod + 'yt ', '')
