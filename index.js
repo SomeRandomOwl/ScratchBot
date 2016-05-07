@@ -907,12 +907,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             typing: false
         });
     }
-    try {
-        if (rawEvent.d.mentions[0].id !== undefined) {
-            if (rawEvent.d.mentions[0].id === bot.id) {
-                if (message.indexOf('<@') === 0) {
-                    //message = message.replace("<@" + bot.id + ">", commandmod)
-                }
+    //try {
+    if (rawEvent.d.mentions[0].id !== undefined) {
+        if (rawEvent.d.mentions[0].id === bot.id) {
+            if (message.indexOf('<@') === 0) {
+                //message = message.replace("<@" + bot.id + ">", commandmod)
             }
         }
     } catch (e) {
@@ -1214,8 +1213,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             logger.info(chalk.dim('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
         }
     }
-    ignore = null
-    announce = null
+    ignore = null announce = null
 });
 
 /* Start of console input */
