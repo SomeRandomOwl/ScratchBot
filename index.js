@@ -999,10 +999,22 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0 || userID.indexOf(SownerId) === 0) {
+        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0) {
             var igcmd = message
             var igcall = igcmd.replace(commandmod + 'ignore ', '')
             if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
+                uningoreC(channelID)
+                messageSend(channelID, 'Ok no longer ignoring this channel')
+            } else {
+                ignoreC(channelID)
+                messageSend(channelID, 'Ok ignoring this channel')
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(SownerId) === 0) {
+            var igcmd = message
+            var igcall = igcmd.replace(commandmod + 'ignore ', '')
+            if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(SownerId) === 0) {
                 uningoreC(channelID)
                 messageSend(channelID, 'Ok no longer ignoring this channel')
             } else {
@@ -1060,7 +1072,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageID: messageID
             })
         }
-        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0 || userID.indexOf(SownerId) === 0) {
+        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0) {
+            try {
+                storage.d.Servers[sname].announceChan = channelID
+                messageSend(channelID, "Ok now announcing user changes on this channel")
+            } catch (e) {
+                logger.error(chalk.red(e))
+            }
+            rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(SownerId) === 0) {
             try {
                 storage.d.Servers[sname].announceChan = channelID
                 messageSend(channelID, "Ok now announcing user changes on this channel")
