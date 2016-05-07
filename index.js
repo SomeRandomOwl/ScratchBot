@@ -1074,21 +1074,39 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
         }
         if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0) {
-            try {
-                storage.d.Servers[sname].announceChan = channelID
-                messageSend(channelID, "Ok now announcing user changes on this channel")
-            } catch (e) {
-                logger.error(chalk.red(e))
+            if (storage.d.Servers[sname].announceChan === null || storage.d.Servers[sname].announceChan === undefined) {
+                try {
+                    storage.d.Servers[sname].announceChan = channelID
+                    messageSend(channelID, "Ok now announcing user changes on this channel")
+                } catch (e) {
+                    logger.error(chalk.red(e))
+                }
+            } else {
+                try {
+                    storage.d.Servers[sname].announceChan = null
+                    messageSend(channelID, "Ok no longer announcing user changes on this channel")
+                } catch (e) {
+                    logger.error(chalk.red(e))
+                }
             }
             rconcmd = "Yes"
             announce = "Done"
         }
         if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(SownerId) === 0 && announce !== "Done") {
-            try {
-                storage.d.Servers[sname].announceChan = channelID
-                messageSend(channelID, "Ok now announcing user changes on this channel")
-            } catch (e) {
-                logger.error(chalk.red(e))
+            if (storage.d.Servers[sname].announceChan === null || storage.d.Servers[sname].announceChan === undefined) {
+                try {
+                    storage.d.Servers[sname].announceChan = channelID
+                    messageSend(channelID, "Ok now announcing user changes on this channel")
+                } catch (e) {
+                    logger.error(chalk.red(e))
+                }
+            } else {
+                try {
+                    storage.d.Servers[sname].announceChan = null
+                    messageSend(channelID, "Ok no longer announcing user changes on this channel")
+                } catch (e) {
+                    logger.error(chalk.red(e))
+                }
             }
             rconcmd = "Yes"
         }
