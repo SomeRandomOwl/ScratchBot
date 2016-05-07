@@ -36,8 +36,8 @@ var logger = new(winston.Logger)({
             name: 'error-file',
             filename: './logs/filelog-error.log',
             level: 'error',
-            handleExceptions: true,
-            humanReadableUnhandledException: true
+           // handleExceptions: true,
+           // humanReadableUnhandledException: true
         })
     ]
 });
@@ -664,7 +664,6 @@ function redditScenery(channelID, reddit, name) {
     /*if (elapsed.h > 0) {
         var redditacttime = moment().format('h:mm a')
         storage.d.Channels[name].lastredditActt = redditacttime
-        
         var lastreddittime = gettime()
         storage.d.Channels[name].lastreddit = lastreddittime
     } else {
@@ -673,13 +672,15 @@ function redditScenery(channelID, reddit, name) {
     }*/
 
     if (isInArray(reddit, redditList)) {
-        request('https://www.reddit.com/r/' + reddit + 'porn' + '.json', function(error, response, body) {
+	var notif = messageSend(channelID,"Grabbing a image from reddit, this might take a few seconds...")
+	request('https://www.reddit.com/r/' + reddit + 'porn' + '.json', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 redditJson = JSON.parse(body)
                 posts = redditJson.data.children
                 redditP = posts[Math.floor(Math.random() * posts.length)];
                 img = redditP.data.url
                 title = redditP.data.title
+		messageDelete(channelID,sentPrevId)
                 messageSend(channelID, title + '\n' + img)
             }
         })
@@ -868,10 +869,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         });
     }
     //Test Connectivity
-    /*if (message.toLowerCase() === "ping" && ignore !== true) {
+    if (message.toLowerCase() === "ping" && ignore !== true) {
         messgnt("pong")
         rconcmd = 'Yes'
-    }*/
+    }
     /*if (isInArray(message, nighttig) && ignore !== true) {
         var nights = ["Night! :zzz:", "Goodnight <@" + userID + "> :zzz:", "Sleep well <@" + userID + "> :zzz:", "Have a good sleep! :zzz:", "Don't let the bed bugs bite! :zzz:", "Nighty nite! :zzz:"]
         var nightm = "Night!"
@@ -1052,7 +1053,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             pug(channelID, cname)
         }
         if (message.toLowerCase().indexOf('redditscenery') === 1 && ignore !== true) {
-            var redditcmd = message
+	    var random = redditList[Math.floor(Math.random() * redditList.length)]
+	    var redditcmd = message
             var redditcall = redditcmd.replace('!redditscenery ', '')
             if (redditcall.toLowerCase().indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
                 var redditcall = redditcmd.replace('add  ', '')
@@ -1064,9 +1066,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 }
                 messageSend(channelID, "Check your PM's :mailbox_with_mail:")
                 messageSend(userID, "Here are my tracked subreddits!: \n\n```" + redditNList + '```\n')
-            } else {
+            } else if (redditcmd.indexOf(' ') !== -1){
                 redditScenery(channelID, redditcall.toLowerCase())
-            }
+            } else {
+		messgnt("Ok heres a " + random + " related picture")
+		console.log('Random')
+		redditScenery(channelID,random)
+	    }
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
