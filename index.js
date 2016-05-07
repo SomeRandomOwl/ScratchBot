@@ -73,8 +73,7 @@ var sentPrevId = null;
 var commandmod = config.cmdMod;
 var ownerId = config.ownerId;
 var rconcmd = 'No';
-var clist = '\n!commands, !math, !ids, !supportedmath, !yt, !triggers, !picture, !cat, !snake, !pug, !redditscenery, !xkcd, !status, !stats';
-var tlist = '\nUtility: ping\nPolite replies: goodnight,  nite,  night, hi, hello';
+var clist = '\n!commands, !math, !ids, !supportedmath, !yt, !picture, !cat, !snake, !pug, !redditscenery, !xkcd, !status, !stats';
 var nighttig = ['night', 'nite', 'goodnight', "g'nite", 'nighty nite!'];
 var debug = false;
 var serverID = null;
@@ -135,9 +134,13 @@ function serverlist(verb) {
             console.log(bot.servers[serverID].name)
         }
         var name = bot.servers[serverID].name;
+        var SownerId = bot.servers[serverID].owner_id
         if (storage.d.Servers[name] === undefined) {
             storage.d.Servers[name] = {
-                'id': serverID
+                'id': serverID,
+                'messageCnt': 0,
+                'announceChan': null,
+                'SownerId': SownerId
             }
         } else {
             if (storage.d.Servers[name].messageCnt === undefined) {
@@ -145,6 +148,9 @@ function serverlist(verb) {
             }
             if (storage.d.Servers[name].announceChan === undefined) {
                 storage.d.Servers[name].announceChan = null
+            }
+            if (storage.d.Servers[name].SownerId === undefined) {
+                storage.d.Servers[name].SownerId = SownerId
             }
         }
     }
@@ -165,7 +171,8 @@ function channellist(verb) {
             if (storage.d.Channels[name] === undefined) {
                 storage.d.Channels[name] = {
                     "id": channelID,
-                    "type": type
+                    "type": type,
+                    "messageCnt": 0,
                 }
             } else {
                 storage.d.Channels[name].id = channelID
@@ -718,6 +725,24 @@ bot.on('debug', function(rawEvent) {
         var userID = rawEvent.d.user.id
         messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just left the server! :cold_sweat:")
     }
+    if (rawEvent.t === "GUILD_CREATE") {
+        var name = rawEvent.d.name
+        var SownerId = rawEvent.d.owner_id
+        storage.d.Servers[name] = {
+            'id': serverID,
+            'messageCnt': 0,
+            'announceChan': null,
+            'SownerId': SownerId
+        }
+    }
+    if (rawEvent.t === "CHANNEL_CREATE") {
+        var name = rawEvent.d.name
+        storage.d.Channels[name] = {
+            "id": channelID,
+            "type": type,
+            "messageCnt": 0,
+        }
+    }
 });
 bot.on('disconnected', function() {
     logger.error(chalk.red("Bot got disconnected, reconnecting"))
@@ -794,7 +819,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var ignore = true
     }
     rconcmd = 'No'
-
+    if (channelID in bot.directMessages) {
+        DM = true
+    } else {
+        DM = false
+    }
     //Gets the message id and server id
     var messageID = rawEvent.d.id
     var serverID = bot.serverFromChannel(channelID)
@@ -804,6 +833,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var sname = bot.servers[serverID].name
     } catch (e) {
         logger.error(chalk.red(e))
+    }
+    if (storage.d.Servers[sname].SownerId !== undefined) {
+        var SownerId = storage.d.Servers[sname].SownerId
     }
     //Logging Related
     if (storage.d.Users[user] !== undefined) {
@@ -859,6 +891,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (debug === 1) {
         console.log(rawEvent)
     }
+    if (DM === false) {
+        if (storage.d.Servers[sname].prefixOvrid !== undefined) {
+            commandmod === storage.d.Servers[sname].prefixOvrid
+        } else {
+            commandmod === '!'
+        }
+    }
     //function to quick call message sending to minimize code
     function messgnt(msg) {
         bot.sendMessage({
@@ -867,20 +906,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             typing: false
         });
     }
+    if (rawEvent.d.mentions[0].id !== undefined) {
+        if (rawEvent.d.mentions[0].id === bot.id) {
+            if (message.indexOf('<@') === 0) {
+                message = message.replace("<@" + bot.id + ">", commandmod)
+            }
+        }
+    }
     //Test Connectivity
     /*if (message.toLowerCase() === "ping" && ignore !== true) {
         messgnt("pong")
-        rconcmd = 'Yes'
-    }*/
-    /*if (isInArray(message, nighttig) && ignore !== true) {
-        var nights = ["Night! :zzz:", "Goodnight <@" + userID + "> :zzz:", "Sleep well <@" + userID + "> :zzz:", "Have a good sleep! :zzz:", "Don't let the bed bugs bite! :zzz:", "Nighty nite! :zzz:"]
-        var nightm = "Night!"
-        nightm = nights[Math.floor(Math.random() * nights.length)];
-        bot.sendMessage({
-            to: channelID,
-            message: nightm,
-            typing: true
-        });
         rconcmd = 'Yes'
     }*/
     //This tests for commands using the command mod set in the config
@@ -891,7 +926,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         //This is the command for rolling dice
         if (message.toLowerCase().indexOf('roll') === 1 && ignore !== true) {
             var msg = message
-            var dice = msg.replace('!roll ', '')
+            var dice = msg.replace(commandmod + 'roll ', '')
             diceroll(dice, userID, channelID)
             rconcmd = 'Yes'
         }
@@ -917,7 +952,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('math') === 1 && ignore !== true) {
             var mathcmd = message
-            var mathcall = mathcmd.replace('!math ', '')
+            var mathcall = mathcmd.replace(commandmod + 'math ', '')
             try {
                 messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
             } catch (e) {
@@ -928,7 +963,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('status') === 1 && ignore !== true) {
             var statuscmd = message
-            var statuscall = statuscmd.replace('!status ', '')
+            var statuscall = statuscmd.replace(commandmod + 'status ', '')
             status(statuscall, channelID, rawEvent)
             rconcmd = 'Yes'
         }
@@ -942,11 +977,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
             rconcmd = "Yes"
         }
-        if (message.toLowerCase().indexOf('triggers') === 1 && ignore !== true) {
-            messageSend(channelID, "Check your PM's :mailbox_with_mail:")
-            messageSend(channelID, "Here are my triggers!: \n\n```" + tlist + '```\n')
-            rconcmd = 'Yes'
-        }
         if (message.toLowerCase().indexOf('commands') === 1 && ignore !== true) {
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             messageSend(userID, "Here are my commands!: \n\n```" + clist + '```\n')
@@ -955,7 +985,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('poke') === 1 && ignore !== true) {
             var pkcmd = message
-            var pkcall = pkcmd.replace('!poke ', '')
+            var pkcall = pkcmd.replace(commandmod + 'poke ', '')
             var pkcall = pkcall.replace('<@', '')
             var pkcall = pkcall.replace('>', '')
             messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">")
@@ -974,7 +1004,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0) {
             var igcmd = message
-            var igcall = igcmd.replace('!ignore ', '')
+            var igcall = igcmd.replace(commandmod + 'ignore ', '')
             if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
                 uningoreC(channelID)
                 messageSend(channelID, 'Ok no longer ignoring this channel')
@@ -986,7 +1016,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('yt') === 1 && ignore !== true) {
             var ytcmd = message
-            var ytcall = ytcmd.replace('!yt ', '')
+            var ytcall = ytcmd.replace(commandmod + 'yt ', '')
             yt(ytcall, userID, channelID)
             bot.deleteMessage({
                 channel: channelID,
@@ -1022,7 +1052,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 }
             } else {
                 var xkcdcmd = message
-                var xkcdcall = xkcdcmd.replace('!xkcd ', '')
+                var xkcdcall = xkcdcmd.replace(commandmod + 'xkcd ', '')
                 relxkcd(xkcdcall, channelID, cname)
             }
             rconcmd = 'Yes'
@@ -1053,7 +1083,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('redditscenery') === 1 && ignore !== true) {
             var redditcmd = message
-            var redditcall = redditcmd.replace('!redditscenery ', '')
+            var redditcall = redditcmd.replace(commandmod + 'redditscenery ', '')
             if (redditcall.toLowerCase().indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
                 var redditcall = redditcmd.replace('add  ', '')
                 storage.settings.redditList.push(redditcall)
@@ -1071,7 +1101,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
             var jscmd = message
-            var jscall = jscmd.replace('!js ', '')
+            var jscall = jscmd.replace(commandmod + 'js ', '')
             try {
                 eval(jscall)
             } catch (e) {
