@@ -820,6 +820,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
         var ignore = true
     }
+    DM = false
     rconcmd = 'No'
     if (channelID in bot.directMessages) {
         console.log('DM')
