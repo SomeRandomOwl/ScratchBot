@@ -701,7 +701,6 @@ bot.on('ready', function() {
     console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"));
 });
 bot.on('debug', function(rawEvent) {
-    console.log(rawEvent)
     try {
         var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].announceChan
     } catch (e) {
