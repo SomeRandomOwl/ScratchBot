@@ -912,12 +912,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (rawEvent.d.mentions[0].id !== undefined) {
             if (rawEvent.d.mentions[0].id === bot.id) {
                 if (message.indexOf('<@') === 0) {
-                    //message = message.replace("<@" + bot.id + ">", commandmod)
+                    message = message.replace("<@" + bot.id + ">", commandmod)
                 }
             }
         }
     } catch (e) {
-        console.log('')
+        var error = null
     }
     //This tests for commands using the command mod set in the config
     if (message.indexOf(commandmod) != -1) {
