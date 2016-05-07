@@ -907,12 +907,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             typing: false
         });
     }
-    if (rawEvent.d.mentions[0].id !== undefined) {
-        if (rawEvent.d.mentions[0].id === bot.id) {
-            if (message.indexOf('<@') === 0) {
-                message = message.replace("<@" + bot.id + ">", commandmod)
+    try {
+        if (rawEvent.d.mentions[0].id !== undefined) {
+            if (rawEvent.d.mentions[0].id === bot.id) {
+                if (message.indexOf('<@') === 0) {
+                    message = message.replace("<@" + bot.id + ">", commandmod)
+                }
             }
         }
+    } catch (e) {
+        return
     }
     //This tests for commands using the command mod set in the config
     if (message.indexOf(commandmod) != -1) {
