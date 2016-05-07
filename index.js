@@ -1010,8 +1010,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageSend(channelID, 'Ok ignoring this channel')
             }
             rconcmd = 'Yes'
+            ignore = "Done"
         }
-        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(SownerId) === 0) {
+        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(SownerId) === 0 && ignore !== "Done") {
             var igcmd = message
             var igcall = igcmd.replace(commandmod + 'ignore ', '')
             if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(SownerId) === 0) {
@@ -1080,8 +1081,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 logger.error(chalk.red(e))
             }
             rconcmd = "Yes"
+            announce = "Done"
         }
-        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(SownerId) === 0) {
+        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(SownerId) === 0 && announce !== "Done") {
             try {
                 storage.d.Servers[sname].announceChan = channelID
                 messageSend(channelID, "Ok now announcing user changes on this channel")
@@ -1191,6 +1193,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             logger.info(chalk.dim('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
         }
     }
+    ignore = null
+    announce = null
 });
 
 /* Start of console input */
