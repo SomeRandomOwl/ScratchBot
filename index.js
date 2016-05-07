@@ -816,6 +816,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     //});
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
+    console.log(rawEvent)
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
         var ignore = true
     }
