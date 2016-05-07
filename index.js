@@ -1215,7 +1215,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             logger.info(chalk.dim('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
         }
     }
-    ignore = null announce = null
+    ignore = null
+    announce = null
 });
 
 /* Start of console input */
