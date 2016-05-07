@@ -1018,6 +1018,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var prefixcmd = message
             var prefixcall = prefixcmd.replace(commandmod + 'prefix ', '')
             storage.d.Servers.prefixOvrid = prefixcall
+            messageSend(channelID, "Ok the prefix being used for this server is now: " + prefixcall)
         }
         if (message.toLowerCase().indexOf('yt') === 1 && ignore !== true) {
             var ytcmd = message
