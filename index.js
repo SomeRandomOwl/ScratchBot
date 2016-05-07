@@ -816,7 +816,6 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     //});
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
-    console.log(rawEvent)
     console.log(message)
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
         var ignore = true
@@ -825,9 +824,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (channelID in bot.directMessages) {
         console.log('DM')
         DM = true
-    } else {
-        DM = false
-        console.log('NDM')
     }
     //Gets the message id and server id
     var messageID = rawEvent.d.id
