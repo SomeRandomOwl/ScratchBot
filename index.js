@@ -169,7 +169,7 @@ function channellist(verb) {
             var name = bot.servers[serverID].channels[channelID].name;
             var type = bot.servers[serverID].channels[channelID].type;
             var sname = bot.servers[serverID].name
-            if (storage.d.Servers.[sname].Channels[name] === undefined) {
+            if (storage.d.Servers[sname].Channels[name] === undefined) {
                 storage.d.Channels[name] = {
                     "id": channelID,
                     "type": type,
