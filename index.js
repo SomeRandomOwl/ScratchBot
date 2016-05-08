@@ -881,12 +881,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         fs.appendFile("logs/Links.txt", '\n' + link)
     }
     if (cname !== undefined) {
-        if (storage.d.Servers[sname].Channels[name].messageCnt === undefined) {
-            storage.d.Servers[sname].Channels[name].messageCnt = 1
+        if (storage.d.Servers[sname].Channels[cname].messageCnt === undefined) {
+            storage.d.Servers[sname].Channels[cname].messageCnt = 1
         } else {
-            mccount = storage.d.Servers[sname].Channels[name].messageCnt
+            mccount = storage.d.Servers[sname].Channels[cname].messageCnt
             mccount = mccount + 1
-            storage.d.Servers[sname].Channels[name].messageCnt = mccount
+            storage.d.Servers[sname].Channels[cname].messageCnt = mccount
         }
         writeJSON('./storage', storage)
     }
@@ -1053,25 +1053,25 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (message.indexOf(' ') === -1) {
                 var comictime = gettime()
                 try {
-                    lastcomictime = storage.d.Servers[sname].Channels[name].lastComic
+                    lastcomictime = storage.d.Servers[sname].Channels[cname].lastComic
                     elapsed = comictime - lastcomictime
                     elapsed = secondsToTime(elapsed)
-                    comicacttime = storage.d.Servers[sname].Channels[name].lastComicActt
+                    comicacttime = storage.d.Servers[sname].Channels[cname].lastComicActt
                     console.log("Comic elapsed: " + JSON.stringify(elapsed))
                 } catch (e) {
-                    storage.d.Servers[sname].Channels[name].lastComic = null
-                    storage.d.Servers[sname].Channels[name].lastComicActt = null
+                    storage.d.Servers[sname].Channels[cname].lastComic = null
+                    storage.d.Servers[sname].Channels[cname].lastComicActt = null
                 }
                 if (elapsed.h > 0) {
                     var comicacttime = moment().format('h:mm a')
-                    storage.d.Servers[sname].Channels[name].lastComicActt = comicacttime
+                    storage.d.Servers[sname].Channels[cname].lastComicActt = comicacttime
                     xkcd.img(function(err, res) {
                         if (!err) {
                             messageSend(channelID, res.title + "\n" + res.url)
                         }
                     });
                     var lastcomictime = gettime()
-                    storage.d.Servers[sname].Channels[name].lastComic = lastcomictime
+                    storage.d.Servers[sname].Channels[cname].lastComic = lastcomictime
                 } else {
                     messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
                 }
