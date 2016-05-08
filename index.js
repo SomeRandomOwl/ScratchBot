@@ -728,6 +728,7 @@ bot.on('debug', function(rawEvent) {
     }
     if (rawEvent.t === "GUILD_CREATE") {
         var name = rawEvent.d.name
+	var serverID = rawEvent.d.id
         var SownerId = rawEvent.d.owner_id
         storage.d.Servers[name] = {
             'id': serverID,
@@ -738,7 +739,9 @@ bot.on('debug', function(rawEvent) {
     }
     if (rawEvent.t === "CHANNEL_CREATE") {
         var name = rawEvent.d.name
-        storage.d.Channels[name] = {
+	var channelID = rawEvent.d.id
+	var type = rawEvent.d.type
+	storage.d.Channels[name] = {
             "id": channelID,
             "type": type,
             "messageCnt": 0,
