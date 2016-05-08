@@ -1158,7 +1158,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
-        if (message.toLowerCase().indexOf('js') === 1 && ) {
+        if (message.toLowerCase().indexOf('js') === 1) {
             var jscmd = message
             var jscall = jscmd.replace(commandmod + 'js ', '')
             if (userID.indexOf(ownerId) === 0) {
