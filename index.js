@@ -1003,28 +1003,27 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(ownerId) === 0) {
+        if (message.toLowerCase().indexOf('ignore') === 1) {
             var igcmd = message
             var igcall = igcmd.replace(commandmod + 'ignore ', '')
-            if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
-                uningoreC(channelID)
-                messageSend(channelID, 'Ok no longer ignoring this channel')
+            if (userID.indexOf(ownerId) === 0) {
+                if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
+                    uningoreC(channelID)
+                    messageSend(channelID, 'Ok no longer ignoring this channel')
+                } else {
+                    ignoreC(channelID)
+                    messageSend(channelID, 'Ok ignoring this channel')
+                }
+            } else if (userID.indexOf(SownerId) === 0) {
+                if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(SownerId) === 0) {
+                    uningoreC(channelID)
+                    messageSend(channelID, 'Ok no longer ignoring this channel')
+                } else {
+                    ignoreC(channelID)
+                    messageSend(channelID, 'Ok ignoring this channel')
+                }
             } else {
-                ignoreC(channelID)
-                messageSend(channelID, 'Ok ignoring this channel')
-            }
-            rconcmd = 'Yes'
-            ignore = "Done"
-        }
-        if (message.toLowerCase().indexOf('ignore') === 1 && userID.indexOf(SownerId) === 0 && ignore !== "Done") {
-            var igcmd = message
-            var igcall = igcmd.replace(commandmod + 'ignore ', '')
-            if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(SownerId) === 0) {
-                uningoreC(channelID)
-                messageSend(channelID, 'Ok no longer ignoring this channel')
-            } else {
-                ignoreC(channelID)
-                messageSend(channelID, 'Ok ignoring this channel')
+                messageSend(channelID, "You are not allowed to do that command, you need to be eithe the bot or server owner")
             }
             rconcmd = 'Yes'
         }
@@ -1077,40 +1076,41 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageID: messageID
             })
         }
-        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(ownerId) === 0) {
-            if (storage.d.Servers[sname].announceChan === null || storage.d.Servers[sname].announceChan === undefined) {
-                try {
-                    storage.d.Servers[sname].announceChan = channelID
-                    messageSend(channelID, "Ok now announcing user changes on this channel")
-                } catch (e) {
-                    logger.error(chalk.red(e))
+        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true) {
+            if (userID.indexOf(ownerId) === 0) {
+                if (storage.d.Servers[sname].announceChan === null || storage.d.Servers[sname].announceChan === undefined) {
+                    try {
+                        storage.d.Servers[sname].announceChan = channelID
+                        messageSend(channelID, "Ok now announcing user changes on this channel")
+                    } catch (e) {
+                        logger.error(chalk.red(e))
+                    }
+                } else {
+                    try {
+                        storage.d.Servers[sname].announceChan = null
+                        messageSend(channelID, "Ok no longer announcing user changes on this channel")
+                    } catch (e) {
+                        logger.error(chalk.red(e))
+                    }
+                }
+            } else if (userID.indexOf(SownerId) === 0) {
+                if (storage.d.Servers[sname].announceChan === null || storage.d.Servers[sname].announceChan === undefined) {
+                    try {
+                        storage.d.Servers[sname].announceChan = channelID
+                        messageSend(channelID, "Ok now announcing user changes on this channel")
+                    } catch (e) {
+                        logger.error(chalk.red(e))
+                    }
+                } else {
+                    try {
+                        storage.d.Servers[sname].announceChan = null
+                        messageSend(channelID, "Ok no longer announcing user changes on this channel")
+                    } catch (e) {
+                        logger.error(chalk.red(e))
+                    }
                 }
             } else {
-                try {
-                    storage.d.Servers[sname].announceChan = null
-                    messageSend(channelID, "Ok no longer announcing user changes on this channel")
-                } catch (e) {
-                    logger.error(chalk.red(e))
-                }
-            }
-            rconcmd = "Yes"
-            announce = "Done"
-        }
-        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true && userID.indexOf(SownerId) === 0 && announce !== "Done") {
-            if (storage.d.Servers[sname].announceChan === null || storage.d.Servers[sname].announceChan === undefined) {
-                try {
-                    storage.d.Servers[sname].announceChan = channelID
-                    messageSend(channelID, "Ok now announcing user changes on this channel")
-                } catch (e) {
-                    logger.error(chalk.red(e))
-                }
-            } else {
-                try {
-                    storage.d.Servers[sname].announceChan = null
-                    messageSend(channelID, "Ok no longer announcing user changes on this channel")
-                } catch (e) {
-                    logger.error(chalk.red(e))
-                }
+                messageSend(channelID, "You are not allowed to do that command, you need to be eithe the bot or server owner")
             }
             rconcmd = "Yes"
         }
@@ -1146,19 +1146,20 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
-        if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === 0) {
+        if (message.toLowerCase().indexOf('js') === 1 && ) {
             var jscmd = message
             var jscall = jscmd.replace(commandmod + 'js ', '')
-            try {
-                eval(jscall)
-            } catch (e) {
-                logger.error(chalk.red("Bad JS Command " + e))
-                messgnt("Err...I'm sorry...that results in a error")
+            if (userID.indexOf(ownerId) === 0) {
+                try {
+                    eval(jscall)
+                } catch (e) {
+                    logger.error(chalk.red("Bad JS Command " + e))
+                    messgnt("Err...I'm sorry...that results in a error")
+                }
+            } else {
+                messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
             }
             rconcmd = 'Yes'
-        }
-        if (message.toLowerCase().indexOf('js') === 1 && userID.indexOf(ownerId) === -1) {
-            messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
         } else if (rconcmd === 'no') {
             logger.info(commandmod + ' was said but there was No Detected command');
         }
