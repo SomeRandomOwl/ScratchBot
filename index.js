@@ -168,24 +168,25 @@ function channellist(verb) {
             }
             var name = bot.servers[serverID].channels[channelID].name;
             var type = bot.servers[serverID].channels[channelID].type;
-            if (storage.d.Channels[name] === undefined) {
+            var sname = bot.servers[serverID].name
+            if (storage.d.Servers.[sname].Channels[name] === undefined) {
                 storage.d.Channels[name] = {
                     "id": channelID,
                     "type": type,
                     "messageCnt": 0,
                 }
             } else {
-                storage.d.Channels[name].id = channelID
-                storage.d.Channels[name].type = type
+                storage.d.Servers.[sname].Channels[name].id = channelID
+                storage.d.Servers.[sname].Channels[name].type = type
                 if (type !== "voice") {
-                    if (storage.d.Channels[name].messageCnt === undefined) {
-                        storage.d.Channels[name].messageCnt = 0
+                    if (storage.d.Servers.[sname].Channels[name].messageCnt === undefined) {
+                        storage.d.Servers.[sname].Channels[name].messageCnt = 0
                     }
-                    if (storage.d.Channels[name].lastComicActt === undefined) {
-                        storage.d.Channels[name].lastComicActt = null
+                    if (storage.d.Servers.[sname].Channels[name].lastComicActt === undefined) {
+                        storage.d.Servers.[sname].Channels[name].lastComicActt = null
                     }
-                    if (storage.d.Channels[name].lastComic === undefined) {
-                        storage.d.Channels[name].lastComic = null
+                    if (storage.d.Servers.[sname].Channels[name].lastComic === undefined) {
+                        storage.d.Servers.[sname].Channels[name].lastComic = null
                     }
                 }
             }
@@ -334,12 +335,19 @@ function consoleparse(line) {
             cnaid = line.replace('~cnaid ', '')
             logger.info(chalk.dim("Now talking in channel: " + cnaid))
         } else if (line.toLowerCase().indexOf('cnch') === 1) {
-            var cnch = line.substring(line.indexOf(' ') + 1)
-            for (var channel in storage.d.Channels) {
-                if (cnch === channel) {
-                    cnaid = storage.d.Channels[channel].id
-                    logger.info(chalk.dim("Now talking in channel: " + cnaid + "/" + channel))
-                    continue
+            var serv = line.substring(line.indexOf(' ') + 1)
+            var chann = server.substring(server.indexOf(' ') + 1)
+            for (var server in storage.d.Servers) {
+                if (server === serv) {
+                    for (var channel in storage.d.Servers[server].Channels) {
+                        if (channel === chann) {
+                            cnaid = storage.d.Servers.[serv].Channels[chann].id
+                            logger.info(chalk.dim("Now talking in channel: " + cnaid + "/" + channel))
+                            return
+                        } else {
+                            continue
+                        }
+                    }
                 } else {
                     continue
                 }
@@ -389,25 +397,25 @@ function messageDelete(channelID, messageID) {
     })
 }
 /*/Retrieves a relavant xkcd comic from a query/*/
-function relxkcd(quer, channelID, name) {
+function relxkcd(quer, channelID, name, sname) {
     var comictime = gettime()
     try {
-        lastcomictime = storage.d.Channels[name].lastComic
+        lastcomictime = storage.d.Servers.[sname].Channels[name].lastComic
         elapsed = comictime - lastcomictime
         elapsed = secondsToTime(elapsed)
-        comicacttime = storage.d.Channels[name].lastComicActt
+        comicacttime = storage.d.Servers.[sname].Channels[name].lastComicActt
         nextTime = lastcattime + 3600
         nextTime = nextTime - cattime
         nextTime = secondsToTime(nextTime)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         console.log("Comic elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
-        storage.d.Channels[name].lastComic = 0
-        storage.d.Channels[name].lastComicActt = 0
+        storage.d.Servers.[sname].Channels[name].lastComic = 0
+        storage.d.Servers.[sname].Channels[name].lastComicActt = 0
     }
     if (elapsed.h > 0) {
         var comicacttime = moment().format('h:mm a')
-        storage.d.Channels[name].lastComicActt = comicacttime
+        storage.d.Servers.[sname].Channels[name].lastComicActt = comicacttime
         request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
@@ -422,7 +430,7 @@ function relxkcd(quer, channelID, name) {
             }
         })
         var lastcomictime = gettime()
-        storage.d.Channels[name].lastComic = lastcomictime
+        storage.d.Servers.[sname].Channels[name].lastComic = lastcomictime
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
@@ -515,31 +523,31 @@ function status(statuscall, channelID, rawEvent) {
     }
 }
 /*/Posts a random cat picture, limit 1 per hour/*/
-function cat(channelID, name) {
+function cat(channelID, name, sname) {
     var cattime = gettime()
-    if (storage.d.Channels[name].lastCat === undefined) {
-        storage.d.Channels[name].lastCat = 0
-        storage.d.Channels[name].lastCatActt = 0
+    if (storage.d.Servers.[sname].Channels[name].lastCat === undefined) {
+        storage.d.Servers.[sname].Channels[name].lastCat = 0
+        storage.d.Servers.[sname].Channels[name].lastCatActt = 0
     }
     try {
         console.log('yes')
-        lastcattime = storage.d.Channels[name].lastCat
+        lastcattime = storage.d.Servers.[sname].Channels[name].lastCat
         elapsed = cattime - lastcattime
         nextTime = lastcattime + 3600
         nextTime = nextTime - cattime
         nextTime = secondsToTime(nextTime)
         elapsed = secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
-        catacttime = storage.d.Channels[name].lastCatActt
+        catacttime = storage.d.Servers.[sname].Channels[name].lastCatActt
         console.log("cat elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
         console.log('no')
-        storage.d.Channels[name].lastCat = 0
-        storage.d.Channels[name].lastCatActt = 0
+        storage.d.Servers.[sname].Channels[name].lastCat = 0
+        storage.d.Servers.[sname].Channels[name].lastCatActt = 0
     }
     if (elapsed.h > 0) {
         var catacttime = moment().format('h:mm a')
-        storage.d.Channels[name].lastCatActt = catacttime
+        storage.d.Servers.[sname].Channels[name].lastCatActt = catacttime
         request('http://random.cat/meow', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 catJson = JSON.parse(body)
@@ -548,7 +556,7 @@ function cat(channelID, name) {
             }
         })
         var lastcattime = gettime()
-        storage.d.Channels[name].lastCat = lastcattime
+        storage.d.Servers.[sname].Channels[name].lastCat = lastcattime
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
@@ -556,31 +564,31 @@ function cat(channelID, name) {
     writeJSON('./storage', storage)
 }
 /*/Posts a random snake picture, limit 1 per hour/*/
-function snake(channelID, name, userID) {
+function snake(channelID, name, sname, userID) {
     var snaketime = gettime()
-    if (storage.d.Channels[name].lastsnake === undefined) {
-        storage.d.Channels[name].lastsnake = 0
-        storage.d.Channels[name].lastsnakeActt = 0
+    if (storage.d.Servers.[sname].Channels[name].lastsnake === undefined) {
+        storage.d.Servers.[sname].Channels[name].lastsnake = 0
+        storage.d.Servers.[sname].Channels[name].lastsnakeActt = 0
     }
     try {
         console.log('yes')
-        lastsnaketime = storage.d.Channels[name].lastsnake
+        lastsnaketime = storage.d.Servers.[sname].Channels[name].lastsnake
         elapsed = snaketime - lastsnaketime
         nextTime = lastsnaketime + 3600
         nextTime = nextTime - snaketime
         nextTime = secondsToTime(nextTime)
         elapsed = secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
-        snakeacttime = storage.d.Channels[name].lastsnakeActt
+        snakeacttime = storage.d.Servers.[sname].Channels[name].lastsnakeActt
         console.log("snake elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
         console.log('no')
-        storage.d.Channels[name].lastsnake = 0
-        storage.d.Channels[name].lastsnakeActt = 0
+        storage.d.Servers.[sname].Channels[name].lastsnake = 0
+        storage.d.Servers.[sname].Channels[name].lastsnakeActt = 0
     }
     if (elapsed.h > 0) {
         var snakeacttime = moment().format('h:mm a')
-        storage.d.Channels[name].lastsnakeActt = snakeacttime
+        storage.d.Servers.[sname].Channels[name].lastsnakeActt = snakeacttime
         request('http://fur.im/snek/snek.php', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 snakeJson = JSON.parse(body)
@@ -589,7 +597,7 @@ function snake(channelID, name, userID) {
             }
         })
         var lastsnaketime = gettime()
-        storage.d.Channels[name].lastsnake = lastsnaketime
+        storage.d.Servers.[sname].Channels[name].lastsnake = lastsnaketime
     } else if (userID.indexOf('142484312862752768') !== -1) {
         request('http://fur.im/snek/snek.php', function(error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -604,31 +612,31 @@ function snake(channelID, name, userID) {
     writeJSON('./storage', storage)
 }
 /*/Posts a random pug picture, limit 1 per hour/*/
-function pug(channelID, name) {
+function pug(channelID, name, sname) {
     var pugtime = gettime()
-    if (storage.d.Channels[name].lastpug === undefined) {
-        storage.d.Channels[name].lastpug = 0
-        storage.d.Channels[name].lastpugActt = 0
+    if (storage.d.Servers.[sname].Channels[name].lastpug === undefined) {
+        storage.d.Servers.[sname].Channels[name].lastpug = 0
+        storage.d.Servers.[sname].Channels[name].lastpugActt = 0
     }
     try {
         console.log('yes')
-        lastpugtime = storage.d.Channels[name].lastpug
+        lastpugtime = storage.d.Servers.[sname].Channels[name].lastpug
         elapsed = pugtime - lastpugtime
         nextTime = lastpugtime + 3600
         nextTime = nextTime - pugtime
         nextTime = secondsToTime(nextTime)
         elapsed = secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
-        pugacttime = storage.d.Channels[name].lastpugActt
+        pugacttime = storage.d.Servers.[sname].Channels[name].lastpugActt
         console.log("pug elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
         console.log('no')
-        storage.d.Channels[name].lastpug = 0
-        storage.d.Channels[name].lastpugActt = 0
+        storage.d.Servers.[sname].Channels[name].lastpug = 0
+        storage.d.Servers.[sname].Channels[name].lastpugActt = 0
     }
     if (elapsed.h > 0) {
         var pugacttime = moment().format('h:mm a')
-        storage.d.Channels[name].lastpugActt = pugacttime
+        storage.d.Servers.[sname].Channels[name].lastpugActt = pugacttime
         request('http://pugme.herokuapp.com/bomb?count=1', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 pugJson = JSON.parse(body)
@@ -637,7 +645,7 @@ function pug(channelID, name) {
             }
         })
         var lastpugtime = gettime()
-        storage.d.Channels[name].lastpug = lastpugtime
+        storage.d.Servers.[sname].Channels[name].lastpug = lastpugtime
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
@@ -645,34 +653,34 @@ function pug(channelID, name) {
     writeJSON('./storage', storage)
 }
 /*/Posts a random image from a SFW scenery subreddit/*/
-function redditScenery(channelID, reddit, name) {
+function redditScenery(channelID, reddit, name, sname) {
 
     /*var reddittime = gettime()
-    if (storage.d.Channels[name].lastreddit === undefined) {
-        storage.d.Channels[name].lastreddit = 0
-        storage.d.Channels[name].lastredditActt = 0
+    if (storage.d.Servers.[sname].Channels[name].lastreddit === undefined) {
+        storage.d.Servers.[sname].Channels[name].lastreddit = 0
+        storage.d.Servers.[sname].Channels[name].lastredditActt = 0
     }
     try {
         console.log('yes')
-        lastreddittime = storage.d.Channels[name].lastreddit
+        lastreddittime = storage.d.Servers.[sname].Channels[name].lastreddit
         elapsed = reddittime - lastreddittime
         nextTime = lastreddittime + 3600
         nextTime = nextTime - reddittime
         nextTime = secondsToTime(nextTime)
         elapsed = secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
-        redditacttime = storage.d.Channels[name].lastredditActt
+        redditacttime = storage.d.Servers.[sname].Channels[name].lastredditActt
         console.log("reddit elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
         console.log('no')
-        storage.d.Channels[name].lastreddit = 0
-        storage.d.Channels[name].lastredditActt = 0
+        storage.d.Servers.[sname].Channels[name].lastreddit = 0
+        storage.d.Servers.[sname].Channels[name].lastredditActt = 0
     }*/
     /*if (elapsed.h > 0) {
         var redditacttime = moment().format('h:mm a')
-        storage.d.Channels[name].lastredditActt = redditacttime
+        storage.d.Servers.[sname].Channels[name].lastredditActt = redditacttime
         var lastreddittime = gettime()
-        storage.d.Channels[name].lastreddit = lastreddittime
+        storage.d.Servers.[sname].Channels[name].lastreddit = lastreddittime
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one reddit image per hour, last reddit image was posted: " + redditacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
@@ -728,7 +736,7 @@ bot.on('debug', function(rawEvent) {
     }
     if (rawEvent.t === "GUILD_CREATE") {
         var name = rawEvent.d.name
-	var serverID = rawEvent.d.id
+        var serverID = rawEvent.d.id
         var SownerId = rawEvent.d.owner_id
         storage.d.Servers[name] = {
             'id': serverID,
@@ -739,9 +747,10 @@ bot.on('debug', function(rawEvent) {
     }
     if (rawEvent.t === "CHANNEL_CREATE") {
         var name = rawEvent.d.name
-	var channelID = rawEvent.d.id
-	var type = rawEvent.d.type
-	storage.d.Channels[name] = {
+        var channelID = rawEvent.d.id
+        var type = rawEvent.d.type
+        var sname = rawEvent.d.guild_id
+        storage.d.Servers.[sname].Channels[name] = {
             "id": channelID,
             "type": type,
             "messageCnt": 0,
@@ -872,12 +881,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         fs.appendFile("logs/Links.txt", '\n' + link)
     }
     if (cname !== undefined) {
-        if (storage.d.Channels[cname].messageCnt === undefined) {
-            storage.d.Channels[cname].messageCnt = 1
+        if (storage.d.Servers.[sname].Channels[name].messageCnt === undefined) {
+            storage.d.Servers.[sname].Channels[name].messageCnt = 1
         } else {
-            mccount = storage.d.Channels[cname].messageCnt
+            mccount = storage.d.Servers.[sname].Channels[name].messageCnt
             mccount = mccount + 1
-            storage.d.Channels[cname].messageCnt = mccount
+            storage.d.Servers.[sname].Channels[name].messageCnt = mccount
         }
         writeJSON('./storage', storage)
     }
@@ -1044,32 +1053,32 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (message.indexOf(' ') === -1) {
                 var comictime = gettime()
                 try {
-                    lastcomictime = storage.d.Channels[cname].lastComic
+                    lastcomictime = storage.d.Servers.[sname].Channels[name].lastComic
                     elapsed = comictime - lastcomictime
                     elapsed = secondsToTime(elapsed)
-                    comicacttime = storage.d.Channels[cname].lastComicActt
+                    comicacttime = storage.d.Servers.[sname].Channels[name].lastComicActt
                     console.log("Comic elapsed: " + JSON.stringify(elapsed))
                 } catch (e) {
-                    storage.d.Channels[cname].lastComic = null
-                    storage.d.Channels[cname].lastComicActt = null
+                    storage.d.Servers.[sname].Channels[name].lastComic = null
+                    storage.d.Servers.[sname].Channels[name].lastComicActt = null
                 }
                 if (elapsed.h > 0) {
                     var comicacttime = moment().format('h:mm a')
-                    storage.d.Channels[cname].lastComicActt = comicacttime
+                    storage.d.Servers.[sname].Channels[name].lastComicActt = comicacttime
                     xkcd.img(function(err, res) {
                         if (!err) {
                             messageSend(channelID, res.title + "\n" + res.url)
                         }
                     });
                     var lastcomictime = gettime()
-                    storage.d.Channels[cname].lastComic = lastcomictime
+                    storage.d.Servers.[sname].Channels[name].lastComic = lastcomictime
                 } else {
                     messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
                 }
             } else {
                 var xkcdcmd = message
                 var xkcdcall = xkcdcmd.replace(commandmod + 'xkcd ', '')
-                relxkcd(xkcdcall, channelID, cname)
+                relxkcd(xkcdcall, channelID, cname, sname)
             }
             rconcmd = 'Yes'
         }
@@ -1118,13 +1127,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('cat') === 1 && ignore !== true) {
-            cat(channelID, cname)
+            cat(channelID, cname, sname)
         }
         if (message.toLowerCase().indexOf('snake') === 1 && ignore !== true) {
-            snake(channelID, cname, userID)
+            snake(channelID, cname, sname, userID)
         }
         if (message.toLowerCase().indexOf('pug') === 1 && ignore !== true) {
-            pug(channelID, cname)
+            pug(channelID, cname, sname)
         }
         if (message.toLowerCase().indexOf('redditscenery') === 1 && ignore !== true) {
             var random = redditList[Math.floor(Math.random() * redditList.length)]
