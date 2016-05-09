@@ -13,12 +13,13 @@ var moment = require('moment');
 var xkcd = require('xkcd-imgs');
 var chalk = require('chalk');
 var request = require('request');
+var mkdirp = require('mkdirp');
 
 /*/Loads Storage.json if it exists/*/
-if (fs.existsSync('storage.json')) {
+if (fs.existsSync('./assets/storage.json')) {
     console.log('Found Storage.json');
-    var storage = require('./storage.json')
-} else if (fs.existsSync('storage.json') === false) {
+    var storage = require('./assets/storage.json')
+} else if (fs.existsSync('./assets/storage.json') === false) {
     logger.info(chalk.underline.blue('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
 /*/Load Up a Youtube Api Key /*/
@@ -846,10 +847,14 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var sname = bot.servers[serverID].name
     } catch (e) {
         logger.error(chalk.red(e))
-    }try {
-    if (storage.d.Servers[sname].SownerId !== undefined) {
-        var SownerId = storage.d.Servers[sname].SownerId
-    }} catch (e) {error = true}
+    }
+    try {
+        if (storage.d.Servers[sname].SownerId !== undefined) {
+            var SownerId = storage.d.Servers[sname].SownerId
+        }
+    } catch (e) {
+        error = true
+    }
     //Logging Related
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
@@ -947,7 +952,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.indexOf("avatar") === 1 && ignore !== true) {
             bot.uploadFile({
                 to: channelID,
-                file: "avatar.png",
+                file: "./assets/avatar.png",
                 filename: "avatar.png",
                 message: "Here you go!",
                 typing: true
