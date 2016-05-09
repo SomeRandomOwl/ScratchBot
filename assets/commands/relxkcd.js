@@ -17,7 +17,6 @@ function messageSend(channelID, msg, bot) {
             return
         }
     });
-    return sentPrevId
 }
 
 /*/Converts Seconds to hh mm ss/*/
