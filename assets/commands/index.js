@@ -1,1 +1,0 @@
-exports.relxkcd = require('./relxkcd.js')
