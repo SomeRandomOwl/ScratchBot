@@ -1,4 +1,4 @@
-var search = function(quer, channelID, name, sname) {
+function search(quer, channelID, name, sname) {
     var comictime = gettime()
     try {
         lastcomictime = storage.d.Servers[sname].Channels[name].lastComic
@@ -38,4 +38,4 @@ var search = function(quer, channelID, name, sname) {
     }
     //writeJSON('./storage', storage)
 }
-export search
+exports.search
