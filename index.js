@@ -1193,8 +1193,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         } else {
             servern = bot.servers[serverID].name
             channeln = bot.servers[serverID].channels[channelID].name
-            mkdirp('./logs' + servern, function(err) {
-                fs.appendFile("logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
+            mkdirp('./logs/' + servern, function(err) {
+                fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
             })
             console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
         }
