@@ -21,8 +21,8 @@
     ],
     "help": {
         "ping": "Utility command; used to test connectivity to the bot",
-        "help": "Utility Command; Prints the help for a command",
-        "info": "Utility Command; Prints the info doccumentation"
+        "help": "Utility Command; Prints the help for a command, for a list of commands do the commands command",
+        "info": "Utility Command; Prints the info doccumentation",
         "roll": "Fun command; Rolls a die/dice accepts multiple inputs. EX: roll 20 | roll d20 | roll 2d20 | roll d%",
         "avatar": "Other Command; Pretty useless, makes the bot post a high res version of its avatar",
         "ids": "Utility Command; Makes bot send a message with the users channel id and user id",
