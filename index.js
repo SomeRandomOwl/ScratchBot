@@ -946,7 +946,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     try {
         if (storage.d.Servers[sname].prefixOvrid !== undefined) {
-            console.log('Prefix override')
             commandmod = storage.d.Servers[sname].prefixOvrid
         }
         else {
@@ -978,7 +977,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var error = null
     }
     //This tests for commands using the command mod set in the config
-    console.log(commandmod)
     if (message.indexOf(commandmod) !== -1) {
         if (message.toLowerCase().indexOf('ping') === 1 && ignore !== true) {
             messageSend(channelID, 'pong')
