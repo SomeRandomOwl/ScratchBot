@@ -615,38 +615,6 @@ function pug(channelID, name, sname) {
 }
 /*/Posts a random image from a SFW scenery subreddit/*/
 function redditScenery(channelID, reddit, name, sname) {
-
-    /*var reddittime = gettime()
-    if (storage.d.Servers[sname].Channels[name].lastreddit === undefined) {
-        storage.d.Servers[sname].Channels[name].lastreddit = 0
-        storage.d.Servers[sname].Channels[name].lastredditActt = 0
-    }
-    try {
-        console.log('yes')
-        lastreddittime = storage.d.Servers[sname].Channels[name].lastreddit
-        elapsed = reddittime - lastreddittime
-        nextTime = lastreddittime + 3600
-        nextTime = nextTime - reddittime
-        nextTime = secondsToTime(nextTime)
-        elapsed = secondsToTime(elapsed)
-        nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
-        redditacttime = storage.d.Servers[sname].Channels[name].lastredditActt
-        console.log("reddit elapsed: " + JSON.stringify(elapsed))
-    } catch (e) {
-        console.log('no')
-        storage.d.Servers[sname].Channels[name].lastreddit = 0
-        storage.d.Servers[sname].Channels[name].lastredditActt = 0
-    }*/
-    /*if (elapsed.h > 0) {
-        var redditacttime = moment().format('h:mm a')
-        storage.d.Servers[sname].Channels[name].lastredditActt = redditacttime
-        var lastreddittime = gettime()
-        storage.d.Servers[sname].Channels[name].lastreddit = lastreddittime
-    } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one reddit image per hour, last reddit image was posted: " + redditacttime + ", time untill next post is allowed: " + nextTime)
-        return elapsed
-    }*/
-
     if (isInArray(reddit, redditList)) {
         var notif = messageSend(channelID, "Grabbing a image from reddit, this might take a few seconds...")
         request('https://www.reddit.com/r/' + reddit + 'porn' + '.json', function(error, response, body) {
