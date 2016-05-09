@@ -398,7 +398,7 @@ function messageDelete(channelID, messageID) {
     })
 }
 /*/Retrieves a relavant xkcd comic from a query/*/
-function relxkcd(quer, channelID, name, sname) {
+/*function relxkcd(quer, channelID, name, sname) {
     var comictime = gettime()
     try {
         lastcomictime = storage.d.Servers[sname].Channels[name].lastComic
@@ -437,7 +437,7 @@ function relxkcd(quer, channelID, name, sname) {
         return elapsed
     }
     writeJSON('./storage', storage)
-}
+}*/
 /*/Retrieves a current status of a user/*/
 function status(statuscall, channelID, rawEvent) {
     try {
