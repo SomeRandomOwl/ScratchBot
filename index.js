@@ -79,8 +79,6 @@ var rconcmd = 'No';
 var clist = null
 var debug = false;
 var serverID = null;
-var clistl = clist.length
-    //Writes JSON to a file
 var xkcdJson = null
     /* Start of function defining */
 
