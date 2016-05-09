@@ -14,6 +14,7 @@ var xkcd = require('xkcd-imgs');
 var chalk = require('chalk');
 var request = require('request');
 var mkdirp = require('mkdirp');
+var cmd = require('./assets/commands')
 
 /*/Loads Storage.json if it exists/*/
 if (fs.existsSync('./assets/storage.json')) {
