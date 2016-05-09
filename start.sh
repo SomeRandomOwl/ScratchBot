@@ -1,6 +1,6 @@
 clear
 echo "$!"
-python3 logclean.py
+python3 ./assets/logclean.py
 while :
 do
       node index.js
