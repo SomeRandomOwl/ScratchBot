@@ -975,7 +975,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var error = null
     }
     //This tests for commands using the command mod set in the config
-    if (message.indexOf(commandmod) != -1) {
+    console.log(commandmod)
+    if (message.indexOf(commandmod) !== -1) {
         if (message.toLowerCase().indexOf('ping') === 1 && ignore !== true) {
             messageSend(channelID, 'pong')
         }
