@@ -846,10 +846,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var sname = bot.servers[serverID].name
     } catch (e) {
         logger.error(chalk.red(e))
-    }
+    }try {
     if (storage.d.Servers[sname].SownerId !== undefined) {
         var SownerId = storage.d.Servers[sname].SownerId
-    }
+    }} catch (e) {error = true}
     //Logging Related
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
