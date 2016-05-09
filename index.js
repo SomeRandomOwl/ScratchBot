@@ -1217,7 +1217,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 redditNList = ""
                 for (var i = 0; i < redditList.length; i++) {
                     if (i < redditList.length - 1) {
-                        redditNList = redditNList + redditList[i] + " , "
+                        redditNList = redditNList + redditList[i] + ", "
                     }
                     else {
                         redditNList = redditNList + redditList[i]
