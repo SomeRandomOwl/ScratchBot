@@ -18,6 +18,29 @@ function messageSend(channelID, msg, bot) {
     return sentPrevId
 }
 
+/*/Converts Seconds to hh mm ss/*/
+function secondsToTime(secs) {
+    var hours = Math.floor(secs / (60 * 60));
+
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+
+    var obj = {
+        "h": hours,
+        "m": minutes,
+        "s": seconds
+    };
+    return obj;
+}
+/*/Gets seconds using Date.now()/*/
+function gettime() {
+    var timenow = Math.floor(Date.now() / 1000)
+    return timenow
+}
+
 exports.search = function(quer, channelID, name, sname, bot) {
     var comictime = gettime()
     try {
@@ -53,7 +76,7 @@ exports.search = function(quer, channelID, name, sname, bot) {
         var lastcomictime = gettime()
         storage.d.Servers[sname].Channels[name].lastComic = lastcomictime
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime, bot)
+        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime, botbo)
         return ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime
     }
     //writeJSON('./storage', storage)
