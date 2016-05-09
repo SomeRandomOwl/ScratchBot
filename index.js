@@ -875,7 +875,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var sname = bot.servers[serverID].name
     }
     catch (e) {
-        logger.error(chalk.red(e))
+        e = e
     }
     try {
         if (storage.d.Servers[sname].SownerId !== undefined) {
