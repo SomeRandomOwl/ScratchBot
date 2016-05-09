@@ -1,6 +1,7 @@
 var storage = require('../storage.json')
 var DiscordClient = require('discord.io')
 var moment = require('moment')
+var request = require('request')
 var exports = module.exports = {}
 
 function messageSend(channelID, msg, bot) {
