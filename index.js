@@ -76,7 +76,7 @@ var sentPrevId = null;
 var commandmod = config.cmdMod;
 var ownerId = config.ownerId;
 var rconcmd = 'No';
-var clist = null
+var clist = doc.cList
 var debug = false;
 var serverID = null;
 var xkcdJson = null
@@ -1039,6 +1039,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cList = "help, "
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
+                console.log('test')
                 if (i !== doc.cList.length) {
                     cList = clist + doc.cList[i] + " , "
                 }
