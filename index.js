@@ -76,7 +76,7 @@ var sentPrevId = null;
 var commandmod = config.cmdMod;
 var ownerId = config.ownerId;
 var rconcmd = 'No';
-var clist = '\n!commands, !math, !ids, !supportedmath, !yt, !picture, !cat, !snake, !pug, !redditscenery, !xkcd, !status, !stats';
+var clist = null
 var debug = false;
 var serverID = null;
 var clistl = clist.length
@@ -1038,7 +1038,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('commands') === 1 && ignore !== true) {
+            cList = "help, "
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+            for (var i = 0; i < doc.cList.length; i++) {
+                if (i !== doc.cList.length) {
+                    cList = Clist + doc.cList[i] + " , "
+                }
+                else {
+                    cList = cList + doc.cList[i]
+                }
+            }
             messageSend(userID, "Here are my commands!: \n\n```" + clist + '```\n')
             messageDelete(channelID, messageID)
             rconcmd = 'Yes'
@@ -1208,8 +1217,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             else if (redditcall.toLowerCase().indexOf('list') !== -1) {
                 redditNList = ""
-                for (var i = redditList.length - 1; i >= 0; i--) {
-                    redditNList = redditNList + redditList[i] + ", "
+                for (var i = 0; i < redditList.cList.length; i++) {
+                    if (i !== redditList.length) {
+                        cList = Clist + redditList[i] + " , "
+                    }
+                    else {
+                        cList = cList + redditList[i]
+                    }
                 }
                 messageSend(channelID, "Check your PM's :mailbox_with_mail:")
                 messageSend(userID, "Here are my tracked subreddits!: \n\n```" + redditNList + '```\n')
