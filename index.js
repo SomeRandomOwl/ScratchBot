@@ -1036,15 +1036,15 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('commands') === 1 && ignore !== true) {
-            cList = "help, "
+            cmList = "help, "
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
-            for (var i = 0; i < doc.cList.length; i++) {
+            for (var i = cList.length - 1; i >= 0; i--) {
                 console.log('test')
                 if (i !== doc.cList.length) {
-                    cList = clist + doc.cList[i] + " , "
+                    cmList = clist + cList[i] + " , "
                 }
                 else {
-                    cList = cList + doc.cList[i]
+                    cmList = cList + cList[i]
                 }
             }
             messageSend(userID, "Here are my commands!: \n\n```" + clist + '```\n')
