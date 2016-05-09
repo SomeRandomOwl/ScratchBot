@@ -76,7 +76,7 @@ var sentPrevId = null;
 var commandmod = config.cmdMod;
 var ownerId = config.ownerId;
 var rconcmd = 'No';
-var cList = doc.cList
+var clist = doc.cList
 var debug = false;
 var serverID = null;
 var xkcdJson = null
@@ -1036,18 +1036,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('commands') === 1 && ignore !== true) {
-            cmList = "help, "
+            cList = "help, "
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
-            for (var i = cList.length - 1; i >= 0; i--) {
-                console.log('test')
+            for (var i = 0; i < doc.cList.length; i++) {
                 if (i !== doc.cList.length) {
-                    cmList = clist + cList[i] + " , "
+                    cList = cList + doc.cList[i] + " , "
                 }
                 else {
-                    cmList = cList + cList[i]
+                    cList = cList + doc.cList[i]
                 }
             }
-            messageSend(userID, "Here are my commands!: \n\n```" + clist + '```\n')
+            messageSend(userID, "Here are my commands!: \n\n```" + cList + '```\n')
             messageDelete(channelID, messageID)
             rconcmd = 'Yes'
         }
