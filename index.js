@@ -1084,7 +1084,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else {
                 var xkcdcmd = message
                 var xkcdcall = xkcdcmd.replace(commandmod + 'xkcd ', '')
-                cmd.relxkcd.search(xkcdcall, channelID, cname, sname)
+                cmd.relxkcd.search(xkcdcall, channelID, cname, sname, bot)
             }
             rconcmd = 'Yes'
         }

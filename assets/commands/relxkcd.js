@@ -1,5 +1,24 @@
+var storage = require('../storage.json')
+var DiscordClient = require('../../node_modules/discord.io')
 var exports = module.exports = {}
-exports.search = function(quer, channelID, name, sname) {
+
+function messageSend(channelID, msg, bot) {
+    bot.sendMessage({
+        to: channelID,
+        message: msg,
+        typing: false
+    }, function(error, response) {
+        try {
+            logger.info(chalk.dim('Last Message Sent ID: ' + response.id))
+            sentPrevId = response.id
+        } catch (e) {
+            return
+        }
+    });
+    return sentPrevId
+}
+
+exports.search = function(quer, channelID, name, sname, bot) {
     var comictime = gettime()
     try {
         lastcomictime = storage.d.Servers[sname].Channels[name].lastComic
@@ -25,8 +44,8 @@ exports.search = function(quer, channelID, name, sname) {
                 request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
                     if (!error && response.statusCode == 200) {
                         xkcdJson = JSON.parse(body)
-                        messageSend(channelID, xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
-                        return elapsed
+                        messageSend(channelID, xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img, bot)
+                        return xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img
                     }
                 })
             }
@@ -34,8 +53,8 @@ exports.search = function(quer, channelID, name, sname) {
         var lastcomictime = gettime()
         storage.d.Servers[sname].Channels[name].lastComic = lastcomictime
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime)
-        return elapsed
+        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime, bot)
+        return ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime
     }
     //writeJSON('./storage', storage)
 }
