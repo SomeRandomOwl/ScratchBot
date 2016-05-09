@@ -411,6 +411,7 @@ function relxkcd(quer, channelID, name, sname) {
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         console.log("Comic elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
+        console.log(e)
         storage.d.Servers[sname].Channels[name].lastComic = 0
         storage.d.Servers[sname].Channels[name].lastComicActt = 0
     }
