@@ -1,5 +1,4 @@
 clear
-echo "$!"
 python3 ./assets/logclean.py
 while :
 do
