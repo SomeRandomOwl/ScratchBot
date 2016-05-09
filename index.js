@@ -947,10 +947,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (DM === false) {
         if (storage.d.Servers[sname].prefixOvrid !== undefined) {
             console.log('Prefix override')
-            var commandmod === storage.d.Servers[sname].prefixOvrid
+            commandmod = storage.d.Servers[sname].prefixOvrid
         }
         else {
-            var commandmod === '!'
+            commandmod = '!'
         }
     }
     //function to quick call message sending to minimize code
