@@ -1194,10 +1194,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             servern = bot.servers[serverID].name
             channeln = bot.servers[serverID].channels[channelID].name
             mkdirp('./logs' + servern, function(err) {
-                console.log(err)
+                fs.appendFile("logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
             })
             console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
-            fs.appendFile("logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
         }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes" && ignore !== true) {
         if (ignore !== true) {
