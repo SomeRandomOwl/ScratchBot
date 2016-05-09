@@ -1193,13 +1193,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         } else {
             servern = bot.servers[serverID].name
             channeln = bot.servers[serverID].channels[channelID].name
-            try {
-                stats = fs.lstatSync('./logs/' + servern);
-            } catch (e) {
-                mkdirp('./logs' + servern, function(err) {
-                    console.log(err)
-                });
-            }
+            mkdirp('./logs' + servern, function(err) {
+                console.log(err)
+            })
             console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
             fs.appendFile("logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
         }
