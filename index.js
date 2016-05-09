@@ -944,7 +944,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (debug === 1) {
         console.log(rawEvent)
     }
-    if (DM === false) {
+    try {
         if (storage.d.Servers[sname].prefixOvrid !== undefined) {
             console.log('Prefix override')
             commandmod = storage.d.Servers[sname].prefixOvrid
@@ -952,6 +952,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         else {
             commandmod = '!'
         }
+    }
+    catch (e) {
+        e = e
     }
     //function to quick call message sending to minimize code
     function messgnt(msg) {
