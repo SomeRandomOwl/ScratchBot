@@ -405,8 +405,8 @@ function relxkcd(quer, channelID, name, sname) {
         elapsed = comictime - lastcomictime
         elapsed = secondsToTime(elapsed)
         comicacttime = storage.d.Servers[sname].Channels[name].lastComicActt
-        nextTime = lastcattime + 3600
-        nextTime = nextTime - cattime
+        nextTime = lastcomictime + 3600
+        nextTime = nextTime - comictime
         nextTime = secondsToTime(nextTime)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         console.log("Comic elapsed: " + JSON.stringify(elapsed))
