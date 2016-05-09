@@ -1040,7 +1040,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
                 if (i < doc.cList.length - 1) {
-                    cList = cLpist + doc.cList[i] + ", "
+                    cList = cList + doc.cList[i] + ", "
                 }
                 else {
                     cList = cList + doc.cList[i]
