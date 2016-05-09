@@ -1039,8 +1039,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cList = "help, "
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
-                if (i !== doc.cList.length) {
-                    cList = cList + doc.cList[i] + " , "
+                if (i < doc.cList.length - 1) {
+                    cList = cLpist + doc.cList[i] + ", "
                 }
                 else {
                     cList = cList + doc.cList[i]
@@ -1215,12 +1215,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             else if (redditcall.toLowerCase().indexOf('list') !== -1) {
                 redditNList = ""
-                for (var i = 0; i < redditList.cList.length; i++) {
-                    if (i !== redditList.length) {
-                        cList = Clist + redditList[i] + " , "
+                for (var i = 0; i < redditList.length; i++) {
+                    if (i < redditList.length - 1) {
+                        redditNList = redditNList + redditList[i] + " , "
                     }
                     else {
-                        cList = cList + redditList[i]
+                        redditNList = redditNList + redditList[i]
                     }
                 }
                 messageSend(channelID, "Check your PM's :mailbox_with_mail:")
