@@ -1,4 +1,4 @@
-function search(quer, channelID, name, sname) {
+var search = function(quer, channelID, name, sname) {
     var comictime = gettime()
     try {
         lastcomictime = storage.d.Servers[sname].Channels[name].lastComic
