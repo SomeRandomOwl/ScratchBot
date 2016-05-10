@@ -350,10 +350,10 @@ function consoleparse(line) {
         }
         else if (line.toLowerCase().indexOf('cnch') === 1) {
             var serv = line.substring(line.indexOf(' ') + 1)
-            console.log(serv)
+            var serve = serv.substring(0, line.indexOf(' '))
             var chann = serv.substring(serv.indexOf(' ') + 1)
             for (var server in storage.d.Servers) {
-                if (server === serv) {
+                if (server === serve) {
                     for (var channel in storage.d.Servers[server].Channels) {
                         if (channel === chann) {
                             cnaid = storage.d.Servers[serv].Channels[chann].id
