@@ -1385,7 +1385,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mkdirp('./logs/' + servern, function(err) {
                 fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
             })
-            if (verb) {
+            if (verb || cnaid === channelID) {
                 console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
             }
         }
