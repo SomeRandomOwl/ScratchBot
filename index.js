@@ -352,6 +352,8 @@ function consoleparse(line) {
             var serv = line.substring(line.indexOf(' ') + 1)
             var serve = serv.substring(0, line.indexOf(' '))
             var chann = serv.substring(serv.indexOf(' ') + 1)
+            console.log(serve)
+            console.log(chann)
             try {
                 cnaid = storage.d.Servers[serve].Channels[chann].id
             }
