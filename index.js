@@ -352,44 +352,30 @@ function consoleparse(line) {
             var serv = line.substring(line.indexOf(' ') + 1)
             var serve = serv.substring(0, line.indexOf(' '))
             var chann = serv.substring(serv.indexOf(' ') + 1)
-            for (var server in storage.d.Servers) {
-                if (server.toLowerCase() === serve.toLowerCase()) {
-                    for (var channel in storage.d.Servers[server].Channels) {
-                        if (channel.toLowerCase() === chann.toLowerCase()) {
-                            cnaid = storage.d.Servers[serv].Channels[chann].id
-                            logger.info(chalk.dim("Now talking in channel: " + cnaid + "/" + channel))
-                            return
-                        }
-                        else {
-                            console.log(channel)
-                            console.log(chann)
-                            continue
-                        }
-                    }
-                }
-                else {
-                    console.log(server)
-                    console.log(serve)
-                    continue
-                }
-            }
-        }
-        else {
             try {
-                eval(line)
+                cnaid = storage.d.Servers[serve].Channels[chann].id
             }
             catch (e) {
-                logger.error(chalk.red("Bad JS Command " + e))
+                console.log(e)
             }
         }
     }
-    else if (line.toLowerCase().indexOf('~') !== 0) {
-        bot.sendMessage({
-            to: cnaid,
-            message: line,
-            typeing: true
-        })
+    else {
+        try {
+            eval(line)
+        }
+        catch (e) {
+            logger.error(chalk.red("Bad JS Command " + e))
+        }
     }
+}
+else if (line.toLowerCase().indexOf('~') !== 0) {
+    bot.sendMessage({
+        to: cnaid,
+        message: line,
+        typeing: true
+    })
+}
 }
 /*/Rolls dice/*/
 function diceroll(dice, userID, channelID) {
