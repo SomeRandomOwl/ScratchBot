@@ -336,8 +336,6 @@ function consoleparse(line) {
             logger.info(chalk.dim("Now talking in channel: " + cnaid))
         } else if (line.toLowerCase().indexOf('cnch') === 1) {
             var channe = line.substring(line.indexOf(' ') + 1)
-            console.log(serve)
-            console.log(chann)
             for (var server in storage.d.Servers) {
                 for (var channel in storage.d.Servers[server].Channels) {
                     if (channel === channe) {
