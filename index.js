@@ -734,10 +734,10 @@ bot.on('debug', function(rawEvent) {
         topic = rawEvent.d.topic
         logger.info(chalk.dim("Channel just updated, Channel Name: " + newName + " Topic: " + topic))
         for (var cname in storage.d.Servers[sname].Channels) {
-            if (stoage.d.Servers[sname].Channels[cname].id === cID) {
-                storage.d.Servers[sname].Channels[newName] = stoage.d.Servers[sname].Channels[cname]
+            if (storage.d.Servers[sname].Channels[cname].id === cID) {
+                storage.d.Servers[sname].Channels[newName] = storage.d.Servers[sname].Channels[cname]
                 storage.d.Servers[sname].Channels[newName].topic = topic
-                delete stoage.d.Servers[sname].Channels[cname]
+                delete storage.d.Servers[sname].Channels[cname]
             }
         }
     }
