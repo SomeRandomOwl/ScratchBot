@@ -353,9 +353,9 @@ function consoleparse(line) {
             var serve = serv.substring(0, line.indexOf(' '))
             var chann = serv.substring(serv.indexOf(' ') + 1)
             for (var server in storage.d.Servers) {
-                if (server === serve) {
+                if (server.toLowerCase() === serve.toLowerCase()) {
                     for (var channel in storage.d.Servers[server].Channels) {
-                        if (channel === chann) {
+                        if (channel.toLowerCase() === chann.toLowerCase()) {
                             cnaid = storage.d.Servers[serv].Channels[chann].id
                             logger.info(chalk.dim("Now talking in channel: " + cnaid + "/" + channel))
                             return
