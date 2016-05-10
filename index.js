@@ -359,23 +359,23 @@ function consoleparse(line) {
                 console.log(e)
             }
         }
-    }
-    else {
-        try {
-            eval(line)
+
+        else {
+            try {
+                eval(line)
+            }
+            catch (e) {
+                logger.error(chalk.red("Bad JS Command " + e))
+            }
         }
-        catch (e) {
-            logger.error(chalk.red("Bad JS Command " + e))
-        }
     }
-}
-else if (line.toLowerCase().indexOf('~') !== 0) {
-    bot.sendMessage({
-        to: cnaid,
-        message: line,
-        typeing: true
-    })
-}
+    else if (line.toLowerCase().indexOf('~') !== 0) {
+        bot.sendMessage({
+            to: cnaid,
+            message: line,
+            typeing: true
+        })
+    }
 }
 /*/Rolls dice/*/
 function diceroll(dice, userID, channelID) {
