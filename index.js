@@ -966,7 +966,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.indexOf("avatar") === 1 && ignore !== true) {
             bot.uploadFile({
                 to: channelID,
-                file: "./assets/avatar2.png",
+                file: "./assets/avatar.png",
                 filename: "avatar.png",
                 message: "Here you go!",
                 typing: true
