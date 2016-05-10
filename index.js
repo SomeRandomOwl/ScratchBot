@@ -342,9 +342,9 @@ function consoleparse(line) {
                 for (var channel in storage.d.Servers[server].Channels) {
                     if (channel === channe) {
                         cnaid = storage.d.Servers[server].Channels[channel].id
+                    } else {
+                        continue
                     }
-                } else {
-                    continue
                 }
             }
         } else {
