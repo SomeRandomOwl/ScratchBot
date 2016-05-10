@@ -727,6 +727,9 @@ bot.on('debug', function(rawEvent) {
             "messageCnt": 0,
         }
     }
+    if (rawEvent.t === "CHANNEL_UPDATE") {
+        console.log(rawEvent)
+    }
 });
 bot.on('disconnected', function() {
     logger.error(chalk.red("Bot got disconnected, reconnecting"))
