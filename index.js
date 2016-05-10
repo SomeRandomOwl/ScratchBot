@@ -1227,6 +1227,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('js') === 1) {
+            jscall = message.substring(message.indexOf(' ') + 1)
             if (userID.indexOf(ownerId) === 0) {
                 try {
                     eval(jscall)
