@@ -685,9 +685,9 @@ bot.on('debug', function(rawEvent) {
     } catch (e) {
         return
     }
-    //if (rawEvent.t === "MESSAGE_UPDATE") {
-    //    //messageSend(rawEvent.d.channel_id, "Did you just update a message?")
-    //}
+    if (rawEvent.t === "MESSAGE_UPDATE") {
+        logger.info(chalk.dim(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
+    }
     if (rawEvent.t === "GUILD_MEMBER_ADD") {
         var name = rawEvent.d.user.username
         var userID = rawEvent.d.user.id
