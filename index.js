@@ -80,8 +80,9 @@ var clist = doc.cList
 var debug = false;
 var serverID = null;
 var xkcdJson = null
-    /* Start of function defining */
+var verb = false
 
+/* Start of function defining */
 if (storage.settings.redditList === undefined) {
     storage.settings.redditList = []
     redditList = storage.settings.redditList
@@ -788,6 +789,14 @@ bot.on('disconnected', function() {
     logger.info(chalk.green("Reconnected"))
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
+    var sname = bot.servers[rawEvent.d.guild_id].name
+    try {
+        var verb = storage.d.Servers[sname].Verb
+    }
+    catch (e) {
+        verb = false
+        storage.d.Servers[sname].Verb = false
+    }
     try {
         if (storage.d.Users[user] === "undefined") {
             storage.d.Users[user] = {
@@ -804,7 +813,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
                 storage.d.Users[user].lastseen = lastseen
                 storage.d.Users[user].rawLastSeen = gettime()
-                if (storage.d.Users[user].status !== 'offline') {
+                if (storage.d.Users[user].status !== 'offline' && verb) {
                     logger.info(chalk.dim(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                 }
                 storage.d.Users[user].status = status
@@ -816,7 +825,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     if (userID === storage.d.Users[user].id) {
                         storage.d.Users[user].lastseen = lastseen
                         storage.d.Users[user].rawLastSeen = gettime()
-                        if (storage.d.Users[user].status !== 'offline') {
+                        if (storage.d.Users[user].status !== 'offline' && verb) {
                             logger.info(chalk.dim(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                         }
                         storage.d.Users[user].status = status
@@ -831,14 +840,14 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
             storage.d.Users[user].lastseen = lastseen
             storage.d.Users[user].rawLastSeen = gettime()
-            if (storage.d.Users[user].status !== 'idle') {
+            if (storage.d.Users[user].status !== 'idle' && verb) {
                 logger.info(chalk.dim(lastseen + ' : ' + chalk.yellow(user + " is now: " + chalk.underline(status))));
             }
             storage.d.Users[user].status = status
         }
         if (status === 'online') {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
-            if (storage.d.Users[user].status !== 'online') {
+            if (storage.d.Users[user].status !== 'online' && verb) {
                 logger.info(chalk.dim(lastseen + ' : ' + chalk.green(user + " is now: " + chalk.underline(status))));
             }
             storage.d.Users[user].status = status
@@ -849,11 +858,6 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     }
 
     writeJSON('./storage', storage)
-    //bot.sendMessage({
-    //   to: logChan,
-    //   message: user + " is now: " + status,
-    //   typing: false
-    //});
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
@@ -910,6 +914,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     catch (e) {
         error = true
+    }
+    try {
+        var verb = storage.d.Servers[sname].Verb
+    }
+    catch (e) {
+        verb = false
+        storage.d.Servers[sname].Verb = false
     }
     //Logging Related
     if (storage.d.Users[user] !== undefined) {
@@ -1279,9 +1290,33 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
         }
         //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
-        if (message.toLowerCase().indexOf('js') === 1) {
-            var jscmd = message
-            var jscall = jscmd.replace(commandmod + 'js ', '')
+        if (message.toLowerCase().indexOf('verb') === 1) {
+            if (userID.indexOf(ownerId) === 0) {
+                if (storage.d.Servers[sname].Verb === false || storage.d.Servers[sname].Verb === undefined) {
+                    try {
+                        storage.d.Servers[sname].Verb = true
+                        messageSend(channelID, "Ok now logging messages and status changes from this server into console")
+                    }
+                    catch (e) {
+                        logger.error(chalk.red(e))
+                    }
+                }
+                else {
+                    try {
+                        storage.d.Servers[sname].Verb = false
+                        messageSend(channelID, "Ok no longer logging messages and status changes from this server into console")
+                    }
+                    catch (e) {
+                        logger.error(chalk.red(e))
+                    }
+                }
+            }
+            else {
+                messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('verb') === 1) {
             if (userID.indexOf(ownerId) === 0) {
                 try {
                     eval(jscall)
@@ -1341,7 +1376,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
         timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
         if (channelID in bot.directMessages) {
-            console.log(timed + 'Channel: ' + 'PM | ' + user + ': ' + message)
+            console.log(timed + 'Channel: ' + 'DM | ' + user + ': ' + message)
             fs.appendFile("logs/DMs" + user + ".txt", '\n' + timed + user + ": " + message)
         }
         else {
@@ -1350,7 +1385,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mkdirp('./logs/' + servern, function(err) {
                 fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
             })
-            console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
+            if (verb) {
+                console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
+            }
         }
     }
     else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes" && ignore !== true) {
