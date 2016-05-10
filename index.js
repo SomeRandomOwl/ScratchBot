@@ -154,7 +154,7 @@ function serverlist(verb) {
             }
         }
     }
-    writeJSON('./storage', storage)
+    writeJSON('./assets/storage', storage)
 }
 /*/Lists currencly seen channels/*/
 function channellist(verb) {
@@ -192,7 +192,7 @@ function channellist(verb) {
             }
         }
     }
-    writeJSON('./storage', storage)
+    writeJSON('./assets/storage', storage)
 }
 /*/List currently/*/
 function userlist(verb) {
@@ -233,7 +233,7 @@ function userlist(verb) {
             }
         }
     }
-    writeJSON('./storage', storage)
+    writeJSON('./assets/storage', storage)
 }
 /*/Quick way of checking if something is in a array/*/
 function isInArray(value, array) {
@@ -430,7 +430,7 @@ function relxkcd(quer, channelID, name, sname) {
         messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
-    writeJSON('./storage', storage)
+    writeJSON('./assets/storage', storage)
 }
 /*/Retrieves a current status of a user/*/
 function status(statuscall, channelID, rawEvent) {
@@ -604,7 +604,7 @@ function snake(channelID, name, sname, userID) {
         messageSend(channelID, ":no_entry: Hey hold up, only one snake per hour, last snake was posted: " + snakeacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
-    writeJSON('./storage', storage)
+    writeJSON('./assets/storage', storage)
 }
 /*/Posts a random pug picture, limit 1 per hour/*/
 function pug(channelID, name, sname) {
@@ -645,7 +645,7 @@ function pug(channelID, name, sname) {
         messageSend(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
-    writeJSON('./storage', storage)
+    writeJSON('./assets/storage', storage)
 }
 /*/Posts a random image from a SFW scenery subreddit/*/
 function redditScenery(channelID, reddit, name, sname) {
@@ -665,7 +665,7 @@ function redditScenery(channelID, reddit, name, sname) {
     } else {
         messageSend(channelID, "Not a recgonized image subreddit to see recgonized reddits type " + commandmod + "redditscenery list")
     }
-    writeJSON('./storage', storage)
+    writeJSON('./assets/storage', storage)
 }
 /*/Help command/*/
 function help(cmd, channelID) {
@@ -798,7 +798,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         return
     }
 
-    writeJSON('./storage', storage)
+    writeJSON('./assets/storage', storage)
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
@@ -867,7 +867,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mucount = mucount + 1
             storage.d.Users[user].messageCnt = mucount
         }
-        writeJSON('./storage', storage)
+        writeJSON('./assets/storage', storage)
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
         logger.info(chalk.dim("Link Posted, logging to file"))
@@ -884,7 +884,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 lucount = lucount + 1
                 storage.d.Users[user].linkCnt = lucount
             }
-            writeJSON('./storage', storage)
+            writeJSON('./assets/storage', storage)
         }
         fs.appendFile("logs/Links.txt", '\n' + link)
     }
@@ -896,7 +896,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mccount = mccount + 1
             storage.d.Servers[sname].Channels[cname].messageCnt = mccount
         }
-        writeJSON('./storage', storage)
+        writeJSON('./assets/storage', storage)
     }
     if (sname !== undefined) {
         if (storage.d.Servers[sname].messageCnt === undefined) {
@@ -906,7 +906,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mscount = mscount + 1
             storage.d.Servers[sname].messageCnt = mscount
         }
-        writeJSON('./storage', storage)
+        writeJSON('./assets/storage', storage)
     }
     //debug!
     if (debug === 1) {
@@ -1283,8 +1283,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             logger.info(chalk.dim('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
         }
     }
-    ignore = null
-    announce = null
 });
 
 /* Start of console input */
