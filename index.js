@@ -361,11 +361,15 @@ function consoleparse(line) {
                             return
                         }
                         else {
+                            console.log(channel)
+                            console.log(chann)
                             continue
                         }
                     }
                 }
                 else {
+                    console.log(server)
+                    console.log(serve)
                     continue
                 }
             }
