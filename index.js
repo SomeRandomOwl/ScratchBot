@@ -957,14 +957,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('info') === 1 && ignore !== true) {
             messageSend(userID, doc.info)
         }
-        //This is the command for rolling dice
         if (message.toLowerCase().indexOf('roll') === 1 && ignore !== true) {
             var msg = message
             var dice = msg.replace(commandmod + 'roll ', '')
             diceroll(dice, userID, channelID)
             rconcmd = 'Yes'
         }
-        //Makes scratch print out her avatar
         if (message.indexOf("avatar") === 1 && ignore !== true) {
             bot.uploadFile({
                 to: channelID,
@@ -975,7 +973,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
             rconcmd = 'Yes'
         }
-        //Makes scratch print out channel id's and user id's
         if (message.toLowerCase().indexOf('ids') === 1 && ignore !== true) {
             bot.sendMessage({
                 to: channelID,
