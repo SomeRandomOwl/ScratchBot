@@ -350,6 +350,7 @@ function consoleparse(line) {
         }
         else if (line.toLowerCase().indexOf('cnch') === 1) {
             var serv = line.substring(line.indexOf(' ') + 1)
+            console.log(serv)
             var chann = server.substring(server.indexOf(' ') + 1)
             for (var server in storage.d.Servers) {
                 if (server === serv) {
