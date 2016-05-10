@@ -728,7 +728,17 @@ bot.on('debug', function(rawEvent) {
         }
     }
     if (rawEvent.t === "CHANNEL_UPDATE") {
-        console.log(rawEvent)
+        sname = bot.servers[rawEvent.d.guild_id].name
+        cID = rawEvent.d.id
+        newName = rawEvent.d.name
+        topic = rawEvent.d.topic
+        for (var cname in storage.d.Servers[sname].Channels) {
+            if (stoage.d.Servers[sname].Channels[cname].id === cID) {
+                storage.d.Servers[sname].Channels[newName] = stoage.d.Servers[sname].Channels[cname]
+                storage.d.Servers[sname].Channels[newName].topic = topic
+                delete stoage.d.Servers[sname].Channels[cname]
+            }
+        }
     }
 });
 bot.on('disconnected', function() {
