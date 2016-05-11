@@ -383,13 +383,6 @@ function diceroll(dice, userID, channelID) {
         messageSend(channelID, '<@' + userID + '>' + ' How can i roll a die with no dice to roll? :disappointed:')
     }
 }
-/*/Quick way to delete messages/*/
-function messageDelete(channelID, messageID) {
-    bot.deleteMessage({
-        channel: channelID,
-        messageID: messageID
-    })
-}
 /*/Retrieves a relavant xkcd comic from a query/*/
 function relxkcd(quer, channelID, name, sname) {
     var comictime = gettime()
@@ -674,6 +667,30 @@ function help(cmd, channelID) {
     } catch (e) {
         messageSend(channelID, "That isn't a recgonized command, or there is no help documentation on it")
     }
+}
+/*/Quick way to delete a message/*/
+function messageDelete(channelID, messageID) {
+    bot.deleteMessage({
+        channel: channelID,
+        messageID: messageID
+    })
+}
+
+function messagesDelete(channelID, mumber) {
+    bot.getMessages({
+        channel: channelID,
+        limit: number
+    }, function(error, messageArr) {
+        if (error) returnconsole.log(error);
+        for (var i = 0; i < messagearr.length; i++) {
+            array = messagearr[i].id
+        }
+        bot.deleteMessages({
+            channelID: channelID,
+            messageIDs: array
+        })
+
+    });
 }
 /* Bot on event functions */
 bot.on('ready', function() {
@@ -1072,6 +1089,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     ignoreC(channelID)
                     messageSend(channelID, 'Ok ignoring this channel')
                 }
+            } else {
+                messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('prune') === 1) {
+            pcall = message.substring(message.indexOf(' ') + 1)
+            if (userID.indexOf(ownerId) === 0) {
+                messagesDelete(channelID, pcall)
+            } else if (userID.indexOf(SownerId) === 0) {
+                messagesDelete(channelID, pcall)
             } else {
                 messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
             }
