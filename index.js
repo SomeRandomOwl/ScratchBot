@@ -230,6 +230,13 @@ function userlist(verb) {
                 if (storage.d.Users[name].rawLastSeen === undefined) {
                     storage.d.Users[name].rawLastSeen = 0
                 }
+                if (storage.d.Users[user].totalIdle === undefined) {
+                    storage.d.Users[user].totalIdle = {
+                        'h': 0,
+                        'm': 0,
+                        's': 0
+                    }
+                }
             }
         }
     }
@@ -824,8 +831,8 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             usrStatus = storage.d.Users[user].status
             if (usrStatus === 'idle') {
                 usrStatus = storage.d.Users[user].totalIdle
-                if (usrStatus = storage.d.Users[user].totalIdle === undefined) {
-                    usrStatus = storage.d.Users[user].totalIdle = {
+                if (storage.d.Users[user].totalIdle === undefined) {
+                    storage.d.Users[user].totalIdle = {
                         'h': 0,
                         'm': 0,
                         's': 0
@@ -840,8 +847,8 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             }
             if (usrStatus === 'offline') {
                 usrStatus = storage.d.Users[user].totalOffline
-                if (usrStatus = storage.d.Users[user].totalOffline === undefined) {
-                    usrStatus = storage.d.Users[user].totalOffline = {
+                if (storage.d.Users[user].totalOffline === undefined) {
+                    storage.d.Users[user].totalOffline = {
                         'h': 0,
                         'm': 0,
                         's': 0
