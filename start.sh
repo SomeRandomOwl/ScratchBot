@@ -1,4 +1,4 @@
-echo "$!"
+clear
 while :
 do
       node index.js
