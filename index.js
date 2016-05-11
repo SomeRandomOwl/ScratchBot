@@ -237,6 +237,13 @@ function userlist(verb) {
                         's': 0
                     }
                 }
+                if (storage.d.Users[name].totalOffline === undefined) {
+                    storage.d.Users[name].totalOffline = {
+                        'h': 0,
+                        'm': 0,
+                        's': 0
+                    }
+                }
             }
         }
     }
