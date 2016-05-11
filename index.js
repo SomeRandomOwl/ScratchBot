@@ -1,7 +1,7 @@
 /* Welcome, this is scratch bots source code, everything that makes her run and tick! */
 var DiscordClient = require('discord.io');
 var winston = require('winston');
-var config = require('../../config.json');
+var config = require('./config.json');
 var fs = require('fs');
 var Roll = require('roll');
 roll = new Roll();
@@ -854,11 +854,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 }
             }
         }
-
     } catch (e) {
         e = e
     }
-
     try {
         if (storage.d.Servers[sname].SownerId !== undefined) {
             var SownerId = storage.d.Servers[sname].SownerId
@@ -1215,7 +1213,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 redditScenery(channelID, random)
             }
         }
-        //Makes scratch execute jvascript, warning this command is really powerful and is limited to owner access only
         if (message.toLowerCase().indexOf('verb') === 1) {
             if (userID.indexOf(ownerId) === 0) {
                 if (storage.d.Servers[sname].Verb === false || storage.d.Servers[sname].Verb === undefined) {
