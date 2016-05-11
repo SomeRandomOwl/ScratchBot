@@ -1084,8 +1084,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var pfcall = pfcmd.replace(commandmod + 'prefix ', '')
             if (userID.indexOf(ownerId) === 0) {
                 storage.d.Servers[sname].prefixOvrid = pfcall
+                messageSend(channelID, "The prefix for this server is now: " + pfcall)
             } else if (userID.indexOf(SownerId) === 0) {
                 storage.d.Servers[sname].prefixOvrid = pfcall
+                messageSend(channelID, "The prefix for this server is now: " + pfcall)
             } else {
                 messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
             }
