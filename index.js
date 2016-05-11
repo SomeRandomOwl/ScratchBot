@@ -676,7 +676,7 @@ function messageDelete(channelID, messageID) {
     })
 }
 
-function messagesDelete(channelID, mumber) {
+function messagesDelete(channelID, number) {
     bot.getMessages({
         channel: channelID,
         limit: number
