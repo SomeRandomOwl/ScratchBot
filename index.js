@@ -230,8 +230,8 @@ function userlist(verb) {
                 if (storage.d.Users[name].rawLastSeen === undefined) {
                     storage.d.Users[name].rawLastSeen = 0
                 }
-                if (storage.d.Users[user].totalIdle === undefined) {
-                    storage.d.Users[user].totalIdle = {
+                if (storage.d.Users[name].totalIdle === undefined) {
+                    storage.d.Users[name].totalIdle = {
                         'h': 0,
                         'm': 0,
                         's': 0
