@@ -66,6 +66,17 @@ var bot = new DiscordClient({
     token: config.token
 });
 
+bot.deleteMessages = function(input, callback) {
+    //input.messageIDs, input.channelID
+    if (type(input.messageIDs) !== 'array') return handleErrCB("'messageIDs' is required, and must be an array.", callback);
+
+    req('post', "https://discordapp.com/api/channels/" + input.channelID + "/messages/bulk_delete", {
+        messages: input.messageIDs.slice(0, 100)
+    }, function(err, res) {
+        handleResCB("Unable to delete messages", err, res, callback);
+    });
+}
+
 /* Global variable setting */
 var cnaid = '171798432749584387'
 var dateFormat = 'MMMM Do YYYY, h:mm:ss a'
