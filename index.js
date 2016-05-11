@@ -904,12 +904,22 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     if (cname !== undefined) {
         console.log(cname)
-        if (storage.d.Servers[sname].Channels[cname].messageCnt === undefined) {
-            storage.d.Servers[sname].Channels[cname].messageCnt = 1
-        } else {
-            mccount = storage.d.Servers[sname].Channels[cname].messageCnt
-            mccount = mccount + 1
-            storage.d.Servers[sname].Channels[cname].messageCnt = mccount
+        try {
+            if (storage.d.Servers[sname].Channels[cname].messageCnt === undefined) {
+                storage.d.Servers[sname].Channels[cname].messageCnt = 1
+            } else {
+                mccount = storage.d.Servers[sname].Channels[cname].messageCnt
+                mccount = mccount + 1
+                storage.d.Servers[sname].Channels[cname].messageCnt = mccount
+            }
+        } catch (e) {
+            if (storage.d.Servers[sname].Channels[cname] === undefined) {
+                storage.d.Servers[sname].Channels[cname] = {
+                    "id": channelID,
+                    "type": 'text',
+                    "messageCnt": 0,
+                }
+            }
         }
         writeJSON('./assets/storage', storage)
     }
