@@ -903,7 +903,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         fs.appendFile("logs/Links.txt", '\n' + link)
     }
     if (cname !== undefined) {
-        console.log(cname)
         try {
             if (storage.d.Servers[sname].Channels[cname].messageCnt === undefined) {
                 storage.d.Servers[sname].Channels[cname].messageCnt = 1
