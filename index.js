@@ -821,6 +821,39 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         }
         if (status === 'online') {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
+            usrStatus = storage.d.Users[user].status
+            if (usrStatus === 'idle') {
+                usrStatus = storage.d.Users[user].totalIdle
+                if (usrStatus = storage.d.Users[user].totalIdle === undefined) {
+                    usrStatus = storage.d.Users[user].totalIdle = {
+                        'h': 0,
+                        'm': 0,
+                        's': 0
+                    }
+                } else {
+                    lastIT = usrStatus = storage.d.Users[user].totalIdle
+                    prevI = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    lastIT.h = lastIT.h + prevI.h
+                    lastIT.m = lastIT.m + prevI.m
+                    lastIT.s = lastIT.s + prevI.s
+                }
+            }
+            if (usrStatus === 'offline') {
+                usrStatus = storage.d.Users[user].totalOffline
+                if (usrStatus = storage.d.Users[user].totalOffline === undefined) {
+                    usrStatus = storage.d.Users[user].totalOffline = {
+                        'h': 0,
+                        'm': 0,
+                        's': 0
+                    }
+                } else {
+                    lastOT = usrStatus = storage.d.Users[user].totalOffline
+                    prevO = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    lastOT.h = lastOT.h + prevO.h
+                    lastOT.m = lastOT.m + prevO.m
+                    lastOT.s = lastOT.s + prevO.s
+                }
+            }
             if (storage.d.Users[user].status !== 'online' && verb) {
                 logger.info(chalk.dim(lastseen + ' : ' + chalk.green(user + " is now: " + chalk.underline(status))));
             }
