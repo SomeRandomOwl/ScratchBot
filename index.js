@@ -1098,10 +1098,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             pcall = message.substring(message.indexOf(' ') + 1)
             if (userID.indexOf(ownerId) === 0) {
                 messagesDelete(channelID, pcall)
+                messageSend('Ok removing the last ' + pcall + " Messages")
             } else if (userID.indexOf(SownerId) === 0) {
                 messagesDelete(channelID, pcall)
+                messageSend('Ok removing the last ' + pcall + " Messages")
             } else {
-                messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
+                messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner/Admin")
             }
             rconcmd = 'Yes'
         }
