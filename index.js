@@ -853,9 +853,11 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     lastIT.m = lastIT.m + prevI.m
                     lastIT.s = lastIT.s + prevI.s
                     lastIT.m = lastIT.m * 60
-                    lastITC = lastIT.m + lastIT.s
+                    lastIT.h = lastIT.h * 3600
+                    lastITC = lastIT.m + lastIT.s + lastIT.h
                     lastITC = secondsToTime(lastITC)
-                    lastIT.h = lastIT.h + lastITC.h
+                    lastIT.d = lastIT.d + lastITC.d
+                    lastIT.h = lastITC.h
                     lastIT.m = lastITC.m
                     lastIT.s = lastITC.s
                     storage.d.Users[user].totalOffline = lastIT
@@ -876,9 +878,11 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     lastOT.m = lastOT.m + prevO.m
                     lastOT.s = lastOT.s + prevO.s
                     lastOT.m = lastOT.m * 60
-                    lastOTC = lastOT.m + lastOT.s
+                    lastOT.h = lastOT.h * 3600
+                    lastOTC = lastOT.m + lastOT.s + lastOT.h
                     lastOTC = secondsToTime(lastOTC)
-                    lastOT.h = lastOT.h + lastOTC.h
+                    lastOT.d = lastOT.d + lastOTC.d
+                    lastOT.h = lastOTC.h
                     lastOT.m = lastOTC.m
                     lastOT.s = lastOTC.s
                     storage.d.Users[user].totalOffline = lastOT
