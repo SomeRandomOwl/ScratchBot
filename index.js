@@ -455,9 +455,17 @@ function status(statuscall, channelID, rawEvent) {
                 if (timeIdle.h === 0) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                 } else if (timeIdle.h === 1) {
-                    timeIdle = timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    if (timeIdle.d === 1) {
+                        timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    } else {
+                        timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    }
                 } else {
-                    timeIdle = timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    if (timeIdle.d === 1) {
+                        timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    } else {
+                        timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    }
                 }
                 messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
             } else if (status === 'offline') {
@@ -469,9 +477,17 @@ function status(statuscall, channelID, rawEvent) {
                 if (timeIdle.h === 0) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                 } else if (timeIdle.h === 1) {
-                    timeIdle = timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    if (timeIdle.d === 1) {
+                        timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    } else {
+                        timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    }
                 } else {
-                    timeIdle = timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    if (timeIdle.d === 1) {
+                        timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    } else {
+                        timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    }
                 }
                 messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
             } else if (status === 'online') {
