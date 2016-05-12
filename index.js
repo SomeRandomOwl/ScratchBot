@@ -555,6 +555,7 @@ function status(statuscall, channelID, rawEvent) {
             }
         }
     } catch (e) {
+        console.log(e)
         messageSend(channelID, "Error; No User specified, or invalid user")
     }
 }
