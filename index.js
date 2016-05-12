@@ -851,7 +851,10 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     lastIT.m = lastIT.m + prevI.m
                     lastIT.s = lastIT.s + prevI.s
                     lastITC = lastIT.m + lastIT.s
-                    lastIT = lastIT + secondsToTime(lastITC)
+                    lastITC = secondsToTime(lastITC)
+                    lastIT.h = lastIT.h + lastITC.h
+                    lastIT.m = lastITC.m
+                    lastIT.s = lastITC.s
                     storage.d.Users[user].totalOffline = lastIT
                 }
             }
@@ -871,7 +874,10 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     lastOT.s = lastOT.s + prevO.s
                     lastOT.m = lastOT.m * 60
                     lastOTC = lastOT.m + lastOT.s
-                    lastOT = lastOT + secondsToTime(lastOTC)
+                    lastOTC = secondsToTime(lastOTC)
+                    lastOT.h = lastOT.h + lastOTC.h
+                    lastOT.m = lastOTC.m
+                    lastOT.s = lastOTC.s
                     storage.d.Users[user].totalOffline = lastOT
                 }
             }
