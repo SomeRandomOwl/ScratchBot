@@ -112,7 +112,9 @@ function secondsToTime(secs) {
     var divisor_for_seconds = divisor_for_minutes % 60;
     var seconds = Math.ceil(divisor_for_seconds);
 
+    var days = Math.floor(hours / 24)
     var obj = {
+        "d": days,
         "h": hours,
         "m": minutes,
         "s": seconds
@@ -850,6 +852,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     lastIT.h = lastIT.h + prevI.h
                     lastIT.m = lastIT.m + prevI.m
                     lastIT.s = lastIT.s + prevI.s
+                    lastIT.m = lastIT.m * 60
                     lastITC = lastIT.m + lastIT.s
                     lastITC = secondsToTime(lastITC)
                     lastIT.h = lastIT.h + lastITC.h
