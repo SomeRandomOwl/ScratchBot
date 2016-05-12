@@ -845,11 +845,14 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                         's': 0
                     }
                 } else {
-                    lastIT = usrStatus = storage.d.Users[user].totalIdle
+                    lastIT = storage.d.Users[user].totalIdle
                     prevI = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
                     lastIT.h = lastIT.h + prevI.h
                     lastIT.m = lastIT.m + prevI.m
                     lastIT.s = lastIT.s + prevI.s
+                    lastITC = lastIT.m + lastIT.s
+                    lastIT = lastIT + secondsToTime(lastITC)
+                    storage.d.Users[user].totalOffline = lastIT
                 }
             }
             if (usrStatus === 'offline') {
@@ -861,11 +864,15 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                         's': 0
                     }
                 } else {
-                    lastOT = usrStatus = storage.d.Users[user].totalOffline
+                    lastOT = storage.d.Users[user].totalOffline
                     prevO = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
                     lastOT.h = lastOT.h + prevO.h
                     lastOT.m = lastOT.m + prevO.m
                     lastOT.s = lastOT.s + prevO.s
+                    lastOT.m = lastOT.m * 60
+                    lastOTC = lastOT.m + lastOT.s
+                    lastOT = lastOT + secondsToTime(lastOTC)
+                    storage.d.Users[user].totalOffline = lastOT
                 }
             }
             if (storage.d.Users[user].status !== 'online' && verb) {
