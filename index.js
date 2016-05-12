@@ -455,13 +455,17 @@ function status(statuscall, channelID, rawEvent) {
                 if (timeIdle.h === 0) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                 } else if (timeIdle.h === 1) {
-                    if (timeIdle.d === 1) {
+                    if (timeIdle.d === 0) {
+                        timeIdle = timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    } else if (timeIdle.d === 1) {
                         timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     } else {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 } else {
-                    if (timeIdle.d === 1) {
+                    if (timeIdle.d === 0) {
+                        timeIdle = timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    } else if (timeIdle.d === 1) {
                         timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     } else {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
@@ -477,13 +481,17 @@ function status(statuscall, channelID, rawEvent) {
                 if (timeIdle.h === 0) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                 } else if (timeIdle.h === 1) {
-                    if (timeIdle.d === 1) {
+                    if (timeIdle.d === 0) {
+                        timeIdle = timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    } else if (timeIdle.d === 1) {
                         timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     } else {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 } else {
-                    if (timeIdle.d === 1) {
+                    if (timeIdle.d === 0) {
+                        timeIdle = timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                    } else if (timeIdle.d === 1) {
                         timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     } else {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
@@ -509,13 +517,17 @@ function status(statuscall, channelID, rawEvent) {
                         if (timeIdle.h === 0) {
                             timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                         } else if (timeIdle.h === 1) {
-                            if (timeIdle.d === 1) {
+                            if (timeIdle.d === 0) {
+                                timeIdle = timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                            } else if (timeIdle.d === 1) {
                                 timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             } else {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         } else {
-                            if (timeIdle.d === 1) {
+                            if (timeIdle.d === 0) {
+                                timeIdle = timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                            } else if (timeIdle.d === 1) {
                                 timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             } else {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
@@ -531,13 +543,17 @@ function status(statuscall, channelID, rawEvent) {
                         if (timeIdle.h === 0) {
                             timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                         } else if (timeIdle.h === 1) {
-                            if (timeIdle.d === 1) {
+                            if (timeIdle.d === 0) {
+                                timeIdle = timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                            } else if (timeIdle.d === 1) {
                                 timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             } else {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         } else {
-                            if (timeIdle.d === 1) {
+                            if (timeIdle.d === 0) {
+                                timeIdle = timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                            } else if (timeIdle.d === 1) {
                                 timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             } else {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
