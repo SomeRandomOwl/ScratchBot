@@ -456,15 +456,15 @@ function status(statuscall, channelID, rawEvent) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                 } else if (timeIdle.h === 1) {
                     if (timeIdle.d === 1) {
-                        timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     } else {
-                        timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 } else {
                     if (timeIdle.d === 1) {
-                        timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     } else {
-                        timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 }
                 messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
@@ -478,15 +478,15 @@ function status(statuscall, channelID, rawEvent) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                 } else if (timeIdle.h === 1) {
                     if (timeIdle.d === 1) {
-                        timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     } else {
-                        timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 } else {
                     if (timeIdle.d === 1) {
-                        timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     } else {
-                        timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                        timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 }
                 messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
@@ -510,15 +510,15 @@ function status(statuscall, channelID, rawEvent) {
                             timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                         } else if (timeIdle.h === 1) {
                             if (timeIdle.d === 1) {
-                                timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                                timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             } else {
-                                timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                                timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         } else {
                             if (timeIdle.d === 1) {
-                                timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                                timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             } else {
-                                timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                                timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         }
                         messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
@@ -532,15 +532,15 @@ function status(statuscall, channelID, rawEvent) {
                             timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                         } else if (timeIdle.h === 1) {
                             if (timeIdle.d === 1) {
-                                timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                                timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             } else {
-                                timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                                timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hour " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         } else {
                             if (timeIdle.d === 1) {
-                                timeIdle = tomeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                                timeIdle = timeIdle.d + " Day " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             } else {
-                                timeIdle = tomeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
+                                timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         }
                         messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
