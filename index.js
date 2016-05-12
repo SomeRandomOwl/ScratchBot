@@ -113,6 +113,9 @@ function secondsToTime(secs) {
     var seconds = Math.ceil(divisor_for_seconds);
 
     var days = Math.floor(hours / 24)
+    while (hours > 24) {
+        hours = hours - 24
+    }
     var obj = {
         "d": days,
         "h": hours,
