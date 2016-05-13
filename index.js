@@ -764,7 +764,7 @@ function messagesDelete(channelID, number) {
     });
 }
 
-function stats(channelID, name) {
+function stats(channelID, name, rawEvent) {
     try {
         if (name.toLowerCase().indexOf('<@') === -1) {
             messageSend(channelID, "Your current stats are: \n\n" +
@@ -1237,7 +1237,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else if (message.toLowerCase().indexOf('channel') !== -1) {
                 messageSend(channelID, "The total ammount of messages sent on this channel is: " + storage.d.Servers[sname].Channels[cname].messageCnt)
             } else {
-                stats(channelID, name)
+                stats(channelID, name, rawEvent)
             }
             rconcmd = 'Yes'
         }
