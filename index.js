@@ -237,6 +237,7 @@ function userlist(verb) {
                 }
                 if (storage.d.Users[name].totalIdle === undefined) {
                     storage.d.Users[name].totalIdle = {
+                        'd': 0,
                         'h': 0,
                         'm': 0,
                         's': 0
@@ -244,6 +245,7 @@ function userlist(verb) {
                 }
                 if (storage.d.Users[name].totalOffline === undefined) {
                     storage.d.Users[name].totalOffline = {
+                        'd': 0,
                         'h': 0,
                         'm': 0,
                         's': 0
@@ -894,6 +896,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 usrStatus = storage.d.Users[user].totalIdle
                 if (storage.d.Users[user].totalIdle === undefined) {
                     storage.d.Users[user].totalIdle = {
+                        'd': 0,
                         'h': 0,
                         'm': 0,
                         's': 0
@@ -901,6 +904,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 } else {
                     lastIT = storage.d.Users[user].totalIdle
                     prevI = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    lastIT.d = lastIT.d + prevI.d
                     lastIT.h = lastIT.h + prevI.h
                     lastIT.m = lastIT.m + prevI.m
                     lastIT.s = lastIT.s + prevI.s
@@ -919,6 +923,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 usrStatus = storage.d.Users[user].totalOffline
                 if (storage.d.Users[user].totalOffline === undefined) {
                     storage.d.Users[user].totalOffline = {
+                        'd': 0,
                         'h': 0,
                         'm': 0,
                         's': 0
@@ -926,6 +931,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 } else {
                     lastOT = storage.d.Users[user].totalOffline
                     prevO = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    lastOT.d = lastOT.d + prevO.d
                     lastOT.h = lastOT.h + prevO.h
                     lastOT.m = lastOT.m + prevO.m
                     lastOT.s = lastOT.s + prevO.s
