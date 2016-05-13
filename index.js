@@ -1222,7 +1222,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 6) {
                 try {
-                    messageSend(channelID, "Your current stats are: \n\<n></n>" +
+                    messageSend(channelID, "Your current stats are: \n\n" +
                         "```Messages Sent: " + storage.d.Users[user].messageCnt +
                         "\nLinks Sent: " + storage.d.Users[user].linkCnt +
                         "\nTotal Time Idle: " +
