@@ -765,34 +765,35 @@ function messagesDelete(channelID, number) {
 }
 
 function stats(channelID, name) {
-    if (statuscall.toLowerCase().indexOf('<@') === -1) {
-        messageSend(channelID, "Your current stats are: \n" +
-            "```Messages Sent: " + storage.d.Users[name].messageCnt +
-            "\nLinks Sent: " + storage.d.Users[name].linkCnt +
-            "\nTotal Time Idle: " +
-            storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
-            "\nTotal Time Offline: " +
-            storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n")
-    } else {
-        var mentId = rawEvent.d.mentions[0].id
-        for (var usern in storage.d.Users) {
-            if (mentId === storage.d.Users[usern].id) {
-                messageSend(channelID, "Your current stats are: \n" +
-                    "```Messages Sent: " + storage.d.Users[usern].messageCnt +
-                    "\nLinks Sent: " + storage.d.Users[usern].linkCnt +
-                    "\nTotal Time Idle: " +
-                    storage.d.Users[usern].totalIdle.d + " Days " + storage.d.Users[usern].totalIdle.h + " Hours " + storage.d.Users[usern].totalIdle.m + " Minutes " + storage.d.Users[usern].totalIdle.s + " Seconds\n" +
-                    "\nTotal Time Offline: " +
-                    storage.d.Users[usern].totalOffline.d + " Days " + storage.d.Users[usern].totalOffline.h + " Hours " + storage.d.Users[usern].totalOffline.m + " Minutes " + storage.d.Users[usern].totalOffline.s + " Seconds\n")
-            } else {
-                continue
+    try {
+        if (statuscall.toLowerCase().indexOf('<@') === -1) {
+            messageSend(channelID, "Your current stats are: \n" +
+                "```Messages Sent: " + storage.d.Users[name].messageCnt +
+                "\nLinks Sent: " + storage.d.Users[name].linkCnt +
+                "\nTotal Time Idle: " +
+                storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
+                "\nTotal Time Offline: " +
+                storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n")
+        } else {
+            var mentId = rawEvent.d.mentions[0].id
+            for (var usern in storage.d.Users) {
+                if (mentId === storage.d.Users[usern].id) {
+                    messageSend(channelID, "Your current stats are: \n" +
+                        "```Messages Sent: " + storage.d.Users[usern].messageCnt +
+                        "\nLinks Sent: " + storage.d.Users[usern].linkCnt +
+                        "\nTotal Time Idle: " +
+                        storage.d.Users[usern].totalIdle.d + " Days " + storage.d.Users[usern].totalIdle.h + " Hours " + storage.d.Users[usern].totalIdle.m + " Minutes " + storage.d.Users[usern].totalIdle.s + " Seconds\n" +
+                        "\nTotal Time Offline: " +
+                        storage.d.Users[usern].totalOffline.d + " Days " + storage.d.Users[usern].totalOffline.h + " Hours " + storage.d.Users[usern].totalOffline.m + " Minutes " + storage.d.Users[usern].totalOffline.s + " Seconds\n")
+                } else {
+                    continue
+                }
             }
         }
+    } catch (e) {
+        console.log(e)
+        messageSend(channelID, "Error; No User specified, or invalid user")
     }
-} catch (e) {
-    console.log(e)
-    messageSend(channelID, "Error; No User specified, or invalid user")
-}
 }
 /* Bot on event functions */
 bot.on('ready', function() {
