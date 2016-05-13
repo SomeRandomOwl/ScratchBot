@@ -1235,7 +1235,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else if (message.toLowerCase().indexOf('server') !== -1) {
                 messageSend(channelID, "The total ammount of messages sent on this server is: " + storage.d.Servers[sname].messageCnt)
             } else if (message.toLowerCase().indexOf('channel') !== -1) {
-                messageSend(channelID, "The total ammount of messages sent on this channel is: " + storage.d.Servers[sname].Channels.[cname].messageCnt)
+                messageSend(channelID, "The total ammount of messages sent on this channel is: " + storage.d.Servers[sname].Channels[cname].messageCnt)
             } else {
                 stats(channelID, name)
             }
