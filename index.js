@@ -745,7 +745,7 @@ function messageDelete(channelID, messageID) {
         messageID: messageID
     })
 }
-
+/*/Dekete multiple messages/*/
 function messagesDelete(channelID, number) {
     bot.getMessages({
         channel: channelID,
@@ -762,6 +762,37 @@ function messagesDelete(channelID, number) {
         })
 
     });
+}
+
+function stats(channelID, name) {
+    if (statuscall.toLowerCase().indexOf('<@') === -1) {
+        messageSend(channelID, "Your current stats are: \n" +
+            "```Messages Sent: " + storage.d.Users[name].messageCnt +
+            "\nLinks Sent: " + storage.d.Users[name].linkCnt +
+            "\nTotal Time Idle: "
+            storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
+            "\nTotal Time Offline: "
+            storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n")
+    } else {
+        var mentId = rawEvent.d.mentions[0].id
+        for (var usern in storage.d.Users) {
+            if (mentId === storage.d.Users[usern].id) {
+                messageSend(channelID, "Your current stats are: \n" +
+                    "```Messages Sent: " + storage.d.Users[usern].messageCnt +
+                    "\nLinks Sent: " + storage.d.Users[usern].linkCnt +
+                    "\nTotal Time Idle: "
+                    storage.d.Users[usern].totalIdle.d + " Days " + storage.d.Users[usern].totalIdle.h + " Hours " + storage.d.Users[usern].totalIdle.m + " Minutes " + storage.d.Users[usern].totalIdle.s + " Seconds\n" +
+                    "\nTotal Time Offline: "
+                    storage.d.Users[usern].totalOffline.d + " Days " + storage.d.Users[usern].totalOffline.h + " Hours " + storage.d.Users[usern].totalOffline.m + " Minutes " + storage.d.Users[usern].totalOffline.s + " Seconds\n")
+            } else {
+                continue
+            }
+        }
+    }
+} catch (e) {
+    console.log(e)
+    messageSend(channelID, "Error; No User specified, or invalid user")
+}
 }
 /* Bot on event functions */
 bot.on('ready', function() {
@@ -1187,12 +1218,25 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('stats') === 1 && ignore !== true) {
             var len = message.length
+            var name = message.substring(message.indexOf(' ') + 1)
             if (len === 6) {
                 try {
-                    messageSend(channelID, "Your current stats are: \n" + "Messages Sent: " + storage.d.Users[user].messageCnt + "\nLinks Sent: " + storage.d.Users[user].linkCnt)
+                    messageSend(channelID, "Your current stats are: \n" +
+                        "```Messages Sent: " + storage.d.Users[user].messageCnt +
+                        "\nLinks Sent: " + storage.d.Users[user].linkCnt +
+                        "\nTotal Time Idle: "
+                        storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
+                        "\nTotal Time Offline: "
+                        storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds\n")
                 } catch (e) {
                     messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
                 }
+            } else if (message.toLowerCase().indexOf('server') !== -1) {
+                messageSend(channelID, "The total ammount of messages sent on this server is: " + storage.d.Servers[sname].messageCnt)
+            } else if (message.toLowerCase().indexOf('channel') !== -1) {
+                messageSend(channelID, "The total ammount of messages sent on this channel is: " + storage.d.Servers[sname].Channels.[cname].messageCnt)
+            } else {
+                stats(channelID, name)
             }
             rconcmd = 'Yes'
         }
