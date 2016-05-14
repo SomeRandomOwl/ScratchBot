@@ -1441,6 +1441,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
+        if (message.toLowerCase().indexOf('uptime') === 1) {
+            time = secondsToTime(gettime() - startUpTime)
+            messageSend(channelID, "The bot has been active for: " + time.d + " Days " + time.h + " Hours " + time.m + " Minutes " + time.s + " Seconds")
+            rconcmd = 'Yes'
+        }
         if (message.toLowerCase().indexOf('js') === 1) {
             jscall = message.substring(message.indexOf(' ') + 1)
             if (userID.indexOf(ownerId) === 0) {

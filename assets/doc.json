@@ -17,7 +17,8 @@
         "snake",
         "stats",
         "status",
-	"verb",
+        "uptime",
+        "verb",
         "xkcd",
         "yt"
     ],
@@ -42,7 +43,8 @@
         "pug": "Fun Command; Makes bot post a random pug picture",
         "redditscenery": "Fun Command; Makes bot post a random picture from a list of subreddits more specifically the SFW network https://www.reddit.com/r/sfwpornnetwork/wiki/network . EX: redditscenery | (random subreddit) | redditscenery subreddit | redditscenery list",
         "js": "Admin Command; Only the bot owner can issue this command, it runs raw javascript and is potentially harmful to the bot",
-	"verb": "Admin Command; bot owner only, disallows message and status output to console"
+        "verb": "Admin Command; bot owner only, disallows message and status output to console",
+        "uptime": "Utility Command; Makes the bot send its current uptime"
     },
     "info": "This bot has been coded by Seth177 it is designed to be a simple chat bot combining useful commands I've seen across a few bots but never really unified together in a way I really wanted. To see a list of commands do the issue the commands command, if you need help on what a command does issue the help command followed by the command you need help with"
 }
