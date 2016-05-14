@@ -796,7 +796,7 @@ function stats(channelID, name, rawEvent) {
     }
 }
 var startUpTime = null
-/* Bot on event functions */
+    /* Bot on event functions */
 bot.on('ready', function() {
     console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
     startUpTime = gettime()
@@ -926,6 +926,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         if (status === 'online') {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
             usrStatus = storage.d.Users[user].status
+            console.log("Previous Status Was: " + usrStatus)
             if (usrStatus === 'idle') {
                 usrStatus = storage.d.Users[user].totalIdle
                 if (storage.d.Users[user].totalIdle === undefined) {
@@ -954,8 +955,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     lastIdleTime = {}
                     previousIdle = {}
                 }
-            }
-            if (usrStatus === 'offline') {
+            } else if (usrStatus === 'offline') {
                 usrStatus = storage.d.Users[user].totalOffline
                 if (storage.d.Users[user].totalOffline === undefined) {
                     storage.d.Users[user].totalOffline = {
