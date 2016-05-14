@@ -926,7 +926,6 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         if (status === 'online') {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
             usrStatus = storage.d.Users[user].status
-            console.log("Previous Status Was: " + usrStatus)
             if (usrStatus === 'idle') {
                 usrStatus = storage.d.Users[user].totalIdle
                 if (storage.d.Users[user].totalIdle === undefined) {
