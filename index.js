@@ -329,7 +329,7 @@ function yt(ytcall, userID, channelID) {
 /*/Used to change status message/*/
 function statusmsg(msg) {
     bot.setPresence({
-        idle_since: Date.now(),
+        idle_since: null,
         game: msg
     })
 }
