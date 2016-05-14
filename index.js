@@ -795,9 +795,11 @@ function stats(channelID, name, rawEvent) {
         messageSend(channelID, "Error; No User specified, or invalid user")
     }
 }
+var startUpTime = null
 /* Bot on event functions */
 bot.on('ready', function() {
-    console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"));
+    console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
+    startUpTime = gettime()
 });
 bot.on('debug', function(rawEvent) {
     try {
