@@ -753,7 +753,7 @@ function messagesDelete(channelID, number) {
     }, function(error, messageArr) {
         if (error) returnconsole.log(error);
         var array = []
-        for (var i = 0; i < messageArr.length; i++) {
+        for (var i = 0; i < number; i++) {
             array.push(messageArr[i].id)
         }
         console.log(array.length)
@@ -930,8 +930,8 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             usrStatus = storage.d.Users[user].status
             if (usrStatus === 'idle') {
                 var usrStatIdle = storage.d.Users[user].totalIdle
-		//console.log('prev idle')
-		if (storage.d.Users[user].totalIdle === undefined) {
+                    //console.log('prev idle')
+                if (storage.d.Users[user].totalIdle === undefined) {
                     storage.d.Users[user].totalIdle = {
                         'd': 0,
                         'h': 0,
@@ -958,8 +958,8 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     previousIdle = {}
                 }
             } else if (usrStatus === 'offline') {
-		//console.log('prev Offline')
-		var usrStatOff = storage.d.Users[user].totalOffline
+                //console.log('prev Offline')
+                var usrStatOff = storage.d.Users[user].totalOffline
                 if (storage.d.Users[user].totalOffline === undefined) {
                     storage.d.Users[user].totalOffline = {
                         'd': 0,
