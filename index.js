@@ -768,7 +768,7 @@ function messagesDelete(channelID, number) {
 function stats(channelID, name, rawEvent) {
     try {
         if (name.toLowerCase().indexOf('<@') === -1) {
-            messageSend(channelID, "Your current stats are: \n\n" +
+            messageSend(channelID, name + "'s current stats are: \n\n" +
                 "```Messages Sent: " + storage.d.Users[name].messageCnt +
                 "\nLinks Sent: " + storage.d.Users[name].linkCnt +
                 "\nTotal Time Idle: " +
@@ -779,7 +779,7 @@ function stats(channelID, name, rawEvent) {
             var mentId = rawEvent.d.mentions[0].id
             for (var usern in storage.d.Users) {
                 if (mentId === storage.d.Users[usern].id) {
-                    messageSend(channelID, "Your current stats are: \n\n" +
+                    messageSend(channelID, usern + "'s current stats are: \n\n" +
                         "```Messages Sent: " + storage.d.Users[usern].messageCnt +
                         "\nLinks Sent: " + storage.d.Users[usern].linkCnt +
                         "\nTotal Time Idle: " +
