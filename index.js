@@ -21,7 +21,7 @@ if (fs.existsSync('./assets/storage.json')) {
     console.log('Found Storage.json');
     var storage = require('./assets/storage.json')
 } else if (fs.existsSync('./assets/storage.json') === false) {
-    logger.info(chalk.underline.blue('Didnt Find Storage.json, Please run generateStorageFile.js'))
+    logger.info(chalk.underline.red('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
@@ -132,7 +132,7 @@ function gettime() {
 /*/Lists currently connected severs and writes them to json/*/
 function serverlist(verb) {
     if (verb) {
-        logger.info(chalk.underline("Currently connected to these servers: \n"))
+        logger.info(chalk.underline("Currently connected to these servers:\n"))
     }
     for (var serverID in bot.servers) {
         if (verb) {
@@ -164,7 +164,7 @@ function serverlist(verb) {
 /*/Lists currencly seen channels/*/
 function channellist(verb) {
     if (verb) {
-        logger.info(chalk.underline("Currently connected to these channels: \n"))
+        logger.info(chalk.underline("Currently connected to these channels:\n"))
     }
     for (var serverID in bot.servers) {
         for (var channelID in bot.servers[serverID].channels) {
@@ -202,7 +202,7 @@ function channellist(verb) {
 /*/List currently/*/
 function userlist(verb) {
     if (verb) {
-        logger.info(chalk.underline("Currently seeing these users: \n"))
+        logger.info(chalk.underline("Currently seeing these users:\n"))
     }
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
@@ -801,6 +801,7 @@ var startUpTime = null
 bot.on('ready', function() {
     console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
     startUpTime = gettime()
+    statusmsg("Discord")
 });
 bot.on('debug', function(rawEvent) {
     try {
@@ -928,8 +929,9 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
             usrStatus = storage.d.Users[user].status
             if (usrStatus === 'idle') {
-                usrStatus = storage.d.Users[user].totalIdle
-                if (storage.d.Users[user].totalIdle === undefined) {
+                var usrStatIdle = storage.d.Users[user].totalIdle
+		//console.log('prev idle')
+		if (storage.d.Users[user].totalIdle === undefined) {
                     storage.d.Users[user].totalIdle = {
                         'd': 0,
                         'h': 0,
@@ -951,12 +953,13 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     lastIdleTime.h = lastIdleTimeC.h
                     lastIdleTime.m = lastIdleTimeC.m
                     lastIdleTime.s = lastIdleTimeC.s
-                    storage.d.Users[user].totalOffline = lastIdleTime
+                    storage.d.Users[user].totalIdle = lastIdleTime
                     lastIdleTime = {}
                     previousIdle = {}
                 }
             } else if (usrStatus === 'offline') {
-                usrStatus = storage.d.Users[user].totalOffline
+		//console.log('prev Offline')
+		var usrStatOff = storage.d.Users[user].totalOffline
                 if (storage.d.Users[user].totalOffline === undefined) {
                     storage.d.Users[user].totalOffline = {
                         'd': 0,
