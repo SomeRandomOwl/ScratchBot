@@ -753,7 +753,7 @@ function messagesDelete(channelID, number) {
     }, function(error, messageArr) {
         if (error) returnconsole.log(error);
         var array = []
-        for (var i = 0; i < number; i++) {
+        for (var i = 0; i < number + 1; i++) {
             array.push(messageArr[i].id)
         }
         console.log(array.length)
