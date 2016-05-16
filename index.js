@@ -756,6 +756,7 @@ function messagesDelete(channelID, number) {
         for (var i = 0; i < messageArr.length; i++) {
             array.push(messageArr[i].id)
         }
+        console.log(array.length)
         bot.deleteMessages({
             channelID: channelID,
             messageIDs: array
