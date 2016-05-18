@@ -15,14 +15,19 @@ var chalk = require('chalk');
 var request = require('request');
 var mkdirp = require('mkdirp');
 var doc = require('./assets/doc.json')
+var cleverbot = require("cleverbot.io")
 
 /*/Loads Storage.json if it exists/*/
 if (fs.existsSync('./assets/storage.json')) {
     console.log('Found Storage.json');
     var storage = require('./assets/storage.json')
-} else if (fs.existsSync('./assets/storage.json') === false) {
+} else
+if (fs.existsSync('./assets/storage.json') === false) {
     logger.info(chalk.underline.red('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
+/*/CleverBot/*/
+bot = new cleverbot(config.cleverUser, config.cleverKey);
+bot.setNick("Scratch")
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
 /*/Set up logging/*/
@@ -772,7 +777,15 @@ function eightBall(channelID, question, rawEvent) {
 }
 
 function clever(question, channelID) {
-    // body...
+    bot.create(function(err, session) {
+        if (err) {
+            console.error(err)
+        } else {
+            bot.ask(question, function(err, response) {
+                messageSend(channelID, response);
+            });
+        }
+    });
 }
 /*/Prints out a users stats/*/
 function stats(channelID, name, rawEvent) {
@@ -1321,6 +1334,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageID: messageID
             });
             rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('clever') === 1 && ignore !== true) {
+            var cleverr = message.substring(message.indexOf(' ') + 1)
+            clever(channelID, cleverr)
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
             if (message.indexOf(' ') === -1) {
