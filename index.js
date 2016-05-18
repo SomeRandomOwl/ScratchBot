@@ -1350,8 +1350,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     ignoreC(channelID)
                     messageSend(channelID, 'Ok ignoring this channel')
                 }
-            } else if (userID.indexOf(SownerId) === 0) {
-                if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(SownerId) === 0) {
+            } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === 0) {
+                if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(SownerId) === -1) {
                     uningoreC(channelID)
                     messageSend(channelID, 'Ok no longer ignoring this channel')
                 } else {
@@ -1368,7 +1368,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (userID.indexOf(ownerId) === 0) {
                 messagesDelete(channelID, pcall)
                 messageSend('Ok removing the last ' + pcall + " Messages")
-            } else if (userID.indexOf(SownerId) === 0) {
+            } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
                 messagesDelete(channelID, pcall)
                 messageSend('Ok removing the last ' + pcall + " Messages")
             } else {
@@ -1382,7 +1382,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (userID.indexOf(ownerId) === 0) {
                 storage.d.Servers[sname].settings.prefixOvrid = pfcall
                 messageSend(channelID, "The prefix for this server is now: " + pfcall)
-            } else if (userID.indexOf(SownerId) === 0) {
+            } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
                 storage.d.Servers[sname].settings.prefixOvrid = pfcall
                 messageSend(channelID, "The prefix for this server is now: " + pfcall)
             } else {
@@ -1448,23 +1448,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
         }
         if (message.toLowerCase().indexOf('announce') !== -1 && ignore !== true) {
-            if (userID.indexOf(ownerId) === 0) {
-                if (storage.d.Servers[sname].settings.announceChan === null || storage.d.Servers[sname].settings.announceChan === undefined) {
-                    try {
-                        storage.d.Servers[sname].settings.announceChan = channelID
-                        messageSend(channelID, "Ok now announcing user changes on this channel")
-                    } catch (e) {
-                        logger.error(chalk.red(e))
-                    }
-                } else {
-                    try {
-                        storage.d.Servers[sname].settings.announceChan = null
-                        messageSend(channelID, "Ok no longer announcing user changes on this channel")
-                    } catch (e) {
-                        logger.error(chalk.red(e))
-                    }
-                }
-            } else if (userID.indexOf(SownerId) === 0) {
+            if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
                 if (storage.d.Servers[sname].settings.announceChan === null || storage.d.Servers[sname].settings.announceChan === undefined) {
                     try {
                         storage.d.Servers[sname].settings.announceChan = channelID
@@ -1481,7 +1465,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 }
             } else {
-                messageSend(channelID, "You are not allowed to do that command, you need to be eithe the bot or server owner")
+                messageSend(channelID, "You are not allowed to do that command, you need to be the server owner")
             }
             rconcmd = "Yes"
         }
