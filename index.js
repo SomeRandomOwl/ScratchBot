@@ -928,15 +928,34 @@ bot.on('debug', function(rawEvent) {
             messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just left the server! :cold_sweat:")
         }
     }
+    if (rawEvent.t === "GUILD_CREATE") {
+        var name = rawEvent.d.name
+        var serverID = rawEvent.d.id
+        var SownerId = rawEvent.d.owner_id
+        if (storage.d.Servers[name] === undefined) {
+            storage.d.Servers[name] = {
+                'id': serverID,
+                'messageCnt': 0,
+                'settings': {
+                    'announceChan': null,
+                    'verb': false
+                },
+                'SownerId': SownerId,
+                'Channels': {}
+            }
+        }
+    }
     if (rawEvent.t === "CHANNEL_CREATE") {
         var name = rawEvent.d.name
         var channelID = rawEvent.d.id
         var type = rawEvent.d.type
         var sname = rawEvent.d.guild_id
-        storage.d.Servers[sname].Channels[name] = {
-            "id": channelID,
-            "type": type,
-            "messageCnt": 0,
+        if (storage.d.Servers[sname].Channels[name] === undefined) {
+            storage.d.Servers[sname].Channels[name] = {
+                "id": channelID,
+                "type": type,
+                "messageCnt": 0,
+            }
         }
     }
     if (rawEvent.t === "CHANNEL_UPDATE") {
