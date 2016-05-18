@@ -1164,11 +1164,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         writeJSON('./assets/storage', storage)
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
+        var timeAt = moment().format('[MMMM Do YYYY, HH:mm:ss]')
         logger.info(chalk.dim("Link Posted, logging to file"))
         if (message.indexOf(' ', message.indexOf('http')) === -1) {
-            var link = message.substring(message.indexOf('http'))
+            var link = user + ': ' + message.substring(message.indexOf('http'))
         } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
-            var link = message.substring(message.indexOf('http'), message.indexOf(' ', message.indexOf('http')))
+            var link = user + ': ' + message.substring(message.indexOf('http'), message.indexOf(' ', message.indexOf('http')))
         }
         if (storage.d.Users[user] !== undefined) {
             if (storage.d.Users[user].linkCnt === undefined) {
@@ -1180,7 +1181,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             writeJSON('./assets/storage', storage)
         }
-        fs.appendFile("logs/Links.txt", '\n' + link)
+        mkdirp('./logs/' + servern, function(err) {
+            fs.appendFile("logs/" + servern + "Links.txt", '\n' + link)
+        })
     }
     if (cname !== undefined) {
         try {
