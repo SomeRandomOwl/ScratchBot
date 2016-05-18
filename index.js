@@ -230,7 +230,7 @@ function channellist(verb, s) {
         }
     }
     if (s) {
-        console.log(chalk.gray("Currently Seeing: " + channelCnt + " Channels"))
+        console.log(chalk.gray("With a total of: " + channelCnt + " Channels"))
     }
     storage.d.totalCounters.channels = channelCnt
     writeJSON('./assets/storage', storage)
@@ -301,7 +301,7 @@ function userlist(verb, s) {
         }
     }
     if (s) {
-        console.log(chalk.gray("Currently Seeing: " + userCnt + " Users"))
+        console.log(chalk.gray("With approximatly: " + userCnt + " Users across all of them"))
     }
     storage.d.totalCounters.users = userCnt
     writeJSON('./assets/storage', storage)
