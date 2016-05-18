@@ -1514,6 +1514,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageSend(channelID, "The bot has been active for: " + time.d + " Days " + time.h + " Hours " + time.m + " Minutes " + time.s + " Seconds")
             rconcmd = 'Yes'
         }
+        if (message.toLowerCase().indexOf('invite') === 1) {
+            messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \n If you dont trust short urls http://unshorten.it/ \nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
+        }
         if (message.toLowerCase().indexOf('js') === 1) {
             jscall = message.substring(message.indexOf(' ') + 1)
             if (userID.indexOf(ownerId) === 0) {
