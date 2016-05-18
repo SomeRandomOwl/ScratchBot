@@ -16,21 +16,7 @@ var request = require('request');
 var mkdirp = require('mkdirp');
 var doc = require('./assets/doc.json')
 var cleverbot = require("cleverbot.io")
-
-/*/Loads Storage.json if it exists/*/
-if (fs.existsSync('./assets/storage.json')) {
-    console.log('Found Storage.json');
-    var storage = require('./assets/storage.json')
-} else
-if (fs.existsSync('./assets/storage.json') === false) {
-    logger.info(chalk.underline.red('Didnt Find Storage.json, Please run generateStorageFile.js'))
-}
-/*/CleverBot/*/
-cBot = new cleverbot(config.cleverUser, config.cleverKey);
-cBot.setNick("sandbox.scratch")
-/*/Load Up a Youtube Api Key /*/
-youTube.setKey(config.youTubeApiKey);
-/*/Set up logging/*/
+    /*/Set up logging/*/
 var logger = new(winston.Logger)({
     transports: [
         new(winston.transports.Console)(),
@@ -62,6 +48,21 @@ var story = new(winston.Logger)({
         }),
     ]
 });
+
+/*/Loads Storage.json if it exists/*/
+if (fs.existsSync('./assets/storage.json')) {
+    logger.info(chalk.dim('Found Storage.json'));
+    var storage = require('./assets/storage.json')
+} else
+if (fs.existsSync('./assets/storage.json') === false) {
+    logger.info(chalk.underline.red('Didnt Find Storage.json, Please run generateStorageFile.js'))
+}
+/*/CleverBot/*/
+cBot = new cleverbot(config.cleverUser, config.cleverKey);
+cBot.setNick("sandbox.scratch")
+/*/Load Up a Youtube Api Key /*/
+youTube.setKey(config.youTubeApiKey);
+
 
 /*/Bot credentials/*/
 var bot = new DiscordClient({
