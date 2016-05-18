@@ -1278,7 +1278,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     } catch (e) {
         var error = null
     }
-    console.log(verb)
     //This tests for commands using the command mod set in the config
     if (message.indexOf(commandmod) !== -1) {
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('ping') !== -1 && ignore !== true) {
