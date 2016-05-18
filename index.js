@@ -1385,7 +1385,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
                 storage.d.Servers[sname].settings.prefixOvrid = pfcall
                 messageSend(channelID, "The prefix for this server is now: " + pfcall)
-            } else {
+            } else if (userID.indexOf(ownerId) === -1 && userID.indexOf(SownerId) === -1) {
                 messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
             }
             rconcmd = 'Yes'
