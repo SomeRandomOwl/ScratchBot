@@ -765,7 +765,7 @@ function messagesDelete(channelID, number) {
     });
 }
 
-function 8ball(channelID, question, rawEvent) {
+function eightBall(channelID, question, rawEvent) {
     // body...
 }
 /*/Prints out a users stats/*/
