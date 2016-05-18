@@ -1217,10 +1217,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     //This tests for commands using the command mod set in the config
     if (message.indexOf(commandmod) !== -1) {
-        if (message.toLowerCase().indexOf('ping') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('ping') !== -1 && ignore !== true) {
             messageSend(channelID, 'pong')
         }
-        if (message.toLowerCase().indexOf('help') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('help') !== -1 && ignore !== true) {
 
             if (message.indexOf(' ') === -1) {
                 help('help', channelID)
@@ -1229,16 +1229,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 help(helpcall, channelID)
             }
         }
-        if (message.toLowerCase().indexOf('info') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('info') !== -1 && ignore !== true) {
             messageSend(userID, doc.info)
         }
-        if (message.toLowerCase().indexOf('roll') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('roll') !== -1 && ignore !== true) {
             var msg = message
             var dice = msg.replace(commandmod + 'roll ', '')
             diceroll(dice, userID, channelID)
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf("avatar") === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf("avatar") !== -1 && ignore !== true) {
             bot.uploadFile({
                 to: channelID,
                 file: "./assets/avatar.png",
@@ -1248,7 +1248,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('ids') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('ids') !== -1 && ignore !== true) {
             bot.sendMessage({
                 to: channelID,
                 message: '<@' + userID + '>' + ' Your userID is: ' + userID + ' and your channelID is: ' + channelID,
@@ -1256,7 +1256,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('math') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('math') !== -1 && ignore !== true) {
             var mathcmd = message
             var mathcall = mathcmd.replace(commandmod + 'math ', '')
             try {
@@ -1267,13 +1267,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = "Yes"
         }
-        if (message.toLowerCase().indexOf('status') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('status') !== -1 && ignore !== true) {
             var statuscmd = message
             var statuscall = statuscmd.replace(commandmod + 'status ', '')
             status(statuscall, channelID, rawEvent)
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('commands') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('commands') !== -1 && ignore !== true) {
             cList = "help, "
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
@@ -1287,7 +1287,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageDelete(channelID, messageID)
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('poke') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('poke') !== -1 && ignore !== true) {
             var pkcmd = message
             var pkcall = pkcmd.replace(commandmod + 'poke ', '')
             var pkcall = pkcall.replace('<@', '')
@@ -1295,7 +1295,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">")
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('stats') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('stats') !== -1 && ignore !== true) {
             var len = message.length
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 6) {
@@ -1319,7 +1319,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('ignore') === 1) {
+        if (message.toLowerCase().indexOf('ignore') !== -1) {
             var igcmd = message
             var igcall = igcmd.replace(commandmod + 'ignore ', '')
             if (userID.indexOf(ownerId) === 0) {
@@ -1343,7 +1343,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('prune') === 1) {
+        if (message.toLowerCase().indexOf('prune') !== -1) {
             pcall = message.substring(message.indexOf(' ') + 1)
             if (userID.indexOf(ownerId) === 0) {
                 messagesDelete(channelID, pcall)
@@ -1356,7 +1356,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('prefix') === 1) {
+        if (message.toLowerCase().indexOf('prefix') !== -1) {
             var pfcmd = message
             var pfcall = pfcmd.replace(commandmod + 'prefix ', '')
             if (userID.indexOf(ownerId) === 0) {
@@ -1370,7 +1370,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('yt') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('yt') !== -1 && ignore !== true) {
             var ytcmd = message
             var ytcall = ytcmd.replace(commandmod + 'yt ', '')
             yt(ytcall, userID, channelID)
@@ -1380,15 +1380,15 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
             rconcmd = "Yes"
         }
-        if (message.toLowerCase().indexOf('clever') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('clever') !== -1 && ignore !== true) {
             cleverr = message.substring(message.indexOf(' ') + 1)
             clever(channelID, cleverr)
         }
-        if (message.toLowerCase().indexOf('8ball') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('8ball') !== -1 && ignore !== true) {
             ebQ = message.substring(message.indexOf(' ') + 1)
             eightBall(channelID, ebQ, userID)
         }
-        if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('xkcd') !== -1 && ignore !== true) {
             if (message.indexOf(' ') === -1) {
                 var comictime = gettime()
                 try {
@@ -1421,13 +1421,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('skip') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('skip') !== -1 && ignore !== true) {
             bot.deleteMessage({
                 channel: channelID,
                 messageID: messageID
             })
         }
-        if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('announce') !== -1 && ignore !== true) {
             if (userID.indexOf(ownerId) === 0) {
                 if (storage.d.Servers[sname].settings.announceChan === null || storage.d.Servers[sname].settings.announceChan === undefined) {
                     try {
@@ -1465,16 +1465,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = "Yes"
         }
-        if (message.toLowerCase().indexOf('cat') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('cat') !== -1 && ignore !== true) {
             cat(channelID, cname, sname)
         }
-        if (message.toLowerCase().indexOf('snake') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('snake') !== -1 && ignore !== true) {
             snake(channelID, cname, sname, userID)
         }
-        if (message.toLowerCase().indexOf('pug') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('pug') !== -1 && ignore !== true) {
             pug(channelID, cname, sname)
         }
-        if (message.toLowerCase().indexOf('redditscenery') === 1 && ignore !== true) {
+        if (message.toLowerCase().indexOf('redditscenery') !== -1 && ignore !== true) {
             var random = redditList[Math.floor(Math.random() * redditList.length)]
             var redditcmd = message
             var redditcall = redditcmd.replace(commandmod + 'redditscenery ', '')
@@ -1500,7 +1500,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 redditScenery(channelID, random)
             }
         }
-        if (message.toLowerCase().indexOf('verb') === 1) {
+        if (message.toLowerCase().indexOf('verb') !== -1) {
             if (userID.indexOf(ownerId) === 0) {
                 if (storage.d.Servers[sname].settings.Verb === false || storage.d.Servers[sname].settings.Verb === undefined) {
                     try {
@@ -1522,19 +1522,19 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('uptime') === 1) {
+        if (message.toLowerCase().indexOf('uptime') !== -1) {
             time = secondsToTime(gettime() - startUpTime)
             messageSend(channelID, "The bot has been active for: " + time.d + " Days " + time.h + " Hours " + time.m + " Minutes " + time.s + " Seconds")
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('us') === 1) {
+        if (message.toLowerCase().indexOf('us') !== -1) {
             var uri = message.substring(message.indexOf(' ') + 1)
             unShorten(channelID, userID, uri)
         }
-        if (message.toLowerCase().indexOf('invite') === 1) {
+        if (message.toLowerCase().indexOf('invite') !== -1) {
             messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \nIf you dont trust short urls use the following command to unshorten it: " + commandmod + "us https://goo.gl/IppQQT \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
         }
-        if (message.toLowerCase().indexOf('js') === 1) {
+        if (message.toLowerCase().indexOf('js') !== -1) {
             jscall = message.substring(message.indexOf(' ') + 1)
             if (userID.indexOf(ownerId) === 0) {
                 try {
