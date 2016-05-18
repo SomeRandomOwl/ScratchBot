@@ -27,7 +27,7 @@ if (fs.existsSync('./assets/storage.json') === false) {
 }
 /*/CleverBot/*/
 cBot = new cleverbot(config.cleverUser, config.cleverKey);
-cBot.setNick("Scratch")
+cbot.setNick("sandbox.scratch")
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
 /*/Set up logging/*/
