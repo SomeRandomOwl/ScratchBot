@@ -1168,7 +1168,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 'messageCnt': 0,
                 'settings': {
                     'announceChan': null,
-                    Ver 'Verb': false,
+                    'Verb': false,
                 },
                 'SownerId': SownerId,
                 'Channels': {}
