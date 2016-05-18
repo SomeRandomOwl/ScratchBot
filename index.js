@@ -870,7 +870,11 @@ var startUpTime = null
     /* Bot on event functions */
 bot.on('ready', function() {
     console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
+    logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while..."))
     startUpTime = gettime()
+    serverlist()
+    channellist()
+    serverlist()
     statusmsg("Discord")
 });
 bot.on('debug', function(rawEvent) {
@@ -910,7 +914,8 @@ bot.on('debug', function(rawEvent) {
                 'announceChan': null,
                 'Verb': false
             },
-            'SownerId': SownerId
+            'SownerId': SownerId,
+            'Channels': {}
         }
     }
     if (rawEvent.t === "CHANNEL_CREATE") {
