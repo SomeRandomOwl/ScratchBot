@@ -902,7 +902,7 @@ bot.on('debug', function(rawEvent) {
     try {
         var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].settings.announceChan
     } catch (e) {
-        return
+        announceID = null
     }
     if (rawEvent.t === "MESSAGE_UPDATE") {
         console.log(chalk.gray(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
@@ -917,12 +917,16 @@ bot.on('debug', function(rawEvent) {
             "status": "unknown",
             "lastseen": "unknown"
         }
-        messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to " + bot.servers[rawEvent.d.guild_id].name + "!")
+        if (announceID !== null) {
+            messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to " + bot.servers[rawEvent.d.guild_id].name + "!")
+        }
     }
     if (rawEvent.t === "GUILD_MEMBER_REMOVE") {
         var name = rawEvent.d.user.username
         var userID = rawEvent.d.user.id
-        messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just left the server! :cold_sweat:")
+        if (announceID !== null) {
+            messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just left the server! :cold_sweat:")
+        }
     }
     if (rawEvent.t === "GUILD_CREATE") {
         var name = rawEvent.d.name
