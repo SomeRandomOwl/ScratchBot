@@ -740,7 +740,7 @@ function help(cmd, channelID, help) {
         }
     } else {
         typeL = []
-        for (var cmdd in doc.help) {
+        for (var cmdd in doc.cList) {
             if (cmd === doc.help[cmdd].type) {
                 typeL.push(cmdd)
             } else {
