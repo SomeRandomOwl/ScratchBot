@@ -788,11 +788,7 @@ function clever(channelID, question) {
         if (err) {
             console.log(err)
         } else {
-            setTimeout(function() {
-                console.log(response)
-                console.log(channelID)
-                messageSend(channelID, response);
-            }, 3000);
+            messageSend(channelID, response);
         }
     });
 }
