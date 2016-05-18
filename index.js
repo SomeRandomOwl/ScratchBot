@@ -888,7 +888,7 @@ function stats(channelID, name, rawEvent) {
 var startUpTime = null
     /* Bot on event functions */
 bot.on('ready', function() {
-    logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while..."))
+    logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
     startUpTime = gettime()
     serverlist(false, true)
     channellist(false, true)
