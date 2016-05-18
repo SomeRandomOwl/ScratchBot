@@ -4,6 +4,7 @@
         "avatar",
         "cat",
         "commands",
+        "clever",
         "ids",
         "ignore",
         "info",
@@ -22,29 +23,134 @@
         "xkcd",
         "yt"
     ],
+    "eBall": ["Are you kidding?",
+        "As I see it, yes.",
+        "Ask again later.",
+        "Better not tell you now.",
+        "Cannot predict now.",
+        "Concentrate and ask again.",
+        "Definitely not.",
+        "Don't bet on it.",
+        "Don't count on it.",
+        "Forget about it.",
+        "Go for it!",
+        "I have my doubts.",
+        "It is certain.",
+        "It is decidedly so.",
+        "Looking good!",
+        "Looks good to me!",
+        "Most likely.",
+        "My reply is no.",
+        "My sources say no.",
+        "My sources say no.",
+        "Outlook good.",
+        "Outlook not so good.",
+        "Outlook so so.",
+        "Probably.",
+        "Reply hazy, try again.",
+        "Signs point to yes.",
+        "Very doubtful.",
+        "Who knows?",
+        "Without a doubt.",
+        "Yes - definitely.",
+        "Yes, in due time.",
+        "Yes.",
+        "You may rely on it.",
+        "You will have to wait."
+    ],
     "help": {
-        "ping": "Utility command; used to test connectivity to the bot",
-        "help": "Utility Command; Prints the help for a command, for a list of commands do the commands command",
-        "info": "Utility Command; Prints the info doccumentation",
-        "roll": "Fun command; Rolls a die/dice accepts multiple inputs. EX: roll 20 | roll d20 | roll 2d20 | roll d%",
-        "avatar": "Other Command; Pretty useless, makes the bot post a high res version of its avatar",
-        "ids": "Utility Command; Makes bot send a message with the users channel id and user id",
-        "math": "Useful command; Makes bot evaluate a math expression",
-        "status": "Utility Command; Makes bot report the status of a specific user and if they are offline state when they went offline. EX: status username | status @username",
-        "commands": "Utility Command; Makes the bot DM the user issuing the command a list of commands",
-        "poke": "Other Command: Pretty useless, makes bot DM a user saying that someone poked them in a channel and state the user that issued the command and channel name. EX: poke @username",
-        "stats": "Makes bot print out current tracked stats for a user. EX stats | stats @username | stats username",
-        "ignore": "Admin Command (requires admin role, or to be the owner of the server/bot) Makes bot ignore all commands and logging on a channel to unignore a channel do: ignore remove",
-        "yt": "Useful command; Makes the bot search youtube for a video, user, or playlist. EX: yt query",
-        "xkcd": "Fun Command; Makes the bot post a random xkcd comic, or search for a specific one using keywaords. EX: xkcd | xkcd query",
-        "announce": "Admin Command (requires admin role, or to be the owner of the server/bot) Makes a bot announce userchanges on a channel, toggalable, issue command again to turn off, only works on one channel",
-        "cat": "Fun Command; Makes bot post a random cat picture",
-        "snake": "Fun Command; Makes bot post a random snake picture",
-        "pug": "Fun Command; Makes bot post a random pug picture",
-        "redditscenery": "Fun Command; Makes bot post a random picture from a list of subreddits more specifically the SFW network https://www.reddit.com/r/sfwpornnetwork/wiki/network . EX: redditscenery | (random subreddit) | redditscenery subreddit | redditscenery list",
-        "js": "Admin Command; Only the bot owner can issue this command, it runs raw javascript and is potentially harmful to the bot",
-        "verb": "Admin Command; bot owner only, disallows message and status output to console",
-        "uptime": "Utility Command; Makes the bot send its current uptime"
+        "ping": {
+            "type": "utility",
+            "help": "used to test connectivity to the bot"
+        },
+        "help": {
+            "type": "utility",
+            "help": "Prints the help for a command, for a list of commands do the commands command"
+        },
+        "info": {
+            "type": "utility",
+            "help": "Prints the info doccumentation"
+        },
+        "roll": {
+            "type": "fun",
+            "help": "Rolls a die/dice accepts multiple inputs. EX: roll 20 | roll d20 | roll 2d20 | roll d%"
+        },
+        "avatar": {
+            "type": "other",
+            "help": "Other Command; Pretty useless, makes the bot post a high res version of its avatar"
+        },
+        "ids": {
+            "type": "utility",
+            "help": "Makes bot send a message with the users channel id and user id"
+        },
+        "clever": {
+            "type": "fun",
+            "help": "Asks cleverbot a question"
+        },
+        "math": {
+            "type": "useful",
+            "help": "Makes bot evaluate a math expression"
+        },
+        "status": {
+            "type": "utility",
+            "help": "Makes bot report the status of a specific user and if they are offline state when they went offline. EX: status username | status @username"
+        },
+        "commands": {
+            "type": "utility",
+            "help": "Makes the bot DM the user issuing the command a list of commands"
+        },
+        "poke": {
+            "type": "other",
+            "help": "Pretty useless, makes bot DM a user saying that someone poked them in a channel and state the user that issued the command and channel name. EX: poke @username"
+        },
+        "stats": {
+            "type": "utility",
+            "help": "Makes bot print out current tracked stats for a user. EX stats | stats @username | stats username"
+        },
+        "ignore": {
+            "type": "admin",
+            "help": "Makes bot ignore all commands and logging on a channel to unignore a channel do: ignore remove"
+        },
+        "yt": {
+            "type": "useful",
+            "help": "Makes the bot search youtube for a video, user, or playlist. EX: yt query"
+        },
+        "xkcd": {
+            "type": "fun",
+            "help": "Makes the bot post a random xkcd comic, or search for a specific one using keywaords. EX: xkcd | xkcd query"
+        },
+        "announce": {
+            "type": "admin",
+            "help": "Makes a bot announce userchanges on a channel, toggalable, issue command again to turn off, only works on one channel"
+        },
+        "cat": {
+            "type": "fun",
+            "help": "Makes bot post a random cat picture"
+        },
+        "snake": {
+            "type": "fun",
+            "help": "Makes bot post a random snake picture"
+        },
+        "pug": {
+            "type": "fun",
+            "help": "Makes bot post a random pug picture"
+        },
+        "redditscenery": {
+            "type": "fun",
+            "help": "Makes bot post a random picture from a list of subreddits more specifically the SFW network https://www.reddit.com/r/sfwpornnetwork/wiki/network . EX: redditscenery | (random subreddit) | redditscenery subreddit | redditscenery list"
+        },
+        "js": {
+            "type": "admin",
+            "help": "Only the bot owner can issue this command, it runs raw javascript and is potentially harmful to the bot"
+        },
+        "verb": {
+            "type": "admin",
+            "help": "bot owner only, disallows message and status output to console"
+        },
+        "uptime": {
+            "type": "utility",
+            "help": "Makes the bot send its current uptime"
+        }
     },
     "info": "This bot has been coded by Seth177 it is designed to be a simple chat bot combining useful commands I've seen across a few bots but never really unified together in a way I really wanted. To see a list of commands do the issue the commands command, if you need help on what a command does issue the help command followed by the command you need help with"
 }
