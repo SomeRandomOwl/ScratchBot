@@ -1182,7 +1182,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             writeJSON('./assets/storage', storage)
         }
         mkdirp('./logs/' + sname, function(err) {
-            fs.appendFile("logs/" + sname + "Links.txt", '\n' + link)
+            fs.appendFile("logs/" + sname + "/Links.txt", '\n' + link)
         })
     }
     if (cname !== undefined) {
