@@ -388,6 +388,8 @@ function messageSend(channelID, msg) {
     }, function(error, response) {
         if (error) {
             console.log(error)
+            console.log(channelID)
+            console.log(msg)
         }
         try {
             logger.info(chalk.dim('Last Message Sent ID: ' + response.id))
