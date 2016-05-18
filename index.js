@@ -111,6 +111,10 @@ function writeJSON(path, data, callback) {
         });
     });
 }
+/*/Quick way of checking if something is in a array/*/
+function isInArray(value, array) {
+    return array.indexOf(value) > -1;
+}
 /*/Converts Seconds to hh mm ss/*/
 function secondsToTime(secs) {
     var hours = Math.floor(secs / (60 * 60));
@@ -218,7 +222,7 @@ function channellist(verb) {
     }
     writeJSON('./assets/storage', storage)
 }
-/*/List currently/*/
+/*/List currently seen users/*/
 function userlist(verb) {
     if (verb) {
         logger.info(chalk.underline("Currently seeing these users:\n"))
@@ -270,14 +274,18 @@ function userlist(verb) {
                         's': 0
                     }
                 }
+                if (storage.d.Users[name].Servers === undefined) {
+                    storage.d.Users[name].Servers = []
+                }
+                if (isInArray(bot.servers[serverID].name, storage.d.Users[name].Servers)) {
+                    continue
+                } else {
+                    storage.d.Users[name].Servers.push(bot.servers[serverID].name)
+                }
             }
         }
     }
     writeJSON('./assets/storage', storage)
-}
-/*/Quick way of checking if something is in a array/*/
-function isInArray(value, array) {
-    return array.indexOf(value) > -1;
 }
 /*/Used to Ignore Channels/*/
 function ignoreC(cID) {
