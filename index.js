@@ -51,7 +51,7 @@ var story = new(winston.Logger)({
 
 /*/Loads Storage.json if it exists/*/
 if (fs.existsSync('./assets/storage.json')) {
-    logger.info(chalk.dim('Found Storage.json'));
+    logger.info(chalk.gray('Found Storage.json'));
     var storage = require('./assets/storage.json')
 } else
 if (fs.existsSync('./assets/storage.json') === false) {
@@ -392,7 +392,7 @@ function messageSend(channelID, msg) {
             console.log(msg)
         }
         try {
-            logger.info(chalk.dim('Last Message Sent ID: ' + response.id))
+            logger.info(chalk.gray('Last Message Sent ID: ' + response.id))
             sentPrevId = response.id
         } catch (e) {
             return
@@ -405,7 +405,7 @@ function consoleparse(line) {
     if (line.toLowerCase().indexOf('~') === 0) {
         if (line.toLowerCase().indexOf('cnaid') === 1) {
             cnaid = line.replace('~cnaid ', '')
-            logger.info(chalk.dim("Now talking in channel: " + cnaid))
+            logger.info(chalk.gray("Now talking in channel: " + cnaid))
         } else if (line.toLowerCase().indexOf('cnch') === 1) {
             var channe = line.substring(line.indexOf(' ') + 1)
             for (var server in storage.d.Servers) {
@@ -905,7 +905,7 @@ bot.on('debug', function(rawEvent) {
         return
     }
     if (rawEvent.t === "MESSAGE_UPDATE") {
-        console.log(chalk.dim(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
+        console.log(chalk.gray(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
     }
     if (rawEvent.t === "GUILD_MEMBER_ADD") {
         var name = rawEvent.d.user.username
@@ -955,7 +955,7 @@ bot.on('debug', function(rawEvent) {
         cID = rawEvent.d.id
         newName = rawEvent.d.name
         topic = rawEvent.d.topic
-        logger.info(chalk.dim("Channel just updated, Channel Name: " + newName + " Topic: " + topic))
+        logger.info(chalk.gray("Channel just updated, Channel Name: " + newName + " Topic: " + topic))
         for (var cname in storage.d.Servers[sname].Channels) {
             if (storage.d.Servers[sname].Channels[cname].id === cID) {
                 storage.d.Servers[sname].Channels[newName] = storage.d.Servers[sname].Channels[cname]
@@ -995,7 +995,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 storage.d.Users[user].lastseen = lastseen
                 storage.d.Users[user].rawLastSeen = gettime()
                 if (storage.d.Users[user].status !== 'offline' && verb) {
-                    logger.info(chalk.dim(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
+                    logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                 }
                 storage.d.Users[user].status = status
             } else if (user === undefined) {
@@ -1006,7 +1006,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                         storage.d.Users[user].lastseen = lastseen
                         storage.d.Users[user].rawLastSeen = gettime()
                         if (storage.d.Users[user].status !== 'offline' && verb) {
-                            logger.info(chalk.dim(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
+                            logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                         }
                         storage.d.Users[user].status = status
                     } else {
@@ -1020,7 +1020,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             storage.d.Users[user].lastseen = lastseen
             storage.d.Users[user].rawLastSeen = gettime()
             if (storage.d.Users[user].status !== 'idle' && verb) {
-                logger.info(chalk.dim(lastseen + ' : ' + chalk.yellow(user + " is now: " + chalk.underline(status))));
+                logger.info(chalk.gray(lastseen + ' : ' + chalk.yellow(user + " is now: " + chalk.underline(status))));
             }
             storage.d.Users[user].status = status
         }
@@ -1087,7 +1087,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 }
             }
             if (storage.d.Users[user].status !== 'online' && verb) {
-                logger.info(chalk.dim(lastseen + ' : ' + chalk.green(user + " is now: " + chalk.underline(status))));
+                logger.info(chalk.gray(lastseen + ' : ' + chalk.green(user + " is now: " + chalk.underline(status))));
             }
             storage.d.Users[user].status = status
         }
@@ -1185,7 +1185,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
         var timeAt = moment().format('[MMMM Do YYYY, HH:mm:ss]')
-        logger.info(chalk.dim("Link Posted, logging to file"))
+        logger.info(chalk.gray("Link Posted, logging to file"))
         if (message.indexOf(' ', message.indexOf('http')) === -1) {
             var link = user + ': ' + message.substring(message.indexOf('http'))
         } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
@@ -1596,7 +1596,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
     if (channelID === '164845697508704257') {
-        console.log(chalk.dim(message))
+        console.log(chalk.gray(message))
         fs.appendFile("logs/space.txt", '\n\n' + message)
         story.space(message, {
             mID: messageID,
@@ -1604,7 +1604,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         })
     }
     if (channelID === '167855344129802241') {
-        console.log(chalk.dim(message))
+        console.log(chalk.gray(message))
         fs.appendFile("logs/unknown.txt", '\n\n' + message)
         story.unknown(message, {
             mID: messageID,
@@ -1612,7 +1612,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         })
     }
     if (channelID === '177624925794861056') {
-        console.log(chalk.dim(message))
+        console.log(chalk.gray(message))
         fs.appendFile("logs/laderis.txt", '\n\n' + message)
         story.laderis(message, {
             mID: messageID,
@@ -1647,7 +1647,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes" && ignore !== true) {
         if (ignore !== true) {
-            logger.info(chalk.dim('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
+            logger.info(chalk.gray('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
         }
     }
 });
