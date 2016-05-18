@@ -817,13 +817,13 @@ function unShorten(channelID, userID, url) {
     try {
         request('http://api.unshorten.it?shortURL=' + url + '&responseFormat=json&return=both&apiKey=' + config.unShorten, function(error, response, body) {
             body = JSON.parse(body)
-            messageSend(channelID, '<@' + userID = '> The url you gave leads to: ' + body.domain + ' And more specifically this page: ' + body.fullurl)
+            messageSend(channelID, '<@' + userID + '> The url you gave leads to: ' + body.domain + ' And more specifically this page: ' + body.fullurl)
             if (error) {
-                messageSend(channelID, '<@' + userID = '> invalid url!')
+                messageSend(channelID, '<@' + userID + '> invalid url!')
             }
         })
     } catch (e) {
-        messageSend(channelID, '<@' + userID = '> you either provided no url or a invalid url!')
+        messageSend(channelID, '<@' + userID + '> you either provided no url or a invalid url!')
     }
 }
 /*/Prints out a users stats/*/
