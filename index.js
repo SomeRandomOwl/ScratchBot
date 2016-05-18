@@ -928,21 +928,6 @@ bot.on('debug', function(rawEvent) {
             messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just left the server! :cold_sweat:")
         }
     }
-    if (rawEvent.t === "GUILD_CREATE") {
-        var name = rawEvent.d.name
-        var serverID = rawEvent.d.id
-        var SownerId = rawEvent.d.owner_id
-        storage.d.Servers[name] = {
-            'id': serverID,
-            'messageCnt': 0,
-            'settings': {
-                'announceChan': null,
-                'verb': false
-            },
-            'SownerId': SownerId,
-            'Channels': {}
-        }
-    }
     if (rawEvent.t === "CHANNEL_CREATE") {
         var name = rawEvent.d.name
         var channelID = rawEvent.d.id
