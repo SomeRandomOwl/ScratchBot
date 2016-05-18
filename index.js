@@ -94,7 +94,6 @@ if (storage.settings.redditList === undefined) {
     redditList = storage.settings.redditList
 }
 cBot.create(function(err, session) {
-    console.log(session)
     if (err) {
         console.error(err)
     }
