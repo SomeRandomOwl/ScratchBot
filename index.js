@@ -91,7 +91,7 @@ if (storage.settings.redditList === undefined) {
 
 /*/Function to write json to the storage file/*/
 function writeJSON(path, data, callback) {
-    fs.writeFile(path + '.tmp', JSON.stringify(data), function(error) {
+    fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
         if (error) {
             return error;
         }
@@ -765,6 +765,10 @@ function messagesDelete(channelID, number) {
     });
 }
 
+function 8ball(channelID, question, rawEvent) {
+    // body...
+}
+/*/Prints out a users stats/*/
 function stats(channelID, name, rawEvent) {
     try {
         if (name.toLowerCase().indexOf('<@') === -1) {
