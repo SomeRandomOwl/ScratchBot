@@ -1287,10 +1287,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('info') !== -1 && ignore !== true) {
-            messageSend(userID, "Currently connected to: " + serverCnt + " Servers\n" +
+            messageSend(userID, "\n```Currently connected to: " + serverCnt + " Servers\n" +
                 "With a total of: " + channelCnt + " Channels\n" +
                 "With approximatly: " + userCnt + " Users across all of them\n" +
-                doc.info)
+                doc.info + '```')
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('roll') !== -1 && ignore !== true) {
             var msg = message
