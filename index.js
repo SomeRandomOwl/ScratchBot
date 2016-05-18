@@ -1119,33 +1119,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
     } catch (e) {
-        sname = 'DM'
-    }
-    try {
-        if (storage.d.Servers[sname] === undefined) {
-            storage.d.Servers[sname] = {
-                'id': serverID,
-                'messageCnt': 0,
-                'settings': {
-                    'announceChan': null,
-                    'verb': false
-                },
-                'SownerId': SownerId,
-                'Channels': {}
-            }
-            for (var channelID in bot.servers[serverID].channels) {
-                var name = bot.servers[serverID].channels[channelID].name;
-                var type = bot.servers[serverID].channels[channelID].type;
-                var sname = bot.servers[serverID].name
-                storage.d.Servers[sname].Channels[name] = {
-                    "id": channelID,
-                    "type": type,
-                    "messageCnt": 0,
-                }
-            }
-        }
-    } catch (e) {
-        e = e
+        //ig
     }
     try {
         if (storage.d.Servers[sname].SownerId !== undefined) {
