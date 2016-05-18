@@ -15,7 +15,7 @@ var chalk = require('chalk');
 var request = require('request');
 var mkdirp = require('mkdirp');
 var doc = require('./assets/doc.json')
-var cleVerbot = require("cleverbot.io")
+var cleverbot = require("cleverbot.io")
     /*/Set up logging/*/
 var logger = new(winston.Logger)({
     transports: [
@@ -57,8 +57,8 @@ if (fs.existsSync('./assets/storage.json')) {
 if (fs.existsSync('./assets/storage.json') === false) {
     logger.info(chalk.underline.red('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
-/*/CleVerbot/*/
-cBot = new cleVerbot(config.cleverUser, config.cleverKey);
+/*/CleverBot/*/
+cBot = new cleverbot(config.cleverUser, config.cleverKey);
 cBot.setNick("sandbox.scratch")
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
@@ -85,7 +85,7 @@ var clist = doc.cList
 var debug = false;
 var serverID = null;
 var xkcdJson = null
-var Verb = false
+var verb = false
 
 /* Start of function defining */
 if (storage.settings.redditList === undefined) {
@@ -144,14 +144,14 @@ function gettime() {
     return timenow
 }
 /*/Lists currently connected severs and writes them to json/*/
-function serverlist(Verb, s) {
+function serverlist(verb, s) {
     serverCnt = 0
-    if (Verb) {
+    if (verb) {
         logger.info(chalk.underline("Currently connected to these servers:\n"))
     }
     for (var serverID in bot.servers) {
         serverCnt++
-        if (Verb) {
+        if (verb) {
             console.log(bot.servers[serverID].name)
         }
         var name = bot.servers[serverID].name;
@@ -162,7 +162,7 @@ function serverlist(Verb, s) {
                 'messageCnt': 0,
                 'settings': {
                     'announceChan': null,
-                    'Verb': false,
+                    'verb': false,
                 },
                 'SownerId': SownerId,
                 'Channels': {}
@@ -186,15 +186,15 @@ function serverlist(Verb, s) {
     writeJSON('./assets/storage', storage)
 }
 /*/Lists currencly seen channels/*/
-function channellist(Verb, s) {
+function channellist(verb, s) {
     channelCnt = 0
-    if (Verb) {
+    if (verb) {
         logger.info(chalk.underline("Currently connected to these channels:\n"))
     }
     for (var serverID in bot.servers) {
         for (var channelID in bot.servers[serverID].channels) {
             channelCnt++
-            if (Verb) {
+            if (verb) {
                 console.log(bot.servers[serverID].channels[channelID].name)
             }
             var name = bot.servers[serverID].channels[channelID].name;
@@ -236,15 +236,15 @@ function channellist(Verb, s) {
     writeJSON('./assets/storage', storage)
 }
 /*/List currently seen users/*/
-function userlist(Verb, s) {
+function userlist(verb, s) {
     userCnt = 0
-    if (Verb) {
+    if (verb) {
         logger.info(chalk.underline("Currently seeing these users:\n"))
     }
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
             userCnt++
-            if (Verb) {
+            if (verb) {
                 console.log(bot.servers[serverID].members[userID].username)
             }
             var name = bot.servers[serverID].members[userID].username;
@@ -831,7 +831,7 @@ function eightBall(channelID, question, userID) {
     var resp = doc.eBall[Math.floor(Math.random() * doc.eBall.length)];
     messageSend(channelID, '<@' + userID + '> ' + resp)
 }
-/*/Ask cleVerbot a question/*/
+/*/Ask cleverbot a question/*/
 function clever(channelID, question) {
     cBot.ask(question, function(err, response) {
         if (err) {
@@ -905,7 +905,7 @@ bot.on('debug', function(rawEvent) {
         announceID = null
     }
     if (rawEvent.t === "MESSAGE_UPDATE") {
-        //console.log(chalk.gray(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
+        console.log(chalk.gray(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
     }
     if (rawEvent.t === "GUILD_MEMBER_ADD") {
         var name = rawEvent.d.user.username
@@ -937,7 +937,7 @@ bot.on('debug', function(rawEvent) {
             'messageCnt': 0,
             'settings': {
                 'announceChan': null,
-                'Verb': false
+                'verb': false
             },
             'SownerId': SownerId,
             'Channels': {}
@@ -977,10 +977,10 @@ bot.on('disconnected', function() {
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     var sname = bot.servers[rawEvent.d.guild_id].name
     try {
-        var Verb = storage.d.Servers[sname].settings.Verb
+        var verb = storage.d.Servers[sname].settings.verb
     } catch (e) {
-        Verb = false
-        storage.d.Servers[sname].settings.Verb = false
+        verb = false
+        storage.d.Servers[sname].settings.verb = false
     }
     try {
         if (storage.d.Users[user] === "undefined") {
@@ -998,7 +998,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
                 storage.d.Users[user].lastseen = lastseen
                 storage.d.Users[user].rawLastSeen = gettime()
-                if (storage.d.Users[user].status !== 'offline' && Verb) {
+                if (storage.d.Users[user].status !== 'offline' && verb) {
                     logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                 }
                 storage.d.Users[user].status = status
@@ -1009,7 +1009,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     if (userID === storage.d.Users[user].id) {
                         storage.d.Users[user].lastseen = lastseen
                         storage.d.Users[user].rawLastSeen = gettime()
-                        if (storage.d.Users[user].status !== 'offline' && Verb) {
+                        if (storage.d.Users[user].status !== 'offline' && verb) {
                             logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                         }
                         storage.d.Users[user].status = status
@@ -1023,7 +1023,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
             storage.d.Users[user].lastseen = lastseen
             storage.d.Users[user].rawLastSeen = gettime()
-            if (storage.d.Users[user].status !== 'idle' && Verb) {
+            if (storage.d.Users[user].status !== 'idle' && verb) {
                 logger.info(chalk.gray(lastseen + ' : ' + chalk.yellow(user + " is now: " + chalk.underline(status))));
             }
             storage.d.Users[user].status = status
@@ -1090,7 +1090,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     previousOffline = {}
                 }
             }
-            if (storage.d.Users[user].status !== 'online' && Verb) {
+            if (storage.d.Users[user].status !== 'online' && verb) {
                 logger.info(chalk.gray(lastseen + ' : ' + chalk.green(user + " is now: " + chalk.underline(status))));
             }
             storage.d.Users[user].status = status
@@ -1128,7 +1128,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 'messageCnt': 0,
                 'settings': {
                     'announceChan': null,
-                    'Verb': false
+                    'verb': false
                 },
                 'SownerId': SownerId,
                 'Channels': {}
@@ -1155,11 +1155,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         error = true
     }
     try {
-        var Verb = storage.d.Servers[sname].settings.Verb
+        if (storage.d.Servers[sname].settings.verb) {
+            verb = true
+        }
     } catch (e) {
-        console.log(e)
-        Verb = false
-        storage.d.Servers[sname].settings.Verb = false
+        verb = false
+        storage.d.Servers[sname].settings.verb = false
     }
     try {
         if (storage.d.Servers[sname] === undefined) {
@@ -1168,7 +1169,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 'messageCnt': 0,
                 'settings': {
                     'announceChan': null,
-                    'Verb': false,
+                    'verb': false,
                 },
                 'SownerId': SownerId,
                 'Channels': {}
@@ -1277,6 +1278,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     } catch (e) {
         var error = null
     }
+    console.log(verb)
     //This tests for commands using the command mod set in the config
     if (message.indexOf(commandmod) !== -1) {
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('ping') !== -1 && ignore !== true) {
@@ -1549,18 +1551,18 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 redditScenery(channelID, random)
             }
         }
-        if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('Verb') !== -1) {
+        if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('verb') !== -1) {
             if (userID.indexOf(ownerId) === 0) {
-                if (storage.d.Servers[sname].settings.Verb === false || storage.d.Servers[sname].settings.Verb === undefined) {
+                if (storage.d.Servers[sname].settings.verb === false || storage.d.Servers[sname].settings.verb === undefined) {
                     try {
-                        storage.d.Servers[sname].settings.Verb = true
+                        storage.d.Servers[sname].settings.verb = true
                         messageSend(channelID, "Ok now logging messages and status changes from this server into console")
                     } catch (e) {
                         logger.error(chalk.red(e))
                     }
                 } else {
                     try {
-                        storage.d.Servers[sname].settings.Verb = false
+                        storage.d.Servers[sname].settings.verb = false
                         messageSend(channelID, "Ok no longer logging messages and status changes from this server into console")
                     } catch (e) {
                         logger.error(chalk.red(e))
@@ -1646,7 +1648,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mkdirp('./logs/' + servern, function(err) {
                 fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
             })
-            if (Verb || cnaid === channelID) {
+            if (verb || cnaid === channelID) {
                 console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
             }
         }
