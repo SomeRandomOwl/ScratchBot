@@ -1181,8 +1181,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             writeJSON('./assets/storage', storage)
         }
-        mkdirp('./logs/' + servern, function(err) {
-            fs.appendFile("logs/" + servern + "Links.txt", '\n' + link)
+        mkdirp('./logs/' + sname, function(err) {
+            fs.appendFile("logs/" + sname + "Links.txt", '\n' + link)
         })
     }
     if (cname !== undefined) {
