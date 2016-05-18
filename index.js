@@ -892,8 +892,8 @@ bot.on('ready', function() {
     startUpTime = gettime()
     serverlist(false, true)
     channellist(false, true)
-    serverlist(false, true)
-    logger.info(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
+    userlist(false, true)
+    logger.info(chalk.cyan('\n' + bot.username + " - (" + bot.id + ")" + " Is now running"))
     statusmsg("Discord")
 });
 bot.on('debug', function(rawEvent) {
