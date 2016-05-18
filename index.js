@@ -875,7 +875,7 @@ bot.on('ready', function() {
     serverlist()
     channellist()
     serverlist()
-    console.log(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
+    logger.info(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
     statusmsg("Discord")
 });
 bot.on('debug', function(rawEvent) {
