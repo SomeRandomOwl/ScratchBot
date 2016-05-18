@@ -778,10 +778,12 @@ function eightBall(channelID, question, rawEvent) {
 
 function clever(question, channelID) {
     cBot.create(function(err, session) {
+        console.log(session)
         if (err) {
             console.error(err)
         } else {
             cBot.ask(question, function(err, response) {
+                console.log(err)
                 messageSend(channelID, response);
             });
         }
