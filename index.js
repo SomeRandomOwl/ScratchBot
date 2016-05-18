@@ -892,9 +892,9 @@ var startUpTime = null
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
     startUpTime = gettime()
-    /*serverlist(false, true)
+    serverlist(false, true)
     channellist(false, true)
-    userlist(false, true)*/
+    userlist(false, true)
     logger.info(chalk.magenta(bot.username + " - (" + bot.id + ")" + " Is now running"))
     statusmsg("Discord")
 });
