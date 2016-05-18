@@ -1656,6 +1656,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             logger.info(chalk.gray('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
         }
     }
+    writeJSON('./assets/storage', storage)
 });
 
 /* Start of console input */
