@@ -783,7 +783,7 @@ function eightBall(channelID, question, rawEvent) {
     // body...
 }
 
-function clever(question, channelID) {
+function clever(channelID, question) {
     cBot.ask(question, function(err, response) {
         if (err) {
             console.log(err)
@@ -1346,7 +1346,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('clever') === 1 && ignore !== true) {
-            var cleverr = message.substring(message.indexOf(' ') + 1)
+            cleverr = message.substring(message.indexOf(' ') + 1)
             clever(channelID, cleverr)
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
