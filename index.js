@@ -1095,7 +1095,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
     } catch (e) {
-        e = e
+        sname = 'DM'
     }
     try {
         if (storage.d.Servers[sname] === undefined) {
