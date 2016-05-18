@@ -145,10 +145,13 @@ function gettime() {
 }
 /*/Lists currently connected severs and writes them to json/*/
 function serverlist(verb) {
+    serverCnt = 0
+    serverCnt++
     if (verb) {
         logger.info(chalk.underline("Currently connected to these servers:\n"))
     }
     for (var serverID in bot.servers) {
+        serverCnt++
         if (verb) {
             console.log(bot.servers[serverID].name)
         }
@@ -177,15 +180,19 @@ function serverlist(verb) {
             }
         }
     }
+    storage.d.totalCounters.servers = serverCnt
     writeJSON('./assets/storage', storage)
 }
 /*/Lists currencly seen channels/*/
 function channellist(verb) {
+    channelCnt = 0
+    channelCnt++
     if (verb) {
         logger.info(chalk.underline("Currently connected to these channels:\n"))
     }
     for (var serverID in bot.servers) {
         for (var channelID in bot.servers[serverID].channels) {
+            channelCnt++
             if (verb) {
                 console.log(bot.servers[serverID].channels[channelID].name)
             }
@@ -221,15 +228,19 @@ function channellist(verb) {
             }
         }
     }
+    storage.d.totalCounters.channels = channelCnt
     writeJSON('./assets/storage', storage)
 }
 /*/List currently seen users/*/
 function userlist(verb) {
+    userCnt = 0
+    userCnt++
     if (verb) {
         logger.info(chalk.underline("Currently seeing these users:\n"))
     }
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
+            userCnt++
             if (verb) {
                 console.log(bot.servers[serverID].members[userID].username)
             }
@@ -286,6 +297,7 @@ function userlist(verb) {
             }
         }
     }
+    storage.d.totalCounters.users = userCnt
     writeJSON('./assets/storage', storage)
 }
 /*/Used to Ignore Channels/*/
