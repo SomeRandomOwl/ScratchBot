@@ -153,15 +153,18 @@ function serverlist(verb) {
             storage.d.Servers[name] = {
                 'id': serverID,
                 'messageCnt': 0,
-                'announceChan': null,
+                'settings': {
+                    'announceChan': null
+                }
+
                 'SownerId': SownerId
             }
         } else {
             if (storage.d.Servers[name].messageCnt === undefined) {
                 storage.d.Servers[name].messageCnt = 0
             }
-            if (storage.d.Servers[name].announceChan === undefined) {
-                storage.d.Servers[name].announceChan = null
+            if (storage.d.Servers[name].settings.announceChan === undefined) {
+                storage.d.Servers[name].settings.announceChan = null
             }
             if (storage.d.Servers[name].SownerId === undefined) {
                 storage.d.Servers[name].SownerId = SownerId
@@ -850,7 +853,7 @@ bot.on('ready', function() {
 });
 bot.on('debug', function(rawEvent) {
     try {
-        var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].announceChan
+        var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].settings.announceChan
     } catch (e) {
         return
     }
@@ -881,7 +884,9 @@ bot.on('debug', function(rawEvent) {
         storage.d.Servers[name] = {
             'id': serverID,
             'messageCnt': 0,
-            'announceChan': null,
+            'settings': {
+                'announceChan': null
+            }
             'SownerId': SownerId
         }
     }
@@ -919,10 +924,10 @@ bot.on('disconnected', function() {
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     var sname = bot.servers[rawEvent.d.guild_id].name
     try {
-        var verb = storage.d.Servers[sname].Verb
+        var verb = storage.d.Servers[sname].settings.Verb
     } catch (e) {
         verb = false
-        storage.d.Servers[sname].Verb = false
+        storage.d.Servers[sname].settings.Verb = false
     }
     try {
         if (storage.d.Users[user] === "undefined") {
@@ -1068,7 +1073,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             storage.d.Servers[sname] = {
                 'id': serverID,
                 'messageCnt': 0,
-                'announceChan': null,
+                'settings': {
+                    'announceChan': null
+                }
+
                 'SownerId': SownerId,
                 'Channels': {}
             }
@@ -1094,10 +1102,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         error = true
     }
     try {
-        var verb = storage.d.Servers[sname].Verb
+        var verb = storage.d.Servers[sname].settings.Verb
     } catch (e) {
         verb = false
-        storage.d.Servers[sname].Verb = false
+        storage.d.Servers[sname].settings.Verb = false
     }
     //Logging Related
     if (storage.d.Users[user] !== undefined) {
@@ -1164,8 +1172,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         console.log(rawEvent)
     }
     try {
-        if (storage.d.Servers[sname].prefixOvrid !== undefined) {
-            commandmod = storage.d.Servers[sname].prefixOvrid
+        if (storage.d.Servers[sname].settings.prefixOvrid !== undefined) {
+            commandmod = storage.d.Servers[sname].settings.prefixOvrid
         } else {
             commandmod = '!'
         }
@@ -1337,10 +1345,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var pfcmd = message
             var pfcall = pfcmd.replace(commandmod + 'prefix ', '')
             if (userID.indexOf(ownerId) === 0) {
-                storage.d.Servers[sname].prefixOvrid = pfcall
+                storage.d.Servers[sname].settings.prefixOvrid = pfcall
                 messageSend(channelID, "The prefix for this server is now: " + pfcall)
             } else if (userID.indexOf(SownerId) === 0) {
-                storage.d.Servers[sname].prefixOvrid = pfcall
+                storage.d.Servers[sname].settings.prefixOvrid = pfcall
                 messageSend(channelID, "The prefix for this server is now: " + pfcall)
             } else {
                 messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
@@ -1406,32 +1414,32 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('announce') === 1 && ignore !== true) {
             if (userID.indexOf(ownerId) === 0) {
-                if (storage.d.Servers[sname].announceChan === null || storage.d.Servers[sname].announceChan === undefined) {
+                if (storage.d.Servers[sname].settings.announceChan === null || storage.d.Servers[sname].settings.announceChan === undefined) {
                     try {
-                        storage.d.Servers[sname].announceChan = channelID
+                        storage.d.Servers[sname].settings.announceChan = channelID
                         messageSend(channelID, "Ok now announcing user changes on this channel")
                     } catch (e) {
                         logger.error(chalk.red(e))
                     }
                 } else {
                     try {
-                        storage.d.Servers[sname].announceChan = null
+                        storage.d.Servers[sname].settings.announceChan = null
                         messageSend(channelID, "Ok no longer announcing user changes on this channel")
                     } catch (e) {
                         logger.error(chalk.red(e))
                     }
                 }
             } else if (userID.indexOf(SownerId) === 0) {
-                if (storage.d.Servers[sname].announceChan === null || storage.d.Servers[sname].announceChan === undefined) {
+                if (storage.d.Servers[sname].settings.announceChan === null || storage.d.Servers[sname].settings.announceChan === undefined) {
                     try {
-                        storage.d.Servers[sname].announceChan = channelID
+                        storage.d.Servers[sname].settings.announceChan = channelID
                         messageSend(channelID, "Ok now announcing user changes on this channel")
                     } catch (e) {
                         logger.error(chalk.red(e))
                     }
                 } else {
                     try {
-                        storage.d.Servers[sname].announceChan = null
+                        storage.d.Servers[sname].settings.announceChan = null
                         messageSend(channelID, "Ok no longer announcing user changes on this channel")
                     } catch (e) {
                         logger.error(chalk.red(e))
@@ -1479,16 +1487,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('verb') === 1) {
             if (userID.indexOf(ownerId) === 0) {
-                if (storage.d.Servers[sname].Verb === false || storage.d.Servers[sname].Verb === undefined) {
+                if (storage.d.Servers[sname].settings.Verb === false || storage.d.Servers[sname].settings.Verb === undefined) {
                     try {
-                        storage.d.Servers[sname].Verb = true
+                        storage.d.Servers[sname].settings.Verb = true
                         messageSend(channelID, "Ok now logging messages and status changes from this server into console")
                     } catch (e) {
                         logger.error(chalk.red(e))
                     }
                 } else {
                     try {
-                        storage.d.Servers[sname].Verb = false
+                        storage.d.Servers[sname].settings.Verb = false
                         messageSend(channelID, "Ok no longer logging messages and status changes from this server into console")
                     } catch (e) {
                         logger.error(chalk.red(e))
