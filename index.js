@@ -778,11 +778,12 @@ function messagesDelete(channelID, number) {
 
     });
 }
-
-function eightBall(channelID, question, rawEvent) {
-    // body...
+/*/Magic 8 Ball/*/
+function eightBall(channelID, question, userID) {
+    var resp = doc.eBall[Math.floor(Math.random() * doc.eBall.length)];
+    messageSend(channelID, '<@' + userID + '> ' + resp)
 }
-
+/*/Ask cleverbot a question/*/
 function clever(channelID, question) {
     cBot.ask(question, function(err, response) {
         if (err) {
@@ -1344,6 +1345,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('clever') === 1 && ignore !== true) {
             cleverr = message.substring(message.indexOf(' ') + 1)
             clever(channelID, cleverr)
+        }
+        if (message.toLowerCase().indexOf('8ball') === 1 && ignore !== true) {
+            ebQ = message.substring(message.indexOf(' ') + 1)
+            clever(channelID, ebQ, userID)
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
             if (message.indexOf(' ') === -1) {
