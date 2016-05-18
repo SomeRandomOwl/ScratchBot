@@ -892,9 +892,9 @@ var startUpTime = null
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
     startUpTime = gettime()
-    //serverlist(false, true)
+    /*serverlist(false, true)
     channellist(false, true)
-    userlist(false, true)
+    userlist(false, true)*/
     logger.info(chalk.magenta(bot.username + " - (" + bot.id + ")" + " Is now running"))
     statusmsg("Discord")
 });
@@ -1136,7 +1136,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         verb = false
         storage.d.Servers[sname].settings.verb = false
     }
-    try {
+    /*try {
         if (storage.d.Servers[sname] === undefined) {
             storage.d.Servers[name] = {
                 'id': serverID,
@@ -1151,7 +1151,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     } catch (e) {
         console.log(e)
-    }
+    }*/
     //Logging Related
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
