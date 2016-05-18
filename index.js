@@ -197,10 +197,16 @@ function channellist(verb) {
                         storage.d.Servers[sname].Channels[name].messageCnt = 0
                     }
                     if (storage.d.Servers[sname].Channels[name].lastComicActt === undefined) {
-                        storage.d.Servers[sname].Channels[name].lastComicActt = null
+                        storage.d.Servers[sname].Channels[name].lastComicActt = 0
                     }
                     if (storage.d.Servers[sname].Channels[name].lastComic === undefined) {
-                        storage.d.Servers[sname].Channels[name].lastComic = null
+                        storage.d.Servers[sname].Channels[name].lastComic = 0
+                    }
+                    if (storage.d.Servers[sname].Channels[name].lastComicActt === null) {
+                        storage.d.Servers[sname].Channels[name].lastComicActt = 0
+                    }
+                    if (storage.d.Servers[sname].Channels[name].lastComic === null) {
+                        storage.d.Servers[sname].Channels[name].lastComic = 0
                     }
                 }
             }
