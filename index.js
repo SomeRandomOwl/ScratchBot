@@ -26,8 +26,8 @@ if (fs.existsSync('./assets/storage.json') === false) {
     logger.info(chalk.underline.red('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
 /*/CleverBot/*/
-bot = new cleverbot(config.cleverUser, config.cleverKey);
-bot.setNick("Scratch")
+cBot = new cleverbot(config.cleverUser, config.cleverKey);
+cBot.setNick("Scratch")
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
 /*/Set up logging/*/
@@ -777,11 +777,11 @@ function eightBall(channelID, question, rawEvent) {
 }
 
 function clever(question, channelID) {
-    bot.create(function(err, session) {
+    cBot.create(function(err, session) {
         if (err) {
             console.error(err)
         } else {
-            bot.ask(question, function(err, response) {
+            cBot.ask(question, function(err, response) {
                 messageSend(channelID, response);
             });
         }
