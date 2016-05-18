@@ -770,6 +770,10 @@ function messagesDelete(channelID, number) {
 function eightBall(channelID, question, rawEvent) {
     // body...
 }
+
+function clever(question, channelID) {
+    // body...
+}
 /*/Prints out a users stats/*/
 function stats(channelID, name, rawEvent) {
     try {
