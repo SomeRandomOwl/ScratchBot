@@ -93,7 +93,12 @@ if (storage.settings.redditList === undefined) {
 } else {
     redditList = storage.settings.redditList
 }
-
+cBot.create(function(err, session) {
+    console.log(session)
+    if (err) {
+        console.error(err)
+    }
+});
 /*/Function to write json to the storage file/*/
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
@@ -777,17 +782,11 @@ function eightBall(channelID, question, rawEvent) {
 }
 
 function clever(question, channelID) {
-    cBot.create(function(err, session) {
-        console.log(session)
-        if (err) {
-            console.error(err)
-        } else {
-            cBot.ask(question, function(err, response) {
-                console.log(err)
-                messageSend(channelID, response);
-            });
-        }
+    cBot.ask(question, function(err, response) {
+        console.log(err)
+        messageSend(channelID, response);
     });
+}
 }
 /*/Prints out a users stats/*/
 function stats(channelID, name, rawEvent) {
