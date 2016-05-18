@@ -144,9 +144,8 @@ function gettime() {
     return timenow
 }
 /*/Lists currently connected severs and writes them to json/*/
-function serverlist(verb) {
+function serverlist(verb, s) {
     serverCnt = 0
-    serverCnt++
     if (verb) {
         logger.info(chalk.underline("Currently connected to these servers:\n"))
     }
@@ -180,13 +179,15 @@ function serverlist(verb) {
             }
         }
     }
+    if (s) {
+        console.log(chalk.gray("/nCurrently connected to: " + serverCnt + " Servers"))
+    }
     storage.d.totalCounters.servers = serverCnt
     writeJSON('./assets/storage', storage)
 }
 /*/Lists currencly seen channels/*/
-function channellist(verb) {
+function channellist(verb, s) {
     channelCnt = 0
-    channelCnt++
     if (verb) {
         logger.info(chalk.underline("Currently connected to these channels:\n"))
     }
@@ -228,13 +229,15 @@ function channellist(verb) {
             }
         }
     }
+    if (s) {
+        console.log(chalk.gray("/nCurrently Seeing: " + channelCnt + " Channels"))
+    }
     storage.d.totalCounters.channels = channelCnt
     writeJSON('./assets/storage', storage)
 }
 /*/List currently seen users/*/
-function userlist(verb) {
+function userlist(verb, s) {
     userCnt = 0
-    userCnt++
     if (verb) {
         logger.info(chalk.underline("Currently seeing these users:\n"))
     }
@@ -296,6 +299,9 @@ function userlist(verb) {
                 }
             }
         }
+    }
+    if (s) {
+        console.log(chalk.gray("/nCurrently Seeing: " + userCnt + " Users"))
     }
     storage.d.totalCounters.users = userCnt
     writeJSON('./assets/storage', storage)
@@ -884,9 +890,9 @@ var startUpTime = null
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while..."))
     startUpTime = gettime()
-    serverlist()
-    channellist()
-    serverlist()
+    serverlist(false, true)
+    channellist(false, true)
+    serverlist(false, true)
     logger.info(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
     statusmsg("Discord")
 });
