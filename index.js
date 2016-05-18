@@ -731,23 +731,13 @@ function redditScenery(channelID, reddit, name, sname) {
     writeJSON('./assets/storage', storage)
 }
 /*/Help command/*/
-function help(cmd, channelID, help) {
+function help(cmd, channelID) {
     if (help) {
         try {
             messageSend(channelID, doc.help[cmd].type + " command; " + doc.help[cmd].help)
         } catch (e) {
             messageSend(channelID, "That isn't a recgonized command, or there is no help documentation on it")
         }
-    } else {
-        typeL = []
-        for (var cmdd in doc.cList) {
-            if (cmd === doc.help[cmdd].type) {
-                typeL.push(cmdd)
-            } else {
-                continue
-            }
-        }
-        messageSend(channelID, "```" + typeL + "```")
     }
 }
 /*/Quick way to delete a message/*/
@@ -1169,11 +1159,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageSend(channelID, 'pong')
         }
         if (message.toLowerCase().indexOf('help') === 1 && ignore !== true) {
-            types = ['admin', 'fun', 'useful', 'utility', 'other']
+
             if (message.indexOf(' ') === -1) {
-                if (isInArray(types)) {} else {
-                    help('help', channelID, true)
-                }
+                help('help', channelID)
             } else {
                 helpcall = message.substring(message.indexOf(' ') + 1)
                 help(helpcall, channelID)
