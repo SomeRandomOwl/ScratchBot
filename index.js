@@ -180,7 +180,7 @@ function serverlist(verb, s) {
         }
     }
     if (s) {
-        console.log(chalk.gray("/nCurrently connected to: " + serverCnt + " Servers"))
+        console.log(chalk.gray("Currently connected to: " + serverCnt + " Servers"))
     }
     storage.d.totalCounters.servers = serverCnt
     writeJSON('./assets/storage', storage)
@@ -230,7 +230,7 @@ function channellist(verb, s) {
         }
     }
     if (s) {
-        console.log(chalk.gray("/nCurrently Seeing: " + channelCnt + " Channels"))
+        console.log(chalk.gray("Currently Seeing: " + channelCnt + " Channels"))
     }
     storage.d.totalCounters.channels = channelCnt
     writeJSON('./assets/storage', storage)
@@ -301,7 +301,7 @@ function userlist(verb, s) {
         }
     }
     if (s) {
-        console.log(chalk.gray("/nCurrently Seeing: " + userCnt + " Users"))
+        console.log(chalk.gray("Currently Seeing: " + userCnt + " Users"))
     }
     storage.d.totalCounters.users = userCnt
     writeJSON('./assets/storage', storage)
