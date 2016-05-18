@@ -301,7 +301,7 @@ function userlist(verb, s) {
         }
     }
     if (s) {
-        console.log(chalk.gray("With approximatly: " + userCnt + " Users across all of them"))
+        console.log(chalk.gray("With approximatly: " + userCnt + " Users across all of them\n"))
     }
     storage.d.totalCounters.users = userCnt
     writeJSON('./assets/storage', storage)
@@ -893,7 +893,7 @@ bot.on('ready', function() {
     serverlist(false, true)
     channellist(false, true)
     userlist(false, true)
-    logger.info(chalk.cyan('\n' + bot.username + " - (" + bot.id + ")" + " Is now running"))
+    logger.info(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
     statusmsg("Discord")
 });
 bot.on('debug', function(rawEvent) {
