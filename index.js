@@ -782,9 +782,13 @@ function eightBall(channelID, question, rawEvent) {
 
 function clever(question, channelID) {
     cBot.ask(question, function(err, response) {
-        console.log(err)
-        console.log(response)
-        messageSend(channelID, response);
+        if (err) {
+            console.log(err)
+        } else {
+            setTimeout(function() {
+                messageSend(channelID, response);
+            }, 3000);
+        }
     });
 }
 
