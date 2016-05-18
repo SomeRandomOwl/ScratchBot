@@ -812,7 +812,20 @@ function clever(channelID, question) {
         }
     });
 }
-
+/*/Unshortens urls/*/
+function unShorten(channelID, userID, url) {
+    try {
+        request('http://api.unshorten.it?shortURL=' + url + '&responseFormat=json&return=both&apiKey=' + config.unShorten, function(error, response, body) {
+            body = JSON.parse(body)
+            messageSend(channelID, "<@" + userID = "> The url you gave leads to: " + body.domain + " And more specifically this page: " + body.fullurl)
+            if (error) {
+                messageSend(channelID, "<@" + userID = "> invalid url!")
+            }
+        })
+    } catch (e) {
+        messageSend(channelID, "<@" + userID = "> you either provided no url or a invalid url!")
+    }
+}
 /*/Prints out a users stats/*/
 function stats(channelID, name, rawEvent) {
     try {
@@ -1373,7 +1386,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('8ball') === 1 && ignore !== true) {
             ebQ = message.substring(message.indexOf(' ') + 1)
-            clever(channelID, ebQ, userID)
+            eightBall(channelID, ebQ, userID)
         }
         if (message.toLowerCase().indexOf('xkcd') === 1 && ignore !== true) {
             if (message.indexOf(' ') === -1) {
@@ -1514,8 +1527,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageSend(channelID, "The bot has been active for: " + time.d + " Days " + time.h + " Hours " + time.m + " Minutes " + time.s + " Seconds")
             rconcmd = 'Yes'
         }
+        if (message.toLowerCase().indexOf('us') === 1) {
+            var uri = message.substring(message.indexOf(' ') + 1)
+            unShorten(channelID, userID, uri)
+        }
         if (message.toLowerCase().indexOf('invite') === 1) {
-            messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \nIf you dont trust short urls http://unshorten.it/ \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
+            messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \nIf you dont trust short urls do" + commandmod + "us to unshorten it \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
         }
         if (message.toLowerCase().indexOf('js') === 1) {
             jscall = message.substring(message.indexOf(' ') + 1)
