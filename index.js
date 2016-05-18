@@ -15,7 +15,7 @@ var chalk = require('chalk');
 var request = require('request');
 var mkdirp = require('mkdirp');
 var doc = require('./assets/doc.json')
-var cleVerbot = require("cleVerbot.io")
+var cleVerbot = require("cleverbot.io")
     /*/Set up logging/*/
 var logger = new(winston.Logger)({
     transports: [
