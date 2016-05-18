@@ -154,9 +154,9 @@ function serverlist(verb) {
                 'id': serverID,
                 'messageCnt': 0,
                 'settings': {
-                    'announceChan': null
-                }
-
+                    'announceChan': null,
+                    'verb': false,
+                },
                 'SownerId': SownerId
             }
         } else {
