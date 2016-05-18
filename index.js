@@ -895,7 +895,7 @@ bot.on('ready', function() {
     serverlist(false, true)
     channellist(false, true)
     userlist(false, true)
-    logger.info(chalk.cyan(bot.username + " - (" + bot.id + ")" + " Is now running"))
+    logger.info(chalk.magenta(bot.username + " - (" + bot.id + ")" + " Is now running"))
     statusmsg("Discord")
 });
 bot.on('debug', function(rawEvent) {
