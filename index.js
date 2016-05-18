@@ -453,6 +453,15 @@ function relxkcd(quer, channelID, name, sname) {
         var lastcomictime = gettime()
         storage.d.Servers[sname].Channels[name].lastComic = lastcomictime
     } else {
+        try {
+            if (comicacttime === undefined) {
+                messageSend(channelID, "Sorry there was some sort of error, should be fixed now, try again")
+                storage.d.Servers[sname].Channels[name].lastComic = 0
+                storage.d.Servers[sname].Channels[name].lastComicActt = 0
+            }
+        } catch (e) {
+            e = e
+        }
         messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
