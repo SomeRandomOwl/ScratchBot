@@ -157,8 +157,8 @@ function serverlist(verb) {
                     'announceChan': null,
                     'Verb': false,
                 },
-
-                'SownerId': SownerId
+                'SownerId': SownerId,
+                'Channels': {}
             }
         } else {
             if (storage.d.Servers[name].messageCnt === undefined) {
@@ -1122,6 +1122,22 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         verb = false
         storage.d.Servers[sname].settings.Verb = false
     }
+    try {
+        if (storage.d.Servers[sname] === undefined) {
+            storage.d.Servers[name] = {
+                'id': serverID,
+                'messageCnt': 0,
+                'settings': {
+                    'announceChan': null,
+                    'Verb': false,
+                },
+                'SownerId': SownerId,
+                'Channels': {}
+            }
+        }
+    } catch (e) {
+        console.log(e)
+    }
     //Logging Related
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
@@ -1162,12 +1178,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 storage.d.Servers[sname].Channels[cname].messageCnt = mccount
             }
         } catch (e) {
-            if (storage.d.Servers[sname].Channels[cname] === undefined) {
-                storage.d.Servers[sname].Channels[cname] = {
-                    "id": channelID,
-                    "type": 'text',
-                    "messageCnt": 0,
+            try {
+                if (storage.d.Servers[sname].Channels[cname] === undefined) {
+                    storage.d.Servers[sname].Channels[cname] = {
+                        "id": channelID,
+                        "type": 'text',
+                        "messageCnt": 0,
+                    }
                 }
+            } catch (e) {
+                e = e
             }
         }
         writeJSON('./assets/storage', storage)
