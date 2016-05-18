@@ -155,8 +155,9 @@ function serverlist(verb) {
                 'messageCnt': 0,
                 'settings': {
                     'announceChan': null,
-                    'verb': false,
+                    'Verb': false,
                 },
+
                 'SownerId': SownerId
             }
         } else {
@@ -885,8 +886,9 @@ bot.on('debug', function(rawEvent) {
             'id': serverID,
             'messageCnt': 0,
             'settings': {
-                'announceChan': null
-            }
+                'announceChan': null,
+                'Verb': false
+            },
             'SownerId': SownerId
         }
     }
@@ -1074,9 +1076,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 'id': serverID,
                 'messageCnt': 0,
                 'settings': {
-                    'announceChan': null
-                }
-
+                    'announceChan': null,
+                    'Verb': false
+                },
                 'SownerId': SownerId,
                 'Channels': {}
             }
