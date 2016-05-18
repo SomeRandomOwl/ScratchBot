@@ -349,6 +349,9 @@ function messageSend(channelID, msg) {
         message: msg,
         typing: false
     }, function(error, response) {
+        if (error) {
+            console.log(error)
+        }
         try {
             logger.info(chalk.dim('Last Message Sent ID: ' + response.id))
             sentPrevId = response.id
@@ -786,6 +789,8 @@ function clever(question, channelID) {
             console.log(err)
         } else {
             setTimeout(function() {
+                console.log(response)
+                console.log(channelID)
                 messageSend(channelID, response);
             }, 3000);
         }
