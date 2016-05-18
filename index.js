@@ -1532,7 +1532,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             unShorten(channelID, userID, uri)
         }
         if (message.toLowerCase().indexOf('invite') === 1) {
-            messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \nIf you dont trust short urls do the command: " + commandmod + "us | to unshorten it \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
+            messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \nIf you dont trust short urls use the following command to unshorten it: " + commandmod + "us https://goo.gl/IppQQT \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
         }
         if (message.toLowerCase().indexOf('js') === 1) {
             jscall = message.substring(message.indexOf(' ') + 1)
