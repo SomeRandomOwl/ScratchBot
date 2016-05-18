@@ -1169,7 +1169,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageSend(channelID, 'pong')
         }
         if (message.toLowerCase().indexOf('help') === 1 && ignore !== true) {
-            types = [admin, fun, useful, utility, other]
+            types = ['admin', 'fun', 'useful', 'utility', 'other']
             if (message.indexOf(' ') === -1) {
                 if (isInArray(types)) {} else {
                     help('help', channelID, true)
