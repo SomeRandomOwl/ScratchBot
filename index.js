@@ -787,7 +787,7 @@ function clever(question, channelID) {
         messageSend(channelID, response);
     });
 }
-}
+
 /*/Prints out a users stats/*/
 function stats(channelID, name, rawEvent) {
     try {
