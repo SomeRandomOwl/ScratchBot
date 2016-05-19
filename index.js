@@ -95,11 +95,11 @@ if (storage.settings.redditList === undefined) {
 } else {
     redditList = storage.settings.redditList
 }
-cBot.create(function(err, session) {
+/*cBot.create(function(err, session) {
     if (err) {
         console.error(err)
     }
-});
+});*/
 /*/Function to write json to the storage file/*/
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
