@@ -18,6 +18,7 @@ var doc = require('./assets/doc.json')
 var Cleverbot = require('cleverbot-node');
 var pirateSpeak = require('pirate-speak');
 var google = require('googleapis');
+var urlshortener = google.urlshortener('v1');
 
 cleverbot = new Cleverbot;
 
