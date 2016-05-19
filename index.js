@@ -1615,8 +1615,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
             })
             try {
-                //cconsole.log(verb)
-                console.log(storage.d.Servers[sname].settings.verb)
                 if (verb || cnaid === channelID || storage.d.Servers[sname].settings.verb) {
                     console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
                 }
