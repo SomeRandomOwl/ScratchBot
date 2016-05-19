@@ -1473,7 +1473,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('pirate') === commandmod.length + 1 && ignore !== true) {
+        if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('pirate') !== -1 && ignore !== true) {
             if (userID.indexOf(ownerId) === 0) {
                 if (storage.d.Servers[sname].settings.pirate === false || storage.d.Servers[sname].settings.pirate === undefined) {
                     storage.d.Servers[sname].settings.pirate = true
