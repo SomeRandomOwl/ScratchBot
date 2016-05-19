@@ -15,8 +15,9 @@ var chalk = require('chalk');
 var request = require('request');
 var mkdirp = require('mkdirp');
 var doc = require('./assets/doc.json')
-    //var cleverbot = require("cleverbot.io")
 var Cleverbot = require('cleverbot-node');
+var pirateSpeak = require('pirate-speak');
+
 cleverbot = new Cleverbot;
 
 /*/Set up logging/*/
@@ -60,9 +61,7 @@ if (fs.existsSync('./assets/storage.json')) {
 if (fs.existsSync('./assets/storage.json') === false) {
     logger.info(chalk.underline.red('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
-/*/CleverBot/*/
-//cBot = new cleverbot(config.cleverUser, config.cleverKey);
-//cBot.setNick("sandbox.scratch")
+
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
 /*/Bot credentials/*/
@@ -87,6 +86,7 @@ var debug = false;
 var serverID = null;
 var xkcdJson = null
 var verb = false
+var pirate = false
 
 /* Start of function defining */
 if (storage.settings.redditList === undefined) {
@@ -95,11 +95,7 @@ if (storage.settings.redditList === undefined) {
 } else {
     redditList = storage.settings.redditList
 }
-/*cBot.create(function(err, session) {
-    if (err) {
-        console.error(err)
-    }
-});*/
+
 /*/Function to write json to the storage file/*/
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
@@ -382,6 +378,9 @@ function statusmsg(msg) {
 }
 /*/Used to send messages and keep tack of the message id/*/
 function messageSend(channelID, msg) {
+    if (pirate === true) {
+        var msg = pirateSpeak.translate(msg);
+    }
     bot.sendMessage({
         to: channelID,
         message: msg,
@@ -1463,6 +1462,15 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 relxkcd(xkcdcall, channelID, cname, sname)
             }
             rconcmd = 'Yes'
+        }
+        if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('pirate') !== -1 && ignore !== true) {
+            if (pirate) {
+                pirate = false
+                messageSend(channelID, "Ok i should now be speaking like i am a pirate")
+            } else {
+                pirate = true
+                messageSend(channelID, "Ok i'm no longer a pirate")
+            }
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('skip') !== -1 && ignore !== true) {
             bot.deleteMessage({
