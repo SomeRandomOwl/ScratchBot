@@ -1618,8 +1618,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 if (verb || cnaid === channelID || storage.d.Servers.settings[sname].verb) {
                     console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
                 }
-            }
-            catche(e) {
+            } catch (e) {
                 //do nothing
             }
         }
