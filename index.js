@@ -824,7 +824,7 @@ function eightBall(channelID, question, userID) {
     messageSend(channelID, '<@' + userID + '> ' + resp)
 }
 /*/Ask cleverbot a question/*/
-function clever(channelID, msg) {
+function clever(channelID, userID, msg) {
     /*cBot.ask(question, function(err, response) {
         if (err) {
             console.log(err)
@@ -1425,7 +1425,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('clever') !== -1 && ignore !== true) {
             cleverr = message.substring(message.indexOf(' ') + 1)
-            clever(channelID, cleverr)
+            clever(channelID, userID, cleverr)
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('8ball') !== -1 && ignore !== true) {
             ebQ = message.substring(message.indexOf(' ') + 1)
