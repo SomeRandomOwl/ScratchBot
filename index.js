@@ -1464,12 +1464,14 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('pirate') !== -1 && ignore !== true) {
-            if (pirate) {
-                pirate = false
-                messageSend(channelID, "Ok i should now be speaking like i am a pirate")
-            } else {
-                pirate = true
-                messageSend(channelID, "Ok i'm no longer a pirate")
+            if (userID.indexOf(ownerId) === 0) {
+                if (pirate === true) {
+                    pirate = true
+                    messageSend(channelID, "Ok i should now be speaking like i am a pirate")
+                } else {
+                    pirate = false
+                    messageSend(channelID, "Ok i'm no longer a pirate")
+                }
             }
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('skip') !== -1 && ignore !== true) {
