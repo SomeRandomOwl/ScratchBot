@@ -918,7 +918,7 @@ bot.on('debug', function(rawEvent) {
         announceID = null
     }
     if (rawEvent.t === "MESSAGE_UPDATE") {
-        console.log(chalk.gray(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
+        //console.log(chalk.gray(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
     }
     if (rawEvent.t === "GUILD_MEMBER_ADD") {
         var name = rawEvent.d.user.username
