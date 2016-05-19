@@ -1730,4 +1730,8 @@ rl.on('line', function(line) {
 }).on('close', () => {
     console.log('Have a great day!');
     process.exit(0);
+}).on('SIGINT', () => {
+    rl.question('Are you sure you want to exit?', (answer) => {
+        if (answer.match(/^y(es)?$/i)) rl.pause();
+    });
 });
