@@ -837,7 +837,7 @@ function clever(channelID, msg) {
             try {
                 messageSend(channelID, "<@" + userID + ">: " + response.message)
             } catch (err) {
-                //nothing
+                console.log(err)
             }
         });
     });
