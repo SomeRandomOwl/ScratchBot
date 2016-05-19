@@ -62,8 +62,6 @@ cBot = new cleverbot(config.cleverUser, config.cleverKey);
 cBot.setNick("sandbox.scratch")
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
-
-
 /*/Bot credentials/*/
 var bot = new DiscordClient({
     autorun: true,
