@@ -918,6 +918,7 @@ function shorten(channelID, userID, ulink) {
         }
     });*/
     request('https://www.googleapis.com/urlshortener/v1/url?longUrl=' + ulink + '&auth=' + config.googleUrl + '&Projection=FULL', function(error, response, body) {
+        console.log(error, response, body)
         if (!error && response.statusCode === 200) {
             body = JSON.parse(body)
             if (body.status === 'OK') {
@@ -926,8 +927,6 @@ function shorten(channelID, userID, ulink) {
                 console.log(body)
                 messageSend(channelID, '<@' + userID + '> There was a error processing that url')
             }
-        } else {
-            console.log(error)
         }
     })
 }
