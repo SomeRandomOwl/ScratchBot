@@ -13,6 +13,7 @@
         "js",
         "math",
         "ping",
+        "pirate",
         "poke",
         "pug",
         "redditscenery",
@@ -64,6 +65,10 @@
         "8ball": {
             "type": "Fun",
             "help": "Ask the bot a question"
+        },
+        "pirate": {
+            "type": "Fun/Really Stupid/Admin",
+            "help": "Makes the bot speak like a pirate"
         },
         "ping": {
             "type": "Utility",
