@@ -1634,6 +1634,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
 });
 
+
 /* Start of console input */
 var rl = readline.createInterface({
     input: process.stdin,
