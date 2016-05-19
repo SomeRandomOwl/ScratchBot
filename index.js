@@ -86,7 +86,6 @@ var debug = false;
 var serverID = null;
 var xkcdJson = null
 var verb = false
-var pirate = false
 
 /* Start of function defining */
 if (storage.settings.redditList === undefined) {
@@ -378,8 +377,17 @@ function statusmsg(msg) {
 }
 /*/Used to send messages and keep tack of the message id/*/
 function messageSend(channelID, msg) {
-    if (pirate === true) {
-        var msg = pirateSpeak.translate(msg);
+    try {
+        sId = bot.serverFromChannel(channelID)
+        for (var sname in storage.d.Servers) {
+            if (storage.d.Servers[sname].id === sId) {
+                if (storage.d.Servers[sname].settings.pirate === true) {
+                    var msg = pirateSpeak.translate(msg);
+                }
+            } else {
+                continue
+            }
+        }
     }
     bot.sendMessage({
         to: channelID,
@@ -1465,8 +1473,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('pirate') !== -1 && ignore !== true) {
             if (userID.indexOf(ownerId) === 0) {
-                if (pirate === false) {
-                    pirate = true
+                if (storage.d.Servers[sname].settings.pirate === false) {
+                    storage.d.Servers[sname].settings.pirate = true
                     messageSend(channelID, "Ok i should now be speaking like i am a pirate")
                 } else {
                     pirate = false
