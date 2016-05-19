@@ -1637,6 +1637,5 @@ var rl = readline.createInterface({
     terminal: true
 });
 rl.on('line', function(line) {
-        consoleparse(line);
-    ]
+    consoleparse(line);
 })
