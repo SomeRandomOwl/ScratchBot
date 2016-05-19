@@ -1486,7 +1486,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     storage.d.Servers[sname].settings.pirate = true
                     messageSend(channelID, "Ok i should now be speaking like i am a pirate")
                 } else {
-                    pirate = false
+                    storage.d.Servers[sname].settings.pirate = false
                     messageSend(channelID, "Ok i'm no longer a pirate")
                 }
             } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
@@ -1494,7 +1494,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     storage.d.Servers[sname].settings.pirate = true
                     messageSend(channelID, "Ok i should now be speaking like i am a pirate")
                 } else {
-                    pirate = false
+                    storage.d.Servers[sname].settings.pirate = false
                     messageSend(channelID, "Ok i'm no longer a pirate")
                 }
             } else {
