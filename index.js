@@ -1465,7 +1465,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('pirate') !== -1 && ignore !== true) {
             if (userID.indexOf(ownerId) === 0) {
-                if (pirate === true) {
+                if (pirate === false) {
                     pirate = true
                     messageSend(channelID, "Ok i should now be speaking like i am a pirate")
                 } else {
