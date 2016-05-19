@@ -17,6 +17,7 @@ var mkdirp = require('mkdirp');
 var doc = require('./assets/doc.json')
 var Cleverbot = require('cleverbot-node');
 var pirateSpeak = require('pirate-speak');
+var google = require('googleapis');
 
 cleverbot = new Cleverbot;
 
@@ -900,6 +901,21 @@ function stats(channelID, name, rawEvent) {
         messageSend(channelID, "Error; No User specified, or invalid user")
     }
 }
+/*/Url shortener/*/
+function shorten(channelID, userID, ulink) {
+    params = {
+        'longUrl': ulink,
+        'auth': config.googleUrl
+    }
+    urlshortener.url.get(params, function(err, response) {
+        if (err) {
+            console.log('Encountered error', err);
+            messageSend(channelID, '@<' + userID + '> There was a error processing that url')
+        } else {
+            messageSend(channelID, '@<' + userID + '> Here is a short url:', response.id);
+        }
+    });
+}
 var startUpTime = null
     /* Bot on event functions */
 bot.on('ready', function() {
@@ -1437,6 +1453,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 channel: channelID,
                 messageID: messageID
             });
+            rconcmd = "Yes"
+        }
+        if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('shorten') !== -1 && ignore !== true) {
+            var lurl = message.substring(message.indexOf(' ') + 1)
+            shorten(channelID, userID, lurl)
             rconcmd = "Yes"
         }
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('clever') !== -1 && ignore !== true) {
