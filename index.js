@@ -917,7 +917,7 @@ function shorten(channelID, userID, ulink) {
             messageSend(channelID, '<@' + userID + '> Here is a short url:', response.id);
         }
     });*/
-    request('https://www.googleapis.com/urlshortener/v1/url?longUrl=' + ulink + '&Authorization=' + config.googleUrl + '&Projection=FULL&shortUrl=' + ulink, function(error, response, body) {
+    request('https://www.googleapis.com/urlshortener/v1/url?longUrl=' + ulink + '&key=' + config.googleUrl + '&Projection=FULL&shortUrl=' + ulink, function(error, response, body) {
         console.log(body)
         if (!error && response.statusCode === 200) {
             body = JSON.parse(body)
