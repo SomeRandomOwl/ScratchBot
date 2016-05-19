@@ -1719,10 +1719,14 @@ var rl = readline.createInterface({
     terminal: true
 });
 rl.setPrompt('Scratch> ');
-rl.prompt();
+setTimeout(function() {
+    rl.prompt();
+}, 2000)
 rl.on('line', function(line) {
     consoleparse(line);
-    rl.prompt();
+    setTimeout(function() {
+        rl.prompt();
+    }, 200)
 }).on('close', () => {
     console.log('Have a great day!');
     process.exit(0);
