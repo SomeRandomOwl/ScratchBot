@@ -1715,7 +1715,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
 /* Start of console input */
 var rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout,
+    //output: process.stdout,
     terminal: true
 });
 rl.setPrompt('Scratch> ');
