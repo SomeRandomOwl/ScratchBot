@@ -904,7 +904,7 @@ function stats(channelID, name, rawEvent) {
 }
 /*/Url shortener/*/
 function shorten(channelID, userID, ulink) {
-    params = {
+    /*params = {
         'longUrl': ulink,
         'auth': config.googleUrl,
         'shortUrl': null
@@ -916,7 +916,18 @@ function shorten(channelID, userID, ulink) {
         } else {
             messageSend(channelID, '<@' + userID + '> Here is a short url:', response.id);
         }
-    });
+    });*/
+    request('https://www.googleapis.com/urlshortener/v1/url?longUrl=' + ulink + '&auth=' + config.googleUrl + '&Projection=FULL', function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            body = JSON.parse(body)
+            if (body.status === 'OK') {
+                messageSend(channelID, '<@' + userID + '> Here is a short url:', body.id)
+            } else {
+                console.log(body)
+                messageSend(channelID, '<@' + userID + '> There was a error processing that url')
+            }
+        }
+    })
 }
 var startUpTime = null
     /* Bot on event functions */
