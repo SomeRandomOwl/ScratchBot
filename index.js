@@ -906,14 +906,15 @@ function stats(channelID, name, rawEvent) {
 function shorten(channelID, userID, ulink) {
     params = {
         'longUrl': ulink,
-        'auth': config.googleUrl
+        'auth': config.googleUrl,
+        'shortUrl': null
     }
     urlshortener.url.get(params, function(err, response) {
         if (err) {
             console.log('Encountered error', err);
-            messageSend(channelID, '@<' + userID + '> There was a error processing that url')
+            messageSend(channelID, '<@' + userID + '> There was a error processing that url')
         } else {
-            messageSend(channelID, '@<' + userID + '> Here is a short url:', response.id);
+            messageSend(channelID, '<@' + userID + '> Here is a short url:', response.id);
         }
     });
 }
