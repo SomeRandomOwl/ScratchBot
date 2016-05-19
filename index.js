@@ -646,7 +646,6 @@ function cat(channelID, name, sname) {
         storage.d.Servers[sname].Channels[name].lastCatActt = 0
     }
     try {
-        console.log('yes')
         lastcattime = storage.d.Servers[sname].Channels[name].lastCat
         elapsed = cattime - lastcattime
         nextTime = lastcattime + 3600
@@ -655,9 +654,7 @@ function cat(channelID, name, sname) {
         elapsed = secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         catacttime = storage.d.Servers[sname].Channels[name].lastCatActt
-        console.log("cat elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
-        console.log('no')
         storage.d.Servers[sname].Channels[name].lastCat = 0
         storage.d.Servers[sname].Channels[name].lastCatActt = 0
     }
@@ -687,7 +684,6 @@ function snake(channelID, name, sname, userID) {
         storage.d.Servers[sname].Channels[name].lastsnakeActt = 0
     }
     try {
-        console.log('yes')
         lastsnaketime = storage.d.Servers[sname].Channels[name].lastsnake
         elapsed = snaketime - lastsnaketime
         nextTime = lastsnaketime + 3600
@@ -696,9 +692,7 @@ function snake(channelID, name, sname, userID) {
         elapsed = secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         snakeacttime = storage.d.Servers[sname].Channels[name].lastsnakeActt
-        console.log("snake elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
-        console.log('no')
         storage.d.Servers[sname].Channels[name].lastsnake = 0
         storage.d.Servers[sname].Channels[name].lastsnakeActt = 0
     }
@@ -735,7 +729,6 @@ function pug(channelID, name, sname) {
         storage.d.Servers[sname].Channels[name].lastpugActt = 0
     }
     try {
-        console.log('yes')
         lastpugtime = storage.d.Servers[sname].Channels[name].lastpug
         elapsed = pugtime - lastpugtime
         nextTime = lastpugtime + 3600
@@ -744,9 +737,7 @@ function pug(channelID, name, sname) {
         elapsed = secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         pugacttime = storage.d.Servers[sname].Channels[name].lastpugActt
-        console.log("pug elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
-        console.log('no')
         storage.d.Servers[sname].Channels[name].lastpug = 0
         storage.d.Servers[sname].Channels[name].lastpugActt = 0
     }
