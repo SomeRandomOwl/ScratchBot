@@ -1122,9 +1122,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         error = true
     }
     try {
-        if (storage.d.Servers[sname].settings.verb) {
-            verb = true
-        }
+        verb = storage.d.Servers[sname].settings.verb
     } catch (e) {
         verb = false
         storage.d.Servers[sname].settings.verb = false
@@ -1615,7 +1613,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
             })
             try {
-                if (verb || cnaid === channelID || storage.d.Servers[sname].settings.verb) {
+                if (verb === true || cnaid === channelID || storage.d.Servers[sname].settings.verb === true) {
                     console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
                 }
             } catch (e) {
