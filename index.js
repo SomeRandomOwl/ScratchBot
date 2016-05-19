@@ -15,8 +15,11 @@ var chalk = require('chalk');
 var request = require('request');
 var mkdirp = require('mkdirp');
 var doc = require('./assets/doc.json')
-var cleverbot = require("cleverbot.io")
-    /*/Set up logging/*/
+    //var cleverbot = require("cleverbot.io")
+var Cleverbot = require('cleverbot-node');
+cleverbot = new Cleverbot;
+
+/*/Set up logging/*/
 var logger = new(winston.Logger)({
     transports: [
         new(winston.transports.Console)(),
@@ -58,8 +61,8 @@ if (fs.existsSync('./assets/storage.json') === false) {
     logger.info(chalk.underline.red('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
 /*/CleverBot/*/
-cBot = new cleverbot(config.cleverUser, config.cleverKey);
-cBot.setNick("sandbox.scratch")
+//cBot = new cleverbot(config.cleverUser, config.cleverKey);
+//cBot.setNick("sandbox.scratch")
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
 /*/Bot credentials/*/
@@ -821,13 +824,22 @@ function eightBall(channelID, question, userID) {
     messageSend(channelID, '<@' + userID + '> ' + resp)
 }
 /*/Ask cleverbot a question/*/
-function clever(channelID, question) {
-    cBot.ask(question, function(err, response) {
+function clever(channelID, msg) {
+    /*cBot.ask(question, function(err, response) {
         if (err) {
             console.log(err)
         } else {
             messageSend(channelID, response);
         }
+    });*/
+    Cleverbot.prepare(function() {
+        cleverbot.write(msg, function(response) {
+            try {
+                messageSend(channelID, "<@" + userID + ">: " + response.message)
+            } catch (err) {
+                //nothing
+            }
+        });
     });
 }
 /*/Unshortens urls/*/
