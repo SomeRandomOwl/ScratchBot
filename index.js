@@ -388,6 +388,8 @@ function messageSend(channelID, msg) {
                 continue
             }
         }
+    } catch (e) {
+        //
     }
     bot.sendMessage({
         to: channelID,
