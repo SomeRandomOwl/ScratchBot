@@ -903,7 +903,7 @@ function stats(channelID, name, rawEvent) {
     }
 }
 /*/Url shortener/*/
-function shorten(channelID, userID, ulink) {
+/*function shorten(channelID, userID, ulink) {
     params = {
         'longUrl': ulink,
         'key': config.googleUrl,
@@ -928,8 +928,8 @@ function shorten(channelID, userID, ulink) {
                 messageSend(channelID, '<@' + userID + '> There was a error processing that url')
             }
         }
-    })*/
-}
+    })
+}*/
 var startUpTime = null
     /* Bot on event functions */
 bot.on('ready', function() {
@@ -1469,11 +1469,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             });
             rconcmd = "Yes"
         }
-        if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('shorten') !== -1 && ignore !== true) {
+        /*if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('shorten') !== -1 && ignore !== true) {
             var lurl = message.substring(message.indexOf(' ') + 1)
             shorten(channelID, userID, lurl)
             rconcmd = "Yes"
-        }
+        }*/
         if (message.indexOf(commandmod) === 0 && message.toLowerCase().indexOf('clever') !== -1 && ignore !== true) {
             cleverr = message.substring(message.indexOf(' ') + 1)
             clever(channelID, userID, cleverr)
