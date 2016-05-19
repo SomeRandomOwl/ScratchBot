@@ -1718,6 +1718,12 @@ var rl = readline.createInterface({
     output: process.stdout,
     terminal: true
 });
+rl.setPrompt('Scratch> ');
+rl.prompt();
 rl.on('line', function(line) {
     consoleparse(line);
-})
+    rl.prompt();
+}).on('close', () => {
+    console.log('Have a great day!');
+    process.exit(0);
+});
