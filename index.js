@@ -926,6 +926,8 @@ function shorten(channelID, userID, ulink) {
                 console.log(body)
                 messageSend(channelID, '<@' + userID + '> There was a error processing that url')
             }
+        } else {
+            console.log(error)
         }
     })
 }
