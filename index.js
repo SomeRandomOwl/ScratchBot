@@ -1278,10 +1278,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         e = e
     }
     //function to quick call message sending to minimize code
-    function msgT(msg, cb) {
-
+    function msgT(msg, cb, type) {
         if (cb === true) {
-            msg = '```' + msg + '```'
+            if (type !== undefined) {
+                msg = '```' + type + '\n' + msg + '```'
+            } else {
+                msg = '```' + msg + '```'
+            }
         }
         bot.sendMessage({
             to: channelID,
