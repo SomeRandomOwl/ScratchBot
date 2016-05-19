@@ -1614,8 +1614,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mkdirp('./logs/' + servern, function(err) {
                 fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
             })
-            if (verb || cnaid === channelID) {
-                console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
+            try {
+                if (verb || cnaid === channelID || storage.d.Servers.settings[sname].verb) {
+                    console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
+                }
+            }
+            catche(e) {
+                //do nothing
             }
         }
     } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes" && ignore !== true) {
@@ -1633,5 +1638,6 @@ var rl = readline.createInterface({
     terminal: true
 });
 rl.on('line', function(line) {
-    consoleparse(line);
+        consoleparse(line);
+    ]
 })
