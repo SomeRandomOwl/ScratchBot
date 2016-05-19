@@ -1643,10 +1643,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     eval(jscall)
                 } catch (e) {
                     logger.error(chalk.red("Bad JS Command " + e))
-                    messgnt("Err...I'm sorry...that results in a error")
+                    messageSend(channelID, "Err...I'm sorry...that results in a error")
                 }
             } else {
-                messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
+                messageSend(channelID, '<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
             }
             rconcmd = 'Yes'
         } else if (rconcmd === 'no') {
