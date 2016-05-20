@@ -1621,7 +1621,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
         }
         if (message.toLowerCase().indexOf('announce') === 0 && ignore !== true) {
-            if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
+            if (userID.indexOf(SownerId) === 0) {
                 if (storage.d.Servers[sname].settings.announceChan === null || storage.d.Servers[sname].settings.announceChan === undefined) {
                     try {
                         storage.d.Servers[sname].settings.announceChan = channelID
