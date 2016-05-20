@@ -993,13 +993,11 @@ bot.on('debug', function(rawEvent) {
         var channelID = rawEvent.d.id
         var type = rawEvent.d.type
         var sname = rawEvent.d.guild_id
-        if (storage.d.Servers[sname].Channels[name] === undefined) {
-            storage.d.Servers[sname].Channels[name] = {
+        storage.d.Servers[sname].Channels[name] = {
                 "id": channelID,
                 "type": type,
                 "messageCnt": 0,
             }
-        }
     }
     if (rawEvent.t === "CHANNEL_UPDATE") {
         sname = bot.servers[rawEvent.d.guild_id].name
