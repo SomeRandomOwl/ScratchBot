@@ -392,9 +392,9 @@ function messageSend(channelID, msg, cb, type) {
     }
     if (cb === true) {
         if (type !== undefined) {
-            msg = '```' + type + '\n' + msg + '```'
+            msg = '\n```' + type + '\n' + msg + '```'
         } else {
-            msg = '```' + msg + '```'
+            msg = '\n```' + msg + '```'
         }
     }
     bot.sendMessage({
