@@ -341,7 +341,7 @@ function yt(ytcall, userID, channelID) {
                         description = description.replace('https://', '')
                     }
 
-                    messageSend(channelID, '\nHere is the result for: ' + ytcall + ';\n\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo: https://youtu.be/' + result.items[0].id.videoId + ';', true, 'css')
+                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo: https://youtu.be/' + result.items[0].id.videoId + ';', true, 'css')
                 } else if (result.items[0].id.kind === 'youtube#channel') {
                     while (result.items[0].id.kind === 'youtube#video') {
                         var description = result.items[0].snippet.description
@@ -350,7 +350,7 @@ function yt(ytcall, userID, channelID) {
                             description = description.replace('https://', '')
                         }
                     }
-                    messageSend(channelID, '\nHere is the result for: ' + ytcall + ';\n\nTitle: ' + result.items[0].snippet.title + ';\nDescription: ' + description + ';\nChannel: https://www.youtube.com/channel/' + result.items[0].id.channelId + ';', true, 'css')
+                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\nDescription: ' + description + ';\nChannel: https://www.youtube.com/channel/' + result.items[0].id.channelId + ';', true, 'css')
                 } else if (result.items[0].id.kind === 'youtube#playlist') {
                     if (result.items[0].id.kind === 'youtube#video') {
                         var description = result.items[0].snippet.description
@@ -359,7 +359,7 @@ function yt(ytcall, userID, channelID) {
                             description = description.replace('https://', '')
                         }
                     }
-                    messageSend(channelID, '\nHere is the result for: ' + ytcall + ';\n\nTitle: ' + result.items[0].snippet.title + ';\nDescription: ' + description + ';\nPlaylist: https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ';', true, 'css')
+                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\nDescription: ' + description + ';\nPlaylist: https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ';', true, 'css')
                 } else {
                     messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
                 }
@@ -1470,10 +1470,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var ytcmd = message
             var ytcall = ytcmd.replace('yt ', '')
             yt(ytcall, userID, channelID)
-            bot.deleteMessage({
-                channel: channelID,
-                messageID: messageID
-            });
             rconcmd = "Yes"
         }
         /*if (message.toLowerCase().indexOf('shorten') === 0 && ignore !== true) {
