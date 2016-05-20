@@ -917,7 +917,7 @@ function whoIs(channelID, serverID, name) {
             userN = body.username
             discriminator = body.discriminator
             avatar = body.avatar
-            bot = body.bot
+            botT = body.bot
 
             if (roles.length !== 0) {
                 rolesm = 'everyone, '
