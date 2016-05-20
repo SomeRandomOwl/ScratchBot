@@ -862,8 +862,9 @@ function unShorten(channelID, userID, url) {
         request('http://api.unshorten.it?shortURL=' + url + '&responseFormat=json&return=both&apiKey=' + config.unShorten, function(error, response, body) {
             body = JSON.parse(body)
             console.log(body)
-            messageSend(channelID, '<@' + userID + '> The url you gave leads to: ' + body.domain + ' And more specifically this page: ' + body.fullurl)
-            if (error) {
+            if (body.domain !== undefined) {
+                messageSend(channelID, '<@' + userID + '> The url you gave leads to: ' + body.domain + ' And more specifically this page: ' + body.fullurl)
+            } else if (body.error !== undefined) {
                 messageSend(channelID, '<@' + userID + '> invalid url!')
             }
         })
@@ -1708,6 +1709,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('us') === 0 && ignore !== true) {
             var uri = message.substring(message.indexOf(' ') + 1)
             unShorten(channelID, userID, uri)
+            rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('invite') === 0 && ignore !== true) {
             messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \nIf you dont trust short urls use the following command to unshorten it: " + commandmod + "us https://goo.gl/IppQQT \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
