@@ -1799,7 +1799,8 @@ var rl = readline.createInterface({
 rl.setPrompt('Scratch> ');
 setTimeout(function() {
     rl.prompt();
-}, 2000) rl.on('line', function(line) {
+}, 2000)
+rl.on('line', function(line) {
     consoleparse(line);
     setTimeout(function() {
         rl.prompt();
