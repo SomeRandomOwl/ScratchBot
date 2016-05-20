@@ -987,7 +987,7 @@ function whoIs(channelID, serverID, name) {
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
-        deleteMessage(channelID, messageID)
+        messageDelete(channelID, messageID)
         body = JSON.parse(body)
         if (debug) {
             messageSend(channelID, JSON.stringify(body, null, '\t'), true, 'json')
