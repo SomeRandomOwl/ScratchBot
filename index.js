@@ -902,6 +902,86 @@ function stats(channelID, name, rawEvent) {
         messageSend(channelID, "Error; No User specified, or invalid user")
     }
 }
+/*/WhoIs/*/
+function whoIs(channelID, serverID, name) {
+    userID = storage.d.Users[name].id
+    roles = bot.servers[serverID].members[userID].roles
+    nick = bot.servers[serverID].members[userID].nick
+    mute = bot.servers[serverID].members[userID].mute
+    deaf = bot.servers[serverID].members[userID].deaf
+    join = bot.servers[serverID].members[userID].joined_at
+    status = bot.servers[serverID].members[userID].status
+    request('https://discordapp.com/api/users/' + userID + '?token=' + config.token, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                body = JSON.parse(body)
+                userN = body.username
+                discriminator = body.discriminator
+                avatar = body.avatar
+                bot = body.bot
+
+                if (roles.length !== 0) {
+                    rolesm = 'everyone, '
+                    for (var i = 0; i < roles.length; i++) {
+                        if (i !== roles.length - 1) {
+                            rolesm = rolesm + roles[i] + ', '
+                        } else {
+                            rolesm = rolesm + roles[i]
+                        }
+                    }
+                } else {
+                    rolesm = 'everyone'
+                }
+
+                if (nick !== undefined) {
+                    if (bot === undefined) {
+                        message = 'Name: ' + userN + '#' + discriminator + ';\n' +
+                            'Nick: ' + nick + ';\n' +
+                            'ID: ' + userID + ';\n\n' +
+                            'Status: ' + status + ';\n' +
+                            'Roles: ' + roles + ';\n' +
+                            'Muted: ' + mute + ';\n' +
+                            'Deafened: ' + deaf + ';\n\n' +
+                            'Joined: ' + join + ';\n' +
+                            'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
+                    } else {
+                        message = 'Name: ' + userN + '#' + discriminator + ';\n' +
+                            'Nick: ' + nick + ';\n' +
+                            'ID: ' + userID + ';\n\n' +
+                            'Status: ' + status + ';\n' +
+                            'Bot: ' + bot + ';\n' +
+                            'Roles: ' + roles + ';\n' +
+                            'Muted: ' + mute + ';\n' +
+                            'Deafened: ' + deaf + ';\n\n' +
+                            'Joined: ' + join + ';\n' +
+                            'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
+                    }
+                } else {
+                    if (bot === undefined) {
+                        message = 'Name: ' + userN + '#' + discriminator + ';\n' +
+                            'ID: ' + userID + ';\n\n' +
+                            'Status: ' + status + ';\n' +
+                            'Roles: ' + roles + ';\n' +
+                            'Muted: ' + mute + ';\n' +
+                            'Deafened: ' + deaf + ';\n\n' +
+                            'Joined: ' + join + ';\n' +
+                            'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
+                    } else {
+                        message = 'Name: ' + userN + '#' + discriminator + ';\n' +
+                            'ID: ' + userID + ';\n\n' +
+                            'Status: ' + status + ';\n' +
+                            'Bot: ' + bot + ';\n' +
+                            'Roles: ' + roles + ';\n' +
+                            'Muted: ' + mute + ';\n' +
+                            'Deafened: ' + deaf + ';\n\n' +
+                            'Joined: ' + join + ';\n' +
+                            'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
+                    }
+                }
+                messageSend(channelID, message, true, 'css')
+            }
+        }
+    })
+}
 /*/Url shortener/*/
 /*function shorten(channelID, userID, ulink) {
     params = {
@@ -1719,8 +1799,7 @@ var rl = readline.createInterface({
 rl.setPrompt('Scratch> ');
 setTimeout(function() {
     rl.prompt();
-}, 2000)
-rl.on('line', function(line) {
+}, 2000) rl.on('line', function(line) {
     consoleparse(line);
     setTimeout(function() {
         rl.prompt();
