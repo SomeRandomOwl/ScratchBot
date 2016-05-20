@@ -932,6 +932,8 @@ function whoIs(channelID, serverID, name) {
                 rolesm = 'everyone'
             }
 
+            avatar = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
+
             if (nick !== undefined) {
                 if (bot === undefined) {
                     message = 'Name: ' + userN + '#' + discriminator + ';\n' +
@@ -983,33 +985,27 @@ function whoIs(channelID, serverID, name) {
 }
 
 /*/Url shortener/*/
-/*function shorten(channelID, userID, ulink) {
-    params = {
-        'longUrl': ulink,
-        'key': config.googleUrl,
-        'shortUrl': ulink
-    }
-    urlshortener.url.get(params, function(err, response) {
-        if (err) {
-            console.log('Encountered error', err);
-            messageSend(channelID, '<@' + userID + '> There was a error processing that url')
+function shorten(cl, ulink, channelID, userID) {
+    request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
+        if (cl === false) {
+            if (!error && response.statusCode === 200) {
+                body = JSON.parse(body)
+                if (body.status_txt === 'OK') {
+                    messageSend(channelID, '<@' + userID + '> Here is a short url:', body.data.url)
+                } else {
+                    console.log(body)
+                    messageSend(channelID, '<@' + userID + '> There was a error processing that url')
+                }
+            }
         } else {
-            messageSend(channelID, '<@' + userID + '> Here is a short url:', response.id);
-        }
-    });
-    /*request('https://www.googleapis.com/urlshortener/v1/url?longUrl=' + ulink + '&key=' + config.googleUrl + '&Projection=FULL&shortUrl=' + ulink, function(error, response, body) {
-        console.log(body)
-        if (!error && response.statusCode === 200) {
-            body = JSON.parse(body)
-            if (body.status === 'OK') {
-                messageSend(channelID, '<@' + userID + '> Here is a short url:', body.id)
+            if (body.status_txt === 'OK') {
+                return body.data.url
             } else {
-                console.log(body)
-                messageSend(channelID, '<@' + userID + '> There was a error processing that url')
+                return body.status_txt
             }
         }
     })
-}*/
+}
 var startUpTime = null
     /* Bot on event functions */
 bot.on('ready', function() {
