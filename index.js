@@ -995,7 +995,7 @@ function shorten(cl, ulink, channelID, userID, debug) {
         if (cl === false) {
             if (!error && response.statusCode === 200) {
                 if (body.status_txt === 'OK') {
-                    messageSend(channelID, '<@' + userID + '> Here is a short url:' + body.data.url)
+                    messageSend(channelID, '<@' + userID + '> Here is a short url: ' + body.data.url)
                 } else {
                     console.log(body)
                     messageSend(channelID, '<@' + userID + '> There was a error processing that url')
