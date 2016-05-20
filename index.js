@@ -329,6 +329,7 @@ function uningoreC(cID) {
 /*/YouTube Search/*/
 function yt(ytcall, userID, channelID) {
     youTube.search(ytcall, 1, function(error, result) {
+        console.log(result.items)
         if (error) {
             logger.error(chalk.red(error));
         } else {
