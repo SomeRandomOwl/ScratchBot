@@ -992,7 +992,6 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
         if (debug) {
             messageSend(channelID, JSON.stringify(body, null, '\t'), true, 'json')
         }
-        console.log(body.data.url)
         if (cl === false) {
             if (!error && response.statusCode === 200) {
                 if (body.status_txt === 'OK') {
@@ -1550,7 +1549,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('shorten') === 0 && ignore !== true) {
             var lurl = message.substring(message.indexOf(' ') + 1)
-            shorten(false, lurl, channelID, userID)
+            shorten(false, lurl, channelID, userID, messageID)
             rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('clever') === 0 && ignore !== true) {
