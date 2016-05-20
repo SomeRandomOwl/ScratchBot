@@ -340,7 +340,7 @@ function yt(ytcall, userID, channelID) {
                         description = description.replace('https://', '')
                     }
 
-                    messageSend(channelID, '<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + description + '\nhttps://youtu.be/' + result.items[0].id.videoId)
+                    messageSend(channelID, '<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\n\nDescription: ' + description + '\nVideo: https://youtu.be/' + result.items[0].id.videoId, true, 'css')
                 } else if (result.items[0].id.kind === 'youtube#channel') {
                     while (result.items[0].id.kind === 'youtube#video') {
                         var description = result.items[0].snippet.description
@@ -349,7 +349,7 @@ function yt(ytcall, userID, channelID) {
                             description = description.replace('https://', '')
                         }
                     }
-                    messageSend(channelID, '<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + description + '\nhttps://www.youtube.com/channel/' + result.items[0].id.channelId)
+                    messageSend(channelID, '<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + description + '\nChannel: https://www.youtube.com/channel/' + result.items[0].id.channelId, true, 'css')
                 } else if (result.items[0].id.kind === 'youtube#playlist') {
                     if (result.items[0].id.kind === 'youtube#video') {
                         var description = result.items[0].snippet.description
@@ -358,7 +358,7 @@ function yt(ytcall, userID, channelID) {
                             description = description.replace('https://', '')
                         }
                     }
-                    messageSend(channelID, '<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + description + '\nhttps://www.youtube.com/playlist?list=' + result.items[0].id.playlistId)
+                    messageSend(channelID, '<@' + userID + '> \nHere is the result for: ' + ytcall + '\n\nTitle: ' + result.items[0].snippet.title + '\nDescription: ' + description + '\nPlaylist: https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId, true, 'css')
                 } else {
                     messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
                 }
@@ -378,7 +378,7 @@ function statusmsg(msg) {
     })
 }
 /*/Used to send messages and keep tack of the message id/*/
-function messageSend(channelID, msg, cb) {
+function messageSend(channelID, msg, cb, type) {
     try {
         sId = bot.serverFromChannel(channelID)
         for (var sname in storage.d.Servers) {
@@ -394,7 +394,11 @@ function messageSend(channelID, msg, cb) {
         //
     }
     if (cb === true) {
-        msg = '```' + msg + '```'
+        if (type !== undefined) {
+            msg = '```' + type + '\n' + msg + '```'
+        } else {
+            msg = '```' + msg + '```'
+        }
     }
     bot.sendMessage({
         to: channelID,
