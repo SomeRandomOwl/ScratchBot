@@ -1002,7 +1002,7 @@ function shorten(cl, ulink, channelID, userID, debug) {
             }
         } else {
             if (body.status_txt === 'OK') {
-                return body.data.url
+                return body
             } else {
                 return body.status_txt
             }
