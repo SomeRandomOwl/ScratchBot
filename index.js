@@ -1543,11 +1543,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             yt(ytcall, userID, channelID)
             rconcmd = "Yes"
         }
-        /*if (message.toLowerCase().indexOf('shorten') === 0 && ignore !== true) {
+        if (message.toLowerCase().indexOf('shorten') === 0 && ignore !== true) {
             var lurl = message.substring(message.indexOf(' ') + 1)
-            shorten(channelID, userID, lurl)
+            shorten(false, lurl, channelID, userID)
             rconcmd = "Yes"
-        }*/
+        }
         if (message.toLowerCase().indexOf('clever') === 0 && ignore !== true) {
             cleverr = message.substring(message.indexOf(' ') + 1)
             clever(channelID, userID, cleverr)
