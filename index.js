@@ -329,7 +329,6 @@ function uningoreC(cID) {
 /*/YouTube Search/*/
 function yt(ytcall, userID, channelID) {
     youTube.search(ytcall, 1, function(error, result) {
-        console.log(result.items[0].snippet)
         if (error) {
             logger.error(chalk.red(error));
         } else {
@@ -392,9 +391,9 @@ function messageSend(channelID, msg, cb, type) {
     }
     if (cb === true) {
         if (type !== undefined) {
-            msg = '\n```' + type + '\n' + msg + '```'
+            msg = '\n\n```' + type + '\n' + msg + '```'
         } else {
-            msg = '\n```' + msg + '```'
+            msg = '\n\n```' + msg + '```'
         }
     }
     bot.sendMessage({
@@ -1280,9 +1279,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     function msgT(msg, cb, type) {
         if (cb === true) {
             if (type !== undefined) {
-                msg = '```' + type + '\n' + msg + '```'
+                msg = '\n\n```' + type + '\n' + msg + '```'
             } else {
-                msg = '```' + msg + '```'
+                msg = '\n\n```' + msg + '```'
             }
         }
         bot.sendMessage({
