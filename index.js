@@ -988,7 +988,7 @@ function whoIs(channelID, serverID, name) {
 function shorten(cl, ulink, channelID, userID, debug) {
     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
         if (debug) {
-            messageSend(channelID, 'Debug!:\n\n' + body, true, 'json')
+            messageSend(channelID, JSON.stringify(body, null, '\t'), true, 'json')
         }
         if (cl === false) {
             if (!error && response.statusCode === 200) {
