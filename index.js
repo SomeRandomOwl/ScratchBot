@@ -939,7 +939,7 @@ bot.on('ready', function() {
     channellist(false, true)
     userlist(false, true)
     logger.info(chalk.magenta(bot.username + " - (" + bot.id + ")" + " Is now running"))
-    statusmsg("Discord")
+    statusmsg("help | info | commands")
 });
 bot.on('debug', function(rawEvent) {
     try {
