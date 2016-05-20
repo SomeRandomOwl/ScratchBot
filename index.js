@@ -329,7 +329,7 @@ function uningoreC(cID) {
 /*/YouTube Search/*/
 function yt(ytcall, userID, channelID) {
     youTube.search(ytcall, 1, function(error, result) {
-        console.log(result.items)
+        console.log(result.items[0].snippet)
         if (error) {
             logger.error(chalk.red(error));
         } else {
@@ -348,14 +348,14 @@ function yt(ytcall, userID, channelID) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\nDescription: ' + description + ';\nChannel: https://www.youtube.com/channel/' + result.items[0].id.channelId + ';', true, 'css')
+                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nChannel: https://www.youtube.com/channel/' + result.items[0].id.channelId + ';', true, 'css')
                 } else if (result.items[0].id.kind === 'youtube#playlist') {
                     var description = result.items[0].snippet.description
                     while (description.indexOf('http') !== -1) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\nDescription: ' + description + ';\nPlaylist: https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ';', true, 'css')
+                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nPlaylist: https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ';', true, 'css')
                 } else {
                     messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
                 }
