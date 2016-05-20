@@ -343,16 +343,16 @@ function yt(ytcall, userID, channelID) {
 
                     messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo: https://youtu.be/' + result.items[0].id.videoId + ';', true, 'css')
                 } else if (result.items[0].id.kind === 'youtube#channel') {
-                    while (result.items[0].id.kind === 'youtube#video') {
+                    if (description.indexOf('http') !== -1) {
                         var description = result.items[0].snippet.description
-                        if (description.indexOf('http') !== -1) {
+                        while (description.indexOf('http') !== -1) {
                             description = description.replace('http://', '')
                             description = description.replace('https://', '')
                         }
                     }
                     messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\nDescription: ' + description + ';\nChannel: https://www.youtube.com/channel/' + result.items[0].id.channelId + ';', true, 'css')
                 } else if (result.items[0].id.kind === 'youtube#playlist') {
-                    if (result.items[0].id.kind === 'youtube#video') {
+                    if (description.indexOf('http') !== -1) {
                         var description = result.items[0].snippet.description
                         while (description.indexOf('http') !== -1) {
                             description = description.replace('http://', '')
