@@ -994,10 +994,10 @@ bot.on('debug', function(rawEvent) {
         var type = rawEvent.d.type
         var sname = rawEvent.d.guild_id
         storage.d.Servers[sname].Channels[name] = {
-                "id": channelID,
-                "type": type,
-                "messageCnt": 0,
-            }
+            "id": channelID,
+            "type": type,
+            "messageCnt": 0,
+        }
     }
     if (rawEvent.t === "CHANNEL_UPDATE") {
         sname = bot.servers[rawEvent.d.guild_id].name
@@ -1733,7 +1733,6 @@ rl.on('line', function(line) {
     console.log('Have a great day!');
     process.exit(0);
 }).on('SIGINT', () => {
-    rl.question('Are you sure you want to exit?', (answer) => {
-        if (answer.match(/^y(es)?$/i)) rl.pause();
-    });
+    bot.disconnect()
+    process.exit(0);
 });
