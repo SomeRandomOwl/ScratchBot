@@ -1471,7 +1471,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('stats') === 0 && ignore !== true) {
             var len = message.length
             var name = message.substring(message.indexOf(' ') + 1)
-            if (len === 6) {
+            if (len === 5) {
                 try {
                     messageSend(channelID, "Your current stats are: \n\n" +
                         "```Messages Sent: " + storage.d.Users[user].messageCnt +
@@ -1785,7 +1785,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 //do nothing
             }
         }
-    } else if (userID.indexOf('104867073343127552') != 0 || channelID.indexOf('164845697508704257') != 0 && rconcmd === "Yes" && ignore !== true) {
+    } else if (rconcmd === "Yes" && ignore !== true) {
         if (ignore !== true) {
             logger.info(chalk.gray('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
         }
