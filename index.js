@@ -1385,7 +1385,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var error = null
     }
     //This tests for commands using the command mod set in the config
-    if (message.indexOf(commandmod) !== -1) {
+    if (message.indexOf(commandmod) === 0) {
         message = message.replace(commandmod, '')
         if (message.toLowerCase().indexOf('ping') === 0 && ignore !== true) {
             messageSend(channelID, 'pong')
@@ -1769,7 +1769,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
         timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
         if (channelID in bot.directMessages) {
-            console.log(timed + 'Channel: ' + 'DM | ' + user + ': ' + message)
+            console.log(timed + 'Channel: ' + 'DM |\n ' + user + ': ' + message)
             fs.appendFile("logs/DMs" + user + ".txt", '\n' + timed + user + ": " + message)
         } else {
             servern = bot.servers[serverID].name
@@ -1779,7 +1779,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
             try {
                 if (verb === true || cnaid === channelID || storage.d.Servers[sname].settings.verb === true) {
-                    console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
+                    console.log(timed + 'Channel: ' + servern + '/' + channeln + ' |\n' + user + ': ' + message)
                 }
             } catch (e) {
                 //do nothing
@@ -1787,7 +1787,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     } else if (rconcmd === "Yes" && ignore !== true) {
         if (ignore !== true) {
-            logger.info(chalk.gray('Last Message User: ' + user + ' | IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
+            logger.info(chalk.gray('Last Message User: ' + user + ' |\nIDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
         }
     }
 });
@@ -1811,7 +1811,4 @@ rl.on('line', function(line) {
 }).on('close', () => {
     console.log('Have a great day!');
     process.exit(0);
-}).on('SIGINT', () => {
-    bot.disconnect()
-    process.exit(0);
-});
+})
