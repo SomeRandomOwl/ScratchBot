@@ -1779,7 +1779,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
             try {
                 if (verb === true || cnaid === channelID || storage.d.Servers[sname].settings.verb === true) {
-                    console.log(timed + 'Channel: ' + servern + '/' + channeln + ' | ' + user + ': ' + message)
+                    console.log(chalk.gray(timed) + 'Channel: ' + chalk.blue(servern + '/' + channeln) + ' | ' + chalk.cyan(user + ': ') + message)
                 }
             } catch (e) {
                 //do nothing
@@ -1799,7 +1799,7 @@ var rl = readline.createInterface({
     output: process.stdout,
     terminal: true
 });
-rl.setPrompt('Scratch> ');
+rl.setPrompt(chalk.magenta('Scratch> ');
 setTimeout(function() {
     rl.prompt();
 }, 2000)
