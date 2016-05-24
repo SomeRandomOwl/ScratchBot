@@ -1028,6 +1028,12 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
         }
     })
 }
+/*/Title Case/*/
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
 /*/Word!/*/
 function wordNik(cl, channelID, userID, word, type, debug) {
     if (type === 'def') {
@@ -1055,7 +1061,7 @@ function wordNik(cl, channelID, userID, word, type, debug) {
             }
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
-                    messageSend(channelID, 'Word: ' + body.word.toUpperCase() + ';\n\n' +
+                    messageSend(channelID, 'Word: ' + body.word.toSentanceCase() + ';\n\n' +
                         'Part of Speech: ' + body.definitions[0].partOfSpeech + ';\n' +
                         'Definition: ' + body.definitions[0].text + ';\n\n' +
                         'Example useage: ' + body.examples[0].text + ';\n' +
