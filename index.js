@@ -1830,7 +1830,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.indexOf(': ') !== -1) {
             nme = message.substring(0, message.indexOf(': '))
             nme = toSentenceCase(nme)
-            said = message.substring(message.indexOf(': '))
+            said = message.substring(message.indexOf(': ') + 2)
             said = toSentenceCase(said)
             message = nme + ': ' + said
         }
