@@ -1821,8 +1821,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     if (channelID === '164845697508704257') {
         if (message.indexOf('#') !== -1) {
-            for (message.indexOf('#') !== -1) {
+            pound = 0
+            for (pound !== -1) {
                 message = message.replace('#', '')
+                pound = message.indexOf('#')
             }
             message = '######' + toSentenceCase(message) + '######'
         }
