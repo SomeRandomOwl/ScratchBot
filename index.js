@@ -1778,7 +1778,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
             try {
                 if (verb === true || cnaid === channelID || storage.d.Servers[sname].settings.verb === true) {
-                    console.log(chalk.gray(timed) + 'Channel: ' + chalk.blue(servern + '/' + channeln) + ' | \n' + chalk.cyan(user + ': ') + message)
+                    console.log('\n' + timed + 'Channel: ' + chalk.blue(servern + '/' + channeln) + ' |\n' + chalk.cyan(user + ': ') + message)
                 }
             } catch (e) {
                 //do nothing
