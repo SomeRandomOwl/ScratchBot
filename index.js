@@ -1015,7 +1015,7 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
     })
 }
 /*/Word!/*/
-function word(cl, channelID, userID, word, type, debug) {
+function wordNik(cl, channelID, userID, word, type, debug) {
     if (type === 'def') {
         request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&sourceDictionaries=webster&api_key=' + config.wordNik, function(error, response, body) {
             body = JSON.parse(body)
@@ -1748,10 +1748,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('word') === 0) {
             if (message.toLowerCase().indexOf('wotd') !== 0) {
-                word(false, channelID, userID, null, 'wotd', false)
+                wordNik(false, channelID, userID, null, 'wotd', false)
             } else {
                 var word = message.substring(message.indexOf(' ') + 1)
-                word(false, channelID, userID, word, 'def', false)
+                wordNik(false, channelID, userID, word, 'def', false)
             }
         }
         if (message.toLowerCase().indexOf('uptime') === 0 && ignore !== true) {
