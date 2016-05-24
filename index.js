@@ -1035,7 +1035,7 @@ function toTitleCase(str) {
     });
 }
 /*/Sentance Case/*/
-function toSentanceCase(string) {
+function toSentaceCase(string) {
     var n = string.split(".");
     var vfinal = ""
     for (i = 0; i < n.length; i++) {
