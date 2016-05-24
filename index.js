@@ -391,6 +391,9 @@ function messageSend(channelID, msg, cb, type) {
     }
     if (cb === true) {
         if (type !== undefined) {
+            if (type === 'json') {
+                msg = JSON.stringify(msg, null, '\t')
+            }
             msg = '\n\n```' + type + '\n' + msg + '```'
         } else {
             msg = '\n\n```' + msg + '```'
@@ -991,7 +994,7 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
         messageDelete(channelID, messageID)
         body = JSON.parse(body)
         if (debug) {
-            messageSend(channelID, JSON.stringify(body, null, '\t'), true, 'json')
+            messageSend(channelID, body, true, 'json')
         }
         if (cl === false) {
             if (!error && response.statusCode === 200) {
@@ -1010,6 +1013,46 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
             }
         }
     })
+}
+/*/Word!/*/
+function word(cl, channelID, userID, word, type, debug) {
+    if (type === 'def') {
+        request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&sourceDictionaries=webster&api_key=' + config.wordNik, function(error, response, body) {
+            body = JSON.parse(body)
+            if (debug) {
+                messageSend(channelID, body, true, 'json')
+            }
+            if (cl === false) {
+                if (!error && response.statusCode === 200) {
+                    messageSend(channelID, '<@' + userID + '>\nWord:' + body[0].word.toUpperCase() + ';\n\n' +
+                        'Part of Speech:' + body[0].partOfSpeech + ';\n' +
+                        'Definition:' + body[0].text + ';\n\n' +
+                        'Example useage: ' + body[0].exampleUses[0].text + ';', true, 'css')
+                }
+            } else {
+                return body
+            }
+        })
+    } else if (type === 'wotd') {
+        request('http://api.wordnik.com:80/v4/words.json/wordOfTheDay?api_key=' + config.wordNik, function(error, response, body) {
+            body = JSON.parse(body)
+            if (debug) {
+                messageSend(channelID, body, true, 'json')
+            }
+            if (cl === false) {
+                if (!error && response.statusCode === 200) {
+                    messageSend(channelID, '<@' + userID + '>\nWord:' + body.word.toUpperCase() + ';\n\n' +
+                        'Part of Speech:' + body.definitions[0].partOfSpeech + ';\n' +
+                        'Definition:' + body.definitions[0].text + ';\n\n' +
+                        'Example useage: ' + body.examples[0].text + ';\n' +
+                        'Cited from:' + body.examples[0].title + ';\n\n' +
+                        'Url:' + body.examples[0].url + ';', true, 'css')
+                }
+            } else {
+                return body
+            }
+        })
+    }
 }
 var startUpTime = null
     /* Bot on event functions */
@@ -1359,6 +1402,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     //function to quick call message sending to minimize code
     function msgT(msg, cb, type) {
         if (cb === true) {
+            if (type === 'json') {
+                msg = JSON.stringify(msg, null, '\t')
+            }
             if (type !== undefined) {
                 msg = '\n\n```' + type + '\n' + msg + '```'
             } else {
@@ -1699,6 +1745,14 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
             }
             rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('word') === 0) {
+            if (message.toLowerCase().indexOf('wotd') !== 0) {
+                word(false, channelID, userID, null, 'wotd', false)
+            } else {
+                var word = message.substring(message.indexOf(' ') + 1)
+                word(false, channelID, userID, word, 'def', false)
+            }
         }
         if (message.toLowerCase().indexOf('uptime') === 0 && ignore !== true) {
             time = secondsToTime(gettime() - startUpTime)
