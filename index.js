@@ -1035,7 +1035,7 @@ function toTitleCase(str) {
     });
 }
 /*/Sentance Case/*/
-function toSentaceCase(string) {
+function toSentenceCase(string) {
     var n = string.split(".");
     var vfinal = ""
     for (i = 0; i < n.length; i++) {
@@ -1060,7 +1060,7 @@ function wordNik(cl, channelID, userID, word, type, debug) {
             }
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
-                    messageSend(channelID, 'Word: ' + toSentaceCase(body[0].word) + ';\n\n' +
+                    messageSend(channelID, 'Word: ' + toSentenceCase(body[0].word) + ';\n\n' +
                         'PartofSpeech: ' + body[0].partOfSpeech + ';\n' +
                         'Definition: ' + body[0].text + ';', true, 'css', true, userID)
                 }
@@ -1076,7 +1076,7 @@ function wordNik(cl, channelID, userID, word, type, debug) {
             }
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
-                    messageSend(channelID, 'Word: ' + toSentaceCase(body.word) + ';\n\n' +
+                    messageSend(channelID, 'Word: ' + toSentenceCase(body.word) + ';\n\n' +
                         'Part of Speech: ' + body.definitions[0].partOfSpeech + ';\n' +
                         'Definition: ' + body.definitions[0].text + ';\n\n' +
                         'Example useage: ' + body.examples[0].text + ';\n' +
@@ -1820,6 +1820,19 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     }
     if (channelID === '164845697508704257') {
+        if (message.indexOf('#') !== -1) {
+            for (message.indexOf('#') !== -1) {
+                message = message.replace('#', '')
+            }
+            message = '######' + toSentenceCase(message) + '######'
+        }
+        if (message.indexOf(': ') !== -1) {
+            nme = message.substring(0, message.indexOf(': '))
+            nme = toSentenceCase(nme)
+            said = message.substring(message.indexOf(': '))
+            said = toSentenceCase(said)
+            message = nme + ': ' + said
+        }
         console.log(chalk.gray(message))
         fs.appendFile("logs/space.txt", '\n\n' + message)
         story.space(message, {
