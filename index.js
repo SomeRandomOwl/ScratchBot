@@ -985,7 +985,6 @@ function whoIs(channelID, serverID, name) {
         }
     })
 }
-
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
@@ -1433,10 +1432,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var mathcmd = message
             var mathcall = mathcmd.replace('math ', '')
             try {
-                messgnt('<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
+                messageSend(channelID, '<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
             } catch (e) {
                 logger.error("Bad Math Command " + mathcall + " | " + e)
-                messgnt("Sorry I'm unable to run that")
+                messageSend(channelID, "Sorry I'm unable to run that")
             }
             rconcmd = "Yes"
         }
