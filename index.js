@@ -1052,8 +1052,9 @@ function toSentaceCase(string) {
 }
 /*/Word!/*/
 function wordNik(cl, channelID, userID, word, type, debug) {
+    console.log(word)
     if (type === 'def') {
-        request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&sourceDictionaries=webster&api_key=' + config.wordNik, function(error, response, body) {
+        request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&includeRelated=false&sourceDictionaries=webster&useCanonical=false&includeTags=false&api_key=' + config.wordNik, function(error, response, body) {
             body = JSON.parse(body)
             console.log(body)
             if (debug) {
