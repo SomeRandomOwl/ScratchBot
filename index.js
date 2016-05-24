@@ -1821,7 +1821,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     if (channelID === '164845697508704257') {
         if (message.indexOf('#') !== -1) {
-            for (var pound = 0; pound > -1) {
+            for (var pound = 0; pound > -1;) {
                 message = message.replace('#', '')
                 pound = message.indexOf('#')
             }
