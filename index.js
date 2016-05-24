@@ -374,7 +374,7 @@ function statusmsg(msg) {
     })
 }
 /*/Used to send messages and keep tack of the message id/*/
-function messageSend(channelID, msg, cb, type) {
+function messageSend(channelID, msg, cb, type, mention, userID) {
     try {
         sId = bot.serverFromChannel(channelID)
         for (var sname in storage.d.Servers) {
@@ -389,14 +389,28 @@ function messageSend(channelID, msg, cb, type) {
     } catch (e) {
         //
     }
+    if (mention === true && cb === false) {
+        msg = msg + '<@' + userID + '>\n'
+    }
     if (cb === true) {
         if (type !== undefined) {
-            if (type === 'json') {
-                msg = JSON.stringify(msg, null, '\t')
+            if (mention === true) {
+                if (type === 'json') {
+                    msg = JSON.stringify(msg, null, '\t')
+                }
+                msg = '<@' + userID + '>\n\n```' + type + '\n' + msg + '```'
+            } else {
+                if (type === 'json') {
+                    msg = JSON.stringify(msg, null, '\t')
+                }
+                msg = '\n\n```' + type + '\n' + msg + '```'
             }
-            msg = '\n\n```' + type + '\n' + msg + '```'
         } else {
-            msg = '\n\n```' + msg + '```'
+            if (mention === true) {
+                msg = '<@' + userID + '>\n\n```' + msg + '```'
+            } else {
+                msg = '\n\n```' + msg + '```'
+            }
         }
     }
     bot.sendMessage({
@@ -1020,14 +1034,14 @@ function wordNik(cl, channelID, userID, word, type, debug) {
         request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&sourceDictionaries=webster&api_key=' + config.wordNik, function(error, response, body) {
             body = JSON.parse(body)
             if (debug) {
-                messageSend(channelID, body, true, 'json')
+                messageSend(channelID, body, true, 'json', true, userID)
             }
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
-                    messageSend(channelID, '<@' + userID + '>\nWord:' + body[0].word.toUpperCase() + ';\n\n' +
-                        'Part of Speech:' + body[0].partOfSpeech + ';\n' +
-                        'Definition:' + body[0].text + ';\n\n' +
-                        'Example useage: ' + body[0].exampleUses[0].text + ';', true, 'css')
+                    messageSend(channelID, 'Word: ' + body[0].word.toUpperCase() + ';\n\n' +
+                        'Part of Speech: ' + body[0].partOfSpeech + ';\n' +
+                        'Definition :' + body[0].text + ';\n\n' +
+                        'Example useage : ' + body[0].exampleUses[0].text + ';', true, 'css', true, userID)
                 }
             } else {
                 return body
@@ -1046,7 +1060,7 @@ function wordNik(cl, channelID, userID, word, type, debug) {
                         'Definition:' + body.definitions[0].text + ';\n\n' +
                         'Example useage: ' + body.examples[0].text + ';\n' +
                         'Cited from:' + body.examples[0].title + ';\n\n' +
-                        'Url:' + body.examples[0].url + ';', true, 'css')
+                        'Url:' + body.examples[0].url + ';', true, 'css', true, userID)
                 }
             } else {
                 return body
