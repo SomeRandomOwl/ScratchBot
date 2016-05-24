@@ -1754,7 +1754,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else if (redditcmd.indexOf(' ') !== -1) {
                 redditScenery(channelID, redditcall.toLowerCase())
             } else {
-                messgnt("Ok heres a " + random + " related picture")
+                messageSend(channelID, "Ok heres a " + random + " related picture")
                 console.log('Random')
                 redditScenery(channelID, random)
             }
@@ -1777,7 +1777,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 }
             } else {
-                messgnt('<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
+                messageSend(channelID, '<@' + userID + "> You are not allowed to use this command")
             }
             rconcmd = 'Yes'
         }
