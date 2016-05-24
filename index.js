@@ -1055,12 +1055,12 @@ function wordNik(cl, channelID, userID, word, type, debug) {
             }
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
-                    messageSend(channelID, '<@' + userID + '>\nWord:' + body.word.toUpperCase() + ';\n\n' +
-                        'Part of Speech:' + body.definitions[0].partOfSpeech + ';\n' +
-                        'Definition:' + body.definitions[0].text + ';\n\n' +
+                    messageSend(channelID, 'Word: ' + body.word.toUpperCase() + ';\n\n' +
+                        'Part of Speech: ' + body.definitions[0].partOfSpeech + ';\n' +
+                        'Definition: ' + body.definitions[0].text + ';\n\n' +
                         'Example useage: ' + body.examples[0].text + ';\n' +
-                        'Cited from:' + body.examples[0].title + ';\n\n' +
-                        'Url:' + body.examples[0].url + ';', true, 'css', true, userID)
+                        'Cited from: ' + body.examples[0].title + ';\n\n' +
+                        'Url: ' + body.examples[0].url + ';', true, 'css', true, userID)
                 }
             } else {
                 return body
