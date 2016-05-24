@@ -1799,7 +1799,7 @@ var rl = readline.createInterface({
     output: process.stdout,
     terminal: true
 });
-rl.setPrompt(chalk.magenta('Scratch> ');
+rl.setPrompt(chalk.magenta('Scratch ') + '> ');
 setTimeout(function() {
     rl.prompt();
 }, 2000)
