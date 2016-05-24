@@ -1048,6 +1048,7 @@ function toSentanceCase(string) {
         vfinal = vfinal + spaceput + newstring + ".";
     }
     vfinal = vfinal.substring(0, vfinal.length - 1);
+    return vfinal
 }
 /*/Word!/*/
 function wordNik(cl, channelID, userID, word, type, debug) {
