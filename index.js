@@ -1783,7 +1783,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('word') === 0) {
-            if (message.toLowerCase().indexOf('wotd') !== 0) {
+            if (message.toLowerCase().indexOf('wotd') !== -1) {
                 wordNik(false, channelID, userID, null, 'wotd', false)
             } else {
                 var word = message.substring(message.indexOf(' ') + 1)
