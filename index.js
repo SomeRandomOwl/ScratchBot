@@ -1052,19 +1052,17 @@ function toSentaceCase(string) {
 }
 /*/Word!/*/
 function wordNik(cl, channelID, userID, word, type, debug) {
-    console.log('Word: ' + word)
     if (type === 'def') {
         request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&includeRelated=false&sourceDictionaries=all&useCanonical=false&includeTags=false&api_key=' + config.wordNik, function(error, response, body) {
             body = JSON.parse(body)
-            console.log(body)
             if (debug) {
                 messageSend(channelID, body, true, 'json', true, userID)
             }
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
                     messageSend(channelID, 'Word: ' + toSentaceCase(body[0].word) + ';\n\n' +
-                        'Part of Speech: ' + body[0].partOfSpeech + ';\n' +
-                        'Definition :' + body[0].text + ';', true, 'css', true, userID)
+                        'PartofSpeech: ' + body[0].partOfSpeech + ';\n' +
+                        'Definition:' + body[0].text + ';', true, 'css', true, userID)
                 }
             } else {
                 return body
