@@ -1059,10 +1059,14 @@ function wordNik(cl, channelID, userID, word, type, debug) {
                 messageSend(channelID, body, true, 'json', true, userID)
             }
             if (cl === false) {
-                if (!error && response.statusCode === 200) {
-                    messageSend(channelID, 'Word: ' + toSentenceCase(body[0].word) + ';\n\n' +
-                        'PartofSpeech: ' + body[0].partOfSpeech + ';\n' +
-                        'Definition: ' + body[0].text + ';', true, 'css', true, userID)
+                try {
+                    if (!error && response.statusCode === 200) {
+                        messageSend(channelID, 'Word: ' + toSentenceCase(body[0].word) + ';\n\n' +
+                            'PartofSpeech: ' + body[0].partOfSpeech + ';\n' +
+                            'Definition: ' + body[0].text + ';', true, 'css', true, userID)
+                    }
+                } catch (e) {
+                    messageSend(channelID, "Bad word!", false, null, true, userID)
                 }
             } else {
                 return body
