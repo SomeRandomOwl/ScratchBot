@@ -1071,16 +1071,21 @@ function wordNik(cl, channelID, userID, word, type, debug) {
     } else if (type === 'wotd') {
         request('http://api.wordnik.com:80/v4/words.json/wordOfTheDay?api_key=' + config.wordNik, function(error, response, body) {
             body = JSON.parse(body)
+            for (var semi = 0; semi > -1;) {
+                message = message.replace(';', '')
+                semi = message.indexOf(';')
+            }
             if (debug) {
                 messageSend(channelID, body, true, 'json')
             }
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
+
                     messageSend(channelID, 'Word: ' + toSentenceCase(body.word) + ';\n\n' +
-                        'Part of Speech: ' + body.definitions[0].partOfSpeech + ';\n' +
+                        'PartOfSpeech: ' + body.definitions[0].partOfSpeech + ';\n' +
                         'Definition: ' + body.definitions[0].text + ';\n\n' +
-                        'Example useage: ' + body.examples[0].text + ';\n' +
-                        'Cited from: ' + body.examples[0].title + ';\n\n' +
+                        'ExampleUseage: ' + body.examples[0].text + ';\n' +
+                        'CitedFrom: ' + body.examples[0].title + ';\n\n' +
                         'Url: ' + body.examples[0].url + ';', true, 'css', true, userID)
                 }
             } else {
