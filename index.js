@@ -1072,8 +1072,8 @@ function wordNik(cl, channelID, userID, word, type, debug) {
         request('http://api.wordnik.com:80/v4/words.json/wordOfTheDay?api_key=' + config.wordNik, function(error, response, body) {
             body = JSON.parse(body)
             for (var semi = 0; semi > -1;) {
-                message = message.replace(';', '')
-                semi = message.indexOf(';')
+                body.examples[0].text = body.examples[0].text.replace(';', '')
+                semi = body.examples[0].text.indexOf(';')
             }
             if (debug) {
                 messageSend(channelID, body, true, 'json')
