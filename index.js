@@ -1364,7 +1364,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         console.log(e)
     }*/
     //Logging Related
-    var re = new RegExp("^([a-z0-9]{20,})$")
+    /*var re = new RegExp("^([a-z0-9]{20,})$")
     if (re.test(message)) {
         console.log('yes')
         bot.deleteMessage({
@@ -1377,7 +1377,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageSend(channelID, "No spam messages please! ", false, null, true, userID)
             }
         });
-    }
+    }*/
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
             storage.d.Users[user].messageCnt = 1
