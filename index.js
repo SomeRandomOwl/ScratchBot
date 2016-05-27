@@ -1372,9 +1372,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageID: messageID
         }, function(error) {
             if (error) {
-                console.log('Error')
+                console.log('No Permission to delete the spam')
             } else {
-                console.log('Message deleted')
+                messageSend(channelID, "No spam messages please! ", false, null, true, userID)
             }
         });
     }
