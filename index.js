@@ -1364,18 +1364,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         console.log(e)
     }*/
     //Logging Related
-    if (preg_match('/(\w)\1{20,}/', message)) {
-        bot.deleteMessage({
-            channel: channelID,
-            messageID: messageID
-        }, function(error) {
-            if (error) {
-                console.log('Error')
-            } else {
-                console.log('Message deleted')
-            }
-        });
-    }
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
             storage.d.Users[user].messageCnt = 1
