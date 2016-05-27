@@ -1370,7 +1370,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageID: messageID
         }, function(error) {
             if (error) {
-                continue
+                console.log('Error')
             } else {
                 console.log('Message deleted')
             }
