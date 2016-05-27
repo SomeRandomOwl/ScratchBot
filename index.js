@@ -1364,7 +1364,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         console.log(e)
     }*/
     //Logging Related
-    var re = new RegExp("/(\w)\1{20,}/")
+    var re = new RegExp("^([a-z0-9]{20,})$")
     if (re.test(message)) {
         console.log('yes')
         bot.deleteMessage({
