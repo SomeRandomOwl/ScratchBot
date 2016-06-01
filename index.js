@@ -1053,7 +1053,7 @@ function toSentenceCase(string) {
 /*/Word!/*/
 function wordNik(cl, channelID, userID, word, type, debug) {
     if (type === 'def') {
-        request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&includeRelated=false&sourceDictionaries=webster%2Ccentury%2Cwiktionary%ahd%2Cwordnet&useCanonical=false&includeTags=false&api_key=' + config.wordNik, function(error, response, body) {
+        request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&includeRelated=false&sourceDictionaries=webster%2Ccentury%2Cwiktionary%2Cahd%2Cwordnet&useCanonical=false&includeTags=false&api_key=' + config.wordNik, function(error, response, body) {
             body = JSON.parse(body)
             if (debug) {
                 messageSend(channelID, body, true, 'json', true, userID)
