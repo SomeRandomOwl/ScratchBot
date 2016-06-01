@@ -390,7 +390,7 @@ function messageSend(channelID, msg, cb, type, mention, userID) {
         //
     }
     if (mention === true && cb === false) {
-        msg = msg + '<@' + userID + '>\n'
+        msg = msg + ' <@' + userID + '>\n'
     }
     if (cb === true) {
         if (type !== undefined) {
