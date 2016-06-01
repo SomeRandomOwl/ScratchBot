@@ -1059,8 +1059,8 @@ function wordNik(cl, channelID, userID, word, type, debug) {
                 messageSend(channelID, body, true, 'json', true, userID)
             }
             for (var semi = 0; semi > -1;) {
-                body.examples[0].text = body.examples[0].text.replace(';', '.')
-                semi = body.examples[0].text.indexOf(';')
+                body[0].text = body[0].text.replace(';', '.')
+                semi = body[0].text.indexOf(';')
             }
             if (cl === false) {
                 try {
