@@ -1884,7 +1884,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
         timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
         if (channelID in bot.directMessages) {
-            console.log(timed + 'Channel: ' + 'DM |\n' + chalk.blue(user + ': ') + message)
+            console.log(timed + 'Channel: ' + 'DM |\n' + chalk.yellow(user + ': ') + message)
             fs.appendFile("logs/DMs/" + user + ".txt", '\n' + timed + user + ": " + message)
         } else {
             servern = bot.servers[serverID].name
