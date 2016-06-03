@@ -1055,12 +1055,18 @@ function wordNik(cl, channelID, userID, word, type, debug) {
     if (type === 'def') {
         request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&includeRelated=false&sourceDictionaries=webster%2Ccentury%2Cwiktionary%2Cahd%2Cwordnet&useCanonical=false&includeTags=false&api_key=' + config.wordNik, function(error, response, body) {
             body = JSON.parse(body)
+            console.log(body)
             if (debug) {
                 messageSend(channelID, body, true, 'json', true, userID)
             }
-            for (var semi = 0; semi > -1;) {
-                body[0].text = body[0].text.replace(';', '.')
-                semi = body[0].text.indexOf(';')
+            try {
+                for (var semi = 0; semi > -1;) {
+                    body[0].text = body[0].text.replace(';', '.')
+                    semi = body[0].text.indexOf(';')
+                }
+            }
+            catche(e) {
+                /*/*/
             }
             if (cl === false) {
                 try {
