@@ -1064,8 +1064,7 @@ function wordNik(cl, channelID, userID, word, type, debug) {
                     body[0].text = body[0].text.replace(';', '.')
                     semi = body[0].text.indexOf(';')
                 }
-            }
-            catche(e) {
+            } catch (e) {
                 /*/*/
             }
             if (cl === false) {
