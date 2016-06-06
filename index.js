@@ -340,21 +340,21 @@ function yt(ytcall, userID, channelID) {
                         description = description.replace('https://', '')
                     }
 
-                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo: https://youtu.be/' + result.items[0].id.videoId + ' ;', true, 'css')
+                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo: https://youtu.be/' + result.items[0].id.videoId, true, 'xl')
                 } else if (result.items[0].id.kind === 'youtube#channel') {
                     var description = result.items[0].snippet.description
                     while (description.indexOf('http') !== -1) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nChannel: https://www.youtube.com/channel/' + result.items[0].id.channelId + ' ;', true, 'css')
+                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nChannel: https://www.youtube.com/channel/' + result.items[0].id.channelId, true, 'xl')
                 } else if (result.items[0].id.kind === 'youtube#playlist') {
                     var description = result.items[0].snippet.description
                     while (description.indexOf('http') !== -1) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nPlaylist: https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ' ;', true, 'css')
+                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nPlaylist: https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId, true, 'xl')
                 } else {
                     messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
                 }
@@ -955,50 +955,50 @@ function whoIs(channelID, serverID, name) {
 
             if (nick !== undefined) {
                 if (bot === undefined) {
-                    message = 'Name: ' + userN + '#' + discriminator + ';\n' +
-                        'Nick: ' + nick + ';\n' +
-                        'ID: ' + userID + ';\n\n' +
-                        'Status: ' + status + ';\n' +
-                        'Roles: ' + roles + ';\n' +
-                        'Muted: ' + mute + ';\n' +
-                        'Deafened: ' + deaf + ';\n\n' +
-                        'Joined: ' + join + ';\n' +
+                    message = 'Name: ' + userN + '#' + discriminator + '\n' +
+                        'Nick: ' + nick + '\n' +
+                        'ID: ' + userID + '\n\n' +
+                        'Status: ' + status + '\n' +
+                        'Roles: ' + roles + '\n' +
+                        'Muted: ' + mute + '\n' +
+                        'Deafened: ' + deaf + '\n\n' +
+                        'Joined: ' + join + '\n' +
                         'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
                 } else {
-                    message = 'Name: ' + userN + '#' + discriminator + ';\n' +
-                        'Nick: ' + nick + ';\n' +
-                        'ID: ' + userID + ';\n\n' +
-                        'Status: ' + status + ';\n' +
-                        'Bot: ' + bot + ';\n' +
-                        'Roles: ' + roles + ';\n' +
-                        'Muted: ' + mute + ';\n' +
-                        'Deafened: ' + deaf + ';\n\n' +
-                        'Joined: ' + join + ';\n' +
+                    message = 'Name: ' + userN + '#' + discriminator + '\n' +
+                        'Nick: ' + nick + '\n' +
+                        'ID: ' + userID + '\n\n' +
+                        'Status: ' + status + '\n' +
+                        'Bot: ' + bot + '\n' +
+                        'Roles: ' + roles + '\n' +
+                        'Muted: ' + mute + '\n' +
+                        'Deafened: ' + deaf + '\n\n' +
+                        'Joined: ' + join + '\n' +
                         'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
                 }
             } else {
                 if (bot === undefined) {
-                    message = 'Name: ' + userN + '#' + discriminator + ';\n' +
-                        'ID: ' + userID + ';\n\n' +
-                        'Status: ' + status + ';\n' +
-                        'Roles: ' + roles + ';\n' +
-                        'Muted: ' + mute + ';\n' +
-                        'Deafened: ' + deaf + ';\n\n' +
-                        'Joined: ' + join + ';\n' +
+                    message = 'Name: ' + userN + '#' + discriminator + '\n' +
+                        'ID: ' + userID + '\n\n' +
+                        'Status: ' + status + '\n' +
+                        'Roles: ' + roles + '\n' +
+                        'Muted: ' + mute + '\n' +
+                        'Deafened: ' + deaf + '\n\n' +
+                        'Joined: ' + join + '\n' +
                         'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
                 } else {
-                    message = 'Name: ' + userN + '#' + discriminator + ';\n' +
-                        'ID: ' + userID + ';\n\n' +
-                        'Status: ' + status + ';\n' +
-                        'Bot: ' + bot + ';\n' +
-                        'Roles: ' + roles + ';\n' +
-                        'Muted: ' + mute + ';\n' +
-                        'Deafened: ' + deaf + ';\n\n' +
-                        'Joined: ' + join + ';\n' +
+                    message = 'Name: ' + userN + '#' + discriminator + '\n' +
+                        'ID: ' + userID + '\n\n' +
+                        'Status: ' + status + '\n' +
+                        'Bot: ' + bot + '\n' +
+                        'Roles: ' + roles + '\n' +
+                        'Muted: ' + mute + '\n' +
+                        'Deafened: ' + deaf + '\n\n' +
+                        'Joined: ' + join + '\n' +
                         'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
                 }
             }
-            messageSend(channelID, message, true, 'css')
+            messageSend(channelID, message, true, 'xl')
         }
     })
 }
