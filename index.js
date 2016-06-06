@@ -1013,7 +1013,7 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
         if (cl === false) {
             if (!error && response.statusCode === 200) {
                 if (body.status_txt === 'OK') {
-                    messageSend(channelID, '<@' + userID + '> Here is a short url: ' + body.data.url)
+                    messageSend(channelID, '<@' + userID + '> Here is a short url: "' + body.data.url + '"')
                 } else {
                     console.log(body)
                     messageSend(channelID, '<@' + userID + '> There was a error processing that url')
@@ -1919,16 +1919,6 @@ var rl = readline.createInterface({
     output: process.stdout,
     terminal: true
 });
-rl.setPrompt(chalk.magenta('Scratch ') + '> ');
-setTimeout(function() {
-    rl.prompt();
-}, 2000)
 rl.on('line', function(line) {
     consoleparse(line);
-    setTimeout(function() {
-        rl.prompt();
-    }, 200)
-}).on('close', () => {
-    console.log('Have a great day!');
-    process.exit(0);
 })
