@@ -374,7 +374,7 @@ function statusmsg(msg) {
     })
 }
 /*/Used to send messages and keep tack of the message id/*/
-function messageSend(channelID, msg, cb, type, mention, userID) {
+function messageSend(channelID, msg, cb, type, mention, userID, preText) {
     try {
         sId = bot.serverFromChannel(channelID)
         for (var sname in storage.d.Servers) {
@@ -398,18 +398,34 @@ function messageSend(channelID, msg, cb, type, mention, userID) {
                 if (type === 'json') {
                     msg = JSON.stringify(msg, null, '\t')
                 }
-                msg = '<@' + userID + '>\n\n```' + type + '\n' + msg + '```'
+                if (preText !== undefined) {
+                    msg = '<@' + userID + '>' + preText + '\n\n```' + type + '\n' + msg + '```'
+                } else {
+                    msg = '<@' + userID + '>\n\n```' + type + '\n' + msg + '```'
+                }
             } else {
                 if (type === 'json') {
                     msg = JSON.stringify(msg, null, '\t')
                 }
-                msg = '\n\n```' + type + '\n' + msg + '```'
+                if (preText !== undefined) {
+                    msg = preText + '\n\n```' + type + '\n' + msg + '```'
+                } else {
+                    msg = '\n\n```' + type + '\n' + msg + '```'
+                }
             }
         } else {
             if (mention === true) {
-                msg = '<@' + userID + '>\n\n```' + msg + '```'
+                if (preText !== undefined) {
+                    msg = '<@' + userID + '>' + preText + '\n\n```' + msg + '```'
+                } else {
+                    msg = '<@' + userID + '>\n\n```' + msg + '```'
+                }
             } else {
-                msg = '\n\n```' + msg + '```'
+                if (preText !== undefined) {
+                    msg = preText + '\n\n```' + msg + '```'
+                } else {
+                    msg = '\n\n```' + msg + '```'
+                }
             }
         }
     }
