@@ -1107,6 +1107,20 @@ function wordNik(cl, channelID, userID, word, type, debug) {
         })
     }
 }
+/*/File Upload/*/
+function fileU(channelID, userID, file) {
+    try {
+        bot.uploadFile({
+            to: channelID,
+            file: file,
+            filename: file,
+            message: "<@" + userID + "> Heres that file"
+        });
+        return "Sucess"
+    } catch (e) {
+        return "There was a error with that"
+    }
+}
 var startUpTime = null
     /* Bot on event functions */
 bot.on('ready', function() {
