@@ -1583,6 +1583,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     setTimeout(function() {
                         statW = whoIs(channelID, serverID, user, true)
                         wLink = statW.substring(statW.indexOf('"h'), statW.indexOf('g"'))
+                        console.log(wLink)
                         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
                             body = JSON.parse(body)
                             statW.replaceBetween(statW.indexOf('"h'), statW.indexOf('g"'), body.data.url)
