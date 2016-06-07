@@ -1582,8 +1582,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 try {
                     setTimeout(function() {
                         statW = whoIs(channelID, serverID, user, true)
-                        wLink = statW.substring(statW.indexOf('"h'), statW.indexOf('g"'))
+                        wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
                         console.log(wLink)
+                        whoRest = statW.substring(statW, indexOf('Avatar'))
+                        console.log(whoRest)
                         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
                             body = JSON.parse(body)
                             statW.replaceBetween(statW.indexOf('"h'), statW.indexOf('g"'), body.data.url)
