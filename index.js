@@ -939,7 +939,7 @@ function stats(channelID, name, rawEvent) {
     }
 }
 /*/WhoIs/*/
-function whoIs(channelID, serverID, name) {
+function whoIs(channelID, serverID, name, cl) {
     userID = storage.d.Users[name].id
     roles = bot.servers[serverID].members[userID].roles
     nick = bot.servers[serverID].members[userID].nick
@@ -982,8 +982,11 @@ function whoIs(channelID, serverID, name) {
             'Deafened:  ' + deaf + '\n\n' +
             'Joined:    ' + join + '\n' +
             'Avatar:    ' + avatarL
-
-        messageSend(channelID, message, true, 'xl')
+        if (cl) {
+            return message
+        } else {
+            messageSend(channelID, message, true, 'xl')
+        }
     })
 }
 /*/Url shortener/*/
@@ -1577,13 +1580,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 5) {
                 try {
-                    messageSend(channelID, "Your current stats are: \n\n" +
-                        "```Messages Sent: " + storage.d.Users[user].messageCnt +
-                        "\nLinks Sent: " + storage.d.Users[user].linkCnt +
-                        "\nTotal Time Idle: " +
-                        storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
-                        "Total Time Offline: " +
-                        storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds```")
+                    messageSend(channelID, whoIs(channelID, serverID, user, true) +
+                        "Messages Sent:         " + storage.d.Users[user].messageCnt + '\n' +
+                        "Links Sent:            " + storage.d.Users[user].linkCnt + '\n' +
+                        "Total Time Idle:       " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
+                        "Total Time Offline:    " +
+                        storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds```", true, 'xl', true, userID)
                 } catch (e) {
                     messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
                 }
