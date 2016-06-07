@@ -968,23 +968,22 @@ function whoIs(channelID, serverID, name) {
     } else {
         rolesm = 'everyone'
     }
-    console.log(avatar)
-    console.log(userID)
     avatarL = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
-    console.log(avatarL)
-    message = '' +
-        'Name:      ' + userN + '#' + discriminator + '\n' +
-        'Nick:      ' + nick + '\n' +
-        'ID:        ' + userID + '\n\n' +
-        'Status:    ' + status + '\n' +
-        'Bot:       ' + botT + '\n' +
-        'Roles:     ' + roles + '\n' +
-        'Muted:     ' + mute + '\n' +
-        'Deafened:  ' + deaf + '\n\n' +
-        'Joined:    ' + join + '\n' +
-        'Avatar:    ' + avatarL
+    setTimeout(function() {
+        message = '' +
+            'Name:      ' + userN + '#' + discriminator + '\n' +
+            'Nick:      ' + nick + '\n' +
+            'ID:        ' + userID + '\n\n' +
+            'Status:    ' + status + '\n' +
+            'Bot:       ' + botT + '\n' +
+            'Roles:     ' + roles + '\n' +
+            'Muted:     ' + mute + '\n' +
+            'Deafened:  ' + deaf + '\n\n' +
+            'Joined:    ' + join + '\n' +
+            'Avatar:    ' + avatarL
 
-    messageSend(channelID, message, true, 'xl')
+        messageSend(channelID, message, true, 'xl')
+    }, 1000);
 }
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
