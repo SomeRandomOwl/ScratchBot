@@ -971,59 +971,18 @@ function whoIs(channelID, serverID, name) {
 
     avatar = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
 
-    if (nick !== null) {
-        if (bot === 'false') {
-            console.log('1')
-            message = '' +
-                'Name:      ' + userN + '#' + discriminator + ';\n' +
-                'Nick:      ' + nick + '\n' +
-                'ID:        ' + userID + '\n\n' +
-                'Status:    ' + status + '\n' +
-                'Roles:     ' + roles + '\n' +
-                'Muted:     ' + mute + '\n' +
-                'Deafened:  ' + deaf + '\n\n' +
-                'Joined:    ' + join + '\n' +
-                'Avatar:    ' + avatar
-        } else {
-            console.log('2')
-            message = '' +
-                'Name:      ' + userN + '#' + discriminator + '\n' +
-                'Nick:      ' + nick + '\n' +
-                'ID:        ' + userID + '\n\n' +
-                'Status:    ' + status + '\n' +
-                'Bot:       ' + botT + '\n' +
-                'Roles:     ' + roles + '\n' +
-                'Muted:     ' + mute + '\n' +
-                'Deafened:  ' + deaf + '\n\n' +
-                'Joined:    ' + join + '\n' +
-                'Avatar:    ' + avatar
-        }
-    } else {
-        console.log('3')
-        if (bot === 'false') {
-            message = '' +
-                'Name:      ' + userN + '#' + discriminator + '\n' +
-                'ID:        ' + userID + '\n\n' +
-                'Status:    ' + status + '\n' +
-                'Roles:     ' + roles + '\n' +
-                'Muted:     ' + mute + '\n' +
-                'Deafened:  ' + deaf + '\n\n' +
-                'Joined:    ' + join + '\n' +
-                'Avatar:    ' + avatar
-        } else {
-            console.log('4')
-            message = '' +
-                'Name:      ' + userN + '#' + discriminator + '\n' +
-                'ID:        ' + userID + '\n\n' +
-                'Status:    ' + status + '\n' +
-                'Bot:       ' + botT + '\n' +
-                'Roles:     ' + roles + '\n' +
-                'Muted:     ' + mute + '\n' +
-                'Deafened:  ' + deaf + '\n\n' +
-                'Joined:    ' + join + '\n' +
-                'Avatar:    ' + avatar
-        }
-    }
+    message = '' +
+        'Name:      ' + userN + '#' + discriminator + '\n' +
+        'Nick:      ' + nick + '\n' +
+        'ID:        ' + userID + '\n\n' +
+        'Status:    ' + status + '\n' +
+        'Bot:       ' + botT + '\n' +
+        'Roles:     ' + roles + '\n' +
+        'Muted:     ' + mute + '\n' +
+        'Deafened:  ' + deaf + '\n\n' +
+        'Joined:    ' + join + '\n' +
+        'Avatar:    ' + avatar
+
     messageSend(channelID, message, true, 'xl')
 }
 /*/Url shortener/*/
