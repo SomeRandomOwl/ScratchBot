@@ -977,7 +977,7 @@ function whoIs(channelID, serverID, name) {
             'ID:        ' + userID + '\n\n' +
             'Status:    ' + status + '\n' +
             'Bot:       ' + botT + '\n' +
-            'Roles:     ' + roles + '\n' +
+            'Roles:     ' + rolesm + '\n' +
             'Muted:     ' + mute + '\n' +
             'Deafened:  ' + deaf + '\n\n' +
             'Joined:    ' + join + '\n' +
