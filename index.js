@@ -910,7 +910,7 @@ function unShorten(channelID, userID, url) {
     }
 }
 /*/Prints out a users stats/*/
-function stats(channelID, name, rawEvent) {
+function stats(channelID, name, rawEvent, channelID, serverID) {
     /*try {*/
     if (name.toLowerCase().indexOf('<@') === -1) {
         console.log('this')
@@ -1001,7 +1001,6 @@ function whoIs(channelID, serverID, name, cl) {
     } else {
         messageSend(channelID, message, true, 'xl')
     }
-
 }
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
@@ -1615,7 +1614,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else if (message.toLowerCase().indexOf('channel') !== -1) {
                 messageSend(channelID, "The total ammount of messages sent on this channel is: " + storage.d.Servers[sname].Channels[cname].messageCnt)
             } else {
-                stats(channelID, name, rawEvent)
+                stats(channelID, name, rawEvent, channelID, serverID)
             }
             rconcmd = 'Yes'
         }
