@@ -1919,7 +1919,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     } else if (rconcmd === "Yes" && ignore !== true) {
         if (ignore !== true) {
-            logger.info(chalk.gray('Last Message User: ' + user + ' |\nIDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' | Message: ' + message));
+            logger.info(chalk.gray('Last Message User: ' + user + ' |IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' |\n Message: ' + message));
         }
     }
 });
