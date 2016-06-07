@@ -1018,8 +1018,6 @@ function whoIs(channelID, serverID, name) {
     }
     messageSend(channelID, message, true, 'xl')
 }
-
-}
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
