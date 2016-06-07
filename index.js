@@ -943,7 +943,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                         "Messages Sent:       " + storage.d.Users[usern].messageCnt + '\n' +
                         "Links Sent:          " + storage.d.Users[usern].linkCnt + '\n' +
                         "Total Time Idle:     " + storage.d.Users[usern].totalIdle.d + " Days " + storage.d.Users[usern].totalIdle.h + " Hours " + storage.d.Users[usern].totalIdle.m + " Minutes " + storage.d.Users[usern].totalIdle.s + " Seconds\n" +
-                        "Total Time Offline:  " + storage.d.Users[usern].totalOffline.d + " Days " + storage.d.Users[usern].totalOffline.h + " Hours " + storage.d.Users[usern].totalOffline.m + " Minutes " + storage.d.Users[usern].totalOffline.s + " Seconds```")
+                        "Total Time Offline:  " + storage.d.Users[usern].totalOffline.d + " Days " + storage.d.Users[usern].totalOffline.h + " Hours " + storage.d.Users[usern].totalOffline.m + " Minutes " + storage.d.Users[usern].totalOffline.s + " Seconds", true, 'xl')
                 })
             } else {
                 continue
