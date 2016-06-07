@@ -90,6 +90,10 @@ var xkcdJson = null
 var verb = false
 var prevUrl
 
+String.prototype.replaceBetween = function(start, end, what) {
+    return this.substring(0, start) + what + this.substring(end);
+};
+
 /* Start of function defining */
 if (storage.settings.redditList === undefined) {
     storage.settings.redditList = []
@@ -97,7 +101,6 @@ if (storage.settings.redditList === undefined) {
 } else {
     redditList = storage.settings.redditList
 }
-
 /*/Function to write json to the storage file/*/
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
@@ -1578,13 +1581,20 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (len === 5) {
                 try {
                     setTimeout(function() {
-                        messageSend(channelID, whoIs(channelID, serverID, user, true) + '\n' +
-                            "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
-                            "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
-                            "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
-                            "Total Time Offline:  " +
-                            storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
-                    }, 1000);
+                            statW = whoIs(channelID, serverID, user, true)
+                            wLink = statW.substring(statw.indexOf('"h'), statw.indexOf('g"'))
+                            request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
+                                body = JSON.parse(body)
+                                statw.replaceBetween(statw.indexOf('"h'), statw.indexOf('g"'), body.data.url)
+                                messageSend(channelID, statW + '\n\n' +
+                                    "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
+                                    "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
+                                    "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
+                                    "Total Time Offline:  " +
+                                    storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
+                            }),
+                        }
+                        1000);
                 } catch (e) {
                     messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
                 }
