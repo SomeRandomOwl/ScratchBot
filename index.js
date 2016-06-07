@@ -968,9 +968,10 @@ function whoIs(channelID, serverID, name) {
     } else {
         rolesm = 'everyone'
     }
-
+    console.log(avatar)
+    console.log(userID)
     avatar = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
-
+    console.log(avatar)
     message = '' +
         'Name:      ' + userN + '#' + discriminator + '\n' +
         'Nick:      ' + nick + '\n' +
