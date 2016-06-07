@@ -952,6 +952,8 @@ function whoIs(channelID, serverID, name) {
     botT = bot.users[userID].bot
     game = bot.users[userID].game
 
+    botT = JSON.stringify(botT)
+
     if (roles.length !== 0) {
         rolesm = 'everyone, '
         for (var i = 0; i < roles.length; i++) {
