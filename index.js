@@ -88,6 +88,7 @@ var debug = false;
 var serverID = null;
 var xkcdJson = null
 var verb = false
+var prevUrl
 
 /* Start of function defining */
 if (storage.settings.redditList === undefined) {
@@ -987,7 +988,7 @@ function whoIs(channelID, serverID, name) {
             'Avatar:    ' + avatarL
 
         messageSend(channelID, message, true, 'xl')
-    }, 1000);
+    }, 1500);
 }
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
@@ -1012,7 +1013,7 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
         } else {
             if (body.status_txt === 'OK') {
                 console.log(body)
-                var prevUrl = body.data.url
+                prevUrl = body.data.url
                 return body.data.url
             } else {
                 return body.status_txt
