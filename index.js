@@ -913,24 +913,36 @@ function unShorten(channelID, userID, url) {
 function stats(channelID, name, rawEvent) {
     try {
         if (name.toLowerCase().indexOf('<@') === -1) {
-            messageSend(channelID, name + "'s current stats are: \n\n" +
-                "```Messages Sent: " + storage.d.Users[name].messageCnt +
-                "\nLinks Sent: " + storage.d.Users[name].linkCnt +
-                "\nTotal Time Idle: " +
-                storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
-                "Total Time Offline: " +
-                storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds```")
+            statW = whoIs(channelID, serverID, user, true)
+            wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
+            whoRest = statW.substring(0, statW.indexOf('Avatar'))
+            request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
+                body = JSON.parse(body)
+                thing = whoRest + 'Avatar: "' + body.data.url + '"'
+
+                messageSend(channelID, thing + "\n\n" +
+                    "Messages Sent:       " + storage.d.Users[name].messageCnt + '\n' +
+                    "Links Sent:          " + storage.d.Users[name].linkCnt + '\n +'
+                    "Total Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
+                    "Total Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds", true, 'xl')
+            })
         } else {
             var mentId = rawEvent.d.mentions[0].id
             for (var usern in storage.d.Users) {
                 if (mentId === storage.d.Users[usern].id) {
-                    messageSend(channelID, usern + "'s current stats are: \n\n" +
-                        "```Messages Sent: " + storage.d.Users[usern].messageCnt +
-                        "\nLinks Sent: " + storage.d.Users[usern].linkCnt +
-                        "\nTotal Time Idle: " +
-                        storage.d.Users[usern].totalIdle.d + " Days " + storage.d.Users[usern].totalIdle.h + " Hours " + storage.d.Users[usern].totalIdle.m + " Minutes " + storage.d.Users[usern].totalIdle.s + " Seconds\n" +
-                        "Total Time Offline: " +
-                        storage.d.Users[usern].totalOffline.d + " Days " + storage.d.Users[usern].totalOffline.h + " Hours " + storage.d.Users[usern].totalOffline.m + " Minutes " + storage.d.Users[usern].totalOffline.s + " Seconds```")
+                    statW = whoIs(channelID, serverID, usern, true)
+                    wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
+                    whoRest = statW.substring(0, statW.indexOf('Avatar'))
+                    request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
+                        body = JSON.parse(body)
+                        thing = whoRest + 'Avatar: "' + body.data.url + '"'
+
+                        messageSend(channelID, thing + "\n\n" +
+                            "Messages Sent:       " + storage.d.Users[usern].messageCnt + '\n' +
+                            "Links Sent:          " + storage.d.Users[usern].linkCnt + '\n' +
+                            "Total Time Idle:     " + storage.d.Users[usern].totalIdle.d + " Days " + storage.d.Users[usern].totalIdle.h + " Hours " + storage.d.Users[usern].totalIdle.m + " Minutes " + storage.d.Users[usern].totalIdle.s + " Seconds\n" +
+                            "Total Time Offline:  " + storage.d.Users[usern].totalOffline.d + " Days " + storage.d.Users[usern].totalOffline.h + " Hours " + storage.d.Users[usern].totalOffline.m + " Minutes " + storage.d.Users[usern].totalOffline.s + " Seconds```")
+                    })
                 } else {
                     continue
                 }
@@ -1580,21 +1592,19 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 5) {
                 try {
-                    setTimeout(function() {
-                        statW = whoIs(channelID, serverID, user, true)
-                        wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
-                        whoRest = statW.substring(0, statW.indexOf('Avatar'))
-                        request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
-                            body = JSON.parse(body)
-                            thing = whoRest + 'Avatar: "' + body.data.url + '"'
-                            messageSend(channelID, thing + '\n\n' +
-                                "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
-                                "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
-                                "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
-                                "Total Time Offline:  " +
-                                storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
-                        })
-                    }, 1000);
+                    statW = whoIs(channelID, serverID, user, true)
+                    wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
+                    whoRest = statW.substring(0, statW.indexOf('Avatar'))
+                    request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
+                        body = JSON.parse(body)
+                        thing = whoRest + 'Avatar: "' + body.data.url + '"'
+                        messageSend(channelID, thing + '\n\n' +
+                            "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
+                            "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
+                            "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
+                            "Total Time Offline:  " +
+                            storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
+                    })
                 } catch (e) {
                     messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
                 }
