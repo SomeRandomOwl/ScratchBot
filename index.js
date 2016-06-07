@@ -971,6 +971,9 @@ function whoIs(channelID, serverID, name) {
     console.log('First ' + avatarL)
     setTimeout(function() {
         console.log('Second ' + avatarL)
+        if (avatarL === undefined) {
+            avatarL === prevUrl
+        }
         message = '' +
             'Name:      ' + userN + '#' + discriminator + '\n' +
             'Nick:      ' + nick + '\n' +
@@ -1009,6 +1012,7 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
         } else {
             if (body.status_txt === 'OK') {
                 console.log(body)
+                var prevUrl = body.data.url
                 return body.data.url
             } else {
                 return body.status_txt
