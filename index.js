@@ -1585,7 +1585,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         wLink = statW.substring(statW.indexOf('"h'), statW.indexOf('g"'))
                         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
                             body = JSON.parse(body)
-                            statw.replaceBetween(statw.indexOf('"h'), statw.indexOf('g"'), body.data.url)
+                            statW.replaceBetween(statW.indexOf('"h'), statW.indexOf('g"'), body.data.url)
                             messageSend(channelID, statW + '\n\n' +
                                 "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
                                 "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
