@@ -982,7 +982,7 @@ function whoIs(channelID, serverID, name) {
         'Muted:     ' + mute + '\n' +
         'Deafened:  ' + deaf + '\n\n' +
         'Joined:    ' + join + '\n' +
-        'Avatar:    ' + avatar
+        'Avatar:    ' + avatarL
 
     messageSend(channelID, message, true, 'xl')
 }
@@ -1006,7 +1006,7 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
         } else {
             if (body.status_txt === 'OK') {
                 console.log(body)
-                return body
+                return body.data.url
             } else {
                 return body.status_txt
             }
