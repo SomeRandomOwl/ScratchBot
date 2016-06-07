@@ -946,81 +946,79 @@ function whoIs(channelID, serverID, name) {
     deaf = bot.servers[serverID].members[userID].deaf
     join = bot.servers[serverID].members[userID].joined_at
     status = bot.servers[serverID].members[userID].status
-    request('https://discordapp.com/api/users/' + userID + '?token=' + config.token, function(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            body = JSON.parse(body)
-            userN = body.username
-            discriminator = body.discriminator
-            avatar = body.avatar
-            botT = body.bot
+    userN = bot.users[userID].username
+    discriminator = bot.users[userID].discriminator
+    avatar = bot.users[userID].avatar
+    botT = bot.users[userID].bot
+    game = bot.users[userID].game
 
-            if (roles.length !== 0) {
-                rolesm = 'everyone, '
-                for (var i = 0; i < roles.length; i++) {
-                    if (i !== roles.length - 1) {
-                        rolesm = rolesm + roles[i] + ', '
-                    } else {
-                        rolesm = rolesm + roles[i]
-                    }
-                }
+    if (roles.length !== 0) {
+        rolesm = 'everyone, '
+        for (var i = 0; i < roles.length; i++) {
+            if (i !== roles.length - 1) {
+                rolesm = rolesm + roles[i] + ', '
             } else {
-                rolesm = 'everyone'
+                rolesm = rolesm + roles[i]
             }
-
-            avatar = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
-
-            if (nick !== undefined) {
-                if (bot === undefined) {
-                    message = '' +
-                        'Name:      ' + userN + '#' + discriminator + ';\n' +
-                        'Nick:      ' + nick + '\n' +
-                        'ID:        ' + userID + '\n\n' +
-                        'Status:    ' + status + '\n' +
-                        'Roles:     ' + roles + '\n' +
-                        'Muted:     ' + mute + '\n' +
-                        'Deafened:  ' + deaf + '\n\n' +
-                        'Joined:    ' + join + '\n' +
-                        'Avatar:    ' + avatar
-                } else {
-                    message = '' +
-                        'Name:      ' + userN + '#' + discriminator + '\n' +
-                        'Nick:      ' + nick + '\n' +
-                        'ID:        ' + userID + '\n\n' +
-                        'Status:    ' + status + '\n' +
-                        'Bot:       ' + bot + '\n' +
-                        'Roles:     ' + roles + '\n' +
-                        'Muted:     ' + mute + '\n' +
-                        'Deafened:  ' + deaf + '\n\n' +
-                        'Joined:    ' + join + '\n' +
-                        'Avatar:    ' + avatar
-                }
-            } else {
-                if (bot === undefined) {
-                    message = '' +
-                        'Name:      ' + userN + '#' + discriminator + '\n' +
-                        'ID:        ' + userID + '\n\n' +
-                        'Status:    ' + status + '\n' +
-                        'Roles:     ' + roles + '\n' +
-                        'Muted:     ' + mute + '\n' +
-                        'Deafened:  ' + deaf + '\n\n' +
-                        'Joined:    ' + join + '\n' +
-                        'Avatar:    ' + avatar
-                } else {
-                    message = '' +
-                        'Name:      ' + userN + '#' + discriminator + '\n' +
-                        'ID:        ' + userID + '\n\n' +
-                        'Status:    ' + status + '\n' +
-                        'Bot:       ' + bot + '\n' +
-                        'Roles:     ' + roles + '\n' +
-                        'Muted:     ' + mute + '\n' +
-                        'Deafened:  ' + deaf + '\n\n' +
-                        'Joined:    ' + join + '\n' +
-                        'Avatar:    ' + avatar
-                }
-            }
-            messageSend(channelID, message, true, 'xl')
         }
-    })
+    } else {
+        rolesm = 'everyone'
+    }
+
+    avatar = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
+
+    if (nick !== undefined) {
+        if (bot === undefined) {
+            message = '' +
+                'Name:      ' + userN + '#' + discriminator + ';\n' +
+                'Nick:      ' + nick + '\n' +
+                'ID:        ' + userID + '\n\n' +
+                'Status:    ' + status + '\n' +
+                'Roles:     ' + roles + '\n' +
+                'Muted:     ' + mute + '\n' +
+                'Deafened:  ' + deaf + '\n\n' +
+                'Joined:    ' + join + '\n' +
+                'Avatar:    ' + avatar
+        } else {
+            message = '' +
+                'Name:      ' + userN + '#' + discriminator + '\n' +
+                'Nick:      ' + nick + '\n' +
+                'ID:        ' + userID + '\n\n' +
+                'Status:    ' + status + '\n' +
+                'Bot:       ' + bot + '\n' +
+                'Roles:     ' + roles + '\n' +
+                'Muted:     ' + mute + '\n' +
+                'Deafened:  ' + deaf + '\n\n' +
+                'Joined:    ' + join + '\n' +
+                'Avatar:    ' + avatar
+        }
+    } else {
+        if (bot === undefined) {
+            message = '' +
+                'Name:      ' + userN + '#' + discriminator + '\n' +
+                'ID:        ' + userID + '\n\n' +
+                'Status:    ' + status + '\n' +
+                'Roles:     ' + roles + '\n' +
+                'Muted:     ' + mute + '\n' +
+                'Deafened:  ' + deaf + '\n\n' +
+                'Joined:    ' + join + '\n' +
+                'Avatar:    ' + avatar
+        } else {
+            message = '' +
+                'Name:      ' + userN + '#' + discriminator + '\n' +
+                'ID:        ' + userID + '\n\n' +
+                'Status:    ' + status + '\n' +
+                'Bot:       ' + bot + '\n' +
+                'Roles:     ' + roles + '\n' +
+                'Muted:     ' + mute + '\n' +
+                'Deafened:  ' + deaf + '\n\n' +
+                'Joined:    ' + join + '\n' +
+                'Avatar:    ' + avatar
+        }
+    }
+    messageSend(channelID, message, true, 'xl')
+}
+
 }
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
@@ -1200,8 +1198,8 @@ bot.on('debug', function(rawEvent) {
         }
     }
     if (rawEvent.t === "CHANNEL_CREATE") {
-	console.log(rawEvent)
-	var name = rawEvent.d.name
+        console.log(rawEvent)
+        var name = rawEvent.d.name
         var channelID = rawEvent.d.id
         var type = rawEvent.d.type
         var sname = rawEvent.d.guild_id
@@ -1522,7 +1520,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         message = message.replace(commandmod, '')
         if (message.toLowerCase().indexOf('ping') === 0 && ignore !== true) {
             messageSend(channelID, 'pong')
-	    rconcmd = 'Yes'
+            rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('help') === 0 && ignore !== true) {
 
@@ -1869,12 +1867,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageSend(channelID, '<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
             }
             rconcmd = 'Yes'
+        } else {
+            if (rconcmd === 'No') {
+                //clever(channelID,userID,message)
+            }
         }
-	else {
-	    if (rconcmd === 'No') {
-		//clever(channelID,userID,message)
-	    }
-	}
     }
     if (channelID === '164845697508704257') {
         if (message.indexOf('#') !== -1) {
