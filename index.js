@@ -958,8 +958,10 @@ function whoIs(channelID, serverID, name) {
         rolesm = 'everyone, '
         for (var i = 0; i < roles.length; i++) {
             if (i !== roles.length - 1) {
+                console.log(roles[i].name)
                 rolesm = rolesm + roles[i].name + ', '
             } else {
+                console.log(roles[i].name)
                 rolesm = rolesm + roles[i].name
             }
         }
@@ -971,6 +973,7 @@ function whoIs(channelID, serverID, name) {
 
     if (nick !== undefined) {
         if (bot === false) {
+            console.log('1')
             message = '' +
                 'Name:      ' + userN + '#' + discriminator + ';\n' +
                 'Nick:      ' + nick + '\n' +
@@ -982,6 +985,7 @@ function whoIs(channelID, serverID, name) {
                 'Joined:    ' + join + '\n' +
                 'Avatar:    ' + avatar
         } else {
+            console.log('2')
             message = '' +
                 'Name:      ' + userN + '#' + discriminator + '\n' +
                 'Nick:      ' + nick + '\n' +
@@ -995,6 +999,7 @@ function whoIs(channelID, serverID, name) {
                 'Avatar:    ' + avatar
         }
     } else {
+        console.log('3')
         if (bot === false) {
             message = '' +
                 'Name:      ' + userN + '#' + discriminator + '\n' +
@@ -1006,6 +1011,7 @@ function whoIs(channelID, serverID, name) {
                 'Joined:    ' + join + '\n' +
                 'Avatar:    ' + avatar
         } else {
+            console.log('4')
             message = '' +
                 'Name:      ' + userN + '#' + discriminator + '\n' +
                 'ID:        ' + userID + '\n\n' +
