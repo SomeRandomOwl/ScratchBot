@@ -932,7 +932,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         var name = rawEvent.d.mentions[0].username
             /*for (var usern in storage.d.Users) {
             if (mentId === storage.d.Users[usern].id) {*/
-        statW = whoIs(channelID, serverID, usern, true)
+        statW = whoIs(channelID, serverID, name, true)
         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
