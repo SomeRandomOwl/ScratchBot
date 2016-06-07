@@ -919,7 +919,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
             body = JSON.parse(body)
-            thing = whoRest + 'Avatar: "' + body.data.url + '"'
+            thing = whoRest + 'Avatar:    "' + body.data.url + '"'
 
             messageSend(channelID, thing + "\n\n" +
                 "Messages Sent:       " + storage.d.Users[name].messageCnt + '\n' +
@@ -937,7 +937,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
             body = JSON.parse(body)
-            thing = whoRest + 'Avatar: "' + body.data.url + '"'
+            thing = whoRest + 'Avatar:    "' + body.data.url + '"'
 
             messageSend(channelID, thing + "\n\n" +
                 "Messages Sent:       " + storage.d.Users[name].messageCnt + '\n' +
@@ -1598,7 +1598,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     whoRest = statW.substring(0, statW.indexOf('Avatar'))
                     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
                         body = JSON.parse(body)
-                        thing = whoRest + 'Avatar: "' + body.data.url + '"'
+                        thing = whoRest + 'Avatar:    "' + body.data.url + '"'
                         messageSend(channelID, thing + '\n\n' +
                             "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
                             "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
