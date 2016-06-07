@@ -971,50 +971,54 @@ function whoIs(channelID, serverID, name) {
 
             if (nick !== undefined) {
                 if (bot === undefined) {
-                    message = 'Name: ' + userN + '#' + discriminator + ';\n' +
-                        'Nick: ' + nick + ';\n' +
-                        'ID: ' + userID + ';\n\n' +
-                        'Status: ' + status + ';\n' +
-                        'Roles: ' + roles + ';\n' +
-                        'Muted: ' + mute + ';\n' +
-                        'Deafened: ' + deaf + ';\n\n' +
-                        'Joined: ' + join + ';\n' +
-                        'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
+                    message = '' +
+                        'Name:      ' + userN + '#' + discriminator + ';\n' +
+                        'Nick:      ' + nick + '\n' +
+                        'ID:        ' + userID + '\n\n' +
+                        'Status:    ' + status + '\n' +
+                        'Roles:     ' + roles + '\n' +
+                        'Muted:     ' + mute + '\n' +
+                        'Deafened:  ' + deaf + '\n\n' +
+                        'Joined:    ' + join + '\n' +
+                        'Avatar:    ' + avatar
                 } else {
-                    message = 'Name: ' + userN + '#' + discriminator + ';\n' +
-                        'Nick: ' + nick + ';\n' +
-                        'ID: ' + userID + ';\n\n' +
-                        'Status: ' + status + ';\n' +
-                        'Bot: ' + bot + ';\n' +
-                        'Roles: ' + roles + ';\n' +
-                        'Muted: ' + mute + ';\n' +
-                        'Deafened: ' + deaf + ';\n\n' +
-                        'Joined: ' + join + ';\n' +
-                        'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
+                    message = '' +
+                        'Name:      ' + userN + '#' + discriminator + '\n' +
+                        'Nick:      ' + nick + '\n' +
+                        'ID:        ' + userID + '\n\n' +
+                        'Status:    ' + status + '\n' +
+                        'Bot:       ' + bot + '\n' +
+                        'Roles:     ' + roles + '\n' +
+                        'Muted:     ' + mute + '\n' +
+                        'Deafened:  ' + deaf + '\n\n' +
+                        'Joined:    ' + join + '\n' +
+                        'Avatar:    ' + avatar
                 }
             } else {
                 if (bot === undefined) {
-                    message = 'Name: ' + userN + '#' + discriminator + ';\n' +
-                        'ID: ' + userID + ';\n\n' +
-                        'Status: ' + status + ';\n' +
-                        'Roles: ' + roles + ';\n' +
-                        'Muted: ' + mute + ';\n' +
-                        'Deafened: ' + deaf + ';\n\n' +
-                        'Joined: ' + join + ';\n' +
-                        'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
+                    message = '' +
+                        'Name:      ' + userN + '#' + discriminator + '\n' +
+                        'ID:        ' + userID + '\n\n' +
+                        'Status:    ' + status + '\n' +
+                        'Roles:     ' + roles + '\n' +
+                        'Muted:     ' + mute + '\n' +
+                        'Deafened:  ' + deaf + '\n\n' +
+                        'Joined:    ' + join + '\n' +
+                        'Avatar:    ' + avatar
                 } else {
-                    message = 'Name: ' + userN + '#' + discriminator + ';\n' +
-                        'ID: ' + userID + ';\n\n' +
-                        'Status: ' + status + ';\n' +
-                        'Bot: ' + bot + ';\n' +
-                        'Roles: ' + roles + ';\n' +
-                        'Muted: ' + mute + ';\n' +
-                        'Deafened: ' + deaf + ';\n\n' +
-                        'Joined: ' + join + ';\n' +
-                        'Avatar: https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg ;'
+                    message = '' +
+                        'Name:      ' + userN + '#' + discriminator + '\n' +
+                        'ID:        ' + userID + '\n\n' +
+                        'Status:    ' + status + '\n' +
+                        'Bot:       ' + bot + '\n' +
+                        'Roles:     ' + roles + '\n' +
+                        'Muted:     ' + mute + '\n' +
+                        'Deafened:  ' + deaf + '\n\n' +
+                        'Joined:    ' + join + '\n' +
+                        'Avatar:    ' + avatar
                 }
             }
-            messageSend(channelID, message, true, 'css')
+            messageSend(channelID, message, true, 'xl')
         }
     })
 }
