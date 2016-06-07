@@ -967,27 +967,24 @@ function whoIs(channelID, serverID, name, cl) {
     } else {
         rolesm = 'everyone'
     }
+    avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
+    message = '' +
+        'Name:      ' + userN + '#' + discriminator + '\n' +
+        'Nick:      ' + nick + '\n' +
+        'ID:        ' + userID + '\n\n' +
+        'Status:    ' + status + '\n' +
+        'Bot:       ' + botT + '\n' +
+        'Roles:     ' + rolesm + '\n' +
+        'Muted:     ' + mute + '\n' +
+        'Deafened:  ' + deaf + '\n\n' +
+        'Joined:    ' + join + '\n' +
+        'Avatar:    ' + avatarL
+    if (cl) {
+        return message
+    } else {
+        messageSend(channelID, message, true, 'xl')
+    }
 
-    request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + 'https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg' + '&access_token=' + config.bitLy, function(error, response, body) {
-        body = JSON.parse(body)
-        avatarL = body.data.url
-        message = '' +
-            'Name:      ' + userN + '#' + discriminator + '\n' +
-            'Nick:      ' + nick + '\n' +
-            'ID:        ' + userID + '\n\n' +
-            'Status:    ' + status + '\n' +
-            'Bot:       ' + botT + '\n' +
-            'Roles:     ' + rolesm + '\n' +
-            'Muted:     ' + mute + '\n' +
-            'Deafened:  ' + deaf + '\n\n' +
-            'Joined:    ' + join + '\n' +
-            'Avatar:    ' + avatarL
-        if (cl) {
-            return message
-        } else {
-            messageSend(channelID, message, true, 'xl')
-        }
-    })
 }
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
@@ -1580,13 +1577,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 5) {
                 try {
-                    whoSelf = whoIs(channelID, serverID, user, true)
                     setTimeout(function() {
-                        messageSend(channelID, whoSelf + '\n' +
-                            "Messages Sent:         " + storage.d.Users[user].messageCnt + '\n' +
-                            "Links Sent:            " + storage.d.Users[user].linkCnt + '\n' +
-                            "Total Time Idle:       " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
-                            "Total Time Offline:    " +
+                        messageSend(channelID, whoIs(channelID, serverID, user, true) + '\n' +
+                            "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
+                            "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
+                            "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
+                            "Total Time Offline:  " +
                             storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
                     }, 1000);
                 } catch (e) {
