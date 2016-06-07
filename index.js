@@ -970,8 +970,8 @@ function whoIs(channelID, serverID, name) {
     }
     console.log(avatar)
     console.log(userID)
-    avatar = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
-    console.log(avatar)
+    avatarL = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
+    console.log(avatarL)
     message = '' +
         'Name:      ' + userN + '#' + discriminator + '\n' +
         'Nick:      ' + nick + '\n' +
@@ -1005,6 +1005,7 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
             }
         } else {
             if (body.status_txt === 'OK') {
+                console.log(body)
                 return body
             } else {
                 return body.status_txt
