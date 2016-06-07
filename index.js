@@ -958,9 +958,9 @@ function whoIs(channelID, serverID, name) {
         rolesm = 'everyone, '
         for (var i = 0; i < roles.length; i++) {
             if (i !== roles.length - 1) {
-                rolesm = rolesm + roles[i] + ', '
+                rolesm = rolesm + roles[i].name + ', '
             } else {
-                rolesm = rolesm + roles[i]
+                rolesm = rolesm + roles[i].name
             }
         }
     } else {
