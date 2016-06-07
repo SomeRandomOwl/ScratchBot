@@ -1583,13 +1583,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     setTimeout(function() {
                         statW = whoIs(channelID, serverID, user, true)
                         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
-                        console.log(wLink)
                         whoRest = statW.substring(0, statW.indexOf('Avatar'))
-                        console.log(whoRest)
                         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
                             body = JSON.parse(body)
-                            statw = whoRest + '\n' + body.data.url
-                            messageSend(channelID, statW + '\n\n' +
+                            thing = whoRest + '\n' + body.data.url
+                            messageSend(channelID, thing + '\n\n' +
                                 "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
                                 "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
                                 "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
