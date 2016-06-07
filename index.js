@@ -968,27 +968,23 @@ function whoIs(channelID, serverID, name) {
         rolesm = 'everyone'
     }
 
-    avatarL = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
-    console.log('First ' + avatarL)
-    setTimeout(function() {
-        request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
-            body = JSON.parse(body)
-            avatarL = body.data.url
-            message = '' +
-                'Name:      ' + userN + '#' + discriminator + '\n' +
-                'Nick:      ' + nick + '\n' +
-                'ID:        ' + userID + '\n\n' +
-                'Status:    ' + status + '\n' +
-                'Bot:       ' + botT + '\n' +
-                'Roles:     ' + rolesm + '\n' +
-                'Muted:     ' + mute + '\n' +
-                'Deafened:  ' + deaf + '\n\n' +
-                'Joined:    ' + join + '\n' +
-                'Avatar:    ' + avatarL
+    request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg' + '&access_token=' + config.bitLy, function(error, response, body) {
+        body = JSON.parse(body)
+        avatarL = body.data.url
+        message = '' +
+            'Name:      ' + userN + '#' + discriminator + '\n' +
+            'Nick:      ' + nick + '\n' +
+            'ID:        ' + userID + '\n\n' +
+            'Status:    ' + status + '\n' +
+            'Bot:       ' + botT + '\n' +
+            'Roles:     ' + rolesm + '\n' +
+            'Muted:     ' + mute + '\n' +
+            'Deafened:  ' + deaf + '\n\n' +
+            'Joined:    ' + join + '\n' +
+            'Avatar:    ' + avatarL
 
-            messageSend(channelID, message, true, 'xl')
-        })
-    }, 100);
+        messageSend(channelID, message, true, 'xl')
+    })
 }
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
@@ -1919,7 +1915,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     } else if (rconcmd === "Yes" && ignore !== true) {
         if (ignore !== true) {
-            logger.info(chalk.gray('Last Message User: ' + user + ' |IDs: ' + ' ' + userID + '/' + channelID + ' | Reconized command?: ' + rconcmd + ' |\n Message: ' + message));
+            logger.info(chalk.gray('Last Message User: ' + user + ' |IDs: ' + ' ' + userID + '/' + channelID + ' |\n Message: ' + message));
         }
     }
 });
