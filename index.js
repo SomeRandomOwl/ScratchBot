@@ -958,16 +958,15 @@ function whoIs(channelID, serverID, name) {
         rolesm = 'everyone, '
         for (var i = 0; i < roles.length; i++) {
             if (i !== roles.length - 1) {
-                console.log(roles[i].name)
-                rolesm = rolesm + roles[i].name + ', '
+                rolesm = rolesm + bot.server[serverID].roles[roles[i]] + ', '
             } else {
-                console.log(roles[i].name)
-                rolesm = rolesm + roles[i].name
+                rolesm = rolesm + bot.server[serverID].roles[roles[i]]
             }
         }
     } else {
         rolesm = 'everyone'
     }
+
     avatarL = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
     console.log('First ' + avatarL)
     setTimeout(function() {
