@@ -971,8 +971,8 @@ function whoIs(channelID, serverID, name) {
 
     avatar = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
 
-    if (nick !== undefined) {
-        if (bot === false) {
+    if (nick !== null) {
+        if (bot === 'false') {
             console.log('1')
             message = '' +
                 'Name:      ' + userN + '#' + discriminator + ';\n' +
@@ -1000,7 +1000,7 @@ function whoIs(channelID, serverID, name) {
         }
     } else {
         console.log('3')
-        if (bot === false) {
+        if (bot === 'false') {
             message = '' +
                 'Name:      ' + userN + '#' + discriminator + '\n' +
                 'ID:        ' + userID + '\n\n' +
