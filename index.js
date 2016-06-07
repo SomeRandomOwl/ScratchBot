@@ -1165,7 +1165,7 @@ bot.on('debug', function(rawEvent) {
         }
     }
     if (rawEvent.t === "CHANNEL_CREATE") {
-        console.log(rawEvent)
+        /*console.log(rawEvent)
         var name = rawEvent.d.name
         var channelID = rawEvent.d.id
         var type = rawEvent.d.type
@@ -1174,7 +1174,8 @@ bot.on('debug', function(rawEvent) {
             "id": channelID,
             "type": type,
             "messageCnt": 0,
-        }
+        }*/
+        channellist()
     }
     if (rawEvent.t === "CHANNEL_UPDATE") {
         sname = bot.servers[rawEvent.d.guild_id].name
