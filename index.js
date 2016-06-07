@@ -913,7 +913,7 @@ function unShorten(channelID, userID, url) {
 function stats(channelID, name, rawEvent) {
     try {
         if (name.toLowerCase().indexOf('<@') === -1) {
-            statW = whoIs(channelID, serverID, user, true)
+            statW = whoIs(channelID, serverID, name, true)
             wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
             whoRest = statW.substring(0, statW.indexOf('Avatar'))
             request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
