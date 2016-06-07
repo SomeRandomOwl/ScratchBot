@@ -969,9 +969,9 @@ function whoIs(channelID, serverID, name) {
         rolesm = 'everyone'
     }
     avatarL = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
-    console.log(avatarL)
+    console.log('First ' + avatarL)
     setTimeout(function() {
-        console.log(avatarL)
+        console.log('Second ' + avatarL)
         message = '' +
             'Name:      ' + userN + '#' + discriminator + '\n' +
             'Nick:      ' + nick + '\n' +
