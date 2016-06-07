@@ -994,6 +994,9 @@ function shorten(cl, ulink, channelID, userID, messageID, debug) {
         if (debug) {
             messageSend(channelID, body, true, 'json')
         }
+        console.log(cl)
+        console.log(error)
+        console.log(response.statusCode)
         if (cl === false) {
             if (!error && response.statusCode === 200) {
                 if (body.status_txt === 'OK') {
