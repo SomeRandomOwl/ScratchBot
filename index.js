@@ -922,7 +922,7 @@ function stats(channelID, name, rawEvent) {
 
                 messageSend(channelID, thing + "\n\n" +
                     "Messages Sent:       " + storage.d.Users[name].messageCnt + '\n' +
-                    "Links Sent:          " + storage.d.Users[name].linkCnt + '\n +'
+                    "Links Sent:          " + storage.d.Users[name].linkCnt + '\n' +
                     "Total Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
                     "Total Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds", true, 'xl')
             })
