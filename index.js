@@ -1200,7 +1200,8 @@ bot.on('debug', function(rawEvent) {
         }
     }
     if (rawEvent.t === "CHANNEL_CREATE") {
-        var name = rawEvent.d.name
+	console.log(rawEvent)
+	var name = rawEvent.d.name
         var channelID = rawEvent.d.id
         var type = rawEvent.d.type
         var sname = rawEvent.d.guild_id
@@ -1521,6 +1522,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         message = message.replace(commandmod, '')
         if (message.toLowerCase().indexOf('ping') === 0 && ignore !== true) {
             messageSend(channelID, 'pong')
+	    rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('help') === 0 && ignore !== true) {
 
@@ -1624,7 +1626,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('ignore') !== -1) {
+        if (message.toLowerCase().indexOf('ignore') === 0) {
             var igcmd = message
             var igcall = igcmd.replace('ignore ', '')
             if (userID.indexOf(ownerId) === 0) {
@@ -1867,9 +1869,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 messageSend(channelID, '<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
             }
             rconcmd = 'Yes'
-        } else if (rconcmd === 'no') {
-            logger.info(commandmod + ' was said but there was No Detected command');
         }
+	else {
+	    if (rconcmd === 'No') {
+		//clever(channelID,userID,message)
+	    }
+	}
     }
     if (channelID === '164845697508704257') {
         if (message.indexOf('#') !== -1) {
@@ -1953,16 +1958,6 @@ var rl = readline.createInterface({
     output: process.stdout,
     terminal: true
 });
-rl.setPrompt(chalk.magenta('Scratch ') + '> ');
-setTimeout(function() {
-    rl.prompt();
-}, 2000)
 rl.on('line', function(line) {
     consoleparse(line);
-    setTimeout(function() {
-        rl.prompt();
-    }, 200)
-}).on('close', () => {
-    console.log('Have a great day!');
-    process.exit(0);
 })
