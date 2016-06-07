@@ -968,7 +968,7 @@ function whoIs(channelID, serverID, name, cl) {
         rolesm = 'everyone'
     }
 
-    request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg' + '&access_token=' + config.bitLy, function(error, response, body) {
+    request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + 'https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg' + '&access_token=' + config.bitLy, function(error, response, body) {
         body = JSON.parse(body)
         avatarL = body.data.url
         message = '' +
@@ -1580,12 +1580,15 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 5) {
                 try {
-                    messageSend(channelID, whoIs(channelID, serverID, user, true) + '\n' +
-                        "Messages Sent:         " + storage.d.Users[user].messageCnt + '\n' +
-                        "Links Sent:            " + storage.d.Users[user].linkCnt + '\n' +
-                        "Total Time Idle:       " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
-                        "Total Time Offline:    " +
-                        storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
+                    whoSelf = whoIs(channelID, serverID, user, true)
+                    setTimeout(function() {
+                        messageSend(channelID, whoSelf + '\n' +
+                            "Messages Sent:         " + storage.d.Users[user].messageCnt + '\n' +
+                            "Links Sent:            " + storage.d.Users[user].linkCnt + '\n' +
+                            "Total Time Idle:       " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
+                            "Total Time Offline:    " +
+                            storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
+                    }, 1000);
                 } catch (e) {
                     messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
                 }
