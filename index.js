@@ -970,7 +970,7 @@ function whoIs(channelID, serverID, name) {
     avatar = shorten(true, 'https://discordapp.com/api/users' + userID + '/avatars/' + avatar + '.jpg')
 
     if (nick !== undefined) {
-        if (bot === undefined) {
+        if (bot === false) {
             message = '' +
                 'Name:      ' + userN + '#' + discriminator + ';\n' +
                 'Nick:      ' + nick + '\n' +
@@ -987,7 +987,7 @@ function whoIs(channelID, serverID, name) {
                 'Nick:      ' + nick + '\n' +
                 'ID:        ' + userID + '\n\n' +
                 'Status:    ' + status + '\n' +
-                'Bot:       ' + bot + '\n' +
+                'Bot:       ' + botT + '\n' +
                 'Roles:     ' + roles + '\n' +
                 'Muted:     ' + mute + '\n' +
                 'Deafened:  ' + deaf + '\n\n' +
@@ -995,7 +995,7 @@ function whoIs(channelID, serverID, name) {
                 'Avatar:    ' + avatar
         }
     } else {
-        if (bot === undefined) {
+        if (bot === false) {
             message = '' +
                 'Name:      ' + userN + '#' + discriminator + '\n' +
                 'ID:        ' + userID + '\n\n' +
@@ -1010,7 +1010,7 @@ function whoIs(channelID, serverID, name) {
                 'Name:      ' + userN + '#' + discriminator + '\n' +
                 'ID:        ' + userID + '\n\n' +
                 'Status:    ' + status + '\n' +
-                'Bot:       ' + bot + '\n' +
+                'Bot:       ' + botT + '\n' +
                 'Roles:     ' + roles + '\n' +
                 'Muted:     ' + mute + '\n' +
                 'Deafened:  ' + deaf + '\n\n' +
