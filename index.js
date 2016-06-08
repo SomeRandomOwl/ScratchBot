@@ -981,7 +981,7 @@ function whoIs(channelID, serverID, name, cl) {
                 roleN = roleN.replace(' ', '')
                 rolesm = rolesm + roleN + ', '
             } else {
-                roleN bot.servers[serverID].roles[roles[i]].name
+                roleN = bot.servers[serverID].roles[roles[i]].name
                 roleN = roleN.replace(' ', '')
                 rolesm = rolesm + roleN
             }
