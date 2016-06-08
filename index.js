@@ -957,20 +957,21 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
 }
 /*/WhoIs/*/
 function whoIs(channelID, serverID, name, cl) {
-    userID = storage.d.Users[name].id
-    roles = bot.servers[serverID].members[userID].roles
-    nick = bot.servers[serverID].members[userID].nick
-    mute = bot.servers[serverID].members[userID].mute
-    deaf = bot.servers[serverID].members[userID].deaf
-    join = bot.servers[serverID].members[userID].joined_at
-    status = bot.servers[serverID].members[userID].status
-    userN = bot.users[userID].username
-    discriminator = bot.users[userID].discriminator
-    avatar = bot.users[userID].avatar
-    botT = bot.users[userID].bot
-    game = bot.users[userID].game
-
-    botT = JSON.stringify(botT)
+    try {
+        userID = storage.d.Users[name].id
+        roles = bot.servers[serverID].members[userID].roles
+        nick = bot.servers[serverID].members[userID].nick
+        mute = bot.servers[serverID].members[userID].mute
+        deaf = bot.servers[serverID].members[userID].deaf
+        join = bot.servers[serverID].members[userID].joined_at
+        status = bot.servers[serverID].members[userID].status
+        userN = bot.users[userID].username
+        discriminator = bot.users[userID].discriminator
+        avatar = bot.users[userID].avatar
+        botT = bot.users[userID].bot
+        game = bot.users[userID].game
+        botT = JSON.stringify(botT)
+    } catch (e) { /**/ }
 
     if (roles.length !== 0) {
         rolesm = 'everyone, '
