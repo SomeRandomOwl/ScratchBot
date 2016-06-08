@@ -913,7 +913,6 @@ function unShorten(channelID, userID, url) {
 function stats(channelID, name, rawEvent, channelID, serverID) {
     /*try {*/
     if (name.toLowerCase().indexOf('<@') === -1) {
-        console.log('this')
         statW = whoIs(channelID, serverID, name, true)
         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
@@ -928,7 +927,6 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                 "Total Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds", true, 'xl')
         })
     } else {
-        console.log('that')
         var name = rawEvent.d.mentions[0].username
             /*for (var usern in storage.d.Users) {
             if (mentId === storage.d.Users[usern].id) {*/
