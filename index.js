@@ -977,18 +977,23 @@ function whoIs(channelID, serverID, name, cl) {
         rolesm = 'everyone, '
         for (var i = 0; i < roles.length; i++) {
             if (i !== roles.length - 1) {
-                rolesm = rolesm + bot.servers[serverID].roles[roles[i]].name + ', '
+                roleN = bot.servers[serverID].roles[roles[i]].name
+                roleN = roleN.replace(' ', '')
+                rolesm = rolesm + roleN + ', '
             } else {
-                rolesm = rolesm + bot.servers[serverID].roles[roles[i]].name
+                roleN bot.servers[serverID].roles[roles[i]].name
+                roleN = roleN.replace(' ', '')
+                rolesm = rolesm + roleN
             }
         }
     } else {
         rolesm = 'everyone'
     }
+
     avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
     message = '' +
         'Name:      ' + userN + '#' + discriminator + '\n' +
-        'Nick:      ' + nick + '\n' +
+        'Nickname:  ' + nick + '\n' +
         'ID:        ' + userID + '\n\n' +
         'Status:    ' + status + '\n' +
         'Bot:       ' + botT + '\n' +
