@@ -566,7 +566,7 @@ function status(statuscall, channelID, rawEvent) {
             if (status === 'idle') {
                 rawLastSeen = storage.d.Users[statuscall].rawLastSeen
                 var ltsmsg = storage.d.Users[statuscall].lastseen
-                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
                 var timeIdle = gettime() - rawLastSeen
                 timeIdle = secondsToTime(timeIdle)
                 if (timeIdle.h === 0) {
@@ -592,7 +592,7 @@ function status(statuscall, channelID, rawEvent) {
             } else if (status === 'offline') {
                 rawLastSeen = storage.d.Users[statuscall].rawLastSeen
                 var ltsmsg = storage.d.Users[statuscall].lastseen
-                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
                 var timeIdle = gettime() - rawLastSeen
                 timeIdle = secondsToTime(timeIdle)
                 if (timeIdle.h === 0) {
@@ -628,7 +628,7 @@ function status(statuscall, channelID, rawEvent) {
                     if (status === 'idle') {
                         rawLastSeen = storage.d.Users[usern].rawLastSeen
                         var ltsmsg = storage.d.Users[usern].lastseen
-                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
                         var timeIdle = gettime() - rawLastSeen
                         timeIdle = secondsToTime(timeIdle)
                         if (timeIdle.h === 0) {
@@ -654,7 +654,7 @@ function status(statuscall, channelID, rawEvent) {
                     } else if (status === 'offline') {
                         rawLastSeen = storage.d.Users[usern].rawLastSeen
                         var ltsmsg = storage.d.Users[usern].lastseen
-                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, HH:mm:ss']).format('MMMM Do YYYY, h:mm:ss a')
+                        ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
                         var timeIdle = gettime() - rawLastSeen
                         timeIdle = secondsToTime(timeIdle)
                         if (timeIdle.h === 0) {
@@ -1239,7 +1239,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         }
         if (status === 'offline') {
             if (user !== undefined) {
-                var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
+                var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
                 storage.d.Users[user].lastseen = lastseen
                 storage.d.Users[user].rawLastSeen = gettime()
                 if (storage.d.Users[user].status !== 'offline' && verb) {
@@ -1247,7 +1247,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 }
                 storage.d.Users[user].status = status
             } else if (user === undefined) {
-                var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
+                var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
                 storage.d.Users[user].rawLastSeen = gettime()
                 for (var user in storage.d.Users) {
                     if (userID === storage.d.Users[user].id) {
@@ -1264,7 +1264,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             }
         }
         if (status === 'idle') {
-            var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
+            var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
             storage.d.Users[user].lastseen = lastseen
             storage.d.Users[user].rawLastSeen = gettime()
             if (storage.d.Users[user].status !== 'idle' && verb) {
@@ -1273,7 +1273,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             storage.d.Users[user].status = status
         }
         if (status === 'online') {
-            var lastseen = moment().format('MMMM Do YYYY, HH:mm:ss')
+            var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
             usrStatus = storage.d.Users[user].status
             if (usrStatus === 'idle') {
                 var usrStatIdle = storage.d.Users[user].totalIdle
@@ -1406,7 +1406,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         writeJSON('./assets/storage', storage)
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
-        var timeAt = moment().format('MMMM Do YYYY, HH:mm:ss')
+        var timeAt = moment().format('MMMM Do YYYY, hh:mm:ss a')
         logger.info(chalk.gray("Link Posted, logging to file"))
         if (message.indexOf(' ', message.indexOf('http')) === -1) {
             var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'))
