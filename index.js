@@ -924,7 +924,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                 "Messages Sent:       " + storage.d.Users[name].messageCnt + '\n' +
                 "Links Sent:          " + storage.d.Users[name].linkCnt + '\n' +
                 "Total Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
-                "Total Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds", true, 'xl')
+                "Total Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n", true, 'xl')
         })
     } else {
         var name = rawEvent.d.mentions[0].username
@@ -941,7 +941,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                 "Messages Sent:       " + storage.d.Users[name].messageCnt + '\n' +
                 "Links Sent:          " + storage.d.Users[name].linkCnt + '\n' +
                 "Total Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
-                "Total Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds", true, 'xl')
+                "Total Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n", true, 'xl')
         })
         /*} else {
                 continue
@@ -1608,7 +1608,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
                             "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
                             "Total Time Offline:  " +
-                            storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
+                            storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds\n\n", true, 'xl', true, userID)
                     })
                 } catch (e) {
                     messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
