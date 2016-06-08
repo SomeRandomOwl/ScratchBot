@@ -957,242 +957,241 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
 }
 /*/WhoIs/*/
 function whoIs(channelID, serverID, name, cl) {
-    function whoIs(channelID, serverID, name, cl) {
-        try {
-            userID = storage.d.Users[name].id
-            roles = bot.servers[serverID].members[userID].roles
-            nick = bot.servers[serverID].members[userID].nick
-            mute = bot.servers[serverID].members[userID].mute
-            deaf = bot.servers[serverID].members[userID].deaf
-            join = bot.servers[serverID].members[userID].joined_at
-            status = bot.servers[serverID].members[userID].status
-            userN = bot.users[userID].username
-            discriminator = bot.users[userID].discriminator
-            avatar = bot.users[userID].avatar
-            botT = bot.users[userID].bot
-            game = bot.users[userID].game
-            botT = JSON.stringify(botT)
-        } catch (e) { /**/ }
+    try {
+        userID = storage.d.Users[name].id
+        roles = bot.servers[serverID].members[userID].roles
+        nick = bot.servers[serverID].members[userID].nick
+        mute = bot.servers[serverID].members[userID].mute
+        deaf = bot.servers[serverID].members[userID].deaf
+        join = bot.servers[serverID].members[userID].joined_at
+        status = bot.servers[serverID].members[userID].status
+        userN = bot.users[userID].username
+        discriminator = bot.users[userID].discriminator
+        avatar = bot.users[userID].avatar
+        botT = bot.users[userID].bot
+        game = bot.users[userID].game
+        botT = JSON.stringify(botT)
+    } catch (e) { /**/ }
 
-        if (roles.length !== 0) {
-            rolesm = 'everyone, '
-            for (var i = 0; i < roles.length; i++) {
-                if (i !== roles.length - 1) {
-                    roleN = bot.servers[serverID].roles[roles[i]].name
-                    roleN = roleN.replace(' ', '')
-                    rolesm = rolesm + roleN + ', '
+    if (roles.length !== 0) {
+        rolesm = 'everyone, '
+        for (var i = 0; i < roles.length; i++) {
+            if (i !== roles.length - 1) {
+                roleN = bot.servers[serverID].roles[roles[i]].name
+                roleN = roleN.replace(' ', '')
+                rolesm = rolesm + roleN + ', '
+            } else {
+                roleN = bot.servers[serverID].roles[roles[i]].name
+                roleN = roleN.replace(' ', '')
+                rolesm = rolesm + roleN
+            }
+        }
+    } else {
+        rolesm = 'everyone'
+    }
+
+    avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
+    message = '' +
+        'Name:      ' + userN + '#' + discriminator + '\n' +
+        'Nickname:  ' + nick + '\n' +
+        'ID:        ' + userID + '\n\n' +
+        'Status:    ' + status + '\n' +
+        'Bot:       ' + botT + '\n' +
+        'Roles:     ' + rolesm + '\n' +
+        'Muted:     ' + mute + '\n' +
+        'Deafened:  ' + deaf + '\n\n' +
+        'Joined:    ' + join + '\n' +
+        'Avatar:    ' + avatarL
+    if (cl) {
+        return message
+    } else {
+        messageSend(channelID, message, true, 'xl')
+    }
+}
+/*/Url shortener/*/
+function shorten(cl, ulink, channelID, userID, messageID, debug) {
+    request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
+        messageDelete(channelID, messageID)
+        body = JSON.parse(body)
+        if (debug) {
+            messageSend(channelID, body, true, 'json')
+        }
+        console.log(cl)
+        console.log(error)
+        console.log(response.statusCode)
+        if (cl === false) {
+            if (!error && response.statusCode === 200) {
+                if (body.status_txt === 'OK') {
+                    messageSend(channelID, '<@' + userID + '> Here is a short url: ' + body.data.url)
                 } else {
-                    roleN = bot.servers[serverID].roles[roles[i]].name
-                    roleN = roleN.replace(' ', '')
-                    rolesm = rolesm + roleN
+                    console.log(body)
+                    messageSend(channelID, '<@' + userID + '> There was a error processing that url')
                 }
             }
         } else {
-            rolesm = 'everyone'
+            if (body.status_txt === 'OK') {
+                console.log(body)
+                prevUrl = body.data.url
+                return body.data.url
+            } else {
+                return body.status_txt
+            }
         }
-
-        avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
-        message = '' +
-            'Name:      ' + userN + '#' + discriminator + '\n' +
-            'Nickname:  ' + nick + '\n' +
-            'ID:        ' + userID + '\n\n' +
-            'Status:    ' + status + '\n' +
-            'Bot:       ' + botT + '\n' +
-            'Roles:     ' + rolesm + '\n' +
-            'Muted:     ' + mute + '\n' +
-            'Deafened:  ' + deaf + '\n\n' +
-            'Joined:    ' + join + '\n' +
-            'Avatar:    ' + avatarL
-        if (cl) {
-            return message
-        } else {
-            messageSend(channelID, message, true, 'xl')
-        }
+    })
+}
+/*/Title Case/*/
+function toTitleCase(str) {
+    return str.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+/*/Sentance Case/*/
+function toSentenceCase(string) {
+    var n = string.split(".");
+    var vfinal = ""
+    for (i = 0; i < n.length; i++) {
+        var spaceput = ""
+        var spaceCount = n[i].replace(/^(\s*).*$/, "$1").length;
+        n[i] = n[i].replace(/^\s+/, "");
+        var newstring = n[i].charAt(n[i]).toUpperCase() + n[i].slice(1);
+        for (j = 0; j < spaceCount; j++)
+            spaceput = spaceput + " ";
+        vfinal = vfinal + spaceput + newstring + ".";
     }
-    /*/Url shortener/*/
-    function shorten(cl, ulink, channelID, userID, messageID, debug) {
-        request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
-            messageDelete(channelID, messageID)
+    vfinal = vfinal.substring(0, vfinal.length - 1);
+    return vfinal
+}
+/*/Word!/*/
+function wordNik(cl, channelID, userID, word, type, debug) {
+    if (type === 'def') {
+        request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&includeRelated=false&sourceDictionaries=webster%2Ccentury%2Cwiktionary%2Cahd%2Cwordnet&useCanonical=false&includeTags=false&api_key=' + config.wordNik, function(error, response, body) {
             body = JSON.parse(body)
+            console.log(body)
+            if (debug) {
+                messageSend(channelID, body, true, 'json', true, userID)
+            }
+            try {
+                for (var semi = 0; semi > -1;) {
+                    body[0].text = body[0].text.replace(';', '.')
+                    semi = body[0].text.indexOf(';')
+                }
+            } catch (e) {
+                /*/*/
+            }
+            if (cl === false) {
+                try {
+                    if (!error && response.statusCode === 200) {
+                        messageSend(channelID, 'Word: ' + toSentenceCase(body[0].word) + ';\n\n' +
+                            'PartofSpeech: ' + body[0].partOfSpeech + ';\n' +
+                            'Definition: ' + body[0].text + ';', true, 'css', true, userID)
+                    }
+                } catch (e) {
+                    messageSend(channelID, "Bad word!", false, null, true, userID)
+                }
+            } else {
+                return body
+            }
+        })
+    } else if (type === 'wotd') {
+        request('http://api.wordnik.com:80/v4/words.json/wordOfTheDay?api_key=' + config.wordNik, function(error, response, body) {
+            body = JSON.parse(body)
+            for (var semi = 0; semi > -1;) {
+                body.examples[0].text = body.examples[0].text.replace(';', '.')
+                semi = body.examples[0].text.indexOf(';')
+            }
             if (debug) {
                 messageSend(channelID, body, true, 'json')
             }
-            console.log(cl)
-            console.log(error)
-            console.log(response.statusCode)
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
-                    if (body.status_txt === 'OK') {
-                        messageSend(channelID, '<@' + userID + '> Here is a short url: ' + body.data.url)
-                    } else {
-                        console.log(body)
-                        messageSend(channelID, '<@' + userID + '> There was a error processing that url')
-                    }
+
+                    messageSend(channelID, 'Word: ' + toSentenceCase(body.word) + ';\n\n' +
+                        'PartOfSpeech: ' + body.definitions[0].partOfSpeech + ';\n' +
+                        'Definition: ' + body.definitions[0].text + ';\n\n' +
+                        'ExampleUseage: ' + body.examples[0].text + ';\n' +
+                        'CitedFrom: ' + body.examples[0].title + ';\n\n' +
+                        'Url: ' + body.examples[0].url + ';', true, 'css', true, userID)
                 }
             } else {
-                if (body.status_txt === 'OK') {
-                    console.log(body)
-                    prevUrl = body.data.url
-                    return body.data.url
-                } else {
-                    return body.status_txt
-                }
+                return body
             }
         })
     }
-    /*/Title Case/*/
-    function toTitleCase(str) {
-        return str.replace(/\w\S*/g, function(txt) {
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+}
+/*/File Upload/*/
+function fileU(channelID, userID, file) {
+    try {
+        bot.uploadFile({
+            to: channelID,
+            file: file,
+            filename: file,
+            message: "<@" + userID + "> Heres that file"
         });
+        return "Sucess"
+    } catch (e) {
+        return "There was a error with that"
     }
-    /*/Sentance Case/*/
-    function toSentenceCase(string) {
-        var n = string.split(".");
-        var vfinal = ""
-        for (i = 0; i < n.length; i++) {
-            var spaceput = ""
-            var spaceCount = n[i].replace(/^(\s*).*$/, "$1").length;
-            n[i] = n[i].replace(/^\s+/, "");
-            var newstring = n[i].charAt(n[i]).toUpperCase() + n[i].slice(1);
-            for (j = 0; j < spaceCount; j++)
-                spaceput = spaceput + " ";
-            vfinal = vfinal + spaceput + newstring + ".";
+}
+var startUpTime = null
+    /* Bot on event functions */
+bot.on('ready', function() {
+    logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
+    startUpTime = gettime()
+    serverlist(false, true)
+    channellist(false, true)
+    userlist(false, true)
+    logger.info(chalk.magenta(bot.username + " -- (" + bot.id + ")" + " Is now running"))
+    statusmsg("help | info | invite")
+});
+bot.on('debug', function(rawEvent) {
+    try {
+        var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].settings.announceChan
+    } catch (e) {
+        announceID = null
+    }
+    if (rawEvent.t === "MESSAGE_UPDATE") {
+        //console.log(chalk.gray(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
+    }
+    if (rawEvent.t === "GUILD_MEMBER_ADD") {
+        var name = rawEvent.d.user.username
+        var userID = rawEvent.d.user.id
+        storage.d.Users[name] = {
+            "id": userID,
+            "messageCnt": 0,
+            "linkCnt": 0,
+            "status": "unknown",
+            "lastseen": "unknown"
         }
-        vfinal = vfinal.substring(0, vfinal.length - 1);
-        return vfinal
-    }
-    /*/Word!/*/
-    function wordNik(cl, channelID, userID, word, type, debug) {
-        if (type === 'def') {
-            request('http://api.wordnik.com:80/v4/word.json/' + word + '/definitions?limit=1&includeRelated=false&sourceDictionaries=webster%2Ccentury%2Cwiktionary%2Cahd%2Cwordnet&useCanonical=false&includeTags=false&api_key=' + config.wordNik, function(error, response, body) {
-                body = JSON.parse(body)
-                console.log(body)
-                if (debug) {
-                    messageSend(channelID, body, true, 'json', true, userID)
-                }
-                try {
-                    for (var semi = 0; semi > -1;) {
-                        body[0].text = body[0].text.replace(';', '.')
-                        semi = body[0].text.indexOf(';')
-                    }
-                } catch (e) {
-                    /*/*/
-                }
-                if (cl === false) {
-                    try {
-                        if (!error && response.statusCode === 200) {
-                            messageSend(channelID, 'Word: ' + toSentenceCase(body[0].word) + ';\n\n' +
-                                'PartofSpeech: ' + body[0].partOfSpeech + ';\n' +
-                                'Definition: ' + body[0].text + ';', true, 'css', true, userID)
-                        }
-                    } catch (e) {
-                        messageSend(channelID, "Bad word!", false, null, true, userID)
-                    }
-                } else {
-                    return body
-                }
-            })
-        } else if (type === 'wotd') {
-            request('http://api.wordnik.com:80/v4/words.json/wordOfTheDay?api_key=' + config.wordNik, function(error, response, body) {
-                body = JSON.parse(body)
-                for (var semi = 0; semi > -1;) {
-                    body.examples[0].text = body.examples[0].text.replace(';', '.')
-                    semi = body.examples[0].text.indexOf(';')
-                }
-                if (debug) {
-                    messageSend(channelID, body, true, 'json')
-                }
-                if (cl === false) {
-                    if (!error && response.statusCode === 200) {
-
-                        messageSend(channelID, 'Word: ' + toSentenceCase(body.word) + ';\n\n' +
-                            'PartOfSpeech: ' + body.definitions[0].partOfSpeech + ';\n' +
-                            'Definition: ' + body.definitions[0].text + ';\n\n' +
-                            'ExampleUseage: ' + body.examples[0].text + ';\n' +
-                            'CitedFrom: ' + body.examples[0].title + ';\n\n' +
-                            'Url: ' + body.examples[0].url + ';', true, 'css', true, userID)
-                    }
-                } else {
-                    return body
-                }
-            })
+        if (announceID !== null) {
+            messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to " + bot.servers[rawEvent.d.guild_id].name + "!")
         }
     }
-    /*/File Upload/*/
-    function fileU(channelID, userID, file) {
-        try {
-            bot.uploadFile({
-                to: channelID,
-                file: file,
-                filename: file,
-                message: "<@" + userID + "> Heres that file"
-            });
-            return "Sucess"
-        } catch (e) {
-            return "There was a error with that"
+    if (rawEvent.t === "GUILD_MEMBER_REMOVE") {
+        var name = rawEvent.d.user.username
+        var userID = rawEvent.d.user.id
+        if (announceID !== null) {
+            messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just left the server! :cold_sweat:")
         }
     }
-    var startUpTime = null
-        /* Bot on event functions */
-    bot.on('ready', function() {
-        logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
-        startUpTime = gettime()
-        serverlist(false, true)
-        channellist(false, true)
-        userlist(false, true)
-        logger.info(chalk.magenta(bot.username + " -- (" + bot.id + ")" + " Is now running"))
-        statusmsg("help | info | invite")
-    });
-    bot.on('debug', function(rawEvent) {
-        try {
-            var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].settings.announceChan
-        } catch (e) {
-            announceID = null
-        }
-        if (rawEvent.t === "MESSAGE_UPDATE") {
-            //console.log(chalk.gray(rawEvent.d.username + " Edited a message, it now reads: " + rawEvent.d.content))
-        }
-        if (rawEvent.t === "GUILD_MEMBER_ADD") {
-            var name = rawEvent.d.user.username
-            var userID = rawEvent.d.user.id
-            storage.d.Users[name] = {
-                "id": userID,
-                "messageCnt": 0,
-                "linkCnt": 0,
-                "status": "unknown",
-                "lastseen": "unknown"
-            }
-            if (announceID !== null) {
-                messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to " + bot.servers[rawEvent.d.guild_id].name + "!")
+    if (rawEvent.t === "GUILD_CREATE") {
+        var name = rawEvent.d.name
+        var serverID = rawEvent.d.id
+        var SownerId = rawEvent.d.owner_id
+        if (storage.d.Servers[name] === undefined) {
+            storage.d.Servers[name] = {
+                'id': serverID,
+                'messageCnt': 0,
+                'settings': {
+                    'announceChan': null,
+                    'verb': false
+                },
+                'SownerId': SownerId,
+                'Channels': {}
             }
         }
-        if (rawEvent.t === "GUILD_MEMBER_REMOVE") {
-            var name = rawEvent.d.user.username
-            var userID = rawEvent.d.user.id
-            if (announceID !== null) {
-                messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just left the server! :cold_sweat:")
-            }
-        }
-        if (rawEvent.t === "GUILD_CREATE") {
-            var name = rawEvent.d.name
-            var serverID = rawEvent.d.id
-            var SownerId = rawEvent.d.owner_id
-            if (storage.d.Servers[name] === undefined) {
-                storage.d.Servers[name] = {
-                    'id': serverID,
-                    'messageCnt': 0,
-                    'settings': {
-                        'announceChan': null,
-                        'verb': false
-                    },
-                    'SownerId': SownerId,
-                    'Channels': {}
-                }
-            }
-        }
-        if (rawEvent.t === "CHANNEL_CREATE") {
-            /*console.log(rawEvent)
+    }
+    if (rawEvent.t === "CHANNEL_CREATE") {
+        /*console.log(rawEvent)
         var name = rawEvent.d.name
         var channelID = rawEvent.d.id
         var type = rawEvent.d.type
@@ -1202,189 +1201,189 @@ function whoIs(channelID, serverID, name, cl) {
             "type": type,
             "messageCnt": 0,
         }*/
-            channellist()
-        }
-        if (rawEvent.t === "CHANNEL_UPDATE") {
-            sname = bot.servers[rawEvent.d.guild_id].name
-            cID = rawEvent.d.id
-            newName = rawEvent.d.name
-            topic = rawEvent.d.topic
-            logger.info(chalk.gray("Channel just updated, Channel Name: " + newName + " Topic: " + topic))
-            for (var cname in storage.d.Servers[sname].Channels) {
-                if (storage.d.Servers[sname].Channels[cname].id === cID) {
-                    storage.d.Servers[sname].Channels[newName] = storage.d.Servers[sname].Channels[cname]
-                    storage.d.Servers[sname].Channels[newName].topic = topic
-                    delete storage.d.Servers[sname].Channels[cname]
-                }
+        channellist()
+    }
+    if (rawEvent.t === "CHANNEL_UPDATE") {
+        sname = bot.servers[rawEvent.d.guild_id].name
+        cID = rawEvent.d.id
+        newName = rawEvent.d.name
+        topic = rawEvent.d.topic
+        logger.info(chalk.gray("Channel just updated, Channel Name: " + newName + " Topic: " + topic))
+        for (var cname in storage.d.Servers[sname].Channels) {
+            if (storage.d.Servers[sname].Channels[cname].id === cID) {
+                storage.d.Servers[sname].Channels[newName] = storage.d.Servers[sname].Channels[cname]
+                storage.d.Servers[sname].Channels[newName].topic = topic
+                delete storage.d.Servers[sname].Channels[cname]
             }
         }
-    });
-    bot.on('disconnected', function() {
-        logger.error(chalk.red("Bot got disconnected, reconnecting"))
-        bot.connect()
-        logger.info(chalk.green("Reconnected"))
-    });
-    bot.on("presence", function(user, userID, status, gameName, rawEvent) {
-        var sname = bot.servers[rawEvent.d.guild_id].name
-        try {
-            var verb = storage.d.Servers[sname].settings.verb
-        } catch (e) {
-            verb = false
-            storage.d.Servers[sname].settings.verb = false
+    }
+});
+bot.on('disconnected', function() {
+    logger.error(chalk.red("Bot got disconnected, reconnecting"))
+    bot.connect()
+    logger.info(chalk.green("Reconnected"))
+});
+bot.on("presence", function(user, userID, status, gameName, rawEvent) {
+    var sname = bot.servers[rawEvent.d.guild_id].name
+    try {
+        var verb = storage.d.Servers[sname].settings.verb
+    } catch (e) {
+        verb = false
+        storage.d.Servers[sname].settings.verb = false
+    }
+    try {
+        if (storage.d.Users[user] === "undefined") {
+            storage.d.Users[user] = {
+                "id": userID,
+                "messageCnt": 0,
+                "linkCnt": 0,
+                "status": "unknown",
+                "lastseen": "unknown",
+                "rawLastSeen": 0
+            }
         }
-        try {
-            if (storage.d.Users[user] === "undefined") {
-                storage.d.Users[user] = {
-                    "id": userID,
-                    "messageCnt": 0,
-                    "linkCnt": 0,
-                    "status": "unknown",
-                    "lastseen": "unknown",
-                    "rawLastSeen": 0
-                }
-            }
-            if (status === 'offline') {
-                if (user !== undefined) {
-                    var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
-                    storage.d.Users[user].lastseen = lastseen
-                    storage.d.Users[user].rawLastSeen = gettime()
-                    if (storage.d.Users[user].status !== 'offline' && verb) {
-                        logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
-                    }
-                    storage.d.Users[user].status = status
-                } else if (user === undefined) {
-                    var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
-                    storage.d.Users[user].rawLastSeen = gettime()
-                    for (var user in storage.d.Users) {
-                        if (userID === storage.d.Users[user].id) {
-                            storage.d.Users[user].lastseen = lastseen
-                            storage.d.Users[user].rawLastSeen = gettime()
-                            if (storage.d.Users[user].status !== 'offline' && verb) {
-                                logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
-                            }
-                            storage.d.Users[user].status = status
-                        } else {
-                            continue
-                        }
-                    }
-                }
-            }
-            if (status === 'idle') {
+        if (status === 'offline') {
+            if (user !== undefined) {
                 var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
                 storage.d.Users[user].lastseen = lastseen
                 storage.d.Users[user].rawLastSeen = gettime()
-                if (storage.d.Users[user].status !== 'idle' && verb) {
-                    logger.info(chalk.gray(lastseen + ' : ' + chalk.yellow(user + " is now: " + chalk.underline(status))));
+                if (storage.d.Users[user].status !== 'offline' && verb) {
+                    logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                 }
                 storage.d.Users[user].status = status
-            }
-            if (status === 'online') {
+            } else if (user === undefined) {
                 var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
-                usrStatus = storage.d.Users[user].status
-                if (usrStatus === 'idle') {
-                    var usrStatIdle = storage.d.Users[user].totalIdle
-                        //console.log('prev idle')
-                    if (storage.d.Users[user].totalIdle === undefined) {
-                        storage.d.Users[user].totalIdle = {
-                            'd': 0,
-                            'h': 0,
-                            'm': 0,
-                            's': 0
+                storage.d.Users[user].rawLastSeen = gettime()
+                for (var user in storage.d.Users) {
+                    if (userID === storage.d.Users[user].id) {
+                        storage.d.Users[user].lastseen = lastseen
+                        storage.d.Users[user].rawLastSeen = gettime()
+                        if (storage.d.Users[user].status !== 'offline' && verb) {
+                            logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                         }
+                        storage.d.Users[user].status = status
                     } else {
-                        var lastIdleTime = storage.d.Users[user].totalIdle
-                        var previousIdle = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
-                        lastIdleTime.d = lastIdleTime.d + previousIdle.d
-                        lastIdleTime.h = lastIdleTime.h + previousIdle.h
-                        lastIdleTime.m = lastIdleTime.m + previousIdle.m
-                        lastIdleTime.s = lastIdleTime.s + previousIdle.s
-                        lastIdleTime.m = lastIdleTime.m * 60
-                        lastIdleTime.h = lastIdleTime.h * 3600
-                        lastIdleTimeC = lastIdleTime.m + lastIdleTime.s + lastIdleTime.h
-                        lastIdleTimeC = secondsToTime(lastIdleTimeC)
-                        lastIdleTime.d = lastIdleTime.d + lastIdleTimeC.d
-                        lastIdleTime.h = lastIdleTimeC.h
-                        lastIdleTime.m = lastIdleTimeC.m
-                        lastIdleTime.s = lastIdleTimeC.s
-                        storage.d.Users[user].totalIdle = lastIdleTime
-                        lastIdleTime = {}
-                        previousIdle = {}
-                    }
-                } else if (usrStatus === 'offline') {
-                    //console.log('prev Offline')
-                    var usrStatOff = storage.d.Users[user].totalOffline
-                    if (storage.d.Users[user].totalOffline === undefined) {
-                        storage.d.Users[user].totalOffline = {
-                            'd': 0,
-                            'h': 0,
-                            'm': 0,
-                            's': 0
-                        }
-                    } else {
-                        var lastOfflineTime = storage.d.Users[user].totalOffline
-                        var previousOffline = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
-                        lastOfflineTime.d = lastOfflineTime.d + previousOffline.d
-                        lastOfflineTime.h = lastOfflineTime.h + previousOffline.h
-                        lastOfflineTime.m = lastOfflineTime.m + previousOffline.m
-                        lastOfflineTime.s = lastOfflineTime.s + previousOffline.s
-                        lastOfflineTime.m = lastOfflineTime.m * 60
-                        lastOfflineTime.h = lastOfflineTime.h * 3600
-                        lastOfflineTimeC = lastOfflineTime.m + lastOfflineTime.s + lastOfflineTime.h
-                        lastOfflineTimeC = secondsToTime(lastOfflineTimeC)
-                        lastOfflineTime.d = lastOfflineTime.d + lastOfflineTimeC.d
-                        lastOfflineTime.h = lastOfflineTimeC.h
-                        lastOfflineTime.m = lastOfflineTimeC.m
-                        lastOfflineTime.s = lastOfflineTimeC.s
-                        storage.d.Users[user].totalOffline = lastOfflineTime
-                        lastOfflineTime = {}
-                        previousOffline = {}
+                        continue
                     }
                 }
-                if (storage.d.Users[user].status !== 'online' && verb) {
-                    logger.info(chalk.gray(lastseen + ' : ' + chalk.green(user + " is now: " + chalk.underline(status))));
-                }
-                storage.d.Users[user].status = status
             }
-        } catch (e) {
-            return
         }
+        if (status === 'idle') {
+            var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
+            storage.d.Users[user].lastseen = lastseen
+            storage.d.Users[user].rawLastSeen = gettime()
+            if (storage.d.Users[user].status !== 'idle' && verb) {
+                logger.info(chalk.gray(lastseen + ' : ' + chalk.yellow(user + " is now: " + chalk.underline(status))));
+            }
+            storage.d.Users[user].status = status
+        }
+        if (status === 'online') {
+            var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
+            usrStatus = storage.d.Users[user].status
+            if (usrStatus === 'idle') {
+                var usrStatIdle = storage.d.Users[user].totalIdle
+                    //console.log('prev idle')
+                if (storage.d.Users[user].totalIdle === undefined) {
+                    storage.d.Users[user].totalIdle = {
+                        'd': 0,
+                        'h': 0,
+                        'm': 0,
+                        's': 0
+                    }
+                } else {
+                    var lastIdleTime = storage.d.Users[user].totalIdle
+                    var previousIdle = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    lastIdleTime.d = lastIdleTime.d + previousIdle.d
+                    lastIdleTime.h = lastIdleTime.h + previousIdle.h
+                    lastIdleTime.m = lastIdleTime.m + previousIdle.m
+                    lastIdleTime.s = lastIdleTime.s + previousIdle.s
+                    lastIdleTime.m = lastIdleTime.m * 60
+                    lastIdleTime.h = lastIdleTime.h * 3600
+                    lastIdleTimeC = lastIdleTime.m + lastIdleTime.s + lastIdleTime.h
+                    lastIdleTimeC = secondsToTime(lastIdleTimeC)
+                    lastIdleTime.d = lastIdleTime.d + lastIdleTimeC.d
+                    lastIdleTime.h = lastIdleTimeC.h
+                    lastIdleTime.m = lastIdleTimeC.m
+                    lastIdleTime.s = lastIdleTimeC.s
+                    storage.d.Users[user].totalIdle = lastIdleTime
+                    lastIdleTime = {}
+                    previousIdle = {}
+                }
+            } else if (usrStatus === 'offline') {
+                //console.log('prev Offline')
+                var usrStatOff = storage.d.Users[user].totalOffline
+                if (storage.d.Users[user].totalOffline === undefined) {
+                    storage.d.Users[user].totalOffline = {
+                        'd': 0,
+                        'h': 0,
+                        'm': 0,
+                        's': 0
+                    }
+                } else {
+                    var lastOfflineTime = storage.d.Users[user].totalOffline
+                    var previousOffline = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    lastOfflineTime.d = lastOfflineTime.d + previousOffline.d
+                    lastOfflineTime.h = lastOfflineTime.h + previousOffline.h
+                    lastOfflineTime.m = lastOfflineTime.m + previousOffline.m
+                    lastOfflineTime.s = lastOfflineTime.s + previousOffline.s
+                    lastOfflineTime.m = lastOfflineTime.m * 60
+                    lastOfflineTime.h = lastOfflineTime.h * 3600
+                    lastOfflineTimeC = lastOfflineTime.m + lastOfflineTime.s + lastOfflineTime.h
+                    lastOfflineTimeC = secondsToTime(lastOfflineTimeC)
+                    lastOfflineTime.d = lastOfflineTime.d + lastOfflineTimeC.d
+                    lastOfflineTime.h = lastOfflineTimeC.h
+                    lastOfflineTime.m = lastOfflineTimeC.m
+                    lastOfflineTime.s = lastOfflineTimeC.s
+                    storage.d.Users[user].totalOffline = lastOfflineTime
+                    lastOfflineTime = {}
+                    previousOffline = {}
+                }
+            }
+            if (storage.d.Users[user].status !== 'online' && verb) {
+                logger.info(chalk.gray(lastseen + ' : ' + chalk.green(user + " is now: " + chalk.underline(status))));
+            }
+            storage.d.Users[user].status = status
+        }
+    } catch (e) {
+        return
+    }
 
-        writeJSON('./assets/storage', storage)
-    });
-    bot.on('message', function(user, userID, channelID, message, rawEvent) {
-        if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
-            var ignore = true
+    writeJSON('./assets/storage', storage)
+});
+bot.on('message', function(user, userID, channelID, message, rawEvent) {
+    if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
+        var ignore = true
+    }
+    rconcmd = 'No'
+    if (channelID in bot.directMessages) {
+        DM = true
+    } else {
+        DM = false
+    }
+    //Gets the message id and server id
+    var messageID = rawEvent.d.id
+    var serverID = bot.serverFromChannel(channelID)
+        //gets the server and channel name
+    try {
+        var cname = bot.servers[serverID].channels[channelID].name
+        var sname = bot.servers[serverID].name
+    } catch (e) {
+        //ig
+    }
+    try {
+        if (storage.d.Servers[sname].SownerId !== undefined) {
+            var SownerId = storage.d.Servers[sname].SownerId
         }
-        rconcmd = 'No'
-        if (channelID in bot.directMessages) {
-            DM = true
-        } else {
-            DM = false
-        }
-        //Gets the message id and server id
-        var messageID = rawEvent.d.id
-        var serverID = bot.serverFromChannel(channelID)
-            //gets the server and channel name
-        try {
-            var cname = bot.servers[serverID].channels[channelID].name
-            var sname = bot.servers[serverID].name
-        } catch (e) {
-            //ig
-        }
-        try {
-            if (storage.d.Servers[sname].SownerId !== undefined) {
-                var SownerId = storage.d.Servers[sname].SownerId
-            }
-        } catch (e) {
-            error = true
-        }
-        try {
-            verb = storage.d.Servers[sname].settings.verb
-        } catch (e) {
-            verb = false
-            storage.d.Servers[sname].settings.verb = false
-        }
-        /*try {
+    } catch (e) {
+        error = true
+    }
+    try {
+        verb = storage.d.Servers[sname].settings.verb
+    } catch (e) {
+        verb = false
+        storage.d.Servers[sname].settings.verb = false
+    }
+    /*try {
         if (storage.d.Servers[sname] === undefined) {
             storage.d.Servers[name] = {
                 'id': serverID,
@@ -1400,562 +1399,562 @@ function whoIs(channelID, serverID, name, cl) {
     } catch (e) {
         console.log(e)
     }*/
-        //Logging Related
+    //Logging Related
+    if (storage.d.Users[user] !== undefined) {
+        if (storage.d.Users[user].messageCnt === undefined) {
+            storage.d.Users[user].messageCnt = 1
+        } else {
+            mucount = storage.d.Users[user].messageCnt
+            mucount = mucount + 1
+            storage.d.Users[user].messageCnt = mucount
+        }
+        writeJSON('./assets/storage', storage)
+    }
+    if (message.toLowerCase().indexOf('http') !== -1) {
+        var timeAt = moment().format('MMMM Do YYYY, hh:mm:ss a')
+        logger.info(chalk.gray("Link Posted, logging to file"))
+        if (message.indexOf(' ', message.indexOf('http')) === -1) {
+            var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'))
+        } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
+            var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'), message.indexOf(' ', message.indexOf('http')))
+        }
         if (storage.d.Users[user] !== undefined) {
-            if (storage.d.Users[user].messageCnt === undefined) {
-                storage.d.Users[user].messageCnt = 1
+            if (storage.d.Users[user].linkCnt === undefined) {
+                storage.d.Users[user].linkCnt = 1
             } else {
-                mucount = storage.d.Users[user].messageCnt
-                mucount = mucount + 1
-                storage.d.Users[user].messageCnt = mucount
+                lucount = storage.d.Users[user].linkCnt
+                lucount = lucount + 1
+                storage.d.Users[user].linkCnt = lucount
             }
             writeJSON('./assets/storage', storage)
         }
-        if (message.toLowerCase().indexOf('http') !== -1) {
-            var timeAt = moment().format('MMMM Do YYYY, hh:mm:ss a')
-            logger.info(chalk.gray("Link Posted, logging to file"))
-            if (message.indexOf(' ', message.indexOf('http')) === -1) {
-                var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'))
-            } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
-                var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'), message.indexOf(' ', message.indexOf('http')))
+        mkdirp('./logs/' + sname, function(err) {
+            fs.appendFile("logs/" + sname + "/Links.txt", '\n' + link)
+        })
+    }
+    if (cname !== undefined) {
+        try {
+            if (storage.d.Servers[sname].Channels[cname].messageCnt === undefined) {
+                storage.d.Servers[sname].Channels[cname].messageCnt = 1
+            } else {
+                mccount = storage.d.Servers[sname].Channels[cname].messageCnt
+                mccount = mccount + 1
+                storage.d.Servers[sname].Channels[cname].messageCnt = mccount
             }
-            if (storage.d.Users[user] !== undefined) {
-                if (storage.d.Users[user].linkCnt === undefined) {
-                    storage.d.Users[user].linkCnt = 1
-                } else {
-                    lucount = storage.d.Users[user].linkCnt
-                    lucount = lucount + 1
-                    storage.d.Users[user].linkCnt = lucount
-                }
-                writeJSON('./assets/storage', storage)
-            }
-            mkdirp('./logs/' + sname, function(err) {
-                fs.appendFile("logs/" + sname + "/Links.txt", '\n' + link)
-            })
-        }
-        if (cname !== undefined) {
+        } catch (e) {
             try {
-                if (storage.d.Servers[sname].Channels[cname].messageCnt === undefined) {
-                    storage.d.Servers[sname].Channels[cname].messageCnt = 1
-                } else {
-                    mccount = storage.d.Servers[sname].Channels[cname].messageCnt
-                    mccount = mccount + 1
-                    storage.d.Servers[sname].Channels[cname].messageCnt = mccount
+                if (storage.d.Servers[sname].Channels[cname] === undefined) {
+                    storage.d.Servers[sname].Channels[cname] = {
+                        "id": channelID,
+                        "type": 'text',
+                        "messageCnt": 0,
+                    }
                 }
             } catch (e) {
-                try {
-                    if (storage.d.Servers[sname].Channels[cname] === undefined) {
-                        storage.d.Servers[sname].Channels[cname] = {
-                            "id": channelID,
-                            "type": 'text',
-                            "messageCnt": 0,
-                        }
-                    }
-                } catch (e) {
-                    e = e
-                }
+                e = e
             }
-            writeJSON('./assets/storage', storage)
         }
-        if (sname !== undefined) {
-            if (storage.d.Servers[sname].messageCnt === undefined) {
-                storage.d.Servers[sname].messageCnt = 1
+        writeJSON('./assets/storage', storage)
+    }
+    if (sname !== undefined) {
+        if (storage.d.Servers[sname].messageCnt === undefined) {
+            storage.d.Servers[sname].messageCnt = 1
+        } else {
+            mscount = storage.d.Servers[sname].messageCnt
+            mscount = mscount + 1
+            storage.d.Servers[sname].messageCnt = mscount
+        }
+        writeJSON('./assets/storage', storage)
+    }
+    //debug!
+    if (debug === 1) {
+        console.log(rawEvent)
+    }
+    try {
+        if (storage.d.Servers[sname].settings.prefixOvrid !== undefined) {
+            commandmod = storage.d.Servers[sname].settings.prefixOvrid
+        } else {
+            commandmod = '!'
+        }
+    } catch (e) {
+        e = e
+    }
+    //function to quick call message sending to minimize code
+    function msgT(msg, cb, type) {
+        if (cb === true) {
+            if (type === 'json') {
+                msg = JSON.stringify(msg, null, '\t')
+            }
+            if (type !== undefined) {
+                msg = '\n\n```' + type + '\n' + msg + '```'
             } else {
-                mscount = storage.d.Servers[sname].messageCnt
-                mscount = mscount + 1
-                storage.d.Servers[sname].messageCnt = mscount
+                msg = '\n\n```' + msg + '```'
             }
-            writeJSON('./assets/storage', storage)
         }
-        //debug!
-        if (debug === 1) {
-            console.log(rawEvent)
+        bot.sendMessage({
+            to: channelID,
+            message: msg,
+            typing: false
+        });
+    }
+    //try {
+    try {
+        if (rawEvent.d.mentions[0].id !== undefined) {
+            if (rawEvent.d.mentions[0].id === bot.id) {
+                if (message.indexOf('<@') === 0) {
+                    message = message.replace("<@" + bot.id + "> ", commandmod)
+                }
+            }
         }
-        try {
-            if (storage.d.Servers[sname].settings.prefixOvrid !== undefined) {
-                commandmod = storage.d.Servers[sname].settings.prefixOvrid
+    } catch (e) {
+        var error = null
+    }
+    //This tests for commands using the command mod set in the config
+    if (message.indexOf(commandmod) === 0) {
+        message = message.replace(commandmod, '')
+        if (message.toLowerCase().indexOf('ping') === 0 && ignore !== true) {
+            messageSend(channelID, 'pong')
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('help') === 0 && ignore !== true) {
+
+            if (message.indexOf(' ') === -1) {
+                help('help', channelID)
             } else {
-                commandmod = '!'
+                helpcall = message.substring(message.indexOf(' ') + 1)
+                help(helpcall, channelID)
             }
-        } catch (e) {
-            e = e
         }
-        //function to quick call message sending to minimize code
-        function msgT(msg, cb, type) {
-            if (cb === true) {
-                if (type === 'json') {
-                    msg = JSON.stringify(msg, null, '\t')
-                }
-                if (type !== undefined) {
-                    msg = '\n\n```' + type + '\n' + msg + '```'
-                } else {
-                    msg = '\n\n```' + msg + '```'
-                }
-            }
+        if (message.toLowerCase().indexOf('info') === 0 && ignore !== true) {
+            messageSend(channelID, "\n```Currently connected to: " + serverCnt + " Servers\n" +
+                "With a total of: " + channelCnt + " Channels\n" +
+                "With approximatly: " + userCnt + " Users across all of them```\n" +
+                doc.info)
+        }
+        if (message.toLowerCase().indexOf('roll') === 0 && ignore !== true) {
+            var msg = message
+            var dice = msg.replace('roll ', '')
+            diceroll(dice, userID, channelID)
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf("avatar") === 0 && ignore !== true) {
+            bot.uploadFile({
+                to: channelID,
+                file: "./assets/avatar.png",
+                filename: "avatar.png",
+                message: "Here you go!",
+                typing: true
+            });
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('ids') === 0 && ignore !== true) {
             bot.sendMessage({
                 to: channelID,
-                message: msg,
+                message: '<@' + userID + '>' + ' Your userID is: ' + userID + ' and your channelID is: ' + channelID,
                 typing: false
             });
+            rconcmd = 'Yes'
         }
-        //try {
-        try {
-            if (rawEvent.d.mentions[0].id !== undefined) {
-                if (rawEvent.d.mentions[0].id === bot.id) {
-                    if (message.indexOf('<@') === 0) {
-                        message = message.replace("<@" + bot.id + "> ", commandmod)
+        if (message.toLowerCase().indexOf('math') === 0 && ignore !== true) {
+            var mathcmd = message
+            var mathcall = mathcmd.replace('math ', '')
+            try {
+                messageSend(channelID, '<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
+            } catch (e) {
+                logger.error("Bad Math Command " + mathcall + " | " + e)
+                messageSend(channelID, "Sorry I'm unable to run that")
+            }
+            rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('status') === 0 && ignore !== true) {
+            var statuscmd = message
+            var statuscall = statuscmd.replace('status ', '')
+            status(statuscall, channelID, rawEvent)
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
+            cList = "help, "
+            messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+            for (var i = 0; i < doc.cList.length; i++) {
+                if (i < doc.cList.length - 1) {
+                    cList = cList + doc.cList[i] + ", "
+                } else {
+                    cList = cList + doc.cList[i]
+                }
+            }
+            messageSend(userID, "Here are my commands!: \n\n```" + cList + '```\n')
+            messageDelete(channelID, messageID)
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('poke') === 0 && ignore !== true) {
+            var pkcmd = message
+            var pkcall = pkcmd.replace('poke ', '')
+            var pkcall = pkcall.replace('<@', '')
+            var pkcall = pkcall.replace('>', '')
+            messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">")
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('stats') === 0 && ignore !== true) {
+            var len = message.length
+            var name = message.substring(message.indexOf(' ') + 1)
+            if (len === 5) {
+                try {
+                    statW = whoIs(channelID, serverID, user, true)
+                    wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
+                    whoRest = statW.substring(0, statW.indexOf('Avatar'))
+                    request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
+                        body = JSON.parse(body)
+                        thing = whoRest + 'Avatar:    "' + body.data.url + '"'
+                        messageSend(channelID, thing + '\n\n' +
+                            "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
+                            "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
+                            "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
+                            "Total Time Offline:  " +
+                            storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
+                    })
+                } catch (e) {
+                    messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
+                }
+            } else if (message.toLowerCase().indexOf('server') !== -1) {
+                messageSend(channelID, "The total ammount of messages sent on this server is: " + storage.d.Servers[sname].messageCnt)
+            } else if (message.toLowerCase().indexOf('channel') !== -1) {
+                messageSend(channelID, "The total ammount of messages sent on this channel is: " + storage.d.Servers[sname].Channels[cname].messageCnt)
+            } else {
+                stats(channelID, name, rawEvent, channelID, serverID)
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('ignore') === 0) {
+            var igcmd = message
+            var igcall = igcmd.replace('ignore ', '')
+            if (userID.indexOf(ownerId) === 0) {
+                if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
+                    uningoreC(channelID)
+                    messageSend(channelID, 'Ok no longer ignoring this channel')
+                } else {
+                    ignoreC(channelID)
+                    messageSend(channelID, 'Ok ignoring this channel')
+                }
+            } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === 0) {
+                if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(SownerId) === -1) {
+                    uningoreC(channelID)
+                    messageSend(channelID, 'Ok no longer ignoring this channel')
+                } else {
+                    ignoreC(channelID)
+                    messageSend(channelID, 'Ok ignoring this channel')
+                }
+            } else {
+                messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('prune') === 0 && ignore !== true) {
+            pcall = message.substring(message.indexOf(' ') + 1)
+            if (userID.indexOf(ownerId) === 0) {
+                messagesDelete(channelID, pcall)
+                messageSend('Ok removing the last ' + pcall + " Messages")
+            } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
+                messagesDelete(channelID, pcall)
+                messageSend('Ok removing the last ' + pcall + " Messages")
+            } else {
+                messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner/Admin")
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('prefix') === 0 && ignore !== true) {
+            var pfcmd = message
+            var pfcall = pfcmd.replace('prefix ', '')
+            if (userID.indexOf(ownerId) === 0) {
+                storage.d.Servers[sname].settings.prefixOvrid = pfcall
+                messageSend(channelID, "The prefix for this server is now: " + pfcall)
+            } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
+                storage.d.Servers[sname].settings.prefixOvrid = pfcall
+                messageSend(channelID, "The prefix for this server is now: " + pfcall)
+            } else if (userID.indexOf(ownerId) === -1 && userID.indexOf(SownerId) === -1 && userID.indexOf(bot.id) === -1) {
+                messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('yt') === 0 && ignore !== true) {
+            var ytcmd = message
+            var ytcall = ytcmd.replace('yt ', '')
+            yt(ytcall, userID, channelID)
+            rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('shorten') === 0 && ignore !== true) {
+            var lurl = message.substring(message.indexOf(' ') + 1)
+            shorten(false, lurl, channelID, userID, messageID)
+            rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('clever') === 0 && ignore !== true) {
+            cleverr = message.substring(message.indexOf(' ') + 1)
+            clever(channelID, userID, cleverr)
+        }
+        if (message.toLowerCase().indexOf('8ball') === 0 && ignore !== true) {
+            ebQ = message.substring(message.indexOf(' ') + 1)
+            eightBall(channelID, ebQ, userID)
+        }
+        if (message.toLowerCase().indexOf('xkcd') === 0 && ignore !== true) {
+            if (message.indexOf(' ') === -1) {
+                var comictime = gettime()
+                try {
+                    lastcomictime = storage.d.Servers[sname].Channels[cname].lastComic
+                    elapsed = comictime - lastcomictime
+                    elapsed = secondsToTime(elapsed)
+                    comicacttime = storage.d.Servers[sname].Channels[cname].lastComicActt
+                    console.log("Comic elapsed: " + JSON.stringify(elapsed))
+                } catch (e) {
+                    storage.d.Servers[sname].Channels[cname].lastComic = null
+                    storage.d.Servers[sname].Channels[cname].lastComicActt = null
+                }
+                if (elapsed.h > 0) {
+                    var comicacttime = moment().format('h:mm a')
+                    storage.d.Servers[sname].Channels[cname].lastComicActt = comicacttime
+                    xkcd.img(function(err, res) {
+                        if (!err) {
+                            messageSend(channelID, res.title + "\n" + res.url)
+                        }
+                    });
+                    var lastcomictime = gettime()
+                    storage.d.Servers[sname].Channels[cname].lastComic = lastcomictime
+                } else {
+                    messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
+                }
+            } else {
+                var xkcdcmd = message
+                var xkcdcall = xkcdcmd.replace('xkcd ', '')
+                relxkcd(xkcdcall, channelID, cname, sname)
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('pirate') === 0 && ignore !== true) {
+            if (userID.indexOf(ownerId) === 0) {
+                if (storage.d.Servers[sname].settings.pirate === false || storage.d.Servers[sname].settings.pirate === undefined) {
+                    storage.d.Servers[sname].settings.pirate = true
+                    messageSend(channelID, "Ok i should now be speaking like i am a pirate")
+                } else {
+                    storage.d.Servers[sname].settings.pirate = false
+                    messageSend(channelID, "Ok i'm no longer a pirate")
+                }
+            } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
+                if (storage.d.Servers[sname].settings.pirate === false || storage.d.Servers[sname].settings.pirate === undefined) {
+                    storage.d.Servers[sname].settings.pirate = true
+                    messageSend(channelID, "Ok i should now be speaking like i am a pirate")
+                } else {
+                    storage.d.Servers[sname].settings.pirate = false
+                    messageSend(channelID, "Ok i'm no longer a pirate")
+                }
+            } else {
+                messageSend(channelID, "Only the bot or server owner can do this")
+            }
+        }
+        if (message.toLowerCase().indexOf('skip') === 0 && ignore !== true) {
+            bot.deleteMessage({
+                channel: channelID,
+                messageID: messageID
+            })
+        }
+        if (message.toLowerCase().indexOf('announce') === 0 && ignore !== true) {
+            if (userID.indexOf(SownerId) === 0) {
+                if (storage.d.Servers[sname].settings.announceChan === null || storage.d.Servers[sname].settings.announceChan === undefined) {
+                    try {
+                        storage.d.Servers[sname].settings.announceChan = channelID
+                        messageSend(channelID, "Ok now announcing user changes on this channel")
+                    } catch (e) {
+                        logger.error(chalk.red(e))
+                    }
+                } else {
+                    try {
+                        storage.d.Servers[sname].settings.announceChan = null
+                        messageSend(channelID, "Ok no longer announcing user changes on this channel")
+                    } catch (e) {
+                        logger.error(chalk.red(e))
                     }
                 }
+            } else {
+                messageSend(channelID, "You are not allowed to do that command, you need to be the server owner")
             }
-        } catch (e) {
-            var error = null
+            rconcmd = "Yes"
         }
-        //This tests for commands using the command mod set in the config
-        if (message.indexOf(commandmod) === 0) {
-            message = message.replace(commandmod, '')
-            if (message.toLowerCase().indexOf('ping') === 0 && ignore !== true) {
-                messageSend(channelID, 'pong')
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('help') === 0 && ignore !== true) {
-
-                if (message.indexOf(' ') === -1) {
-                    help('help', channelID)
-                } else {
-                    helpcall = message.substring(message.indexOf(' ') + 1)
-                    help(helpcall, channelID)
+        if (message.toLowerCase().indexOf('cat') === 0 && ignore !== true) {
+            cat(channelID, cname, sname)
+        }
+        if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
+            snake(channelID, cname, sname, userID)
+        }
+        if (message.toLowerCase().indexOf('pug') === 0 && ignore !== true) {
+            pug(channelID, cname, sname)
+        }
+        if (message.toLowerCase().indexOf('redditscenery') === 0 && ignore !== true) {
+            var random = redditList[Math.floor(Math.random() * redditList.length)]
+            var redditcmd = message
+            var redditcall = redditcmd.replace('redditscenery ', '')
+            if (redditcall.toLowerCase().indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
+                var redditcall = redditcmd.replace('add  ', '')
+                storage.settings.redditList.push(redditcall)
+            } else if (redditcall.toLowerCase().indexOf('list') !== -1) {
+                redditNList = ""
+                for (var i = 0; i < redditList.length; i++) {
+                    if (i < redditList.length - 1) {
+                        redditNList = redditNList + redditList[i] + ", "
+                    } else {
+                        redditNList = redditNList + redditList[i]
+                    }
                 }
-            }
-            if (message.toLowerCase().indexOf('info') === 0 && ignore !== true) {
-                messageSend(channelID, "\n```Currently connected to: " + serverCnt + " Servers\n" +
-                    "With a total of: " + channelCnt + " Channels\n" +
-                    "With approximatly: " + userCnt + " Users across all of them```\n" +
-                    doc.info)
-            }
-            if (message.toLowerCase().indexOf('roll') === 0 && ignore !== true) {
-                var msg = message
-                var dice = msg.replace('roll ', '')
-                diceroll(dice, userID, channelID)
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf("avatar") === 0 && ignore !== true) {
-                bot.uploadFile({
-                    to: channelID,
-                    file: "./assets/avatar.png",
-                    filename: "avatar.png",
-                    message: "Here you go!",
-                    typing: true
-                });
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('ids') === 0 && ignore !== true) {
-                bot.sendMessage({
-                    to: channelID,
-                    message: '<@' + userID + '>' + ' Your userID is: ' + userID + ' and your channelID is: ' + channelID,
-                    typing: false
-                });
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('math') === 0 && ignore !== true) {
-                var mathcmd = message
-                var mathcall = mathcmd.replace('math ', '')
-                try {
-                    messageSend(channelID, '<@' + userID + '>' + " the answer is this: " + math.eval(mathcall))
-                } catch (e) {
-                    logger.error("Bad Math Command " + mathcall + " | " + e)
-                    messageSend(channelID, "Sorry I'm unable to run that")
-                }
-                rconcmd = "Yes"
-            }
-            if (message.toLowerCase().indexOf('status') === 0 && ignore !== true) {
-                var statuscmd = message
-                var statuscall = statuscmd.replace('status ', '')
-                status(statuscall, channelID, rawEvent)
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
-                cList = "help, "
                 messageSend(channelID, "Check your PM's :mailbox_with_mail:")
-                for (var i = 0; i < doc.cList.length; i++) {
-                    if (i < doc.cList.length - 1) {
-                        cList = cList + doc.cList[i] + ", "
-                    } else {
-                        cList = cList + doc.cList[i]
-                    }
-                }
-                messageSend(userID, "Here are my commands!: \n\n```" + cList + '```\n')
-                messageDelete(channelID, messageID)
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('poke') === 0 && ignore !== true) {
-                var pkcmd = message
-                var pkcall = pkcmd.replace('poke ', '')
-                var pkcall = pkcall.replace('<@', '')
-                var pkcall = pkcall.replace('>', '')
-                messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">")
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('stats') === 0 && ignore !== true) {
-                var len = message.length
-                var name = message.substring(message.indexOf(' ') + 1)
-                if (len === 5) {
-                    try {
-                        statW = whoIs(channelID, serverID, user, true)
-                        wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
-                        whoRest = statW.substring(0, statW.indexOf('Avatar'))
-                        request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
-                            body = JSON.parse(body)
-                            thing = whoRest + 'Avatar:    "' + body.data.url + '"'
-                            messageSend(channelID, thing + '\n\n' +
-                                "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
-                                "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
-                                "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
-                                "Total Time Offline:  " +
-                                storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds", true, 'xl', true, userID)
-                        })
-                    } catch (e) {
-                        messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
-                    }
-                } else if (message.toLowerCase().indexOf('server') !== -1) {
-                    messageSend(channelID, "The total ammount of messages sent on this server is: " + storage.d.Servers[sname].messageCnt)
-                } else if (message.toLowerCase().indexOf('channel') !== -1) {
-                    messageSend(channelID, "The total ammount of messages sent on this channel is: " + storage.d.Servers[sname].Channels[cname].messageCnt)
-                } else {
-                    stats(channelID, name, rawEvent, channelID, serverID)
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('ignore') === 0) {
-                var igcmd = message
-                var igcall = igcmd.replace('ignore ', '')
-                if (userID.indexOf(ownerId) === 0) {
-                    if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(ownerId) === 0) {
-                        uningoreC(channelID)
-                        messageSend(channelID, 'Ok no longer ignoring this channel')
-                    } else {
-                        ignoreC(channelID)
-                        messageSend(channelID, 'Ok ignoring this channel')
-                    }
-                } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === 0) {
-                    if (igcall.toLowerCase().indexOf('remove') !== -1 && userID.indexOf(SownerId) === -1) {
-                        uningoreC(channelID)
-                        messageSend(channelID, 'Ok no longer ignoring this channel')
-                    } else {
-                        ignoreC(channelID)
-                        messageSend(channelID, 'Ok ignoring this channel')
-                    }
-                } else {
-                    messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('prune') === 0 && ignore !== true) {
-                pcall = message.substring(message.indexOf(' ') + 1)
-                if (userID.indexOf(ownerId) === 0) {
-                    messagesDelete(channelID, pcall)
-                    messageSend('Ok removing the last ' + pcall + " Messages")
-                } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
-                    messagesDelete(channelID, pcall)
-                    messageSend('Ok removing the last ' + pcall + " Messages")
-                } else {
-                    messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner/Admin")
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('prefix') === 0 && ignore !== true) {
-                var pfcmd = message
-                var pfcall = pfcmd.replace('prefix ', '')
-                if (userID.indexOf(ownerId) === 0) {
-                    storage.d.Servers[sname].settings.prefixOvrid = pfcall
-                    messageSend(channelID, "The prefix for this server is now: " + pfcall)
-                } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
-                    storage.d.Servers[sname].settings.prefixOvrid = pfcall
-                    messageSend(channelID, "The prefix for this server is now: " + pfcall)
-                } else if (userID.indexOf(ownerId) === -1 && userID.indexOf(SownerId) === -1 && userID.indexOf(bot.id) === -1) {
-                    messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner")
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('yt') === 0 && ignore !== true) {
-                var ytcmd = message
-                var ytcall = ytcmd.replace('yt ', '')
-                yt(ytcall, userID, channelID)
-                rconcmd = "Yes"
-            }
-            if (message.toLowerCase().indexOf('shorten') === 0 && ignore !== true) {
-                var lurl = message.substring(message.indexOf(' ') + 1)
-                shorten(false, lurl, channelID, userID, messageID)
-                rconcmd = "Yes"
-            }
-            if (message.toLowerCase().indexOf('clever') === 0 && ignore !== true) {
-                cleverr = message.substring(message.indexOf(' ') + 1)
-                clever(channelID, userID, cleverr)
-            }
-            if (message.toLowerCase().indexOf('8ball') === 0 && ignore !== true) {
-                ebQ = message.substring(message.indexOf(' ') + 1)
-                eightBall(channelID, ebQ, userID)
-            }
-            if (message.toLowerCase().indexOf('xkcd') === 0 && ignore !== true) {
-                if (message.indexOf(' ') === -1) {
-                    var comictime = gettime()
-                    try {
-                        lastcomictime = storage.d.Servers[sname].Channels[cname].lastComic
-                        elapsed = comictime - lastcomictime
-                        elapsed = secondsToTime(elapsed)
-                        comicacttime = storage.d.Servers[sname].Channels[cname].lastComicActt
-                        console.log("Comic elapsed: " + JSON.stringify(elapsed))
-                    } catch (e) {
-                        storage.d.Servers[sname].Channels[cname].lastComic = null
-                        storage.d.Servers[sname].Channels[cname].lastComicActt = null
-                    }
-                    if (elapsed.h > 0) {
-                        var comicacttime = moment().format('h:mm a')
-                        storage.d.Servers[sname].Channels[cname].lastComicActt = comicacttime
-                        xkcd.img(function(err, res) {
-                            if (!err) {
-                                messageSend(channelID, res.title + "\n" + res.url)
-                            }
-                        });
-                        var lastcomictime = gettime()
-                        storage.d.Servers[sname].Channels[cname].lastComic = lastcomictime
-                    } else {
-                        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
-                    }
-                } else {
-                    var xkcdcmd = message
-                    var xkcdcall = xkcdcmd.replace('xkcd ', '')
-                    relxkcd(xkcdcall, channelID, cname, sname)
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('pirate') === 0 && ignore !== true) {
-                if (userID.indexOf(ownerId) === 0) {
-                    if (storage.d.Servers[sname].settings.pirate === false || storage.d.Servers[sname].settings.pirate === undefined) {
-                        storage.d.Servers[sname].settings.pirate = true
-                        messageSend(channelID, "Ok i should now be speaking like i am a pirate")
-                    } else {
-                        storage.d.Servers[sname].settings.pirate = false
-                        messageSend(channelID, "Ok i'm no longer a pirate")
-                    }
-                } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
-                    if (storage.d.Servers[sname].settings.pirate === false || storage.d.Servers[sname].settings.pirate === undefined) {
-                        storage.d.Servers[sname].settings.pirate = true
-                        messageSend(channelID, "Ok i should now be speaking like i am a pirate")
-                    } else {
-                        storage.d.Servers[sname].settings.pirate = false
-                        messageSend(channelID, "Ok i'm no longer a pirate")
-                    }
-                } else {
-                    messageSend(channelID, "Only the bot or server owner can do this")
-                }
-            }
-            if (message.toLowerCase().indexOf('skip') === 0 && ignore !== true) {
-                bot.deleteMessage({
-                    channel: channelID,
-                    messageID: messageID
-                })
-            }
-            if (message.toLowerCase().indexOf('announce') === 0 && ignore !== true) {
-                if (userID.indexOf(SownerId) === 0) {
-                    if (storage.d.Servers[sname].settings.announceChan === null || storage.d.Servers[sname].settings.announceChan === undefined) {
-                        try {
-                            storage.d.Servers[sname].settings.announceChan = channelID
-                            messageSend(channelID, "Ok now announcing user changes on this channel")
-                        } catch (e) {
-                            logger.error(chalk.red(e))
-                        }
-                    } else {
-                        try {
-                            storage.d.Servers[sname].settings.announceChan = null
-                            messageSend(channelID, "Ok no longer announcing user changes on this channel")
-                        } catch (e) {
-                            logger.error(chalk.red(e))
-                        }
-                    }
-                } else {
-                    messageSend(channelID, "You are not allowed to do that command, you need to be the server owner")
-                }
-                rconcmd = "Yes"
-            }
-            if (message.toLowerCase().indexOf('cat') === 0 && ignore !== true) {
-                cat(channelID, cname, sname)
-            }
-            if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
-                snake(channelID, cname, sname, userID)
-            }
-            if (message.toLowerCase().indexOf('pug') === 0 && ignore !== true) {
-                pug(channelID, cname, sname)
-            }
-            if (message.toLowerCase().indexOf('redditscenery') === 0 && ignore !== true) {
-                var random = redditList[Math.floor(Math.random() * redditList.length)]
-                var redditcmd = message
-                var redditcall = redditcmd.replace('redditscenery ', '')
-                if (redditcall.toLowerCase().indexOf('add') !== -1 && userID.indexOf(ownerId) === 0) {
-                    var redditcall = redditcmd.replace('add  ', '')
-                    storage.settings.redditList.push(redditcall)
-                } else if (redditcall.toLowerCase().indexOf('list') !== -1) {
-                    redditNList = ""
-                    for (var i = 0; i < redditList.length; i++) {
-                        if (i < redditList.length - 1) {
-                            redditNList = redditNList + redditList[i] + ", "
-                        } else {
-                            redditNList = redditNList + redditList[i]
-                        }
-                    }
-                    messageSend(channelID, "Check your PM's :mailbox_with_mail:")
-                    messageSend(userID, "Here are my tracked subreddits!: \n\n```" + redditNList + '```\n')
-                } else if (redditcmd.indexOf(' ') !== -1) {
-                    redditScenery(channelID, redditcall.toLowerCase())
-                } else {
-                    messageSend(channelID, "Ok heres a " + random + " related picture")
-                    console.log('Random')
-                    redditScenery(channelID, random)
-                }
-            }
-            if (message.toLowerCase().indexOf('verb') === 0) {
-                if (userID.indexOf(ownerId) === 0) {
-                    if (storage.d.Servers[sname].settings.verb === false || storage.d.Servers[sname].settings.verb === undefined) {
-                        try {
-                            storage.d.Servers[sname].settings.verb = true
-                            messageSend(channelID, "Ok now logging messages and status changes from this server into console")
-                        } catch (e) {
-                            logger.error(chalk.red(e))
-                        }
-                    } else {
-                        try {
-                            storage.d.Servers[sname].settings.verb = false
-                            messageSend(channelID, "Ok no longer logging messages and status changes from this server into console")
-                        } catch (e) {
-                            logger.error(chalk.red(e))
-                        }
-                    }
-                } else {
-                    messageSend(channelID, '<@' + userID + "> You are not allowed to use this command")
-                }
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('word') === 0) {
-                if (message.toLowerCase().indexOf('wotd') !== -1) {
-                    wordNik(false, channelID, userID, null, 'wotd', false)
-                } else {
-                    var word = message.substring(message.indexOf(' ') + 1)
-                    wordNik(false, channelID, userID, word, 'def', false)
-                }
-            }
-            if (message.toLowerCase().indexOf('uptime') === 0 && ignore !== true) {
-                time = secondsToTime(gettime() - startUpTime)
-                messageSend(channelID, "The bot has been active for: " + time.d + " Days " + time.h + " Hours " + time.m + " Minutes " + time.s + " Seconds")
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('us') === 0 && ignore !== true) {
-                var uri = message.substring(message.indexOf(' ') + 1)
-                unShorten(channelID, userID, uri)
-                rconcmd = 'Yes'
-            }
-            if (message.toLowerCase().indexOf('invite') === 0 && ignore !== true) {
-                messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \nIf you dont trust short urls use the following command to unshorten it: " + commandmod + "us https://goo.gl/IppQQT \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
-            }
-            if (message.toLowerCase().indexOf('js') === 0) {
-                jscall = message.substring(message.indexOf(' ') + 1)
-                if (userID.indexOf(ownerId) === 0) {
-                    try {
-                        eval(jscall)
-                    } catch (e) {
-                        logger.error(chalk.red("Bad JS Command " + e))
-                        messageSend(channelID, "Err...I'm sorry...that results in a error")
-                    }
-                } else {
-                    messageSend(channelID, '<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
-                }
-                rconcmd = 'Yes'
+                messageSend(userID, "Here are my tracked subreddits!: \n\n```" + redditNList + '```\n')
+            } else if (redditcmd.indexOf(' ') !== -1) {
+                redditScenery(channelID, redditcall.toLowerCase())
             } else {
-                if (rconcmd === 'No') {
-                    //clever(channelID,userID,message)
+                messageSend(channelID, "Ok heres a " + random + " related picture")
+                console.log('Random')
+                redditScenery(channelID, random)
+            }
+        }
+        if (message.toLowerCase().indexOf('verb') === 0) {
+            if (userID.indexOf(ownerId) === 0) {
+                if (storage.d.Servers[sname].settings.verb === false || storage.d.Servers[sname].settings.verb === undefined) {
+                    try {
+                        storage.d.Servers[sname].settings.verb = true
+                        messageSend(channelID, "Ok now logging messages and status changes from this server into console")
+                    } catch (e) {
+                        logger.error(chalk.red(e))
+                    }
+                } else {
+                    try {
+                        storage.d.Servers[sname].settings.verb = false
+                        messageSend(channelID, "Ok no longer logging messages and status changes from this server into console")
+                    } catch (e) {
+                        logger.error(chalk.red(e))
+                    }
                 }
-            }
-        }
-        if (channelID === '164845697508704257') {
-            if (message.indexOf('#') !== -1) {
-                for (var pound = 0; pound > -1;) {
-                    message = message.replace('#', '')
-                    pound = message.indexOf('#')
-                }
-                message = '######' + toSentenceCase(message) + '######'
-            }
-            if (message.indexOf(': ') !== -1) {
-                nme = message.substring(0, message.indexOf(': '))
-                nme = toSentenceCase(nme)
-                said = message.substring(message.indexOf(': ') + 2)
-                said = toSentenceCase(said)
-                message = nme + ': ' + said
-            }
-            console.log(chalk.gray(message))
-            fs.appendFile("logs/space.txt", '\n\n' + message)
-            story.space(message, {
-                mID: messageID,
-                username: user
-            })
-        }
-        if (channelID === '167855344129802241') {
-            console.log(chalk.gray(message))
-            fs.appendFile("logs/unknown.txt", '\n\n' + message)
-            story.unknown(message, {
-                mID: messageID,
-                username: user
-            })
-        }
-        if (channelID === '177624925794861056') {
-            console.log(chalk.gray(message))
-            fs.appendFile("logs/laderis.txt", '\n\n' + message)
-            story.laderis(message, {
-                mID: messageID,
-                username: user
-            })
-        }
-        //Special conditions to prevent the logging of bots and specially monitored chats
-        if (userID.indexOf('104867073343127552') === 0 || channelID.indexOf('164845697508704257') === 0 || channelID.indexOf('167855344129802241') === 0) {
-            if (userID === '104867073343127552') {
-                return
-            } else if (channelID.indexOf('164845697508704257') === 0) {
-                return
-            } else if (channelID.indexOf('167855344129802241')) {
-                return
-            }
-        } else if (rconcmd === "No" && ignore !== true) {
-            var timed = Date()
-            timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
-            timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
-            if (channelID in bot.directMessages) {
-                console.log(timed + 'Channel: ' + 'DM |\n' + chalk.yellow(user + ': ') + message)
-                fs.appendFile("logs/DMs/" + user + ".txt", '\n' + timed + user + ": " + message)
             } else {
-                servern = bot.servers[serverID].name
-                channeln = bot.servers[serverID].channels[channelID].name
-                mkdirp('./logs/' + servern, function(err) {
-                    fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
-                })
+                messageSend(channelID, '<@' + userID + "> You are not allowed to use this command")
+            }
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('word') === 0) {
+            if (message.toLowerCase().indexOf('wotd') !== -1) {
+                wordNik(false, channelID, userID, null, 'wotd', false)
+            } else {
+                var word = message.substring(message.indexOf(' ') + 1)
+                wordNik(false, channelID, userID, word, 'def', false)
+            }
+        }
+        if (message.toLowerCase().indexOf('uptime') === 0 && ignore !== true) {
+            time = secondsToTime(gettime() - startUpTime)
+            messageSend(channelID, "The bot has been active for: " + time.d + " Days " + time.h + " Hours " + time.m + " Minutes " + time.s + " Seconds")
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('us') === 0 && ignore !== true) {
+            var uri = message.substring(message.indexOf(' ') + 1)
+            unShorten(channelID, userID, uri)
+            rconcmd = 'Yes'
+        }
+        if (message.toLowerCase().indexOf('invite') === 0 && ignore !== true) {
+            messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \nIf you dont trust short urls use the following command to unshorten it: " + commandmod + "us https://goo.gl/IppQQT \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
+        }
+        if (message.toLowerCase().indexOf('js') === 0) {
+            jscall = message.substring(message.indexOf(' ') + 1)
+            if (userID.indexOf(ownerId) === 0) {
                 try {
-                    if (verb === true || cnaid === channelID || storage.d.Servers[sname].settings.verb === true) {
-                        console.log('\n' + timed + 'Channel: ' + chalk.blue(servern + '/' + channeln) + ' |\n' + chalk.cyan(user + ': ') + message)
-                    }
+                    eval(jscall)
                 } catch (e) {
-                    //do nothing
+                    logger.error(chalk.red("Bad JS Command " + e))
+                    messageSend(channelID, "Err...I'm sorry...that results in a error")
                 }
+            } else {
+                messageSend(channelID, '<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
             }
-        } else if (rconcmd === "Yes" && ignore !== true) {
-            if (ignore !== true) {
-                logger.info(chalk.gray('Last Message User: ' + user + ' |IDs: ' + ' ' + userID + '/' + channelID + ' |\n Message: ' + message));
+            rconcmd = 'Yes'
+        } else {
+            if (rconcmd === 'No') {
+                //clever(channelID,userID,message)
             }
         }
-    });
+    }
+    if (channelID === '164845697508704257') {
+        if (message.indexOf('#') !== -1) {
+            for (var pound = 0; pound > -1;) {
+                message = message.replace('#', '')
+                pound = message.indexOf('#')
+            }
+            message = '######' + toSentenceCase(message) + '######'
+        }
+        if (message.indexOf(': ') !== -1) {
+            nme = message.substring(0, message.indexOf(': '))
+            nme = toSentenceCase(nme)
+            said = message.substring(message.indexOf(': ') + 2)
+            said = toSentenceCase(said)
+            message = nme + ': ' + said
+        }
+        console.log(chalk.gray(message))
+        fs.appendFile("logs/space.txt", '\n\n' + message)
+        story.space(message, {
+            mID: messageID,
+            username: user
+        })
+    }
+    if (channelID === '167855344129802241') {
+        console.log(chalk.gray(message))
+        fs.appendFile("logs/unknown.txt", '\n\n' + message)
+        story.unknown(message, {
+            mID: messageID,
+            username: user
+        })
+    }
+    if (channelID === '177624925794861056') {
+        console.log(chalk.gray(message))
+        fs.appendFile("logs/laderis.txt", '\n\n' + message)
+        story.laderis(message, {
+            mID: messageID,
+            username: user
+        })
+    }
+    //Special conditions to prevent the logging of bots and specially monitored chats
+    if (userID.indexOf('104867073343127552') === 0 || channelID.indexOf('164845697508704257') === 0 || channelID.indexOf('167855344129802241') === 0) {
+        if (userID === '104867073343127552') {
+            return
+        } else if (channelID.indexOf('164845697508704257') === 0) {
+            return
+        } else if (channelID.indexOf('167855344129802241')) {
+            return
+        }
+    } else if (rconcmd === "No" && ignore !== true) {
+        var timed = Date()
+        timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
+        timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
+        if (channelID in bot.directMessages) {
+            console.log(timed + 'Channel: ' + 'DM |\n' + chalk.yellow(user + ': ') + message)
+            fs.appendFile("logs/DMs/" + user + ".txt", '\n' + timed + user + ": " + message)
+        } else {
+            servern = bot.servers[serverID].name
+            channeln = bot.servers[serverID].channels[channelID].name
+            mkdirp('./logs/' + servern, function(err) {
+                fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
+            })
+            try {
+                if (verb === true || cnaid === channelID || storage.d.Servers[sname].settings.verb === true) {
+                    console.log('\n' + timed + 'Channel: ' + chalk.blue(servern + '/' + channeln) + ' |\n' + chalk.cyan(user + ': ') + message)
+                }
+            } catch (e) {
+                //do nothing
+            }
+        }
+    } else if (rconcmd === "Yes" && ignore !== true) {
+        if (ignore !== true) {
+            logger.info(chalk.gray('Last Message User: ' + user + ' |IDs: ' + ' ' + userID + '/' + channelID + ' |\n Message: ' + message));
+        }
+    }
+});
 
 
-    /* Start of console input */
-    var rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-        terminal: true
-    });
-    rl.on('line', function(line) {
-        consoleparse(line);
-    })
+/* Start of console input */
+var rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: true
+});
+rl.on('line', function(line) {
+    consoleparse(line);
+})
