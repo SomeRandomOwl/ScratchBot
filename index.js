@@ -977,23 +977,18 @@ function whoIs(channelID, serverID, name, cl) {
         rolesm = 'everyone, '
         for (var i = 0; i < roles.length; i++) {
             if (i !== roles.length - 1) {
-                roleN = bot.servers[serverID].roles[roles[i]].name
-                roleN = roleN.replace(' ', '')
-                rolesm = rolesm + roleN + ', '
+                rolesm = rolesm + bot.servers[serverID].roles[roles[i]].name + ', '
             } else {
-                roleN = bot.servers[serverID].roles[roles[i]].name
-                roleN = roleN.replace(' ', '')
-                rolesm = rolesm + roleN
+                rolesm = rolesm + bot.servers[serverID].roles[roles[i]].name
             }
         }
     } else {
         rolesm = 'everyone'
     }
-
     avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
     message = '' +
         'Name:      ' + userN + '#' + discriminator + '\n' +
-        'Nickname:  ' + nick + '\n' +
+        'Nick:      ' + nick + '\n' +
         'ID:        ' + userID + '\n\n' +
         'Status:    ' + status + '\n' +
         'Bot:       ' + botT + '\n' +
@@ -1943,7 +1938,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
     } else if (rconcmd === "Yes" && ignore !== true) {
         if (ignore !== true) {
-            logger.info(chalk.gray('Last Message User: ' + user + ' |IDs: ' + ' ' + userID + '/' + channelID + ' |' + chalk.green('\nMessage: ') + message));
+            logger.info(chalk.gray('Last Message User: ' + user + ' |IDs: ' + ' ' + userID + '/' + channelID + ' |\n Message: ' + message));
         }
     }
 });
