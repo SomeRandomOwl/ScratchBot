@@ -344,21 +344,21 @@ function yt(ytcall, userID, channelID) {
                         description = description.replace('https://', '')
                     }
 
-                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo: https://youtu.be/' + result.items[0].id.videoId + ' ;', true, 'css')
+                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo:       https://youtu.be/' + result.items[0].id.videoId + ' ;', true, 'css')
                 } else if (result.items[0].id.kind === 'youtube#channel') {
                     var description = result.items[0].snippet.description
                     while (description.indexOf('http') !== -1) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nChannel: https://www.youtube.com/channel/' + result.items[0].id.channelId + ' ;', true, 'css')
+                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nChannel:     https://www.youtube.com/channel/' + result.items[0].id.channelId + ' ;', true, 'css')
                 } else if (result.items[0].id.kind === 'youtube#playlist') {
                     var description = result.items[0].snippet.description
                     while (description.indexOf('http') !== -1) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle: ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nPlaylist: https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ' ;', true, 'css')
+                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nPlaylist:    https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ' ;', true, 'css')
                 } else {
                     messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
                 }
@@ -1079,9 +1079,10 @@ function wordNik(cl, channelID, userID, word, type, debug) {
             if (cl === false) {
                 try {
                     if (!error && response.statusCode === 200) {
-                        messageSend(channelID, 'Word: ' + toSentenceCase(body[0].word) + ';\n\n' +
-                            'PartofSpeech: ' + body[0].partOfSpeech + ';\n' +
-                            'Definition: ' + body[0].text + ';', true, 'css', true, userID)
+                        messageSend(channelID, '' +
+                            'Word:          ' + toSentenceCase(body[0].word) + '\n\n' +
+                            'PartofSpeech:  ' + body[0].partOfSpeech + '\n' +
+                            'Definition:    ' + body[0].text, true, 'xl', true, userID)
                     }
                 } catch (e) {
                     messageSend(channelID, "Bad word!", false, null, true, userID)
@@ -1103,12 +1104,13 @@ function wordNik(cl, channelID, userID, word, type, debug) {
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
 
-                    messageSend(channelID, 'Word: ' + toSentenceCase(body.word) + ';\n\n' +
-                        'PartOfSpeech: ' + body.definitions[0].partOfSpeech + ';\n' +
-                        'Definition: ' + body.definitions[0].text + ';\n\n' +
+                    messageSend(channelID, '' +
+                        'Word:          ' + toSentenceCase(body.word) + ';\n\n' +
+                        'PartOfSpeech:  ' + body.definitions[0].partOfSpeech + ';\n' +
+                        'Definition:    ' + body.definitions[0].text + ';\n\n' +
                         'ExampleUseage: ' + body.examples[0].text + ';\n' +
-                        'CitedFrom: ' + body.examples[0].title + ';\n\n' +
-                        'Url: ' + body.examples[0].url + ';', true, 'css', true, userID)
+                        'CitedFrom:     ' + body.examples[0].title + ';\n\n' +
+                        'Url:           ' + body.examples[0].url + ';', true, 'css', true, userID)
                 }
             } else {
                 return body
