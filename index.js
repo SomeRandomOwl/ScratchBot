@@ -1526,9 +1526,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
         }
         if (message.toLowerCase().indexOf('info') === 0 && ignore !== true) {
-            messageSend(channelID, "\n```Currently connected to: " + serverCnt + " Servers\n" +
-                "With a total of: " + channelCnt + " Channels\n" +
-                "With approximatly: " + userCnt + " Users across all of them```\n" +
+            messageSend(channelID, "\nConnectedTo: " + serverCnt + " Servers\n" +
+                "With: " + channelCnt + " Channels\n" +
+                "and: " + userCnt + " Users\n", true, 'xl', true, userID,
                 doc.info)
         }
         if (message.toLowerCase().indexOf('roll') === 0 && ignore !== true) {
