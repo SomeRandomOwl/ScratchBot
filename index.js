@@ -403,7 +403,7 @@ function messageSend(channelID, msg, cb, type, mention, userID, preText) {
                     msg = JSON.stringify(msg, null, '\t')
                 }
                 if (preText !== undefined) {
-                    msg = '<@' + userID + '>' + preText + '\n\n```' + type + '\n' + msg + '```'
+                    msg = '<@' + userID + '> ' + preText + '\n\n```' + type + '\n' + msg + '```'
                 } else {
                     msg = '<@' + userID + '>\n\n```' + type + '\n' + msg + '```'
                 }
@@ -420,7 +420,7 @@ function messageSend(channelID, msg, cb, type, mention, userID, preText) {
         } else {
             if (mention === true) {
                 if (preText !== undefined) {
-                    msg = '<@' + userID + '>' + preText + '\n\n```' + msg + '```'
+                    msg = '<@' + userID + '> ' + preText + '\n\n```' + msg + '```'
                 } else {
                     msg = '<@' + userID + '>\n\n```' + msg + '```'
                 }
