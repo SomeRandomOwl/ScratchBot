@@ -918,13 +918,13 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
             body = JSON.parse(body)
-            thing = whoRest + 'Avatar:    "' + body.data.url + '"'
+            thing = whoRest + 'Avatar:        "' + body.data.url + '"'
 
             messageSend(channelID, thing + "\n\n" +
-                "Messages Sent:       " + storage.d.Users[name].messageCnt + '\n' +
-                "Links Sent:          " + storage.d.Users[name].linkCnt + '\n' +
-                "Total Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
-                "Total Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n", true, 'xl')
+                "Messages Sent: " + storage.d.Users[name].messageCnt + '\n' +
+                "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
+                "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
+                "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n", true, 'xl')
         })
     } else {
         var name = rawEvent.d.mentions[0].username
@@ -935,13 +935,13 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
             body = JSON.parse(body)
-            thing = whoRest + 'Avatar:    "' + body.data.url + '"'
+            thing = whoRest + 'Avatar:        "' + body.data.url + '"'
 
             messageSend(channelID, thing + "\n\n" +
-                "Messages Sent:       " + storage.d.Users[name].messageCnt + '\n' +
-                "Links Sent:          " + storage.d.Users[name].linkCnt + '\n' +
-                "Total Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
-                "Total Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n", true, 'xl')
+                "Messages Sent: " + storage.d.Users[name].messageCnt + '\n' +
+                "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
+                "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
+                "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n", true, 'xl')
         })
         /*} else {
                 continue
@@ -990,16 +990,16 @@ function whoIs(channelID, serverID, name, cl) {
 
     avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
     message = '' +
-        'Name:      ' + userN + '#' + discriminator + '\n' +
-        'Nickname:  ' + nick + '\n' +
-        'ID:        ' + userID + '\n\n' +
-        'Status:    ' + status + '\n' +
-        'Bot:       ' + botT + '\n' +
-        'Roles:     ' + rolesm + '\n' +
-        'Muted:     ' + mute + '\n' +
-        'Deafened:  ' + deaf + '\n\n' +
-        'Joined:    ' + join + '\n' +
-        'Avatar:    ' + avatarL
+        'Name:          ' + userN + '#' + discriminator + '\n' +
+        'Nickname:      ' + nick + '\n' +
+        'ID:            ' + userID + '\n\n' +
+        'Status:        ' + status + '\n' +
+        'Bot:           ' + botT + '\n' +
+        'Roles:         ' + rolesm + '\n' +
+        'Muted:         ' + mute + '\n' +
+        'Deafened:      ' + deaf + '\n\n' +
+        'Joined:        ' + join + '\n' +
+        'Avatar:        ' + avatarL
     if (cl) {
         return message
     } else {
@@ -1604,12 +1604,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     whoRest = statW.substring(0, statW.indexOf('Avatar'))
                     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
                         body = JSON.parse(body)
-                        thing = whoRest + 'Avatar:    "' + body.data.url + '"'
+                        thing = whoRest + 'Avatar:        "' + body.data.url + '"'
                         messageSend(channelID, thing + '\n\n' +
-                            "Messages Sent:       " + storage.d.Users[user].messageCnt + '\n' +
-                            "Links Sent:          " + storage.d.Users[user].linkCnt + '\n' +
-                            "Total Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
-                            "Total Time Offline:  " +
+                            "Messages Sent: " + storage.d.Users[user].messageCnt + '\n' +
+                            "Links Sent:    " + storage.d.Users[user].linkCnt + '\n' +
+                            "Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
+                            "Time Offline:  " +
                             storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds\n\n", true, 'xl', true, userID)
                     })
                 } catch (e) {
