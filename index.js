@@ -1529,7 +1529,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageSend(channelID, serverCnt + " Servers\n" +
                 channelCnt + " Channels\n" +
                 userCnt + " Users\n", true, 'xl', true, userID,
-                doc.info + ' Scratch current count of servers, channels, ans users seen')
+                doc.info + "\n\nHere is Scratch's current count of servers, channels, ans users seen")
         }
         if (message.toLowerCase().indexOf('roll') === 0 && ignore !== true) {
             var msg = message
