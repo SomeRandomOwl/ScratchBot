@@ -987,8 +987,38 @@ function whoIs(channelID, serverID, name, cl) {
     } else {
         rolesm = 'everyone'
     }
+    ChtTime = secondsToTime(gettime() - storage.d.Users[name].lastChatR)
+    lastChat = ""
+    if (ChtTime.d > 0) {
+        if (ChtTime.d === 1) {
+            lastChat = "1 Day "
+        } else {
+            lastChat = ChtTime.d + " Days "
+        }
+    }
+    if (ChtTime.h > 0) {
+        if (ChtTime.h === 1) {
+            lastChat = lastChat + "1 Hour "
+        } else {
+            lastChat = lastChat + ChtTime.h + " Hours "
+        }
+    }
+    if (ChtTime.m > 0) {
+        if (ChtTime.m === 1) {
+            lastChat = lastChat + "1 Minute "
+        } else {
+            lastChat = lastChat + ChtTime.m + " Minutes "
+        }
+    }
+    if (ChtTime.s > 0) {
+        if (ChtTime.s === 1) {
+            lastChat = lastChat + "1 Second "
+        } else {
+            lastChat = lastChat + ChtTime.s + " Seconds "
+        }
+    }
 
-    lastChat = "(" + storage.d.Users[name].lastChat + ")"
+    lastChat = lastChat + "(" + storage.d.Users[name].lastChat + ")"
 
     avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
     message = '' +
@@ -1407,11 +1437,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (storage.d.Users[user].messageCnt === undefined) {
             storage.d.Users[user].messageCnt = 1
             storage.d.Users[user].lastChat = moment().format('MMMM Do YYYY, hh:mm:ss a')
-            console.log(storage.d.Users[user].lastChat)
+            storage.d.Users[user].lastChatR = gettime()
         } else {
             mucount = storage.d.Users[user].messageCnt
             mucount = mucount + 1
             storage.d.Users[user].messageCnt = mucount
+            storage.d.Users[user].lastChat = moment().format('MMMM Do YYYY, hh:mm:ss a')
+            storage.d.Users[user].lastChatR = gettime()
         }
         writeJSON('./assets/storage', storage)
     }
