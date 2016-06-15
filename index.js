@@ -595,7 +595,7 @@ function status(statuscall, channelID, rawEvent) {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 }
-                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
+                messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nSince: " + timeIdle + "\nlastSeen: " + ltsmsg, true, 'xl')
             } else if (status === 'offline') {
                 rawLastSeen = storage.d.Users[statuscall].rawLastSeen
                 var ltsmsg = storage.d.Users[statuscall].lastseen
@@ -621,7 +621,7 @@ function status(statuscall, channelID, rawEvent) {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 }
-                messageSend(channelID, statuscall + " Is currently " + storage.d.Users[statuscall].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
+                messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nSince: " + timeIdle + "\nlastSeen: " + ltsmsg, true, 'xl')
             } else if (status === 'online') {
                 messageSend(channelID, statuscall + " Is currently online")
             } else if (status === 'Unknown') {
@@ -657,7 +657,7 @@ function status(statuscall, channelID, rawEvent) {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         }
-                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
+                        messageSend(channelID, statuscall + ": " + storage.d.Users[usern].status + "\nSince: " + timeIdle + "\nlastSeen: " + ltsmsg, true, 'xl')
                     } else if (status === 'offline') {
                         rawLastSeen = storage.d.Users[usern].rawLastSeen
                         var ltsmsg = storage.d.Users[usern].lastseen
@@ -683,7 +683,7 @@ function status(statuscall, channelID, rawEvent) {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         }
-                        messageSend(channelID, statuscall + " Is currently " + storage.d.Users[usern].status + " and has been for: " + timeIdle + " And was last seen at: " + ltsmsg)
+                        messageSend(channelID, statuscall + ": " + storage.d.Users[usern].status + "\nSince: " + timeIdle + "\nlastSeen: " + ltsmsg, true, 'xl')
                     } else if (status === 'online') {
                         messageSend(channelID, statuscall + " Is currently online")
                     } else if (status === 'Unknown') {
