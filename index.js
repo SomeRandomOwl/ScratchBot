@@ -410,18 +410,18 @@ function messageSend(channelID, msg, cb, type, mention, userID, preText) {
                     msg = JSON.stringify(msg, null, '\t')
                 }
                 if (preText !== undefined) {
-                    msg = '<@' + userID + '> ' + preText + '\n\n```' + type + '\n' + msg + '```'
+                    msg = '<@' + userID + '> ' + preText + '\n```' + type + '\n' + msg + '```'
                 } else {
-                    msg = '<@' + userID + '>\n\n```' + type + '\n' + msg + '```'
+                    msg = '<@' + userID + '>\n```' + type + '\n' + msg + '```'
                 }
             } else {
                 if (type === 'json') {
                     msg = JSON.stringify(msg, null, '\t')
                 }
                 if (preText !== undefined) {
-                    msg = preText + '\n\n```' + type + '\n' + msg + '```'
+                    msg = preText + '\n```' + type + '\n' + msg + '```'
                 } else {
-                    msg = '\n\n```' + type + '\n' + msg + '```'
+                    msg = '```' + type + '\n' + msg + '```'
                 }
             }
         } else {
@@ -429,13 +429,13 @@ function messageSend(channelID, msg, cb, type, mention, userID, preText) {
                 if (preText !== undefined) {
                     msg = '<@' + userID + '> ' + preText + '\n\n```' + msg + '```'
                 } else {
-                    msg = '<@' + userID + '>\n\n```' + msg + '```'
+                    msg = '<@' + userID + '>\n```' + msg + '```'
                 }
             } else {
                 if (preText !== undefined) {
-                    msg = preText + '\n\n```' + msg + '```'
+                    msg = preText + '\n```' + msg + '```'
                 } else {
-                    msg = '\n\n```' + msg + '```'
+                    msg = '```' + msg + '```'
                 }
             }
         }
