@@ -1018,7 +1018,7 @@ function whoIs(channelID, serverID, name, cl) {
         }
     }
 
-    lastChat = lastChat + storage.d.Users[name].lastChat
+    lastChat = lastChat + '(' + storage.d.Users[name].lastChat + ')'
 
     avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
     message = '' +
