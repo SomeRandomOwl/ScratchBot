@@ -1033,7 +1033,7 @@ function whoIs(channelID, serverID, name, cl) {
         'Nickname:      ' + nick + '\n' +
         'ID:            ' + userID + '\n\n' +
         'Status:        ' + status + '\n' +
-        'LastChat       ' + lastChat + '\n' +
+        'LastChat       ' + lastChat + '\n\n' +
         'Bot:           ' + botT + '\n' +
         'Roles:         ' + rolesm + '\n' +
         'Muted:         ' + mute + '\n' +
