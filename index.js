@@ -291,9 +291,16 @@ function userlist(verb, s) {
                         's': 0
                     }
                 }
+                if (storage.d.Users[name].lastChat === undefined) {
+                    storage.d.Users[name].lastChat = moment().format('MMMM Do YYYY, hh:mm:ss a')
+                }
+                if (storage.d.Users[name].lastChatR === undefined) {
+                    storage.d.Users[name].lastChatR = gettime()
+                }
                 if (storage.d.Users[name].Servers === undefined) {
                     storage.d.Users[name].Servers = []
                 }
+
                 if (isInArray(bot.servers[serverID].name, storage.d.Users[name].Servers)) {
                     continue
                 } else {
