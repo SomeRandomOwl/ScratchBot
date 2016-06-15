@@ -988,6 +988,7 @@ function whoIs(channelID, serverID, name, cl) {
         rolesm = 'everyone'
     }
     ChtTime = secondsToTime(gettime() - storage.d.Users[name].lastChatR)
+    console.log(chats)
     lastChat = ""
     if (ChtTime.d > 0) {
         if (ChtTime.d === 1) {
