@@ -566,7 +566,7 @@ function relxkcd(quer, channelID, name, sname) {
     writeJSON('./assets/storage', storage)
 }
 /*/Retrieves a current status of a user/*/
-function status(statuscall, channelID, rawEvent) {
+function status(statuscall, channelID, rawEvent, cl) {
     try {
         if (statuscall.toLowerCase().indexOf('<@') === -1) {
             var status = storage.d.Users[statuscall].status
@@ -595,7 +595,12 @@ function status(statuscall, channelID, rawEvent) {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 }
-                messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                if (cl) {
+                    var clmsg = statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg
+                    return clmsg
+                } else {
+                    messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                }
             } else if (status === 'offline') {
                 rawLastSeen = storage.d.Users[statuscall].rawLastSeen
                 var ltsmsg = storage.d.Users[statuscall].lastseen
@@ -621,9 +626,18 @@ function status(statuscall, channelID, rawEvent) {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 }
-                messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                if (cl) {
+                    var clmsg = statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg
+                    return clmsg
+                } else {
+                    messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                }
             } else if (status === 'online') {
-                messageSend(channelID, statuscall + " Is currently online")
+                if (cl) {
+                    return "Online"
+                } else {
+                    messageSend(channelID, statuscall + " Is currently online")
+                }
             } else if (status === 'Unknown') {
                 messageSend(channelID, "Oh...um, i dont know the last time " + statuscall + " was online...sorry :confounded:")
             }
@@ -657,7 +671,12 @@ function status(statuscall, channelID, rawEvent) {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         }
-                        messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                        if (cl) {
+                            clmsg = usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg
+                            return clmsg
+                        } else {
+                            messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                        }
                     } else if (status === 'offline') {
                         rawLastSeen = storage.d.Users[usern].rawLastSeen
                         var ltsmsg = storage.d.Users[usern].lastseen
@@ -683,9 +702,18 @@ function status(statuscall, channelID, rawEvent) {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         }
-                        messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                        if (cl) {
+                            var clmsg = usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg
+                            return clmsg
+                        } else {
+                            messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                        }
                     } else if (status === 'online') {
-                        messageSend(channelID, statuscall + " Is currently online")
+                        if (cl) {
+                            return "Online"
+                        } else {
+                            messageSend(channelID, statuscall + " Is currently online")
+                        }
                     } else if (status === 'Unknown') {
                         messageSend(channelID, "Oh...um, i dont know the last time " + statuscall + " was online...sorry :confounded:")
                     }
@@ -963,6 +991,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
 /*/WhoIs/*/
 function whoIs(channelID, serverID, name, cl) {
     try {
+        ss = status(name, channelID, null, true)
         userID = storage.d.Users[name].id
         roles = bot.servers[serverID].members[userID].roles
         nick = bot.servers[serverID].members[userID].nick
@@ -992,7 +1021,7 @@ function whoIs(channelID, serverID, name, cl) {
             }
         }
     } else {
-        rolesm = 'everyone'
+        rolesm = 'Everyone'
     }
     ChtTime = secondsToTime(gettime() - storage.d.Users[name].lastChatR)
     lastChat = ""
@@ -1033,9 +1062,10 @@ function whoIs(channelID, serverID, name, cl) {
         'Nickname:      ' + nick + '\n' +
         'ID:            ' + userID + '\n\n' +
         'Status:        ' + status + '\n' +
+        'LastSeen:      ' + ss + '\n' +
         'LastChat       ' + lastChat + '\n\n' +
-        'Bot:           ' + botT + '\n' +
         'Roles:         ' + rolesm + '\n' +
+        'Bot:           ' + botT + '\n' +
         'Muted:         ' + mute + '\n' +
         'Deafened:      ' + deaf + '\n\n' +
         'Joined:        ' + join + '\n' +
