@@ -1421,7 +1421,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     //Gets the message id and server id
     var messageID = rawEvent.d.id
-    var serverID = bot.serverFromChannel(channelID)
+    var serverID = bot.channels[channelID].guild_id
         //gets the server and channel name
     try {
         var cname = bot.servers[serverID].channels[channelID].name
