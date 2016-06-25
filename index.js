@@ -1174,7 +1174,7 @@ function fileU(channelID, userID, file) {
     }
 }
 
-function totalOfAll(channelID, verb) {
+function totalOfAll(channelID, verb, cl) {
     var totalofall = 0;
     var message = ''
     for (var servername in storage.d.Servers) {
@@ -1184,7 +1184,11 @@ function totalOfAll(channelID, verb) {
     if (verb) {
         messageSend(channelID, message + 'All: ' + totalofall)
     } else {
-        messageSend(channelID, "Total Of All Messages: " + totalofall)
+        if (cl) {
+            return totalOfAll
+        } else {
+            messageSend(channelID, "Total Of All Messages: " + totalofall)
+        }
     }
 }
 var startUpTime = null
