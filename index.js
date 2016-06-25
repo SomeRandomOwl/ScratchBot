@@ -1173,6 +1173,20 @@ function fileU(channelID, userID, file) {
         return "There was a error with that"
     }
 }
+
+function totalOfAll(channelID, verb) {
+    var totalofall = 0;
+    var message = ''
+    for (var servername in storage.d.Servers) {
+        message = message + servername + ":  " + storage.d.Servers[servername].messageCnt + '\n'
+        totalofall = totalofall + storage.d.Servers[servername].messageCnt
+    };
+    if (verb) {
+        messageSend(channelID, message + 'All: ' + totalofall)
+    } else {
+        messageSend(channelID, "Total Of All Messages: " + totalofall)
+    }
+}
 var startUpTime = null
     /* Bot on event functions */
 bot.on('ready', function() {
