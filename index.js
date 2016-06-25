@@ -992,7 +992,7 @@ function whoIs(channelID, serverID, name, cl) {
             }
         }
     } else {
-        rolesm = 'everyone'
+        rolesm = 'Everyone'
     }
     ChtTime = secondsToTime(gettime() - storage.d.Users[name].lastChatR)
     lastChat = ""
@@ -1040,6 +1040,7 @@ function whoIs(channelID, serverID, name, cl) {
         'Deafened:      ' + deaf + '\n\n' +
         'Joined:        ' + join + '\n' +
         'Avatar:        ' + avatarL
+
     if (cl) {
         return message
     } else {
