@@ -19,6 +19,7 @@ var Cleverbot = require('cleverbot-node');
 var pirateSpeak = require('pirate-speak');
 var google = require('googleapis');
 var urlshortener = google.urlshortener('v1');
+var schedule = require('node-schedule');
 
 cleverbot = new Cleverbot;
 
@@ -89,6 +90,9 @@ var serverID = null;
 var xkcdJson = null
 var verb = false
 var prevUrl
+var questions = {
+    'ActiveQs': {}
+}
 
 String.prototype.replaceBetween = function(start, end, what) {
     return this.substring(0, start) + what + this.substring(end);
@@ -1193,6 +1197,11 @@ function totalOfAll(channelID, verb, cl) {
 }
 var startUpTime = null
     /* Bot on event functions */
+var update = schedule.scheduleJob('* 5 * * *', function() {
+    serverlist(false)
+    channellist(false)
+    userlist(false)
+});
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
     startUpTime = gettime()
