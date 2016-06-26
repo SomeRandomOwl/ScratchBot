@@ -1195,6 +1195,7 @@ function totalOfAll(channelID, verb, cl) {
         }
     }
 }
+disc = false
 var startUpTime = null
     /* Bot on event functions */
 var update = schedule.scheduleJob('* 5 * * *', function() {
@@ -1204,7 +1205,7 @@ var update = schedule.scheduleJob('* 5 * * *', function() {
 });
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
-    if (disconnected === false) {
+    if (disc === false) {
         startUpTime = gettime()
     }
     serverlist(false, true)
@@ -1289,7 +1290,7 @@ bot.on('debug', function(rawEvent) {
     }
 });
 bot.on('disconnected', function() {
-    var disconnected = true
+    var disc = true
     logger.error(chalk.red("Bot got disconnected, reconnecting"))
     bot.connect()
     logger.info(chalk.green("Reconnected"))
