@@ -1198,7 +1198,7 @@ function totalOfAll(channelID, verb, cl) {
 disc = false
 var startUpTime = null
     /* Bot on event functions */
-var update = schedule.scheduleJob('* 5 * * *', function() {
+var update = schedule.scheduleJob('*/5 * * * *', function() {
     serverlist(false)
     channellist(false)
     userlist(false)
