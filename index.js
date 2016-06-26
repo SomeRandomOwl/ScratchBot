@@ -1178,7 +1178,7 @@ function totalOfAll(channelID, verb, cl) {
     var totalofall = 0;
     var message = ''
     for (var servername in storage.d.Servers) {
-        message = message + servername + ":  " + storage.d.Servers[servername].messageCnt + '\n'
+        message = message + servername + ":  " + storage.d.Servers[servername].messageCnt + '\n\n'
         totalofall = totalofall + storage.d.Servers[servername].messageCnt
     };
     if (verb) {
