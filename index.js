@@ -1204,7 +1204,9 @@ var update = schedule.scheduleJob('* 5 * * *', function() {
 });
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
-    startUpTime = gettime()
+    if (disconnected === false) {
+        startUpTime = gettime()
+    }
     serverlist(false, true)
     channellist(false, true)
     userlist(false, true)
@@ -1287,6 +1289,7 @@ bot.on('debug', function(rawEvent) {
     }
 });
 bot.on('disconnected', function() {
+    var disconnected = true
     logger.error(chalk.red("Bot got disconnected, reconnecting"))
     bot.connect()
     logger.info(chalk.green("Reconnected"))
