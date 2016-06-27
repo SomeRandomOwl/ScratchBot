@@ -2,7 +2,7 @@ var questions = {
 
 }
 
-exports.q = function(question) {
+module.exports = function(question) {
     console.log('yes')
 }
 
