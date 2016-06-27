@@ -708,7 +708,7 @@ function unShorten(channelID, userID, url) {
 function stats(channelID, name, rawEvent, channelID, serverID) {
     /*try {*/
     if (name.toLowerCase().indexOf('<@') === -1) {
-        statW = whoIs(channelID, serverID, name, true)
+        statW = cmds.util.whoIs(bot, storage, serverID, name)
         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
@@ -725,7 +725,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         var name = rawEvent.d.mentions[0].username
             /*for (var usern in storage.d.Users) {
             if (mentId === storage.d.Users[usern].id) {*/
-        statW = whoIs(channelID, serverID, name, true)
+        statW = cmds.util.whoIs(bot, storage, serverID, name)
         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
@@ -747,93 +747,6 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         console.log(e)
         messageSend(channelID, "Error; No User specified, or invalid user")
     }*/
-}
-/*/WhoIs/*/
-function whoIs(channelID, serverID, name, cl) {
-    try {
-        userID = storage.d.Users[name].id
-        roles = bot.servers[serverID].members[userID].roles
-        nick = bot.servers[serverID].members[userID].nick
-        mute = bot.servers[serverID].members[userID].mute
-        deaf = bot.servers[serverID].members[userID].deaf
-        join = bot.servers[serverID].members[userID].joined_at
-        status = bot.servers[serverID].members[userID].status
-        userN = bot.users[userID].username
-        discriminator = bot.users[userID].discriminator
-        avatar = bot.users[userID].avatar
-        botT = bot.users[userID].bot
-        game = bot.users[userID].game
-        botT = JSON.stringify(botT)
-    } catch (e) { /**/ }
-
-    if (roles.length !== 0) {
-        rolesm = 'everyone, '
-        for (var i = 0; i < roles.length; i++) {
-            if (i !== roles.length - 1) {
-                roleN = bot.servers[serverID].roles[roles[i]].name
-                roleN = roleN.replace(' ', '')
-                rolesm = rolesm + roleN + ', '
-            } else {
-                roleN = bot.servers[serverID].roles[roles[i]].name
-                roleN = roleN.replace(' ', '')
-                rolesm = rolesm + roleN
-            }
-        }
-    } else {
-        rolesm = 'Everyone'
-    }
-    ChtTime = cmds.util.secondsToTime(cmds.util.gettime() - storage.d.Users[name].lastChatR)
-    lastChat = ""
-    if (ChtTime.d > 0) {
-        if (ChtTime.d === 1) {
-            lastChat = "1 Day "
-        } else {
-            lastChat = ChtTime.d + " Days "
-        }
-    }
-    if (ChtTime.h > 0) {
-        if (ChtTime.h === 1) {
-            lastChat = lastChat + "1 Hour "
-        } else {
-            lastChat = lastChat + ChtTime.h + " Hours "
-        }
-    }
-    if (ChtTime.m > 0) {
-        if (ChtTime.m === 1) {
-            lastChat = lastChat + "1 Minute "
-        } else {
-            lastChat = lastChat + ChtTime.m + " Minutes "
-        }
-    }
-    if (ChtTime.s > 0) {
-        if (ChtTime.s === 1) {
-            lastChat = lastChat + "1 Second "
-        } else {
-            lastChat = lastChat + ChtTime.s + " Seconds "
-        }
-    }
-
-    lastChat = lastChat + '(' + storage.d.Users[name].lastChat + ')'
-
-    avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
-    message = '' +
-        'Name:          ' + userN + '#' + discriminator + '\n' +
-        'Nickname:      ' + nick + '\n' +
-        'ID:            ' + userID + '\n\n' +
-        'Status:        ' + status + '\n' +
-        'LastChat       ' + lastChat + '\n\n' +
-        'Roles:         ' + rolesm + '\n' +
-        'Bot:           ' + botT + '\n' +
-        'Muted:         ' + mute + '\n' +
-        'Deafened:      ' + deaf + '\n\n' +
-        'Joined:        ' + join + '\n' +
-        'Avatar:        ' + avatarL
-
-    if (cl) {
-        return message
-    } else {
-        messageSend(channelID, message, true, 'xl')
-    }
 }
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, messageID, debug) {
@@ -1461,7 +1374,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 5) {
                 try {
-                    statW = whoIs(channelID, serverID, user, true)
+                    statW = cmds.util.whoIs(bot, storage, serverID, user)
                     wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
                     whoRest = statW.substring(0, statW.indexOf('Avatar'))
                     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
