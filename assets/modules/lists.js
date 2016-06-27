@@ -1,7 +1,5 @@
 var cmds = ('./modules')
 
-
-console.log(storage)
 /*/Lists currently connected severs and writes them to json/*/
 exports.server = function(bot, storage, verb, s) {
     serverCnt = 0
