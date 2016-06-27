@@ -996,9 +996,9 @@ bot.on('ready', function() {
     if (disc === false) {
         startUpTime = cmds.util.gettime()
     }
-    cmds.list.server(bot, storage, false, true)
-    cmds.list.channel(bot, storage, false, true)
-    cmds.list.user(bot, storage, false, true)
+    console.log(chalk.gray(cmds.list.server(bot, storage, false, true)))
+    console.log(chalk.gray(cmds.list.channel(bot, storage, false, true)))
+    console.log(chalk.gray(cmds.list.user(bot, storage, false, true)))
     logger.info(chalk.magenta(bot.username + " -- (" + bot.id + ")" + " Is now running"))
     statusmsg("help | info | invite")
 });
