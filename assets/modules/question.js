@@ -1,4 +1,3 @@
-var question = function(question) {
+exports.question = function(question) {
     console.log('yes')
 }
-export question
