@@ -1,0 +1,13 @@
+/*/Function to write json to the storage file/*/
+module.exports = function(path, data, callback) {
+    fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
+        if (error) {
+            return error;
+        }
+        fs.rename(path + '.tmp', path + '.json', function(error) {
+            if (error) {
+                return error;
+            }
+        });
+    });
+}
