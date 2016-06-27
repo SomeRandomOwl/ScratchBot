@@ -987,18 +987,18 @@ disc = false
 var startUpTime = null
     /* Bot on event functions */
 var update = schedule.scheduleJob('*/5 * * * *', function() {
-    cmds.lists.serverlist(bot, false)
-    cmds.lists.channellist(bot, false)
-    cmds.lists.userlist(bot, false)
+    cmds.list.serverlist(bot, false)
+    cmds.list.channellist(bot, false)
+    cmds.list.userlist(bot, false)
 });
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
     if (disc === false) {
         startUpTime = cmds.util.gettime()
     }
-    cmds.lists.serverlist(bot, false, true)
-    cmds.lists.channellist(bot, false, true)
-    cmds.lists.userlist(bot, false, true)
+    cmds.list.serverlist(bot, false, true)
+    cmds.list.channellist(bot, false, true)
+    cmds.list.userlist(bot, false, true)
     logger.info(chalk.magenta(bot.username + " -- (" + bot.id + ")" + " Is now running"))
     statusmsg("help | info | invite")
 });
