@@ -1,4 +1,4 @@
-var cmds = require('./modules')
+var cmds = require('./')
 var chalk = require('chalk')
 
 /*/Lists currently connected severs and writes them to json/*/
