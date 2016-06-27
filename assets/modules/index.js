@@ -4,12 +4,14 @@ var gettime = require('./gettime.js')
 var writeJSON = require('./writeJSON.js')
 var lists = require('./lists.js')
 var isInArray = require('./isInArray.js')
+var whoIs = require('./whoIs.js')
 
 var util = {
     secondsToTime,
     gettime,
     writeJSON,
-    isInArray
+    isInArray,
+    whoIs
 }
 
 exports.list = lists
