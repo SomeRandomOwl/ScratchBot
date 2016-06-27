@@ -698,7 +698,7 @@ function cat(channelID, name, sname) {
         messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
-    cmds.util.writeJSON('./storage', storage)
+    cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Posts a random snake picture, limit 1 per hour/*/
 function snake(channelID, name, sname, userID) {
