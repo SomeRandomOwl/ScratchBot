@@ -20,7 +20,7 @@ var pirateSpeak = require('pirate-speak');
 var google = require('googleapis');
 var urlshortener = google.urlshortener('v1');
 var schedule = require('node-schedule');
-var cmds = require('assets/modules')
+var cmds = require('./assets/modules')
 
 cleverbot = new Cleverbot;
 
@@ -1435,8 +1435,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     //Gets the message id and server id
     var messageID = rawEvent.d.id
-    try{ var serverID = bot.channels[channelID].guild_id} catch (e) {/**/}
-        //gets the server and channel name
+    try {
+        var serverID = bot.channels[channelID].guild_id
+    } catch (e) { /**/ }
+    //gets the server and channel name
     try {
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
