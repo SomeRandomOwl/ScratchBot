@@ -1,5 +1,5 @@
 /*/WhoIs/*/
-exports.whoIs = function(bot, storage, serverID, name) {
+module.exports = function(bot, storage, serverID, name) {
     try {
         userID = storage.d.Users[name].id
         roles = bot.servers[serverID].members[userID].roles
