@@ -157,7 +157,7 @@ exports.user = function(bot, storage, verb, s) {
                     storage.d.Users[name].Servers = []
                 }
 
-                if (isInArray(bot.servers[serverID].name, storage.d.Users[name].Servers)) {
+                if (cmds.util.isInArray(bot.servers[serverID].name, storage.d.Users[name].Servers)) {
                     continue
                 } else {
                     storage.d.Users[name].Servers.push(bot.servers[serverID].name)

@@ -103,10 +103,6 @@ if (storage.settings.redditList === undefined) {
 } else {
     redditList = storage.settings.redditList
 }
-/*/Quick way of checking if something is in a array/*/
-function isInArray(value, array) {
-    return array.indexOf(value) > -1;
-}
 /*/Used to Ignore Channels/*/
 function ignoreC(cID) {
     try {
@@ -614,7 +610,7 @@ function pug(channelID, name, sname) {
 }
 /*/Posts a random image from a SFW scenery subreddit/*/
 function redditScenery(channelID, reddit, name, sname) {
-    if (isInArray(reddit, redditList)) {
+    if (cmds.util.isInArray(reddit, redditList)) {
         var notif = messageSend(channelID, "Grabbing a image from reddit, this might take a few seconds...")
         request('https://www.reddit.com/r/' + reddit + 'porn' + '.json', function(error, response, body) {
             if (!error && response.statusCode == 200) {
