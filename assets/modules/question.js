@@ -1,3 +1,3 @@
-exports.q = function(question) {
+exports = function(question) {
     console.log('yes')
 }
