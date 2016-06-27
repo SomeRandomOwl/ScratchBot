@@ -1,4 +1,4 @@
-var cmds = ('./modules')
+var cmds = ('./index.js')
 
 /*/Lists currently connected severs and writes them to json/*/
 exports.server = function(bot, storage, verb, s) {
