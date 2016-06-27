@@ -1389,6 +1389,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     })
                 } catch (e) {
                     messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
+                    console.log(e)
                 }
             } else if (message.toLowerCase().indexOf('server') !== -1) {
                 messageSend(channelID, "The total ammount of messages sent on this server is: " + storage.d.Servers[sname].messageCnt)
