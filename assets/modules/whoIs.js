@@ -1,4 +1,5 @@
 /*/WhoIs/*/
+var cmds = require('./')
 module.exports = function(bot, storage, serverID, name) {
     try {
         userID = storage.d.Users[name].id
