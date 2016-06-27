@@ -120,28 +120,6 @@ function writeJSON(path, data, callback) {
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
-/*/Converts Seconds to hh mm ss/*/
-function secondsToTime(secs) {
-    var hours = Math.floor(secs / (60 * 60));
-
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
-
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
-
-    var days = Math.floor(hours / 24)
-    while (hours > 23) {
-        hours = hours - 24
-    }
-    var obj = {
-        "d": days,
-        "h": hours,
-        "m": minutes,
-        "s": seconds
-    };
-    return obj;
-}
 /*/Gets seconds using Date.now()/*/
 function gettime() {
     var timenow = Math.floor(Date.now() / 1000)
@@ -522,11 +500,11 @@ function relxkcd(quer, channelID, name, sname) {
     try {
         lastcomictime = storage.d.Servers[sname].Channels[name].lastComic
         elapsed = comictime - lastcomictime
-        elapsed = secondsToTime(elapsed)
+        elapsed = cmds.util.secondsToTime(elapsed)
         comicacttime = storage.d.Servers[sname].Channels[name].lastComicActt
         nextTime = lastcomictime + 3600
         nextTime = nextTime - comictime
-        nextTime = secondsToTime(nextTime)
+        nextTime = cmds.util.secondsToTime(nextTime)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         console.log("Comic elapsed: " + JSON.stringify(elapsed))
     } catch (e) {
@@ -577,7 +555,7 @@ function status(statuscall, channelID, rawEvent) {
                 var ltsmsg = storage.d.Users[statuscall].lastseen
                 ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
                 var timeIdle = gettime() - rawLastSeen
-                timeIdle = secondsToTime(timeIdle)
+                timeIdle = cmds.util.secondsToTime(timeIdle)
                 if (timeIdle.h === 0) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                 } else if (timeIdle.h === 1) {
@@ -603,7 +581,7 @@ function status(statuscall, channelID, rawEvent) {
                 var ltsmsg = storage.d.Users[statuscall].lastseen
                 ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
                 var timeIdle = gettime() - rawLastSeen
-                timeIdle = secondsToTime(timeIdle)
+                timeIdle = cmds.util.secondsToTime(timeIdle)
                 if (timeIdle.h === 0) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                 } else if (timeIdle.h === 1) {
@@ -639,7 +617,7 @@ function status(statuscall, channelID, rawEvent) {
                         var ltsmsg = storage.d.Users[usern].lastseen
                         ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
                         var timeIdle = gettime() - rawLastSeen
-                        timeIdle = secondsToTime(timeIdle)
+                        timeIdle = cmds.util.secondsToTime(timeIdle)
                         if (timeIdle.h === 0) {
                             timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                         } else if (timeIdle.h === 1) {
@@ -665,7 +643,7 @@ function status(statuscall, channelID, rawEvent) {
                         var ltsmsg = storage.d.Users[usern].lastseen
                         ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
                         var timeIdle = gettime() - rawLastSeen
-                        timeIdle = secondsToTime(timeIdle)
+                        timeIdle = cmds.util.secondsToTime(timeIdle)
                         if (timeIdle.h === 0) {
                             timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                         } else if (timeIdle.h === 1) {
@@ -713,8 +691,8 @@ function cat(channelID, name, sname) {
         elapsed = cattime - lastcattime
         nextTime = lastcattime + 3600
         nextTime = nextTime - cattime
-        nextTime = secondsToTime(nextTime)
-        elapsed = secondsToTime(elapsed)
+        nextTime = cmds.util.secondsToTime(nextTime)
+        elapsed = cmds.util.secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         catacttime = storage.d.Servers[sname].Channels[name].lastCatActt
     } catch (e) {
@@ -751,8 +729,8 @@ function snake(channelID, name, sname, userID) {
         elapsed = snaketime - lastsnaketime
         nextTime = lastsnaketime + 3600
         nextTime = nextTime - snaketime
-        nextTime = secondsToTime(nextTime)
-        elapsed = secondsToTime(elapsed)
+        nextTime = cmds.util.secondsToTime(nextTime)
+        elapsed = cmds.util.secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         snakeacttime = storage.d.Servers[sname].Channels[name].lastsnakeActt
     } catch (e) {
@@ -796,8 +774,8 @@ function pug(channelID, name, sname) {
         elapsed = pugtime - lastpugtime
         nextTime = lastpugtime + 3600
         nextTime = nextTime - pugtime
-        nextTime = secondsToTime(nextTime)
-        elapsed = secondsToTime(elapsed)
+        nextTime = cmds.util.secondsToTime(nextTime)
+        elapsed = cmds.util.secondsToTime(elapsed)
         nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
         pugacttime = storage.d.Servers[sname].Channels[name].lastpugActt
     } catch (e) {
@@ -996,7 +974,7 @@ function whoIs(channelID, serverID, name, cl) {
     } else {
         rolesm = 'Everyone'
     }
-    ChtTime = secondsToTime(gettime() - storage.d.Users[name].lastChatR)
+    ChtTime = cmds.util.secondsToTime(gettime() - storage.d.Users[name].lastChatR)
     lastChat = ""
     if (ChtTime.d > 0) {
         if (ChtTime.d === 1) {
@@ -1362,7 +1340,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     }
                 } else {
                     var lastIdleTime = storage.d.Users[user].totalIdle
-                    var previousIdle = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    var previousIdle = cmds.util.secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
                     lastIdleTime.d = lastIdleTime.d + previousIdle.d
                     lastIdleTime.h = lastIdleTime.h + previousIdle.h
                     lastIdleTime.m = lastIdleTime.m + previousIdle.m
@@ -1370,7 +1348,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     lastIdleTime.m = lastIdleTime.m * 60
                     lastIdleTime.h = lastIdleTime.h * 3600
                     lastIdleTimeC = lastIdleTime.m + lastIdleTime.s + lastIdleTime.h
-                    lastIdleTimeC = secondsToTime(lastIdleTimeC)
+                    lastIdleTimeC = cmds.util.secondsToTime(lastIdleTimeC)
                     lastIdleTime.d = lastIdleTime.d + lastIdleTimeC.d
                     lastIdleTime.h = lastIdleTimeC.h
                     lastIdleTime.m = lastIdleTimeC.m
@@ -1391,7 +1369,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     }
                 } else {
                     var lastOfflineTime = storage.d.Users[user].totalOffline
-                    var previousOffline = secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    var previousOffline = cmds.util.secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
                     lastOfflineTime.d = lastOfflineTime.d + previousOffline.d
                     lastOfflineTime.h = lastOfflineTime.h + previousOffline.h
                     lastOfflineTime.m = lastOfflineTime.m + previousOffline.m
@@ -1399,7 +1377,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     lastOfflineTime.m = lastOfflineTime.m * 60
                     lastOfflineTime.h = lastOfflineTime.h * 3600
                     lastOfflineTimeC = lastOfflineTime.m + lastOfflineTime.s + lastOfflineTime.h
-                    lastOfflineTimeC = secondsToTime(lastOfflineTimeC)
+                    lastOfflineTimeC = cmds.util.secondsToTime(lastOfflineTimeC)
                     lastOfflineTime.d = lastOfflineTime.d + lastOfflineTimeC.d
                     lastOfflineTime.h = lastOfflineTimeC.h
                     lastOfflineTime.m = lastOfflineTimeC.m
@@ -1776,7 +1754,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 try {
                     lastcomictime = storage.d.Servers[sname].Channels[cname].lastComic
                     elapsed = comictime - lastcomictime
-                    elapsed = secondsToTime(elapsed)
+                    elapsed = cmds.util.secondsToTime(elapsed)
                     comicacttime = storage.d.Servers[sname].Channels[cname].lastComicActt
                     console.log("Comic elapsed: " + JSON.stringify(elapsed))
                 } catch (e) {
@@ -1918,7 +1896,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
         }
         if (message.toLowerCase().indexOf('uptime') === 0 && ignore !== true) {
-            time = secondsToTime(gettime() - startUpTime)
+            time = cmds.util.secondsToTime(gettime() - startUpTime)
             messageSend(channelID, "The bot has been active for: " + time.d + " Days " + time.h + " Hours " + time.m + " Minutes " + time.s + " Seconds")
             rconcmd = 'Yes'
         }
