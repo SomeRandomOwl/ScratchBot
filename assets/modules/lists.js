@@ -1,11 +1,10 @@
 var cmds = ('./modules')
-var chalk = ('../../node_modules/chalk')
 
 /*/Lists currently connected severs and writes them to json/*/
 exports.server = function(bot, storage, verb, s) {
     serverCnt = 0
     if (verb) {
-        logger.info(chalk.underline("Currently connected to these servers:\n"))
+        logger.info("Currently connected to these servers:\n")
     }
     for (var serverID in bot.servers) {
         serverCnt++
@@ -37,17 +36,17 @@ exports.server = function(bot, storage, verb, s) {
             }
         }
     }
-    if (s) {
-        console.log(chalk.gray("Currently connected to: " + serverCnt + " Servers"))
-    }
     storage.d.totalCounters.servers = serverCnt
     cmds.util.writeJSON('./assets/storage', storage)
+    if (s) {
+        return "Currently connected to: " + serverCnt + " Servers"
+    }
 }
 /*/Lists currencly seen channels/*/
 exports.channel = function(bot, storage, verb, s) {
     channelCnt = 0
     if (verb) {
-        logger.info(chalk.underline("Currently connected to these channels:\n"))
+        logger.info("Currently connected to these channels:\n")
     }
     for (var serverID in bot.servers) {
         for (var channelID in bot.servers[serverID].channels) {
@@ -87,17 +86,18 @@ exports.channel = function(bot, storage, verb, s) {
             }
         }
     }
-    if (s) {
-        console.log(chalk.gray("With a total of: " + channelCnt + " Channels"))
-    }
     storage.d.totalCounters.channels = channelCnt
     cmds.util.writeJSON('./assets/storage', storage)
+
+    if (s) {
+        return "With a total of: " + channelCnt + " Channels"
+    }
 }
 /*/List currently seen users/*/
 exports.user = function(bot, storage, verb, s) {
     userCnt = 0
     if (verb) {
-        logger.info(chalk.underline("Currently seeing these users:\n"))
+        logger.info("Currently seeing these users:\n")
     }
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
@@ -165,9 +165,11 @@ exports.user = function(bot, storage, verb, s) {
             }
         }
     }
-    if (s) {
-        console.log(chalk.gray("With approximatly: " + userCnt + " Users across all of them\n"))
-    }
+
     storage.d.totalCounters.users = userCnt
     cmds.util.writeJSON('./assets/storage', storage)
+
+    if (s) {
+        return "With approximatly: " + userCnt + " Users across all of them\n"
+    }
 }
