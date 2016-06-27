@@ -982,11 +982,10 @@ function totalOfAll(channelID, verb, cl) {
 disc = false
 var startUpTime = null
     /* Bot on event functions */
-var update = schedule.scheduleJob('*/5 * * * *', function() {
+var update = schedule.scheduleJob('*/2 * * * *', function() {
     cmds.list.server(bot, storage, false)
     cmds.list.channel(bot, storage, false)
     cmds.list.user(bot, storage, false)
-    console.log("Updating lists")
 });
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
