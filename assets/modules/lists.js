@@ -1,10 +1,9 @@
-var storage = ('../storage.json')
 var cmds = ('./modules')
 
 
 console.log(storage)
 /*/Lists currently connected severs and writes them to json/*/
-exports.server = function(bot, verb, s) {
+exports.server = function(bot, storage, verb, s) {
     serverCnt = 0
     if (verb) {
         logger.info(chalk.underline("Currently connected to these servers:\n"))
@@ -46,7 +45,7 @@ exports.server = function(bot, verb, s) {
     cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Lists currencly seen channels/*/
-exports.channel = function(bot, verb, s) {
+exports.channel = function(bot, storage, verb, s) {
     channelCnt = 0
     if (verb) {
         logger.info(chalk.underline("Currently connected to these channels:\n"))
@@ -96,7 +95,7 @@ exports.channel = function(bot, verb, s) {
     cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/List currently seen users/*/
-exports.user = function(bot, verb, s) {
+exports.user = function(bot, storage, verb, s) {
     userCnt = 0
     if (verb) {
         logger.info(chalk.underline("Currently seeing these users:\n"))
