@@ -10,6 +10,3 @@ var util = {
 
 exports.question = question
 exports.util = util
-
-var exp = JSON.stringify(exports, null, '\t')
-var exports = JSON.parse(exp)
