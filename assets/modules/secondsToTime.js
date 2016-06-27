@@ -1,4 +1,4 @@
-exports.secondsToTime = function(secs) {
+module.exports = function(secs) {
     var hours = Math.floor(secs / (60 * 60));
 
     var divisor_for_minutes = secs % (60 * 60);
