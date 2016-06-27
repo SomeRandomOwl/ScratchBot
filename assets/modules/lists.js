@@ -1,5 +1,25 @@
 var cmds = require('./')
 var chalk = require('chalk')
+var moment = require('moment')
+var winston = require('winston');
+
+var logger = new(winston.Logger)({
+    transports: [
+        new(winston.transports.Console)(),
+        new(winston.transports.File)({
+            name: 'info-file',
+            filename: './logs/filelog-info.log',
+            level: 'info'
+        }),
+        new(winston.transports.File)({
+            name: 'error-file',
+            filename: './logs/filelog-error.log',
+            level: 'error',
+            // handleExceptions: true,
+            // humanReadableUnhandledException: true
+        })
+    ]
+});
 
 /*/Lists currently connected severs and writes them to json/*/
 exports.server = function(bot, storage, verb, s) {
