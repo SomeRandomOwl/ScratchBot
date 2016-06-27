@@ -133,7 +133,8 @@ exports.user = function(bot, storage, verb, s) {
                     "linkCnt": 0,
                     "status": "unknown",
                     "lastseen": "unknown",
-                    "rawLastSeen": 0
+                    "rawLastSeen": 0,
+                    "servers": = []
                 }
             } else {
                 if (storage.d.Users[name].messageCnt === undefined) {
