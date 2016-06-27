@@ -20,6 +20,7 @@ var pirateSpeak = require('pirate-speak');
 var google = require('googleapis');
 var urlshortener = google.urlshortener('v1');
 var schedule = require('node-schedule');
+var cmds = require('assets/modules')
 
 cleverbot = new Cleverbot;
 
@@ -1177,7 +1178,7 @@ function fileU(channelID, userID, file) {
         return "There was a error with that"
     }
 }
-
+/*/Totals all user messages/*/
 function totalOfAll(channelID, verb, cl) {
     var totalofall = 0;
     var message = ''
