@@ -120,11 +120,7 @@ function writeJSON(path, data, callback) {
 function isInArray(value, array) {
     return array.indexOf(value) > -1;
 }
-/*/Gets seconds using Date.now()/*/
-function gettime() {
-    var timenow = Math.floor(Date.now() / 1000)
-    return timenow
-}
+
 /*/Lists currently connected severs and writes them to json/*/
 function serverlist(verb, s) {
     serverCnt = 0
@@ -275,7 +271,7 @@ function userlist(verb, s) {
                     storage.d.Users[name].lastChat = moment().format('MMMM Do YYYY, hh:mm:ss a')
                 }
                 if (storage.d.Users[name].lastChatR === undefined) {
-                    storage.d.Users[name].lastChatR = gettime()
+                    storage.d.Users[name].lastChatR = cmds.util.gettime()
                 }
                 if (storage.d.Users[name].Servers === undefined) {
                     storage.d.Users[name].Servers = []
@@ -496,7 +492,7 @@ function diceroll(dice, userID, channelID) {
 }
 /*/Retrieves a relavant xkcd comic from a query/*/
 function relxkcd(quer, channelID, name, sname) {
-    var comictime = gettime()
+    var comictime = cmds.util.gettime()
     try {
         lastcomictime = storage.d.Servers[sname].Channels[name].lastComic
         elapsed = comictime - lastcomictime
@@ -528,7 +524,7 @@ function relxkcd(quer, channelID, name, sname) {
                 })
             }
         })
-        var lastcomictime = gettime()
+        var lastcomictime = cmds.util.gettime()
         storage.d.Servers[sname].Channels[name].lastComic = lastcomictime
     } else {
         try {
@@ -554,7 +550,7 @@ function status(statuscall, channelID, rawEvent) {
                 rawLastSeen = storage.d.Users[statuscall].rawLastSeen
                 var ltsmsg = storage.d.Users[statuscall].lastseen
                 ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
-                var timeIdle = gettime() - rawLastSeen
+                var timeIdle = cmds.util.gettime() - rawLastSeen
                 timeIdle = cmds.util.secondsToTime(timeIdle)
                 if (timeIdle.h === 0) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
@@ -580,7 +576,7 @@ function status(statuscall, channelID, rawEvent) {
                 rawLastSeen = storage.d.Users[statuscall].rawLastSeen
                 var ltsmsg = storage.d.Users[statuscall].lastseen
                 ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
-                var timeIdle = gettime() - rawLastSeen
+                var timeIdle = cmds.util.gettime() - rawLastSeen
                 timeIdle = cmds.util.secondsToTime(timeIdle)
                 if (timeIdle.h === 0) {
                     timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
@@ -616,7 +612,7 @@ function status(statuscall, channelID, rawEvent) {
                         rawLastSeen = storage.d.Users[usern].rawLastSeen
                         var ltsmsg = storage.d.Users[usern].lastseen
                         ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
-                        var timeIdle = gettime() - rawLastSeen
+                        var timeIdle = cmds.util.gettime() - rawLastSeen
                         timeIdle = cmds.util.secondsToTime(timeIdle)
                         if (timeIdle.h === 0) {
                             timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
@@ -642,7 +638,7 @@ function status(statuscall, channelID, rawEvent) {
                         rawLastSeen = storage.d.Users[usern].rawLastSeen
                         var ltsmsg = storage.d.Users[usern].lastseen
                         ltsmsg = moment(ltsmsg, ['MMMM Do YYYY, hh:mm:ss a']).format('MMMM Do YYYY, h:mm:ss a')
-                        var timeIdle = gettime() - rawLastSeen
+                        var timeIdle = cmds.util.gettime() - rawLastSeen
                         timeIdle = cmds.util.secondsToTime(timeIdle)
                         if (timeIdle.h === 0) {
                             timeIdle = timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
@@ -681,7 +677,7 @@ function status(statuscall, channelID, rawEvent) {
 }
 /*/Posts a random cat picture, limit 1 per hour/*/
 function cat(channelID, name, sname) {
-    var cattime = gettime()
+    var cattime = cmds.util.gettime()
     if (storage.d.Servers[sname].Channels[name].lastCat === undefined) {
         storage.d.Servers[sname].Channels[name].lastCat = 0
         storage.d.Servers[sname].Channels[name].lastCatActt = 0
@@ -709,7 +705,7 @@ function cat(channelID, name, sname) {
                 return elapsed
             }
         })
-        var lastcattime = gettime()
+        var lastcattime = cmds.util.gettime()
         storage.d.Servers[sname].Channels[name].lastCat = lastcattime
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime + ", time untill next post is allowed: " + nextTime)
@@ -719,7 +715,7 @@ function cat(channelID, name, sname) {
 }
 /*/Posts a random snake picture, limit 1 per hour/*/
 function snake(channelID, name, sname, userID) {
-    var snaketime = gettime()
+    var snaketime = cmds.util.gettime()
     if (storage.d.Servers[sname].Channels[name].lastsnake === undefined) {
         storage.d.Servers[sname].Channels[name].lastsnake = 0
         storage.d.Servers[sname].Channels[name].lastsnakeActt = 0
@@ -747,7 +743,7 @@ function snake(channelID, name, sname, userID) {
                 return elapsed
             }
         })
-        var lastsnaketime = gettime()
+        var lastsnaketime = cmds.util.gettime()
         storage.d.Servers[sname].Channels[name].lastsnake = lastsnaketime
     } else if (userID.indexOf('142484312862752768') !== -1) {
         request('http://fur.im/snek/snek.php', function(error, response, body) {
@@ -764,7 +760,7 @@ function snake(channelID, name, sname, userID) {
 }
 /*/Posts a random pug picture, limit 1 per hour/*/
 function pug(channelID, name, sname) {
-    var pugtime = gettime()
+    var pugtime = cmds.util.gettime()
     if (storage.d.Servers[sname].Channels[name].lastpug === undefined) {
         storage.d.Servers[sname].Channels[name].lastpug = 0
         storage.d.Servers[sname].Channels[name].lastpugActt = 0
@@ -792,7 +788,7 @@ function pug(channelID, name, sname) {
                 return elapsed
             }
         })
-        var lastpugtime = gettime()
+        var lastpugtime = cmds.util.gettime()
         storage.d.Servers[sname].Channels[name].lastpug = lastpugtime
     } else {
         messageSend(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime)
@@ -974,7 +970,7 @@ function whoIs(channelID, serverID, name, cl) {
     } else {
         rolesm = 'Everyone'
     }
-    ChtTime = cmds.util.secondsToTime(gettime() - storage.d.Users[name].lastChatR)
+    ChtTime = cmds.util.secondsToTime(cmds.util.gettime() - storage.d.Users[name].lastChatR)
     lastChat = ""
     if (ChtTime.d > 0) {
         if (ChtTime.d === 1) {
@@ -1182,7 +1178,7 @@ var update = schedule.scheduleJob('*/5 * * * *', function() {
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
     if (disc === false) {
-        startUpTime = gettime()
+        startUpTime = cmds.util.gettime()
     }
     serverlist(false, true)
     channellist(false, true)
@@ -1294,18 +1290,18 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             if (user !== undefined) {
                 var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
                 storage.d.Users[user].lastseen = lastseen
-                storage.d.Users[user].rawLastSeen = gettime()
+                storage.d.Users[user].rawLastSeen = cmds.util.gettime()
                 if (storage.d.Users[user].status !== 'offline' && verb) {
                     logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                 }
                 storage.d.Users[user].status = status
             } else if (user === undefined) {
                 var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
-                storage.d.Users[user].rawLastSeen = gettime()
+                storage.d.Users[user].rawLastSeen = cmds.util.gettime()
                 for (var user in storage.d.Users) {
                     if (userID === storage.d.Users[user].id) {
                         storage.d.Users[user].lastseen = lastseen
-                        storage.d.Users[user].rawLastSeen = gettime()
+                        storage.d.Users[user].rawLastSeen = cmds.util.gettime()
                         if (storage.d.Users[user].status !== 'offline' && verb) {
                             logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
                         }
@@ -1319,7 +1315,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         if (status === 'idle') {
             var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
             storage.d.Users[user].lastseen = lastseen
-            storage.d.Users[user].rawLastSeen = gettime()
+            storage.d.Users[user].rawLastSeen = cmds.util.gettime()
             if (storage.d.Users[user].status !== 'idle' && verb) {
                 logger.info(chalk.gray(lastseen + ' : ' + chalk.yellow(user + " is now: " + chalk.underline(status))));
             }
@@ -1340,7 +1336,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     }
                 } else {
                     var lastIdleTime = storage.d.Users[user].totalIdle
-                    var previousIdle = cmds.util.secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    var previousIdle = cmds.util.secondsToTime(cmds.util.gettime() - storage.d.Users[user].rawLastSeen)
                     lastIdleTime.d = lastIdleTime.d + previousIdle.d
                     lastIdleTime.h = lastIdleTime.h + previousIdle.h
                     lastIdleTime.m = lastIdleTime.m + previousIdle.m
@@ -1369,7 +1365,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                     }
                 } else {
                     var lastOfflineTime = storage.d.Users[user].totalOffline
-                    var previousOffline = cmds.util.secondsToTime(gettime() - storage.d.Users[user].rawLastSeen)
+                    var previousOffline = cmds.util.secondsToTime(cmds.util.gettime() - storage.d.Users[user].rawLastSeen)
                     lastOfflineTime.d = lastOfflineTime.d + previousOffline.d
                     lastOfflineTime.h = lastOfflineTime.h + previousOffline.h
                     lastOfflineTime.m = lastOfflineTime.m + previousOffline.m
@@ -1454,13 +1450,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (storage.d.Users[user].messageCnt === undefined) {
             storage.d.Users[user].messageCnt = 1
             storage.d.Users[user].lastChat = moment().format('MMMM Do YYYY, hh:mm:ss a')
-            storage.d.Users[user].lastChatR = gettime()
+            storage.d.Users[user].lastChatR = cmds.util.gettime()
         } else {
             mucount = storage.d.Users[user].messageCnt
             mucount = mucount + 1
             storage.d.Users[user].messageCnt = mucount
             storage.d.Users[user].lastChat = moment().format('MMMM Do YYYY, hh:mm:ss a')
-            storage.d.Users[user].lastChatR = gettime()
+            storage.d.Users[user].lastChatR = cmds.util.gettime()
         }
         writeJSON('./assets/storage', storage)
     }
@@ -1750,7 +1746,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('xkcd') === 0 && ignore !== true) {
             if (message.indexOf(' ') === -1) {
-                var comictime = gettime()
+                var comictime = cmds.util.gettime()
                 try {
                     lastcomictime = storage.d.Servers[sname].Channels[cname].lastComic
                     elapsed = comictime - lastcomictime
@@ -1769,7 +1765,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             messageSend(channelID, res.title + "\n" + res.url)
                         }
                     });
-                    var lastcomictime = gettime()
+                    var lastcomictime = cmds.util.gettime()
                     storage.d.Servers[sname].Channels[cname].lastComic = lastcomictime
                 } else {
                     messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
@@ -1896,7 +1892,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
         }
         if (message.toLowerCase().indexOf('uptime') === 0 && ignore !== true) {
-            time = cmds.util.secondsToTime(gettime() - startUpTime)
+            time = cmds.util.secondsToTime(cmds.util.gettime() - startUpTime)
             messageSend(channelID, "The bot has been active for: " + time.d + " Days " + time.h + " Hours " + time.m + " Minutes " + time.s + " Seconds")
             rconcmd = 'Yes'
         }
