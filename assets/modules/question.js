@@ -4,7 +4,6 @@ var shortid = require('shortid');
 exports.ask = function(question) {
     id = shortid.generate()
     questions[id] = question
-    questions = JSON.stringify(questions, null, '\t')
     console.log(questions)
     return id
     exports.active = questions
