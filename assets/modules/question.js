@@ -1,11 +1,16 @@
-var questions = {}
+var activeQ = {}
 var shortid = require('shortid');
 
-exports.ask = function(question) {
+var ask = function(question) {
     questions[shortid.generate()] = question
     console.log(questions)
 }
-exports.answer = function(answer) {
+var answer = function(answer) {
     console.log('yes')
 }
-exports.active = questions
+var exp = {
+    activeQ,
+    ask,
+    answer
+}
+module.exports = exp
