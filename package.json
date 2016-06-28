@@ -18,7 +18,7 @@
     "pirate-speak": ">=1.0.0",
     "roll": ">=1.1.0",
     "shelljs": ">=0.6.0",
-    "walk": ">=2.3.9",
+    "shortid": "^2.2.6",
     "winston": ">=2.2.0",
     "xkcd-imgs": ">=1.0.1",
     "youtube-node": ">=1.3.0"
