@@ -1381,14 +1381,22 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
                 if (i < doc.cList.length - 1) {
-                    if (cList.length < 1900) {
-                        cList = cList + '[' + doc.cList[i] + "]" + "(" + doc.help[doc.cList[i]].help + ") #" + doc.help[doc.cList[i]].type + "\n"
+                    if (cList.length < 1841) {
+                        if (doc.help[doc.cList[i]].type === "Admin") {
+                            cList = cList + '[' + doc.cList[i] + "]" + "[" + doc.help[doc.cList[i]].help + "]\n"
+                        } else {
+                            cList = cList + '[' + doc.cList[i] + "]" + "(" + doc.help[doc.cList[i]].help + ")\n"
+                        }
                     } else {
-                        cList2 = cList2 + '[' + doc.cList[i] + "]" + "(" + doc.help[doc.cList[i]].help + ") #" + doc.help[doc.cList[i]].type + "\n"
+                        if (doc.help[doc.cList[i]].type === "Admin") {
+                            cList2 = cList2 + '[' + doc.cList[i] + "]" + "[" + doc.help[doc.cList[i]].help + "]\n"
+                        } else {
+                            cList2 = cList2 + '[' + doc.cList[i] + "]" + "(" + doc.help[doc.cList[i]].help + ")\n"
+                        }
                     }
                 }
             }
-            messageSend(userID, cList, true, 'md', false, null, "Here are my commands!")
+            messageSend(userID, cList, true, 'md', false, null, "Here are my commands! #Note Yellow indicates Admin Commands")
             if (cList2.length > 2) {
                 setTimeout(function() {
                     messageSend(userID, cList2, true, 'md')
