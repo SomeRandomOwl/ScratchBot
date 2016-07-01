@@ -98,7 +98,7 @@
         },
         "avatar": {
             "type": "other",
-            "help": "Other Command; Pretty useless, makes the bot post a high res version of its avatar"
+            "help": "Pretty useless, makes the bot post a high res version of its avatar"
         },
         "ids": {
             "type": "Utility",
