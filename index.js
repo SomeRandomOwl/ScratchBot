@@ -1378,17 +1378,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
             cList = {
                 "Utility": "[ help ] ( Prints out the help doc for any Command )\n",
-                "Fun": "",
-                "Admin": "",
-                "Other": "",
-                "Useful": ""
+                "Fun": "\n",
+                "Admin": "\n",
+                "Other": "\n",
+                "Useful": "\n"
             }
             cList2 = {
-                "Utility": "",
-                "Fun": "",
-                "Admin": "",
-                "Other": "",
-                "Useful": ""
+                "Utility": "\n",
+                "Fun": "\n",
+                "Admin": "\n",
+                "Other": "\n",
+                "Useful": "\n"
             }
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
@@ -1403,10 +1403,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 }
             }
-            messageSend(userID, "# Admin\n" + cList.Admin + "\n# Useful\n" + cList.Useful + "\n# Utility\n" + cList.Utility + "\n# Fun\n" + cList.Fun + "\n# Other\n" + cList.Other, true, 'md', false, null, "Here are my commands!")
+            messageSend(userID, "# Admin" + cList.Admin + "# Useful" + cList.Useful + "# Utility" + cList.Utility + "# Fun" + cList.Fun + "# Other" + cList.Other, true, 'md', false, null, "Here are my commands!")
             if (cList2.length > 2) {
                 setTimeout(function() {
-                    messageSend(userID, "# Admin\n" + cList2.Admin + "\n# Useful\n" + cList2.Useful + "\n# Utility\n" + cList2.Utility + "\n# Fun\n" + cList2.Fun + "# Other\n" + cList2.Other, true, 'md')
+                    messageSend(userID, "# Admin" + cList2.Admin + "\n# Useful" + cList2.Useful + "# Utility" + cList2.Utility + "# Fun" + cList2.Fun + "# Other" + cList2.Other, true, 'md')
                 }, 200);
             }
             messageDelete(channelID, messageID)
