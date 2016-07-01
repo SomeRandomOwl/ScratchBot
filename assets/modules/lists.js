@@ -133,8 +133,8 @@ exports.user = function(bot, storage, verb, s) {
                     "linkCnt": 0,
                     "status": "unknown",
                     "lastseen": "unknown",
-                    "lastChat": moment().format('MMMM Do YYYY, hh:mm:ss a')
-                    "lastChatR": cmds.util.gettime()
+                    "lastChat": moment().format('MMMM Do YYYY, hh:mm:ss a'),
+                    "lastChatR": cmds.util.gettime(),
                     "rawLastSeen": 0,
                     "totalIdle": {
                         'd': 0,
