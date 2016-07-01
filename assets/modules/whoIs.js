@@ -18,7 +18,7 @@ module.exports = function(bot, storage, serverID, name) {
     } catch (e) { /**/ }
 
     if (roles.length !== 0) {
-        rolesm = 'everyone, '
+        rolesm = 'Everyone, '
         for (var i = 0; i < roles.length; i++) {
             if (i !== roles.length - 1) {
                 roleN = bot.servers[serverID].roles[roles[i]].name
