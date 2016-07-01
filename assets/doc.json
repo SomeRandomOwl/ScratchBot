@@ -93,7 +93,7 @@
         },
         "roll": {
             "type": "Fun",
-            "help": "Rolls a die/dice accepts multiple inputs.\nExample Uses: roll 20 | roll d20 | roll 2d20 | roll d%"
+            "help": "Rolls a die/dice accepts multiple inputs."
         },
         "avatar": {
             "type": "other",

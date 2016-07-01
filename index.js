@@ -299,7 +299,7 @@ function diceroll(dice, userID, channelID) {
     }
     //If now die are thrown toss this
     if (dice.indexOf('d') === -1) {
-        messageSend(channelID, '<@' + userID + '>' + ' How can i roll a die with no dice to roll? :disappointed:')
+        messageSend(channelID, '<@' + userID + '>' + ' How can i roll a die with no dice to roll? :disappointed: (Note Accepted formats are numbers and die numbers such as d20 or 2d20')
     }
 }
 /*/Retrieves a relavant xkcd comic from a query/*/
@@ -1376,7 +1376,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
-            cList = "[ help ] ( Prints out the help doc for any Command )"
+            cList = "[ help ] ( Prints out the help doc for any Command ) \n"
             cList2 = ""
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
