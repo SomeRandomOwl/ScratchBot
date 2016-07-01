@@ -266,11 +266,11 @@ function consoleparse(line) {
                 }
             }
         } else {
-            try {
-                eval(line)
-            } catch (e) {
-                logger.error(chalk.red("Bad JS Command " + e))
-            }
+            //try {
+            eval(line)
+            // } catch (e) {
+            //    logger.error(chalk.red("Bad JS Command " + e))
+            //}
         }
     } else if (line.toLowerCase().indexOf('~') !== 0) {
         bot.sendMessage({
