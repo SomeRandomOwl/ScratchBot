@@ -163,7 +163,7 @@
         },
         "js": {
             "type": "Admin",
-            "help": "Only the bot owner can issue this command, it runs raw javascript and is potentially harmful to the bot"
+            "help": "Bot owner only!, it runs raw javascript and is potentially harmful to the bot"
         },
         "verb": {
             "type": "Admin",
