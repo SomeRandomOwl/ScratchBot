@@ -1394,7 +1394,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             for (var i = 0; i < doc.cList.length; i++) {
                 try {
                     totalLength = cList.Utility.length + cList.Fun.length + cList.Admin.length + cList.Other.length + cList.Other.Useful
-                } catch (e) { /**/ }
+                } catch (e) {
+                    totalLength = 0
+                }
                 if (totalLength < 1900) {
                     console.log(doc.help[doc.cList[i]].type)
                     console.log(cList)
