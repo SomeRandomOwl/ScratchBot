@@ -1152,7 +1152,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         verb = storage.d.Servers[sname].settings.verb
     } catch (e) {
         verb = false
-        storage.d.Servers[sname].settings.verb = false
+	try {
+	    storage.d.Servers[sname].settings.verb = false
+	}
+	catch (e) {
+	    /**/
+	}
     }
     /*try {
         if (storage.d.Servers[sname] === undefined) {
