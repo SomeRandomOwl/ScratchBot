@@ -1395,12 +1395,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 try {
                     totalLength = cList.Utility.length + cList.Fun.length + cList.Admin.length + cList.Other.length + cList.Other.Useful
                 } catch (e) { /**/ }
-                if (i < doc.cList.length - 1) {
-                    if (totalLength < 1900) {
-                        cList = cList[doc.help[doc.cList[i]].type] + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " )\n"
-                    } else {
-                        cList2 = cList2[doc.help[doc.cList[i]].type] + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " )\n"
-                    }
+                if (totalLength < 1900) {
+                    cList = cList[doc.help[doc.cList[i]].type] + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " )\n"
+                } else {
+                    cList2 = cList2[doc.help[doc.cList[i]].type] + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " )\n"
                 }
             }
             messageSend(userID, "# Admin\n" + cList.Admin + "# Useful\n" + cList.Useful + "# Utility\n" + cList.Utility + "# Fun\n" + cList.Fun + "# Other\n" + cList.Other, true, 'md', false, null, "Here are my commands!")
