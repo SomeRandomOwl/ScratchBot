@@ -1376,42 +1376,22 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
-            cList = {
-                "Utility": "[ help ] ( Prints out the help doc for any Command )\n",
-                "Fun": "\n",
-                "Admin": "\n",
-                "Other": "\n",
-                "Useful": "\n"
-            }
-            cList2 = {
-                "Utility": "\n",
-                "Fun": "\n",
-                "Admin": "\n",
-                "Other": "\n",
-                "Useful": "\n"
-            }
-            Utility =
-                messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+            cList = "[ help ] ( Prints out the help doc for any Command )\n"
+            cList2 = ""
+            messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
-                try {
-                    totalLength = cList.Utility.length + cList.Fun.length + cList.Admin.length + cList.Other.length + cList.Other.Useful.length
-                } catch (e) {
-                    totalLength = 0
-                }
-                console.log(doc.help[doc.cList[i]].type)
-                console.log(cList)
-                if (totalLength < 1900) {
-                    console.log(doc.help[doc.cList[i]].type)
-                    console.log(cList)
-                    cList = cList[doc.help[doc.cList[i]].type] + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " )\n"
-                } else {
-                    cList2 = cList2[doc.help[doc.cList[i]].type] + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " )\n"
-                }
+                if (i < doc.cList.length - 1) {
+                    if (cList.length < 1900) {
+                        cList = cList + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " ) # " + doc.help[doc.cList[i]].type + "\n"
+                    } else {
+                        cList2 = cList2 + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " ) # " + doc.help[doc.cList[i]].type + "\n"
+                    }
+                } *
             }
-            messageSend(userID, "# Admin\n" + cList.Admin + "# Useful\n" + cList.Useful + "# Utility\n" + cList.Utility + "# Fun\n" + cList.Fun + "# Other\n" + cList.Other, true, 'md', false, null, "Here are my commands!")
+            messageSend(userID, cList, true, 'md', false, null, "Here are my commands!")
             if (cList2.length > 2) {
                 setTimeout(function() {
-                    messageSend(userID, "# Admin\n" + cList2.Admin + "# Useful\n" + cList2.Useful + "# Utility\n" + cList2.Utility + "# Fun\n" + cList2.Fun + "# Other\n" + cList2.Other, true, 'md')
+                    messageSend(userID, cList2, true, 'md')
                 }, 200);
             }
             messageDelete(channelID, messageID)
