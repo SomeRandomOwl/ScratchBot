@@ -157,7 +157,7 @@
         },
         "redditscenery": {
             "type": "Fun",
-            "help": "Makes bot post a random picture from a list of subreddits more specifically the SFW network https://www.reddit.com/r/sfwpornnetwork/wiki/network \nExample Uses: ```redditscenery\nredditscenery subreddit\nredditscenery list```"
+            "help": "Makes bot post a random picture from a list of subreddits more specifically the SFW network http://bit.ly/29igYq8 redditscenery\nredditscenery subreddit\nredditscenery list"
         },
         "js": {
             "type": "Admin",
