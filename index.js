@@ -1396,6 +1396,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     totalLength = cList.Utility.length + cList.Fun.length + cList.Admin.length + cList.Other.length + cList.Other.Useful
                 } catch (e) { /**/ }
                 if (totalLength < 1900) {
+                    console.log(doc.help[doc.cList[i]].type)
+                    console.log(cList)
                     cList = cList[doc.help[doc.cList[i]].type] + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " )\n"
                 } else {
                     cList2 = cList2[doc.help[doc.cList[i]].type] + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " )\n"
