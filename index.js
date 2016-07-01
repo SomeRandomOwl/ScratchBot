@@ -1394,9 +1394,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     console.log(e)
                 }
             } else if (message.toLowerCase().indexOf('server') !== -1) {
-                messageSend(channelID, "The total ammount of messages sent on this server is: " + storage.d.Servers[sname].messageCnt)
+                messageSend(channelID, storage.d.Servers[sname].messageCnt + "Messages", true, 'xl')
             } else if (message.toLowerCase().indexOf('channel') !== -1) {
-                messageSend(channelID, "The total ammount of messages sent on this channel is: " + storage.d.Servers[sname].Channels[cname].messageCnt)
+                messageSend(channelID, storage.d.Servers[sname].Channels[cname].messageCnt + 'Messages', true, 'xl')
             } else {
                 stats(channelID, name, rawEvent, channelID, serverID)
             }
