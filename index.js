@@ -1389,6 +1389,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 }
             }
             messageSend(userID, cList, true, 'md', false, null, "Here are my commands!", function(error, response) {
+                console.log('Debug!')
                 if (cList2.length > 2) {
                     messageSend(userID, cList2, true, 'md')
                 }
