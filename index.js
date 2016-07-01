@@ -740,7 +740,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                 "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
                 "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
                 "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
-                "First Seen:    " + storage.d.Users[name].tracking +
+                "First Seen:    " + storage.d.Users[name].tracking + "\n" +
                 "Last Seen      " + lastSeen, true, 'xl')
         })
     } else {
@@ -759,7 +759,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                 "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
                 "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
                 "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
-                "First Seen:    " + storage.d.Users[name].tracking +
+                "First Seen:    " + storage.d.Users[name].tracking + "\n" +
                 "Last Seen:     " + lastSeen, true, 'xl')
         })
         /*} else {
