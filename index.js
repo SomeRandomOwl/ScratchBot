@@ -1382,7 +1382,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cList2 = {}
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
-                totalLength = cList.Utility.length + cList.Fun.length + cList.Admin.length + cList.Other.length
+                try {
+                    totalLength = cList.Utility.length + cList.Fun.length + cList.Admin.length + cList.Other.length
+                } catch (e) { /**/ }
                 if (i < doc.cList.length - 1) {
                     if (totalLength < 1900) {
                         cList = cList[doc.help[doc.cList[i]].type] + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " )\n"
