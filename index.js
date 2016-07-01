@@ -1010,7 +1010,7 @@ bot.on('debug', function(rawEvent) {
         }
     }
 });
-bot.on('disconnected', function() {
+bot.on('disconnect', function() {
     var disc = true
     logger.error(chalk.red("Bot got disconnected, reconnecting"))
     bot.connect()
