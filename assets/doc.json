@@ -64,12 +64,13 @@
         "You will have to wait."
     ],
     "help": {
+        "typeList": ["Fun", "Admin", "Utility", "Other"],
         "8ball": {
             "type": "Fun",
             "help": "Ask the bot a question"
         },
         "pirate": {
-            "type": "Fun/Really Stupid/Admin",
+            "type": "Admin",
             "help": "Makes the bot speak like a pirate"
         },
         "ping": {
@@ -97,7 +98,7 @@
             "help": "Rolls a die/dice accepts multiple inputs."
         },
         "avatar": {
-            "type": "other",
+            "type": "Other",
             "help": "Pretty useless, makes the bot post a high res version of its avatar"
         },
         "ids": {
@@ -121,7 +122,7 @@
             "help": "Makes the bot DM the user issuing the command a list of commands"
         },
         "poke": {
-            "type": "other",
+            "type": "Other",
             "help": "Pretty useless, makes bot DM a user saying that someone poked them in a channel and state the user that issued the command and channel name. EX: poke @username"
         },
         "stats": {
