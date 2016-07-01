@@ -1390,10 +1390,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 "Other": "\n",
                 "Useful": "\n"
             }
-            messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+            Utility =
+                messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
                 try {
-                    totalLength = cList.Utility.length + cList.Fun.length + cList.Admin.length + cList.Other.length + cList.Other.Useful
+                    totalLength = cList.Utility.length + cList.Fun.length + cList.Admin.length + cList.Other.length + cList.Other.Useful.length
                 } catch (e) {
                     totalLength = 0
                 }
