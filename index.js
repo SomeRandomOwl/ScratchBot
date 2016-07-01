@@ -1403,10 +1403,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 }
             }
-            messageSend(userID, "# Admin" + cList.Admin + "# Useful" + cList.Useful + "# Utility" + cList.Utility + "# Fun" + cList.Fun + "# Other" + cList.Other, true, 'md', false, null, "Here are my commands!")
+            messageSend(userID, "# Admin" + cList.Admin + "\n# Useful" + cList.Useful + "\n# Utility" + cList.Utility + "\n# Fun" + cList.Fun + "\n# Other" + cList.Other, true, 'md', false, null, "Here are my commands!")
             if (cList2.length > 2) {
                 setTimeout(function() {
-                    messageSend(userID, "# Admin" + cList.Admin + "# Useful" + cList.Useful + "# Utility" + cList.Utility + "# Fun" + cList.Fun + "# Other" + cList.Other, true, 'md')
+                    messageSend(userID, "# Admin" + cList2.Admin + "\n# Useful" + cList2.Useful + "\n# Utility" + cList2.Utility + "\n# Fun" + cList2.Fun + "# Other" + cList2.Other, true, 'md')
                 }, 200);
             }
             messageDelete(channelID, messageID)
