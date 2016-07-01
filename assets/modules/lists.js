@@ -133,8 +133,23 @@ exports.user = function(bot, storage, verb, s) {
                     "linkCnt": 0,
                     "status": "unknown",
                     "lastseen": "unknown",
+                    "lastChat": moment().format('MMMM Do YYYY, hh:mm:ss a')
+                    "lastChatR": cmds.util.gettime()
                     "rawLastSeen": 0,
-                    "servers": []
+                    "totalIdle": {
+                        'd': 0,
+                        'h': 0,
+                        'm': 0,
+                        's': 0
+                    },
+                    "totalOffline": {
+                        'd': 0,
+                        'h': 0,
+                        'm': 0,
+                        's': 0
+                    },
+                    "servers": [],
+                    "tracking": moment().format('MMMM Do YYYY, hh:mm:ss a')
                 }
             } else {
                 if (storage.d.Users[name].messageCnt === undefined) {
