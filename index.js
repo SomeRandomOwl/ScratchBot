@@ -1380,12 +1380,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
                 if (i < doc.cList.length - 1) {
-                    cList = cList + doc.cList[i] + ", "
+                    cList = cList + '[ ' + doc.cList[i] + " ]\n"
                 } else {
-                    cList = cList + doc.cList[i]
+                    cList = cList + '[ ' + doc.cList[i] + ' ]'
                 }
             }
-            messageSend(userID, "Here are my commands!: \n\n```" + cList + '```\n')
+            messageSend(userID, cList, true, 'xl', false, null, "Here are my commands!")
             messageDelete(channelID, messageID)
             rconcmd = 'Yes'
         }
