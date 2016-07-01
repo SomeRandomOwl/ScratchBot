@@ -1376,7 +1376,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
-            cList = "[help](Prints out the help doc for any Command)\n"
+            cList = "[help](Prints out the help doc for any Command)     \n"
             cList2 = ""
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
