@@ -384,7 +384,7 @@ function status(statuscall, channelID, rawEvent, cl) {
                     }
                 }
                 if (cl) {
-                    return timeIdle + "(" + ltsmsg + ")"
+                    return timeIdle + " ago (" + ltsmsg + ")"
                 } else {
                     messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
                 }
@@ -414,7 +414,7 @@ function status(statuscall, channelID, rawEvent, cl) {
                     }
                 }
                 if (cl) {
-                    return timeIdle + "(" + ltsmsg + ")"
+                    return timeIdle + " ago (" + ltsmsg + ")"
                 } else {
                     messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
                 }
@@ -458,7 +458,7 @@ function status(statuscall, channelID, rawEvent, cl) {
                             }
                         }
                         if (cl) {
-                            return timeIdle + "(" + ltsmsg + ")"
+                            return timeIdle + " ago (" + ltsmsg + ")"
                         } else {
                             messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
                         }
@@ -488,7 +488,7 @@ function status(statuscall, channelID, rawEvent, cl) {
                             }
                         }
                         if (cl) {
-                            return timeIdle + "(" + ltsmsg + ")"
+                            return timeIdle + " ago (" + ltsmsg + ")"
                         } else {
                             messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
                         }
