@@ -1386,8 +1386,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             "Messages Sent: " + storage.d.Users[user].messageCnt + '\n' +
                             "Links Sent:    " + storage.d.Users[user].linkCnt + '\n' +
                             "Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
-                            "Time Offline:  " +
-                            storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds\n\n", true, 'xl', true, userID)
+                            "Time Offline:  " + storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds\n\n" +
+                            "First Seen:    " + storage.d.Users[name].tracking, true, 'xl', true, userID)
                     })
                 } catch (e) {
                     messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
