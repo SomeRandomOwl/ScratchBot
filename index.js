@@ -1386,7 +1386,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     } else {
                         cList2 = cList2 + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " ) # " + doc.help[doc.cList[i]].type + "\n"
                     }
-                } *
+                }
             }
             messageSend(userID, cList, true, 'md', false, null, "Here are my commands!")
             if (cList2.length > 2) {
