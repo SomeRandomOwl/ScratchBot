@@ -419,7 +419,11 @@ function status(statuscall, channelID, rawEvent, cl) {
                     messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
                 }
             } else if (status === 'online') {
-                messageSend(channelID, statuscall + " Is currently online")
+                if (cl) {
+                    return "currently Online"
+                } else {
+                    messageSend(channelID, statuscall + " Is currently online")
+                }
             } else if (status === 'Unknown') {
                 messageSend(channelID, "Oh...um, i dont know the last time " + statuscall + " was online...sorry :confounded:")
             }
