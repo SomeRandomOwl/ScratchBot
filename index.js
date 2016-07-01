@@ -1377,15 +1377,21 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
             cList = "[ help ] ( Prints out the help doc for any Command )"
+            cList2 = ""
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
             for (var i = 0; i < doc.cList.length; i++) {
                 if (i < doc.cList.length - 1) {
-                    cList = cList + '[ ' + doc.cList[i] + " ] + ( " + doc.help[doc.cList[i]].help + " ) ## " + doc.help[doc.cList[i]].type + " ##\n"
-                } else {
-                    cList = cList + '[ ' + doc.cList[i] + " ] + ( " + doc.help[doc.cList[i]].help + " ) ## " + doc.help[doc.cList[i]].type + " ##"
+                    if (cList.length < 1900) {
+                        cList = cList + '[ ' + doc.cList[i] + " ] + ( " + doc.help[doc.cList[i]].help + " ) ## " + doc.help[doc.cList[i]].type + " ##\n"
+                    } else {
+                        cList2 = cList2 + '[ ' + doc.cList[i] + " ] + ( " + doc.help[doc.cList[i]].help + " ) ## " + doc.help[doc.cList[i]].type + " ##\n"
+                    }
                 }
             }
             messageSend(userID, cList, true, 'md', false, null, "Here are my commands!")
+            if (cList2.length > 2) {
+                messageSend(userID, cList2, true, 'md')
+            }
             messageDelete(channelID, messageID)
             rconcmd = 'Yes'
         }
