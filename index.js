@@ -354,7 +354,7 @@ function relxkcd(quer, channelID, name, sname) {
     cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Retrieves a current status of a user/*/
-function status(statuscall, channelID, rawEvent) {
+function status(statuscall, channelID, rawEvent, cl) {
     try {
         if (statuscall.toLowerCase().indexOf('<@') === -1) {
             var status = storage.d.Users[statuscall].status
@@ -383,7 +383,11 @@ function status(statuscall, channelID, rawEvent) {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 }
-                messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                if (cl) {
+                    return storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg
+                } else {
+                    messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                }
             } else if (status === 'offline') {
                 rawLastSeen = storage.d.Users[statuscall].rawLastSeen
                 var ltsmsg = storage.d.Users[statuscall].lastseen
@@ -409,7 +413,11 @@ function status(statuscall, channelID, rawEvent) {
                         timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                     }
                 }
-                messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                if (cl) {
+                    return storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg
+                } else {
+                    messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                }
             } else if (status === 'online') {
                 messageSend(channelID, statuscall + " Is currently online")
             } else if (status === 'Unknown') {
@@ -445,7 +453,11 @@ function status(statuscall, channelID, rawEvent) {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         }
-                        messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                        if (cl) {
+                            return storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg
+                        } else {
+                            messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                        }
                     } else if (status === 'offline') {
                         rawLastSeen = storage.d.Users[usern].rawLastSeen
                         var ltsmsg = storage.d.Users[usern].lastseen
@@ -471,7 +483,11 @@ function status(statuscall, channelID, rawEvent) {
                                 timeIdle = timeIdle.d + " Days " + timeIdle.h + " Hours " + timeIdle.m + " Minutes and " + timeIdle.s + " Seconds"
                             }
                         }
-                        messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                        if (cl) {
+                            return storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg
+                        } else {
+                            messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                        }
                     } else if (status === 'online') {
                         messageSend(channelID, statuscall + " Is currently online")
                     } else if (status === 'Unknown') {
@@ -714,13 +730,13 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
             body = JSON.parse(body)
             thing = whoRest + 'Avatar:        "' + body.data.url + '"'
-
+            lastSeen = status(name, null, rawEvent, true)
             messageSend(channelID, thing + "\n\n" +
                 "Messages Sent: " + storage.d.Users[name].messageCnt + '\n' +
                 "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
                 "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
                 "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
-                "First Seen:    " + storage.d.Users[name].tracking, true, 'xl')
+                "First Seen:    " + storage.d.Users[name].tracking "Last Seen      " + lastSeen, true, 'xl')
         })
     } else {
         var name = rawEvent.d.mentions[0].username
@@ -732,13 +748,13 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
             body = JSON.parse(body)
             thing = whoRest + 'Avatar:        "' + body.data.url + '"'
-
+            lastSeen = status(name, null, rawEvent, true)
             messageSend(channelID, thing + "\n\n" +
                 "Messages Sent: " + storage.d.Users[name].messageCnt + '\n' +
                 "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
                 "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
                 "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
-                "First Seen:    " + storage.d.Users[name].tracking, true, 'xl')
+                "First Seen:    " + storage.d.Users[name].tracking "Last Seen:     " + lastSeen, true, 'xl')
         })
         /*} else {
                 continue
@@ -1154,12 +1170,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         verb = storage.d.Servers[sname].settings.verb
     } catch (e) {
         verb = false
-	try {
-	    storage.d.Servers[sname].settings.verb = false
-	}
-	catch (e) {
-	    /**/
-	}
+        try {
+            storage.d.Servers[sname].settings.verb = false
+        } catch (e) {
+            /**/
+        }
     }
     /*try {
         if (storage.d.Servers[sname] === undefined) {
