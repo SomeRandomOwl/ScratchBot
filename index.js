@@ -1384,7 +1384,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     if (cList.length < 1900) {
                         cList = cList + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " ) ## " + doc.help[doc.cList[i]].type + "\n"
                     } else {
-                        cList2 = cList2 + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " ) ## " + doc.help[doc.cList[i]].type "\n"
+                        cList2 = cList2 + '[ ' + doc.cList[i] + " ]" + "( " + doc.help[doc.cList[i]].help + " ) ## " + doc.help[doc.cList[i]].type + "\n"
                     }
                 }
             }
