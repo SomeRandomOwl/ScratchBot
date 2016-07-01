@@ -1388,7 +1388,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 }
             }
-            messageSend(userID, cList, true, 'md', false, null, "Here are my commands!", function() {
+            messageSend(userID, cList, true, 'md', false, null, "Here are my commands!", function(error, response) {
                 if (cList2.length > 2) {
                     messageSend(userID, cList2, true, 'md')
                 }
