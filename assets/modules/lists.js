@@ -148,7 +148,7 @@ exports.user = function(bot, storage, verb, s) {
                         'm': 0,
                         's': 0
                     },
-                    "servers": [],
+                    "Servers": [],
                     "tracking": moment().format('MMMM Do YYYY, hh:mm:ss a')
                 }
             } else {
