@@ -1188,6 +1188,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var sname = bot.servers[serverID].name
         if (storage.Servers[sname].muted.indexOf(userID) !== -1) {
             messageDelete(channelID, messageID)
+            logger.info(chalk.red('Deleted') + chalk.gray(' the message of a muted user: ' + user))
         }
     } catch (e) {
         //ig
