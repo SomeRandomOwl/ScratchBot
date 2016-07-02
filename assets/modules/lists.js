@@ -43,7 +43,8 @@ exports.server = function(bot, storage, verb, s) {
                     'verb': false,
                 },
                 'SownerId': SownerId,
-                'Channels': {}
+                'Channels': {},
+                'muted': []
             }
         } else {
             if (storage.d.Servers[name].messageCnt === undefined) {
