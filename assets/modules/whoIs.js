@@ -16,21 +16,25 @@ module.exports = function(bot, storage, serverID, name) {
         game = bot.users[userID].game
         botT = JSON.stringify(botT)
     } catch (e) { /**/ }
+    try {
+        if (roles.length !== 0) {
+            rolesm = 'Everyone, '
+            for (var i = 0; i < roles.length; i++) {
+                if (i !== roles.length - 1) {
+                    roleN = bot.servers[serverID].roles[roles[i]].name
+                    roleN = roleN.replace(' ', '')
+                    rolesm = rolesm + roleN + ', '
+                } else {
+                    roleN = bot.servers[serverID].roles[roles[i]].name
+                    roleN = roleN.replace(' ', '')
+                    rolesm = rolesm + roleN
+                }
 
-    if (roles.length !== 0) {
-        rolesm = 'Everyone, '
-        for (var i = 0; i < roles.length; i++) {
-            if (i !== roles.length - 1) {
-                roleN = bot.servers[serverID].roles[roles[i]].name
-                roleN = roleN.replace(' ', '')
-                rolesm = rolesm + roleN + ', '
-            } else {
-                roleN = bot.servers[serverID].roles[roles[i]].name
-                roleN = roleN.replace(' ', '')
-                rolesm = rolesm + roleN
             }
+        } else {
+            rolesm = 'Everyone'
         }
-    } else {
+    } catch (e) {
         rolesm = 'Everyone'
     }
     ChtTime = cmds.util.secondsToTime(cmds.util.gettime() - storage.d.Users[name].lastChatR)
