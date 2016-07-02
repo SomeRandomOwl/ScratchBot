@@ -1195,6 +1195,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             logger.info(chalk.red('Deleted') + chalk.gray(' the message of a muted user: ' + user))
         }
     } catch (e) {
+        console.log(e)
         logger.error(chalk.red("Error deletinge muted user message"))
     }
     try {
