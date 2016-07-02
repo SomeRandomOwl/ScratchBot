@@ -1434,7 +1434,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     messageSend(userID, cList2, true, 'md')
                 }, 200);
             }
-            messageDelete(channelID, messageID)
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('poke') === 0 && ignore !== true) {
