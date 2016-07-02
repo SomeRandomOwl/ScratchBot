@@ -928,8 +928,10 @@ function mute(sname, userID, un) {
     if (un) {
         var index = storage.Servers[sname].muted.indexOf(userID)
         storage.Servers[sname].muted.splice(index, 1)
+        console.log(userID + " Has been Un-muted")
     } else {
         storage.Servers[sname].muted.push(userID)
+        console.log(userID + " Has been muted")
     }
 }
 disc = false
