@@ -923,6 +923,15 @@ function admin(id, userID, type) {
         target: userID
     })
 }
+
+function mute(sname, userID, un) {
+    if (un) {
+        var index = storage.Servers[sname].muted.indexOf(userID)
+        storage.Servers[sname].muted.splice(index, 1)
+    } else {
+        storage.Servers[sname].muted.push(userID)
+    }
+}
 disc = false
 var startUpTime = null
     /* Bot on event functions */
@@ -1169,6 +1178,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     try {
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
+        if (storage.Servers[sname].muted.indexOf(userID) !== -1) {
+            messageDelete(channelID, messageID)
+        }
     } catch (e) {
         //ig
     }
