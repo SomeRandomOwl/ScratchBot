@@ -916,6 +916,13 @@ function totalOfAll(channelID, verb, cl) {
         }
     }
 }
+//admin functions
+function admin(id, userID, type) {
+    bot[type]({
+        channel: id,
+        target: userID
+    })
+}
 disc = false
 var startUpTime = null
     /* Bot on event functions */
@@ -1396,7 +1403,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 }
             }
-            messageSend(userID, cList, true, 'md', false, null, "Here are my commands! Yellow = Admin")
+            messageSend(userID, cList, true, 'md', false, null, "Here are my commands!ush Yellow = Admin")
             if (cList2.length > 2) {
                 setTimeout(function() {
                     messageSend(userID, cList2, true, 'md')
