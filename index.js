@@ -926,10 +926,16 @@ function admin(id, userID, type) {
 
 function mute(sname, userID, un) {
     if (un) {
+        if (storage.d.Servers[sname].muted === undefined) {
+            storage.d.Servers[sname].muted = []
+        }
         var index = storage.d.Servers[sname].muted.indexOf(userID)
         storage.d.Servers[sname].muted.splice(index, 1)
         console.log(userID + " Has been Un-muted")
     } else {
+        if (storage.d.Servers[sname].muted === undefined) {
+            storage.d.Servers[sname].muted = []
+        }
         storage.d.Servers[sname].muted.push(userID)
         console.log(userID + " Has been muted")
     }
