@@ -11,8 +11,8 @@ exports.answer = function(id, all) {
     if (!all) {
         delete questions[id]
     } else {
-        for (var id in cmds.question.active) {
-            delete cmds.question.active[id]
+        for (var id in questions) {
+            delete questions[id]
         }
     }
     exports.active = questions
