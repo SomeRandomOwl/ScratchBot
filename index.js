@@ -916,13 +916,6 @@ function totalOfAll(channelID, verb, cl) {
         }
     }
 }
-//admin functions
-function admin(id, userID, type) {
-    bot[type]({
-        channel: id,
-        target: userID
-    })
-}
 
 function mute(sname, userID, un) {
     if (un) {
