@@ -10,7 +10,7 @@ module.exports = function(bot, messageSend, channelID, card) {
             'Rarity:  ' + body.cards[0].rarity + '\n' +
             'Text:    ' + body.cards[0].text + '\n' +
             'Art:     ' + 'http://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + body.cards[0].number + '.jpg'
-        messageSend(channelID, message)
+        messageSend(channelID, message, true, 'xl')
     })
 }
 
