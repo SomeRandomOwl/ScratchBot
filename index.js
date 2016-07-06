@@ -20,7 +20,7 @@ var pirateSpeak = require('pirate-speak');
 var google = require('googleapis');
 var urlshortener = google.urlshortener('v1');
 var schedule = require('node-schedule');
-var cmds = require('./assets/modules')
+var cmds = require('./assets/modules')(bot, storage, config)
 
 cleverbot = new Cleverbot;
 
