@@ -9,7 +9,8 @@ var util = {
     gettime,
     writeJSON,
     isInArray,
-    whoIs
+    whoIs,
+    messageSend
 }
 
 exports.mtg = require('./mtg.js')
