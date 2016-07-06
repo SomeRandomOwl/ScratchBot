@@ -6,7 +6,7 @@ module.exports = function(bot, messageSend, channelID, card) {
         body = JSON.parse(body);
         message = "" +
             'Name:    ' + body.cards[0].name + '  ' + 'Cost:' + body.cards[0].manaCost + '\n' +
-            'Set:     ' + toSentanceCase(body.cards[0].setName) + '\n' +
+            'Set:     ' + toSentenceCase(body.cards[0].setName) + '\n' +
             'Type:    ' + body.cards[0].type + '\n' +
             'Rarity:  ' + body.cards[0].rarity + '\n' +
             'Text:     \n' + body.cards[0].text.toLowerCase() + '\n'
