@@ -11,6 +11,7 @@ var util = {
     whoIs
 }
 
+exports.mtg = require('./mtg.js')
 exports.list = require('./lists.js')
 exports.question = require('./question.js')
 exports.util = util

@@ -1712,7 +1712,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     eval(jscall)
                 } catch (e) {
                     logger.error(chalk.red("Bad JS Command " + e))
-                    messageSend(channelID, "Err...I'm sorry...that results in a error")
+                    messageSend(channelID, error)
                 }
             } else {
                 messageSend(channelID, '<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
