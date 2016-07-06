@@ -1,14 +1,15 @@
 var request = require('request');
+var toSentanceCase = require('./toSentanceCase.js')
 module.exports = function(bot, messageSend, channelID, card) {
     console.log(messageSend, channelID, card)
     request("https://api.magicthegathering.io/v1/cards?name=" + card + "&pageSize=1", function(error, response, body) {
         body = JSON.parse(body);
         message = "" +
             'Name:    ' + body.cards[0].name + '  ' + 'Cost:' + body.cards[0].manaCost + '\n' +
-            'Set:     ' + body.cards[0].setName + '\n' +
+            'Set:     ' + toSentanceCase(body.cards[0].setName) + '\n' +
             'Type:    ' + body.cards[0].type + '\n' +
             'Rarity:  ' + body.cards[0].rarity + '\n' +
-            'Text:    ' + body.cards[0].text.toLowerCase() + '\n'
+            'Text:     \n' + body.cards[0].text.toLowerCase() + '\n'
         art = 'http://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + '/' + body.cards[0].number + '.jpg'
         messageSend(channelID, message, true, 'xl', false, null, art)
     })
