@@ -4,14 +4,20 @@ module.exports = function(bot, messageSend, channelID, card) {
     console.log(messageSend, channelID, card)
     request("https://api.magicthegathering.io/v1/cards?name=" + card + "&pageSize=1", function(error, response, body) {
         body = JSON.parse(body);
-        message = "" +
-            'Name:      ' + body.cards[0].name + '  ' + 'Cost: ' + body.cards[0].manaCost + '\n' +
-            'Set:       ' + toSentenceCase(body.cards[0].setName) + '\n' +
-            'Type:      ' + body.cards[0].type + '\n' +
-            'Rarity:    ' + body.cards[0].rarity + '\n' +
-            'Text:     \n' + body.cards[0].text.toLowerCase() + '\n'
-        art = '\nhttp://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + '/' + body.cards[0].number + '.jpg \n' + 'http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=' + body.cards[0].multiverseid
-        messageSend(channelID, message, true, 'xl', false, null, art)
+        try {
+            message = "" +
+                'Name:      ' + body.cards[0].name + '  ' + 'Cost: ' + body.cards[0].manaCost + '\n' +
+                'Set:       ' + toSentenceCase(body.cards[0].setName) + '\n' +
+                'Type:      ' + body.cards[0].type + '\n' +
+                'Rarity:    ' + body.cards[0].rarity + '\n' +
+                'Text:     \n' + body.cards[0].text.toLowerCase() + '\n'
+            art = '\nhttp://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + '/' + body.cards[0].number + '.jpg \n' + 'http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=' + body.cards[0].multiverseid
+            messageSend(channelID, message, true, 'xl', false, null, art)
+
+        } catch (e) {
+            console.log(e)
+            messageSend(channelID, "There was a error retriveing that cards info", true, 'fix')
+        }
     })
 }
 
