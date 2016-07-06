@@ -20,6 +20,12 @@ var pirateSpeak = require('pirate-speak');
 var google = require('googleapis');
 var urlshortener = google.urlshortener('v1');
 var schedule = require('node-schedule');
+var bot = new DiscordClient({
+    autorun: true,
+    //email: config.email,
+    //password: config.pass,
+    token: config.token
+});
 var cmds = require('./assets/modules')(bot, storage, config)
 
 cleverbot = new Cleverbot;
@@ -69,12 +75,7 @@ if (fs.existsSync('./assets/storage.json') === false) {
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
 /*/Bot credentials/*/
-var bot = new DiscordClient({
-    autorun: true,
-    //email: config.email,
-    //password: config.pass,
-    token: config.token
-});
+
 
 /* Global variable setting */
 var cnaid = '171798432749584387'
