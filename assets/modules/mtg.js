@@ -1,5 +1,6 @@
 var request = require('request');
-module.exports = function(card) {
+module.exports = function(bot, messageSend, channelID, card) {
+    console.log(messageSend, channelID, card)
     request("https://api.magicthegathering.io/v1/cards?name=" + card + "&pageSize=1", function(error, response, body) {
         body = JSON.parse(body);
         message = "" +
@@ -9,8 +10,7 @@ module.exports = function(card) {
             'Rarity:  ' + body.cards[0].rarity + '\n' +
             'Text:    ' + body.cards[0].text + '\n' +
             'Art:     ' + 'http://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + body.cards[0].number + '.jpg'
-        console.log(message)
-        return message
+        messageSend(channelID, message)
     })
 }
 
