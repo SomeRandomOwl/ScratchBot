@@ -10,7 +10,7 @@ var util = {
     writeJSON,
     isInArray,
     whoIs,
-    messageSend
+    //messageSend
 }
 
 exports.mtg = require('./mtg.js')
