@@ -1513,6 +1513,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = 'Yes'
         }
+        if (message.toLowerCase().indexOf('mtg') === 0 && ignore !== true) {
+            mtg = message.substring(message.indexOf(' ') + 1)
+            cmds.mtg(bot, messageSend, channelID, mtg)
+            rconcmd = 'Yes'
+        }
         if (message.toLowerCase().indexOf('prefix') === 0 && ignore !== true) {
             var pfcmd = message
             var pfcall = pfcmd.replace('prefix ', '')
