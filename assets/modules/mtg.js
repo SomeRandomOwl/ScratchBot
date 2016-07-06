@@ -9,10 +9,9 @@ module.exports = function(bot, messageSend, channelID, card) {
             'Set:       ' + toSentenceCase(body.cards[0].setName) + '\n' +
             'Type:      ' + body.cards[0].type + '\n' +
             'Rarity:    ' + body.cards[0].rarity + '\n' +
-            'Gatherer:  ' + 'http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=' + body.cards[0].multiverseid + '\n' +
             'Text:     \n' + body.cards[0].text.toLowerCase() + '\n'
-        art = 'http://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + '/' + body.cards[0].number + '.jpg'
-        messageSend(channelID, message, true, 'xl', false, null, art)
+        art = '\nhttp://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + '/' + body.cards[0].number + '.jpg \n' + 'http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=' + body.cards[0].multiverseid + '\n' +
+            messageSend(channelID, message, true, 'xl', false, null, art)
     })
 }
 
