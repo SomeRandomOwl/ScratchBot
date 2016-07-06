@@ -3,7 +3,7 @@ var gettime = require('./gettime.js')
 var writeJSON = require('./writeJSON.js')
 var isInArray = require('./isInArray.js')
 var whoIs = require('./whoIs.js')
-var messageSend = require('./messageSend.js')(bot, storage)
+    //var messageSend = require('./messageSend.js')(bot, storage)
 var util = {
     secondsToTime,
     gettime,
