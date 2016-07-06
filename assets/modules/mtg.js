@@ -8,9 +8,9 @@ module.exports = function(bot, messageSend, channelID, card) {
             'Set:     ' + body.cards[0].setName + '\n' +
             'Type:    ' + body.cards[0].type + '\n' +
             'Rarity:  ' + body.cards[0].rarity + '\n' +
-            'Text:    ' + body.cards[0].text + '\n' +
-            'Art:     ' + 'http://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + body.cards[0].number + '.jpg'
-        messageSend(channelID, message, true, 'xl')
+            'Text:    ' + body.cards[0].text + '\n'
+        art = 'http://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + body.cards[0].number + '.jpg'
+        messageSend(channelID, message, true, 'xl', false, null, art)
     })
 }
 
