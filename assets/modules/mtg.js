@@ -9,6 +9,7 @@ module.exports = function(card) {
             'Rarity:  ' + body.cards[0].rarity + '\n' +
             'Text:    ' + body.cards[0].text + '\n' +
             'Art:     ' + 'http://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + body.cards[0].number + '.jpg'
+        console.log(message)
         return message
     })
 }
