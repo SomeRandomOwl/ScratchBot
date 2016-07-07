@@ -92,7 +92,7 @@
         },
         "info": {
             "type": "Utility",
-            "help": "Prints the info doccumentation"
+            "help": "Prints the info documentation"
         },
         "roll": {
             "type": "Fun",
@@ -108,7 +108,7 @@
         },
         "clever": {
             "type": "Fun",
-            "help": "Asks cleverbot a question"
+            "help": "Asks clever-bot a question"
         },
         "math": {
             "type": "Useful",
@@ -116,7 +116,7 @@
         },
         "status": {
             "type": "Utility",
-            "help": "Makes bot report the status of a specific user and if they are offline state when they went offline."
+            "help": "Makes bot report the status of a specific user and if they are off-line state when they went off-line."
         },
         "commands": {
             "type": "Utility",
@@ -136,15 +136,15 @@
         },
         "yt": {
             "type": "Useful",
-            "help": "Makes the bot search youtube for a video, user, or playlist."
+            "help": "Makes the bot search Youtube for a video, user, or play-list."
         },
         "xkcd": {
             "type": "Fun",
-            "help": "Makes the bot post a random xkcd comic, or search for a specific one using keywaords. For random mode just do the command with nothing following"
+            "help": "Makes the bot post a random xkcd comic, or search for a specific one using keywords. For random mode just do the command with nothing following"
         },
         "announce": {
             "type": "Admin",
-            "help": "Makes a bot announce userchanges on a channel, toggalable, issue command again to turn off, only works on one channel"
+            "help": "Makes a bot announce user changes on a channel, toggalable, issue command again to turn off, only works on one channel"
         },
         "cat": {
             "type": "Fun",
@@ -180,7 +180,7 @@
         },
         "word": {
             "type": "Useful",
-            "help": "Used to ask the definition of a word or alterntivily ask for the word of the day"
+            "help": "Used to ask the definition of a word or alternatively ask for the word of the day"
         },
         "prune": {
             "type": "Admin",
