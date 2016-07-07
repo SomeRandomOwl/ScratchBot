@@ -31,7 +31,7 @@ exports.list = function() {
         }
         for (var fileN in files) {
             if (vlJ.shortNames[files[fileN]] === undefined && files[fileN].endsWith('.mp3')) {
-                vlJ.shortNames[fileN] = {
+                vlJ.shortNames[files[fileN]] = {
                     'playCount': 0,
                     'nicknames': []
                 }
