@@ -667,10 +667,10 @@ function messageDelete(channelID, messageID) {
     })
 }
 /*/Dekete multiple messages/*/
-function messagesDelete(channelID, number) {
+function messagesDelete(channelID, num) {
     bot.getMessages({
         channel: channelID,
-        limit: number
+        limit: Number(num)
     }, function(error, messageArr) {
         console.log('Array Length: ' + Object.keys(messageArr).length)
         if (error) returnconsole.log(error);
