@@ -4,11 +4,11 @@ var vlJ = require('../voiceLines/voiceL.json')
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
         if (error) {
-            return error;
+            console.log(error);
         }
         fs.rename(path + '.tmp', path + '.json', function(error) {
             if (error) {
-                return error;
+                console.log(error);
             }
         });
     });
