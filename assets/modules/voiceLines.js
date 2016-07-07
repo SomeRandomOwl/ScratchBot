@@ -90,6 +90,13 @@ exports.play = function(bot, serverID, userID, channelID, file) {
             bot.joinVoiceChannel(userVoiceC)
         }
     }
+    bot.sendMessage({
+        to: channelID,
+        message: 'That should play in a moment',
+        typing: false
+    }, function(error, response) {
+        var id = response.id
+    })
     setTimeout(function() {
         if (file.endsWith('.mp3')) {
             bot.getAudioContext({
@@ -121,5 +128,9 @@ exports.play = function(bot, serverID, userID, channelID, file) {
 
             }
         }
-    }, 500)
+        bot.deleteMessage({
+            channel: channelID,
+            messageID: id
+        })
+    }, 1000)
 }
