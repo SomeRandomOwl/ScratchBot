@@ -14,7 +14,7 @@ exports.list = function() {
         if (vlJ.nicknames === undefined) {
             vlJ.nicknames = []
         }
-        for (var i = vlJ.fileList.length - 1; i >= 0; i--) {
+        for (var fileN in vlJ.shortNames) {
             if (vlJ.shortNames[vlJ.fileList[i]] === undefined) {
                 vlJ.shortNames[vlJ.fileList[i]] = {
                     'playCount': 0,
