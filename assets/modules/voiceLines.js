@@ -1,4 +1,7 @@
 var fs = require('fs');
+fs.readdir('./', function(err, files) {
+    console.log(files)
+})
 var vlJ = require('./assets/voiceLines/voiceL.json')
 var cmds = require('./assets/modules')
 var util = require('util'),
