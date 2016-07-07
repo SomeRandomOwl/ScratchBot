@@ -1,6 +1,6 @@
 var fs = require('fs');
 var vlJ = require('../voiceLines/voiceL.json')
-var cmds = require('./assets/modules')
+var cmds = require('./')
 var util = require('util'),
     exec = require('child_process').exec,
     child
