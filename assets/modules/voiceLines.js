@@ -3,9 +3,6 @@ var vlJ = require('../voiceLines/voiceL.json')
 
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
-        fs.readdir(path, function(err, files) {
-            console.log(files)
-        })
         if (error) {
             console.log(error);
         }
