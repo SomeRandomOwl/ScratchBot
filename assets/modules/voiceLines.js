@@ -20,6 +20,7 @@ var util = require('util'),
 
 exports.list = function() {
     fs.readdir('./assets/voiceLines', function(err, files) {
+        console.log(files)
         if (vlJ.shortNames === undefined) {
             vlJ.shortNames = {}
         }
