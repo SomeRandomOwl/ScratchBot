@@ -1546,6 +1546,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cleverr = message.substring(message.indexOf(' ') + 1)
             clever(channelID, userID, cleverr)
         }
+        if (message.toLowerCase().indexOf('vl') === 0 && ignore !== true) {
+            vl = message.substring(message.indexOf(' ') + 1)
+            if (vl.indexof('nickname') !== -1) {
+                vlf = message.substring(message.indexOf(' ') + 1)
+                fileN = vlf.split(" ")[0]
+                nick = vlf.split(" ")[1]
+                cmds.voiceLines.nickname(fileN, nick)
+            } else {
+                cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
+            }
+        }
         if (message.toLowerCase().indexOf('8ball') === 0 && ignore !== true) {
             ebQ = message.substring(message.indexOf(' ') + 1)
             eightBall(channelID, ebQ, userID)
