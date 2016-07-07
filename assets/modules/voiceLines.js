@@ -29,7 +29,7 @@ exports.list = function() {
         if (vlJ.fileList === undefined) {
             vlJ.fileList = []
         }
-        for (var fileN in vlJ.shortNames) {
+        for (var fileN in files) {
             if (vlJ.shortNames[vlJ.fileList[i]] === undefined && fileN.endsWith('.mp3')) {
                 vlJ.shortNames[vlJ.fileList[i]] = {
                     'playCount': 0,
@@ -37,6 +37,7 @@ exports.list = function() {
                 }
                 vlJ.fileList.push(fileN)
             } else {
+                console.log('Not a mp3 ' + )
                 continue
             }
         }
