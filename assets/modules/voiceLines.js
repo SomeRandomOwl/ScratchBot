@@ -82,7 +82,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
                 channel: userVoiceC,
                 stereo: true
             }, function(stream) {
-                stream.playAudioFile('../voiceLines/' + file);
+                stream.playAudioFile('./assets/voiceLines/' + file);
             })
         } else {
             if (vlJ.nicknames.indexOf(file) === -1) {
@@ -98,7 +98,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
                             channel: userVoiceC,
                             stereo: true
                         }, function(stream) {
-                            stream.playAudioFile('../voiceLines/' + fileN);
+                            stream.playAudioFile('./assets/voiceLines/' + fileN);
                         })
                     } else {
                         continue
