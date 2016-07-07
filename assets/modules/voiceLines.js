@@ -1,6 +1,19 @@
 var fs = require('fs');
 var vlJ = require('../voiceLines/voiceL.json')
-var cmds = require('./')
+
+function writeJSON(path, data, callback) {
+    fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
+        if (error) {
+            return error;
+        }
+        fs.rename(path + '.tmp', path + '.json', function(error) {
+            if (error) {
+                return error;
+            }
+        });
+    });
+}
+
 var util = require('util'),
     exec = require('child_process').exec,
     child
@@ -27,7 +40,7 @@ exports.list = function() {
                 continue
             }
         }
-        cmds.util.writeJSON('../voiceLines/voiceL.json', vlJ)
+        writeJSON('../voiceLines/voiceL.json', vlJ)
         exports.vlJ = vlJ
     })
 }
