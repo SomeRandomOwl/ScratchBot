@@ -7,19 +7,22 @@ var util = require('util'),
 
 exports.list = function() {
     fs.readdir('./assets/voiceLines', function(err, files) {
-        vlJ.fileList = files
         if (vlJ.shortNames === undefined) {
             vlJ.shortNames = {}
         }
         if (vlJ.nicknames === undefined) {
             vlJ.nicknames = []
         }
+        if (vlJ.fileList === undefined) {
+            vlJ.fileList = []
+        }
         for (var fileN in vlJ.shortNames) {
-            if (vlJ.shortNames[vlJ.fileList[i]] === undefined) {
+            if (vlJ.shortNames[vlJ.fileList[i]] === undefined && fileN.endsWith('.mp3')) {
                 vlJ.shortNames[vlJ.fileList[i]] = {
                     'playCount': 0,
                     'nicknames': []
                 }
+                vlJ.fileList.push(fileN)
             } else {
                 continue
             }
