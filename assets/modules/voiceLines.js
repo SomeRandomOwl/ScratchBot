@@ -5,6 +5,7 @@ var util = require('util'),
     exec = require('child_process').exec,
     child
 
+console.log(cmds)
 exports.list = function() {
     fs.readdir('./assets/voiceLines', function(err, files) {
         if (vlJ.shortNames === undefined) {
