@@ -20,7 +20,6 @@ var util = require('util'),
 
 exports.list = function() {
     fs.readdir('./assets/voiceLines', function(err, files) {
-        console.log(files)
         if (vlJ.shortNames === undefined) {
             vlJ.shortNames = {}
         }
@@ -38,7 +37,7 @@ exports.list = function() {
                 }
                 vlJ.fileList.push(files[fileN])
             } else {
-                console.log('Not a mp3 ' + files[fileN])
+                //console.log('Not a mp3 ' + files[fileN])
                 continue
             }
         }
