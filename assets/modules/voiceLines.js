@@ -31,14 +31,14 @@ exports.list = function() {
             vlJ.fileList = []
         }
         for (var fileN in files) {
-            if (vlJ.shortNames[fileN] === undefined && fileN.endsWith('.mp3')) {
+            if (vlJ.shortNames[files[fileN]] === undefined && files[fileN].endsWith('.mp3')) {
                 vlJ.shortNames[fileN] = {
                     'playCount': 0,
                     'nicknames': []
                 }
-                vlJ.fileList.push(fileN)
+                vlJ.fileList.push(files[fileN])
             } else {
-                console.log('Not a mp3 ' + fileN)
+                console.log('Not a mp3 ' + files[fileN])
                 continue
             }
         }
