@@ -1424,7 +1424,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 }
             }
-            messageSend(userID, cList, true, 'md', false, null, "Here are my commands!ush Yellow = Admin")
+            messageSend(userID, cList, true, 'md', false, null, "Here are my commands Yellow = Admin")
             if (cList2.length > 2) {
                 setTimeout(function() {
                     messageSend(userID, cList2, true, 'md')
