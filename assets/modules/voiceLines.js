@@ -95,7 +95,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
         message: 'That should play in a moment',
         typing: false
     }, function(error, response) {
-        var id = response.id
+        var resid = response.id
     })
     setTimeout(function() {
         if (file.endsWith('.mp3')) {
@@ -130,7 +130,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
         }
         bot.deleteMessage({
             channel: channelID,
-            messageID: id
+            messageID: resid
         })
     }, 1000)
 }
