@@ -79,7 +79,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
     setTimeout(function() {
         if (file.endsWith('.mp3')) {
             bot.getAudioContext({
-                channel: channelID,
+                channel: userVoiceC,
                 stereo: true
             }, function(stream) {
                 stream.playAudioFile('../voiceLines/' + file);
@@ -87,7 +87,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
         } else {
             if (vlJ.nicknames.indexOf(file) === -1) {
                 bot.sendMessage({
-                    to: channelID,
+                    to: userVoiceC,
                     message: 'That is not a file I recgonize!',
                     typing: false
                 })
@@ -95,7 +95,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
                 for (var fileN in vlJ.shortNames) {
                     if (vlJ.shortNames[fileN].nicknames.indexOf(file) !== -1) {
                         bot.getAudioContext({
-                            channel: channelID,
+                            channel: userVoiceC,
                             stereo: true
                         }, function(stream) {
                             stream.playAudioFile('../voiceLines/' + fileN);
