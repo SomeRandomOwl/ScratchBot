@@ -37,7 +37,7 @@ exports.list = function() {
                 }
                 vlJ.fileList.push(fileN)
             } else {
-                console.log('Not a mp3 ' + )
+                console.log('Not a mp3 ' + fileN)
                 continue
             }
         }
