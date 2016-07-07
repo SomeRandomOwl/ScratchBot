@@ -44,7 +44,7 @@ exports.list = function() {
                 continue
             }
         }
-        writeJSON('./assets/voiceLines/voiceL.json', vlJ)
+        writeJSON('./assets/voiceLines/voiceL', vlJ)
         exports.vlJ = vlJ
     })
 }
