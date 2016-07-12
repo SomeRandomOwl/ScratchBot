@@ -16,7 +16,9 @@ module.exports = function(bot, storage, name) {
         botT = bot.users[userID].bot
         game = bot.users[userID].game
         botT = JSON.stringify(botT)
-    } catch (e) { /**/ }
+    } catch (e) {
+        console.log(e)
+    }
     try {
         if (roles.length !== 0) {
             rolesm = 'Everyone, '
