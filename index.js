@@ -1583,7 +1583,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 Nname = vlf.substring(vlf.indexOf('|') + 1)
                 cmds.voiceLines.nickname(fileN, Nname)
             } else if (vl.indexOf('list') !== -1) {
-                messageSend(channelID, cmds.voiceLines.list())
+                cmds.voiceLines.list()
+                setTimeout(function() {
+                    messageSend(channelID cmds.voiceLines.newFiles, true, 'json')
+                }, 500)
             } else {
                 cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
             }
