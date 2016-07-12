@@ -45,6 +45,7 @@ exports.list = function() {
         }
         writeJSON('./assets/voiceLines/voiceL', vlJ)
         exports.vlJ = vlJ
+        exports.newFiles = newFiles
     })
 }
 exports.list()
