@@ -73,6 +73,7 @@ exports.nickname = function(file, name) {
 exports.play = function(bot, serverID, userID, channelID, file) {
     botVoicC = bot.servers[serverID].members[bot.id].voice_channel_id
     userVoiceC = bot.servers[serverID].members[userID].voice_channel_id
+    bot.leaveVoiceChannel(userVoiceC)
     if (botVoicC === undefined) {
         if (userVoiceC === undefined) {
             bot.sendMessage({
