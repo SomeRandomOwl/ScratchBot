@@ -1578,10 +1578,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             vl = message.substring(message.indexOf(' ') + 1)
             if (vl.indexOf('nickname') !== -1) {
                 vlf = message.substring(message.indexOf(' ') + 1)
-                vlf = vlf.split(' ')
-                fileN = vlf[0]
-                Nname = vlf[1]
+                fileN = vlf.substring(0, vlf.indexOf('|'))
+                Nname = vlf.substring(vlf.indexOf('|') + 1)
                 cmds.voiceLines.nickname(fileN, Nname)
+            } else if (vl.indexOf('list') !== -1) {
+                messageSend(cmds.voiceLines.list())
             } else {
                 cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
             }
