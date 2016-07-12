@@ -36,11 +36,15 @@ exports.list = function() {
                     'nicknames': []
                 }
                 vlJ.fileList.push(files[fileN])
+                var newFiles = []
+                newFiles.push(files[fileN])
+                exports.newFiles = newFiles
             } else {
                 //console.log('Not a mp3 ' + files[fileN])
                 continue
             }
         }
+        return newFiles
         writeJSON('./assets/voiceLines/voiceL', vlJ)
         exports.vlJ = vlJ
     })
@@ -62,6 +66,8 @@ exports.nickname = function(file, name) {
     if (vlJ.nicknames.indexOf(name) === -1) {
         vlJ.shortNames[file].nicknames.push(name)
         vlJ.nicknames.push(name)
+        writeJSON('./assets/voiceLines/voiceL', vlJ)
+        exports.vlJ = vlJ
     } else {
         return "Nickname already Exists"
     }
