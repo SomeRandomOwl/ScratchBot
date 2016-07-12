@@ -2,8 +2,8 @@ var fs = require('fs');
 var vlJ = require('../voiceLines/voiceL.json')
 var newFiles = []
 
-for (var i = vlj.joinedChannels.length - 1; i >= 0; i--) {
-    bot.leaveVoiceChannel(vlj.joinedChannels[i])
+for (var i = vlJ.joinedChannels.length - 1; i >= 0; i--) {
+    bot.leaveVoiceChannel(vlJ.joinedChannels[i])
 }
 
 function writeJSON(path, data, callback) {
