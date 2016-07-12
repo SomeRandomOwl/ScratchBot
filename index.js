@@ -1579,7 +1579,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (vl.indexOf('nickname') !== -1) {
                 vlf = message.replace('vl ', '')
                 vlf = message.replace('nickname ', '')
-                fileN = vlf.substring(0, vlf.indexOf('|'))
+                fileN = vlf.substring(vlf.indexOf(' ') + 1, vlf.indexOf('|'))
                 Nname = vlf.substring(vlf.indexOf('|') + 1)
                 console.log(fileN)
                 console.log(Nname)
