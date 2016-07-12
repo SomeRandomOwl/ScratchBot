@@ -1,5 +1,6 @@
 var fs = require('fs');
 var vlJ = require('../voiceLines/voiceL.json')
+var newFiles = []
 
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
@@ -36,17 +37,14 @@ exports.list = function() {
                     'nicknames': []
                 }
                 vlJ.fileList.push(files[fileN])
-                var newFiles = []
                 newFiles.push(files[fileN])
             } else {
                 //console.log('Not a mp3 ' + files[fileN])
                 continue
             }
         }
-        return newFiles
         writeJSON('./assets/voiceLines/voiceL', vlJ)
         exports.vlJ = vlJ
-        exports.newFiles = newFiles
     })
 }
 exports.list()
@@ -67,7 +65,6 @@ exports.nickname = function(file, name) {
         vlJ.shortNames[file].nicknames.push(name)
         vlJ.nicknames.push(name)
         writeJSON('./assets/voiceLines/voiceL', vlJ)
-        exports.vlJ = vlJ
     } else {
         return "Nickname already Exists"
     }
