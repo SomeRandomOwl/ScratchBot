@@ -67,11 +67,16 @@ exports.download = function(url) {
             });
     }
 }
-exports.nickname = function(file, name) {
+exports.nickname = function(file, name, bot, channelID) {
     if (vlJ.nicknames.indexOf(name) === -1) {
         vlJ.shortNames[file].nicknames.push(name)
         vlJ.nicknames.push(name)
         writeJSON('./assets/voiceLines/voiceL', vlJ)
+        bot.sendMessage({
+            to: channelID,
+            message: 'OK! added a new nickname for: ' + file + ' Nickname: ' + namw,
+            typing: false
+        })
     } else {
         return "Nickname already Exists"
     }

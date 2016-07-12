@@ -1581,7 +1581,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 vlf = message.replace('nickname ', '')
                 fileN = vlf.substring(vlf.indexOf(' ') + 1, vlf.indexOf('|'))
                 Nname = vlf.substring(vlf.indexOf('|') + 1)
-                cmds.voiceLines.nickname(fileN, Nname)
+                cmds.voiceLines.nickname(fileN, Nname, bot, channelID)
             } else if (vl.indexOf('list') !== -1) {
                 cmds.voiceLines.list()
                 setTimeout(function() {
