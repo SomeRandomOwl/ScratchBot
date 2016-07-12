@@ -1585,7 +1585,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else if (vl.indexOf('list') !== -1) {
                 cmds.voiceLines.list()
                 setTimeout(function() {
-                    messageSend(channelID cmds.voiceLines.newFiles, true, 'json')
+                    messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
                 }, 500)
             } else {
                 cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
