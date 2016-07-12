@@ -1580,6 +1580,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 vlf = message.substring(message.indexOf(' ') + 1)
                 fileN = vlf.substring(0, vlf.indexOf('|'))
                 Nname = vlf.substring(vlf.indexOf('|') + 1)
+                console.log(fileN)
+                console.log(Nname)
                 cmds.voiceLines.nickname(fileN, Nname)
             } else if (vl.indexOf('list') !== -1) {
                 messageSend(channelID, cmds.voiceLines.list())
