@@ -1241,9 +1241,24 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         cmds.util.writeJSON('./assets/storage', storage)
     }
+    try{
+	if(storage.d.Servers[sname].Channels[cname].nsfw === true){
+          nsfw=true
+	} else {
+          nsfw=false
+	}
+    } catch(e) {
+	console.log(e)
+	try {
+	    storage.d.Servers[sname].Channels[cname].nsfw =false
+	} catch(e) {
+	    /**/
+	}
+	nsfw=false
+    }
     if (message.toLowerCase().indexOf('http') !== -1) {
         var timeAt = moment().format('MMMM Do YYYY, hh:mm:ss a')
-        logger.info(chalk.gray("Link Posted, logging to file"))
+        //logger.info(chalk.gray("Link Posted, logging to file"))
         if (message.indexOf(' ', message.indexOf('http')) === -1) {
             var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'))
         } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
@@ -1260,7 +1275,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cmds.util.writeJSON('./assets/storage', storage)
         }
         mkdirp('./logs/' + sname, function(err) {
-            fs.appendFile("logs/" + sname + "/Links.txt", '\n' + link)
+	    try {
+		if (nsfw){fs.appendFile("logs/" + sname + "/LinksNSFW.txt", '\n' + link)}else {
+		    fs.appendFile("logs/" + sname + "/Links.txt", '\n' + link)}} catch (e) {/**/}
         })
     }
     if (cname !== undefined) {
@@ -1433,11 +1450,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('poke') === 0 && ignore !== true) {
-            var pkcmd = message
-            var pkcall = pkcmd.replace('poke ', '')
-            var pkcall = pkcall.replace('<@', '')
-            var pkcall = pkcall.replace('>', '')
-            messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">")
+            var pkcall = rawEvent.d.mentions[0].id
+	    message = message.replace('poke','')
+            messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + "> With the following message: " + message)
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('stats') === 0 && ignore !== true) {
