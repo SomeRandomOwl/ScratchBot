@@ -38,7 +38,6 @@ exports.list = function() {
                 vlJ.fileList.push(files[fileN])
                 var newFiles = []
                 newFiles.push(files[fileN])
-                exports.newFiles = newFiles
             } else {
                 //console.log('Not a mp3 ' + files[fileN])
                 continue
@@ -47,6 +46,7 @@ exports.list = function() {
         return newFiles
         writeJSON('./assets/voiceLines/voiceL', vlJ)
         exports.vlJ = vlJ
+        exports.newFiles = newFiles
     })
 }
 exports.list()
