@@ -2,6 +2,10 @@ var fs = require('fs');
 var vlJ = require('../voiceLines/voiceL.json')
 var newFiles = []
 
+for (var i = vlj.joinedChannels.length - 1; i >= 0; i--) {
+    bot.leaveVoiceChannel(vlj.joinedChannels[i])
+}
+
 function writeJSON(path, data, callback) {
     fs.writeFile(path + '.tmp', JSON.stringify(data, null, "\t"), function(error) {
         if (error) {
@@ -73,7 +77,7 @@ exports.nickname = function(file, name) {
 exports.play = function(bot, serverID, userID, channelID, file) {
     botVoicC = bot.servers[serverID].members[bot.id].voice_channel_id
     userVoiceC = bot.servers[serverID].members[userID].voice_channel_id
-    bot.leaveVoiceChannel(userVoiceC)
+
     if (botVoicC === undefined) {
         if (userVoiceC === undefined) {
             bot.sendMessage({
@@ -83,6 +87,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
             })
         } else {
             bot.joinVoiceChannel(userVoiceC)
+            vlJ.joinedChannels.push(userVoiceC)
         }
     } else {
         if (userVoiceC === undefined) {
@@ -93,6 +98,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
             })
         } else if (botVoicC !== userVoiceC) {
             bot.joinVoiceChannel(userVoiceC)
+            vlJ.joinedChannels.push(userVoiceC)
         }
     }
     bot.sendMessage({
