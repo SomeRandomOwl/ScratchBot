@@ -740,8 +740,17 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                 "Last Seen      " + lastSeen, true, 'xl')
         })
     } else {
-        var name = rawEvent.d.mentions[0].username
-            /*for (var usern in storage.d.Users) {
+        try {
+            var name = rawEvent.d.mentions[0].username
+        } catch (e) {
+            nmm = name.substring(name.indexOf('@'), name.indexOf('>'))
+            for (var nmme in storage.d.Users) {
+                if (storage.d.Users[nmme].id = nmm) {
+                    name = nmme
+                }
+            }
+        }
+        /*for (var usern in storage.d.Users) {
             if (mentId === storage.d.Users[usern].id) {*/
         statW = cmds.util.whoIs(bot, storage, name)
         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
@@ -1241,24 +1250,24 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         cmds.util.writeJSON('./assets/storage', storage)
     }
-    try{
-	if(storage.d.Servers[sname].Channels[cname].nsfw === true){
-          nsfw=true
-	} else {
-          nsfw=false
-	}
-    } catch(e) {
-	console.log(e)
-	try {
-	    storage.d.Servers[sname].Channels[cname].nsfw =false
-	} catch(e) {
-	    /**/
-	}
-	nsfw=false
+    try {
+        if (storage.d.Servers[sname].Channels[cname].nsfw === true) {
+            nsfw = true
+        } else {
+            nsfw = false
+        }
+    } catch (e) {
+        console.log(e)
+        try {
+            storage.d.Servers[sname].Channels[cname].nsfw = false
+        } catch (e) {
+            /**/
+        }
+        nsfw = false
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
         var timeAt = moment().format('MMMM Do YYYY, hh:mm:ss a')
-        //logger.info(chalk.gray("Link Posted, logging to file"))
+            //logger.info(chalk.gray("Link Posted, logging to file"))
         if (message.indexOf(' ', message.indexOf('http')) === -1) {
             var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'))
         } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
@@ -1275,9 +1284,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cmds.util.writeJSON('./assets/storage', storage)
         }
         mkdirp('./logs/' + sname, function(err) {
-	    try {
-		if (nsfw){fs.appendFile("logs/" + sname + "/LinksNSFW.txt", '\n' + link)}else {
-		    fs.appendFile("logs/" + sname + "/Links.txt", '\n' + link)}} catch (e) {/**/}
+            try {
+                if (nsfw) {
+                    fs.appendFile("logs/" + sname + "/LinksNSFW.txt", '\n' + link)
+                } else {
+                    fs.appendFile("logs/" + sname + "/Links.txt", '\n' + link)
+                }
+            } catch (e) { /**/ }
         })
     }
     if (cname !== undefined) {
@@ -1451,7 +1464,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('poke') === 0 && ignore !== true) {
             var pkcall = rawEvent.d.mentions[0].id
-	    message = message.replace('poke','')
+            message = message.replace('poke', '')
             messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + "> With the following message: " + message)
             rconcmd = 'Yes'
         }
