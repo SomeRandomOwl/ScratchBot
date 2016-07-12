@@ -1582,7 +1582,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 Nname = vlf.substring(vlf.indexOf('|') + 1)
                 cmds.voiceLines.nickname(fileN, Nname)
             } else if (vl.indexOf('list') !== -1) {
-                messageSend(cmds.voiceLines.list())
+                messageSend(channelID, cmds.voiceLines.list())
             } else {
                 cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
             }
