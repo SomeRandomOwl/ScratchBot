@@ -63,7 +63,7 @@ exports.server = function(bot, storage, verb, s) {
         console.log(chalk.gray("Currently connected to: " + serverCnt + " Servers"))
     }
     storage.d.totalCounters.servers = serverCnt
-    cmds.util.writeJSON('./assets/storage', storage)
+    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Lists currencly seen channels/*/
 exports.channel = function(bot, storage, verb, s) {
@@ -113,7 +113,7 @@ exports.channel = function(bot, storage, verb, s) {
         console.log(chalk.gray("With a total of: " + channelCnt + " Channels"))
     }
     storage.d.totalCounters.channels = channelCnt
-    cmds.util.writeJSON('./assets/storage', storage)
+    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/List currently seen users/*/
 exports.user = function(bot, storage, verb, s) {
@@ -207,5 +207,5 @@ exports.user = function(bot, storage, verb, s) {
         console.log(chalk.gray("With approximatly: " + userCnt + " Users across all of them\n"))
     }
     storage.d.totalCounters.users = userCnt
-    cmds.util.writeJSON('./assets/storage', storage)
+    //cmds.util.writeJSON('./assets/storage', storage)
 }
