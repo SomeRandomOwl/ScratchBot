@@ -5,7 +5,7 @@ var isInArray = require('./isInArray.js')
 var whoIs = require('./whoIs.js')
 var toSentenceCase = require('./toSentenceCase.js')
     //var messageSend = require('./messageSend.js')(bot, storage)
-o
+
 var util = {
     secondsToTime,
     gettime,
