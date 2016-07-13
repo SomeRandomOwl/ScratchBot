@@ -1,8 +1,10 @@
 /*/WhoIs/*/
 var cmds = require('./')
-module.exports = function(bot, storage, serverID, name) {
+module.exports = function(bot, storage, name) {
     try {
+        console.log(name)
         userID = storage.d.Users[name].id
+        serverID = storage.d.Servers[storage.d.Users[name].Servers[0]].id
         roles = bot.servers[serverID].members[userID].roles
         nick = bot.servers[serverID].members[userID].nick
         mute = bot.servers[serverID].members[userID].mute
@@ -15,7 +17,9 @@ module.exports = function(bot, storage, serverID, name) {
         botT = bot.users[userID].bot
         game = bot.users[userID].game
         botT = JSON.stringify(botT)
-    } catch (e) { /**/ }
+    } catch (e) {
+        console.log(e)
+    }
     try {
         if (roles.length !== 0) {
             rolesm = 'Everyone, '

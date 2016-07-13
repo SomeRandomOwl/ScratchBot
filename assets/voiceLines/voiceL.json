@@ -1,0 +1,36 @@
+{
+	"shortNames": {
+		"demoman_autodejectedtie04.mp3": {
+			"playCount": 0,
+			"nicknames": []
+		},
+		"potatos_fgb_defiance16.mp3": {
+			"playCount": 0,
+			"nicknames": []
+		},
+		"potatos_longfall_speech03.mp3": {
+			"playCount": 0,
+			"nicknames": []
+		},
+		"potatos_see_bird01.mp3": {
+			"playCount": 0,
+			"nicknames": [
+				"bird"
+			]
+		},
+		"potatos_sp_a3_00_fall18.mp3": {
+			"playCount": 0,
+			"nicknames": []
+		}
+	},
+	"nicknames": [
+		"bird"
+	],
+	"fileList": [
+		"demoman_autodejectedtie04.mp3",
+		"potatos_fgb_defiance16.mp3",
+		"potatos_longfall_speech03.mp3",
+		"potatos_see_bird01.mp3",
+		"potatos_sp_a3_00_fall18.mp3"
+	]
+}

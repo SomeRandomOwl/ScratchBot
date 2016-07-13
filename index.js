@@ -26,7 +26,7 @@ var bot = new DiscordClient({
     //password: config.pass,
     token: config.token
 });
-var cmds = require('./assets/modules') //(bot, storage, config)
+var cmds = require('./assets/modules')(bot, storage, config);
 
 cleverbot = new Cleverbot;
 
@@ -667,22 +667,17 @@ function messageDelete(channelID, messageID) {
     })
 }
 /*/Dekete multiple messages/*/
-function messagesDelete(channelID, number) {
+function messagesDelete(channelID, num) {
     bot.getMessages({
         channel: channelID,
-        limit: number
+        limit: Number(num)
     }, function(error, messageArr) {
+        console.log('Array Length: ' + Object.keys(messageArr).length)
         if (error) returnconsole.log(error);
-        var array = []
-        for (var i = 0; i < number + 1 && i < array.length; i++) {
-            array.push(messageArr[i].id)
-        }
-        console.log(array.length)
         bot.deleteMessages({
             channelID: channelID,
-            messageIDs: array
-        })
-
+            messageIDs: messageArr.map(m => m.id)
+        });
     });
 }
 /*/Magic 8 Ball/*/
@@ -729,7 +724,7 @@ function unShorten(channelID, userID, url) {
 function stats(channelID, name, rawEvent, channelID, serverID) {
     /*try {*/
     if (name.toLowerCase().indexOf('<@') === -1) {
-        statW = cmds.util.whoIs(bot, storage, serverID, name)
+        statW = cmds.util.whoIs(bot, storage, name)
         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
@@ -745,10 +740,19 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                 "Last Seen      " + lastSeen, true, 'xl')
         })
     } else {
-        var name = rawEvent.d.mentions[0].username
-            /*for (var usern in storage.d.Users) {
+        try {
+            var name = rawEvent.d.mentions[0].username
+        } catch (e) {
+            nmm = name.substring(name.indexOf('@'), name.indexOf('>'))
+            for (var nmme in storage.d.Users) {
+                if (storage.d.Users[nmme].id = nmm) {
+                    name = nmme
+                }
+            }
+        }
+        /*for (var usern in storage.d.Users) {
             if (mentId === storage.d.Users[usern].id) {*/
-        statW = cmds.util.whoIs(bot, storage, serverID, name)
+        statW = cmds.util.whoIs(bot, storage, name)
         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
@@ -1246,9 +1250,24 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         cmds.util.writeJSON('./assets/storage', storage)
     }
+    try {
+        if (storage.d.Servers[sname].Channels[cname].nsfw === true) {
+            nsfw = true
+        } else {
+            nsfw = false
+        }
+    } catch (e) {
+        console.log(e)
+        try {
+            storage.d.Servers[sname].Channels[cname].nsfw = false
+        } catch (e) {
+            /**/
+        }
+        nsfw = false
+    }
     if (message.toLowerCase().indexOf('http') !== -1) {
         var timeAt = moment().format('MMMM Do YYYY, hh:mm:ss a')
-        logger.info(chalk.gray("Link Posted, logging to file"))
+            //logger.info(chalk.gray("Link Posted, logging to file"))
         if (message.indexOf(' ', message.indexOf('http')) === -1) {
             var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'))
         } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
@@ -1265,7 +1284,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cmds.util.writeJSON('./assets/storage', storage)
         }
         mkdirp('./logs/' + sname, function(err) {
-            fs.appendFile("logs/" + sname + "/Links.txt", '\n' + link)
+            try {
+                if (nsfw) {
+                    fs.appendFile("logs/" + sname + "/LinksNSFW.txt", '\n' + link)
+                } else {
+                    fs.appendFile("logs/" + sname + "/Links.txt", '\n' + link)
+                }
+            } catch (e) { /**/ }
         })
     }
     if (cname !== undefined) {
@@ -1429,7 +1454,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }
                 }
             }
-            messageSend(userID, cList, true, 'md', false, null, "Here are my commands!ush Yellow = Admin")
+            messageSend(userID, cList, true, 'md', false, null, "Here are my commands Yellow = Admin")
             if (cList2.length > 2) {
                 setTimeout(function() {
                     messageSend(userID, cList2, true, 'md')
@@ -1438,11 +1463,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('poke') === 0 && ignore !== true) {
-            var pkcmd = message
-            var pkcall = pkcmd.replace('poke ', '')
-            var pkcall = pkcall.replace('<@', '')
-            var pkcall = pkcall.replace('>', '')
-            messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + ">")
+            var pkcall = rawEvent.d.mentions[0].id
+            message = message.replace('poke', '')
+            messageSend(pkcall, "Hi <@" + pkcall + "> You where poked by: <@" + userID + "> in: <#" + channelID + "> With the following message: " + message)
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('stats') === 0 && ignore !== true) {
@@ -1450,7 +1473,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 5) {
                 try {
-                    statW = cmds.util.whoIs(bot, storage, serverID, user)
+                    statW = cmds.util.whoIs(bot, storage, user)
                     wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
                     whoRest = statW.substring(0, statW.indexOf('Avatar'))
                     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
@@ -1503,11 +1526,15 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('prune') === 0 && ignore !== true) {
             pcall = message.substring(message.indexOf(' ') + 1)
             if (userID.indexOf(ownerId) === 0) {
-                messagesDelete(channelID, pcall)
-                messageSend('Ok removing the last ' + pcall + " Messages")
+                messagesDelete(channelID, Number(pcall) + 1)
+                setTimeout(function() {
+                    messageSend(channelID, 'Ok removed the last ' + pcall + " Messages")
+                }, 500)
             } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
-                messagesDelete(channelID, pcall)
-                messageSend('Ok removing the last ' + pcall + " Messages")
+                messagesDelete(channelID, Number(pcall) + 1)
+                setTimeout(function() {
+                    messageSend(channelID, 'Ok removed the last ' + pcall + " Messages")
+                }, 500)
             } else {
                 messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner/Admin")
             }
@@ -1546,6 +1573,23 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('clever') === 0 && ignore !== true) {
             cleverr = message.substring(message.indexOf(' ') + 1)
             clever(channelID, userID, cleverr)
+        }
+        if (message.toLowerCase().indexOf('vl') === 0 && ignore !== true) {
+            vl = message.substring(message.indexOf(' ') + 1)
+            if (vl.indexOf('nickname') !== -1) {
+                vlf = message.replace('vl ', '')
+                vlf = message.replace('nickname ', '')
+                fileN = vlf.substring(vlf.indexOf(' ') + 1, vlf.indexOf('|'))
+                Nname = vlf.substring(vlf.indexOf('|') + 1)
+                cmds.voiceLines.nickname(fileN, Nname, bot, channelID)
+            } else if (vl.indexOf('list') !== -1) {
+                cmds.voiceLines.list()
+                setTimeout(function() {
+                    messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
+                }, 500)
+            } else {
+                cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
+            }
         }
         if (message.toLowerCase().indexOf('8ball') === 0 && ignore !== true) {
             ebQ = message.substring(message.indexOf(' ') + 1)
