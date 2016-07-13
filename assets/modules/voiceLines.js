@@ -74,7 +74,7 @@ exports.nickname = function(file, name, bot, channelID) {
         writeJSON('./assets/voiceLines/voiceL', vlJ)
         bot.sendMessage({
             to: channelID,
-            message: 'OK! added a new nickname for: ' + file + ' Nickname: ' + namw,
+            message: 'OK! added a new nickname for: ' + file + ' Nickname: ' + name,
             typing: false
         })
     } else {
