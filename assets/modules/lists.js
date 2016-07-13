@@ -1,4 +1,5 @@
 var cmds = require('./')
+console.log(cmds)
 var chalk = require('chalk')
 var moment = require('moment')
 var winston = require('winston');
