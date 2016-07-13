@@ -1,6 +1,7 @@
 module.exports = function(bot, storage, config) {
     const module = {};
 
+    console.log(bot)
 
     var secondsToTime = require('./secondsToTime.js')
     var gettime = require('./gettime.js')
