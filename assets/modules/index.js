@@ -9,7 +9,7 @@ module.exports = function(bot, storage, config) {
     var isInArray = require('./isInArray.js')
     var whoIs = require('./whoIs.js')
     var toSentenceCase = require('./toSentenceCase.js')
-    var messageSend = require('./messageSend.js')(bot, storage)
+        //var messageSend = require('./messageSend.js')(bot, storage)
 
     var util = {
         secondsToTime,
@@ -18,7 +18,7 @@ module.exports = function(bot, storage, config) {
         isInArray,
         whoIs,
         toSentenceCase,
-        messageSend
+        //messageSend
     }
 
     module.voiceLines = require('./voiceLines.js')(util)

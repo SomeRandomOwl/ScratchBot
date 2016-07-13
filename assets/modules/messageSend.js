@@ -18,7 +18,7 @@ var logger = new(winston.Logger)({
     ]
 });
 /*/Used to send messages and keep tack of the message id/*/
-module.exports = function(channelID, msg, cb, type, mention, userID, preText, bot, storage) {
+module.exports = function(channelID, msg, cb, type, mention, userID, preText) {
     try {
         sId = bot.serverFromChannel(channelID)
         for (var sname in storage.d.Servers) {
