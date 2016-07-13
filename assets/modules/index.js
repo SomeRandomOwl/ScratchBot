@@ -20,10 +20,10 @@ module.exports = function(bot, storage, config) {
         //messageSend
     }
 
-    module.voiceLines = require('./voiceLines.js')
-    module.mtg = require('./mtg.js')
-    module.list = require('./lists.js')
-    module.question = require('./question.js')
+    module.voiceLines = require('./voiceLines.js')(util)
+    module.mtg = require('./mtg.js')(util)
+    module.list = require('./lists.js')(util)
+    module.question = require('./question.js')(util)
     module.util = util
 
     return module;
