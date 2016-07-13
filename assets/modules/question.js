@@ -1,20 +1,23 @@
 var questions = {}
 var shortid = require('shortid');
+module.exports = function(bot, storage, config) {
+    const module = {};
 
-exports.ask = function(question) {
-    id = shortid.generate()
-    questions[id] = question
-    return id
-    exports.active = questions
-}
-exports.answer = function(id, all) {
-    if (!all) {
-        delete questions[id]
-    } else {
-        for (var id in questions) {
-            delete questions[id]
-        }
+    module.ask = function(question) {
+        id = shortid.generate()
+        questions[id] = question
+        return id
+        module.active = questions
     }
-    exports.active = questions
+    module.answer = function(id, all) {
+        if (!all) {
+            delete questions[id]
+        } else {
+            for (var id in questions) {
+                delete questions[id]
+            }
+        }
+        module.active = questions
+    }
+    module.active = questions
 }
-exports.active = questions
