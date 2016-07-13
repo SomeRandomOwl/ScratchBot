@@ -1,7 +1,7 @@
 var request = require('request');
 var toSentenceCase = require('./toSentenceCase.js')
-module.exports = function(bot, messageSend, channelID, card) {
-    console.log(messageSend, channelID, card)
+module.exports = function(bot, channelID, card) {
+    console.log(messageSend, channelID, card, util)
     request("https://api.magicthegathering.io/v1/cards?name=" + card + "&pageSize=1", function(error, response, body) {
         body = JSON.parse(body);
         try {
@@ -16,7 +16,7 @@ module.exports = function(bot, messageSend, channelID, card) {
 
         } catch (e) {
             console.log(e)
-            messageSend(channelID, "There was a error retriveing that cards info", true, 'fix')
+            util.messageSend(channelID, "There was a error retriveing that cards info", true, 'fix')
         }
     })
 }
