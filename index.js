@@ -26,7 +26,7 @@ var bot = new DiscordClient({
     //password: config.pass,
     token: config.token
 });
-var cmds = require('./assets/modules') //(bot, storage, config);
+var cmds = require('./assets/modules')(bot, storage, config);
 cmds.voiceLines.leaveAll(bot)
 cleverbot = new Cleverbot;
 
