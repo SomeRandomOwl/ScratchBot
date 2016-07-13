@@ -153,5 +153,5 @@ exports.play = function(bot, serverID, userID, channelID, file) {
             }
         }
 
-    }, 1000) x
+    }, 1000)
 }
