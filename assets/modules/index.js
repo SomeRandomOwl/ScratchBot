@@ -16,7 +16,7 @@ module.exports = function(bot, storage, config) {
         writeJSON,
         isInArray,
         whoIs,
-        toSentenceCase
+        toSentenceCase,
         messageSend
     }
 
