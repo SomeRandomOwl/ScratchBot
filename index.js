@@ -1,7 +1,7 @@
 /* Welcome, this is scratch bots source code, everything that makes her run and tick! */
 var DiscordClient = require('discord.io');
 var winston = require('winston');
-var config = require('../TESTconfig.json');
+var config = require('../../config.json');
 var fs = require('fs');
 var Roll = require('roll');
 roll = new Roll();
@@ -1335,7 +1335,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (storage.d.Servers[sname].settings.prefixOvrid !== undefined) {
             commandmod = storage.d.Servers[sname].settings.prefixOvrid
         } else {
-            commandmod = '?'
+            commandmod = '!'
         }
     } catch (e) {
         e = e
