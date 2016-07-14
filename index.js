@@ -1590,7 +1590,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
                 }, 500)
             }
-            vlDO.list = function {
+            vlDO.list = function() {
                 console.log('LISTING')
                 messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
             }
