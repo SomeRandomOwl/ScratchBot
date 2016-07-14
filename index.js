@@ -1582,11 +1582,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 fileN = vlf.substring(vlf.indexOf(' ') + 1, vlf.indexOf('|'))
                 Nname = vlf.substring(vlf.indexOf('|') + 1)
                 cmds.voiceLines.nickname(fileN, Nname, bot, channelID)
-            } else if (vl.indexOf('list') !== -1) {
+            } else if (vl.toLowerCase().indexOf('list new') !== -1) {
                 cmds.voiceLines.list()
                 setTimeout(function() {
                     messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
                 }, 500)
+            } else if (vl.toLowerCase().indexOf('list')) {
+                messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
             } else {
                 cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
             }
