@@ -1576,20 +1576,40 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('vl') === 0 && ignore !== true) {
             vl = message.substring(message.indexOf(' ') + 1)
+            vlDO = {
+                'nickname': function(vl) {
+                    vlf = message.replace('vl ', '')
+                    vlf = message.replace('nickname ', '')
+                    fileN = vlf.substring(vlf.indexOf(' ') + 1, vlf.indexOf('|'))
+                    Nname = vlf.substring(vlf.indexOf('|') + 1)
+                    cmds.voiceLines.nickname(fileN, Nname, bot, channelID)
+                },
+                'new': function() {
+                    cmds.voiceLines.list()
+                    setTimeout(function() {
+                        messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
+                    }, 500)
+                },
+                'list': function {
+                    messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
+                },
+                'play': function(vl) {
+                    cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
+                }
+            }
             if (vl.indexOf('nickname') !== -1) {
-                vlf = message.replace('vl ', '')
-                vlf = message.replace('nickname ', '')
-                fileN = vlf.substring(vlf.indexOf(' ') + 1, vlf.indexOf('|'))
-                Nname = vlf.substring(vlf.indexOf('|') + 1)
-                cmds.voiceLines.nickname(fileN, Nname, bot, channelID)
-            } else if (vl.indexOf('list new') !== -1) {
-                cmds.voiceLines.list()
-                setTimeout(function() {
-                    messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
-                }, 500)
-            } else if (vl.indexOf('list')) {
-                messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
+                vlDO.nickname(vl)
             } else {
+                noNI = true
+            } if (vl.indexOf('list new') !== -1) {
+                vlDO.new()
+            } else {
+                noLIN = true
+            } if (vl.indexOf('list')) {
+                vlDO.list
+            } else {
+                noLI = true
+            } if (noNI && noLIN && noLI) {
                 cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
             }
         }
@@ -1755,7 +1775,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('invite') === 0 && ignore !== true) {
-            messageSend(channelID, "Here is my invite link: https://goo.gl/IppQQT \nIf you dont trust short urls use the following command to unshorten it: " + commandmod + "us https://goo.gl/IppQQT \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
+            messageSend(channelID, "Here is my invite link: https:/ / goo.gl / IppQQT\ nIf you dont trust short urls use the following command to unshorten it: " + commandmod + "
+            us https: //goo.gl/IppQQT \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
         }
         if (message.toLowerCase().indexOf('js') === 0) {
             jscall = message.substring(message.indexOf(' ') + 1)
