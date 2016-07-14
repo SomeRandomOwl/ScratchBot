@@ -1576,25 +1576,25 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('vl') === 0 && ignore !== true) {
             vl = message.substring(message.indexOf(' ') + 1)
-            vlDO = {
-                nickname = function(vl) {
-                    vlf = message.replace('vl ', '')
-                    vlf = message.replace('nickname ', '')
-                    fileN = vlf.substring(vlf.indexOf(' ') + 1, vlf.indexOf('|'))
-                    Nname = vlf.substring(vlf.indexOf('|') + 1)
-                    cmds.voiceLines.nickname(fileN, Nname, bot, channelID)
-                },
-                new = function() {
-                    cmds.voiceLines.list()
-                    setTimeout(function() {
-                        messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
-                    }, 500)
-                },
-                list = function {
-                    console.log('LISTING')
-                    messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
-                }
+            vlDO = {}
+            vlDO.nickname = function(vl) {
+                vlf = message.replace('vl ', '')
+                vlf = message.replace('nickname ', '')
+                fileN = vlf.substring(vlf.indexOf(' ') + 1, vlf.indexOf('|'))
+                Nname = vlf.substring(vlf.indexOf('|') + 1)
+                cmds.voiceLines.nickname(fileN, Nname, bot, channelID)
             }
+            vlDO.new = function() {
+                cmds.voiceLines.list()
+                setTimeout(function() {
+                    messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
+                }, 500)
+            }
+            vlDO.list = function {
+                console.log('LISTING')
+                messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
+            }
+
             if (vl.indexOf('nickname') !== -1) {
                 vlDO.nickname(vl)
             } else {
