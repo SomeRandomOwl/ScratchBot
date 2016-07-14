@@ -1577,25 +1577,22 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('vl') === 0 && ignore !== true) {
             vl = message.substring(message.indexOf(' ') + 1)
             vlDO = {
-                'nickname': function(vl) {
+                nickname = function(vl) {
                     vlf = message.replace('vl ', '')
                     vlf = message.replace('nickname ', '')
                     fileN = vlf.substring(vlf.indexOf(' ') + 1, vlf.indexOf('|'))
                     Nname = vlf.substring(vlf.indexOf('|') + 1)
                     cmds.voiceLines.nickname(fileN, Nname, bot, channelID)
                 },
-                'new': function() {
+                new = function() {
                     cmds.voiceLines.list()
                     setTimeout(function() {
                         messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
                     }, 500)
                 },
-                'list': function {
+                list = function {
                     console.log('LISTING')
                     messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
-                },
-                'play': function(vl) {
-                    cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
                 }
             }
             if (vl.indexOf('nickname') !== -1) {
