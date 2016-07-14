@@ -1594,7 +1594,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 console.log('LISTING')
                 messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
             }
-
+            noLI = false
+            noNI = false
+            noLIN = false
             if (vl.indexOf('nickname') !== -1) {
                 vlDO.nickname(vl)
             } else {
