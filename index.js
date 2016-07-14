@@ -1591,6 +1591,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     }, 500)
                 },
                 'list': function {
+                    console.log('LISTING')
                     messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
                 },
                 'play': function(vl) {
