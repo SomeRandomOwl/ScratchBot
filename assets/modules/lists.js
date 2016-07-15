@@ -153,6 +153,9 @@ exports.user = function(bot, storage, verb, s) {
                     "tracking": moment().format('MMMM Do YYYY, hh:mm:ss a')
                 }
             } else {
+                if (storage.d.Users[name].tracking === undefined) {
+                    storage.d.Users[name].tracking = moment().format('MMMM Do YYYY, hh:mm:ss a')
+                }
                 if (storage.d.Users[name].messageCnt === undefined) {
                     storage.d.Users[name].messageCnt = 0
                 }
