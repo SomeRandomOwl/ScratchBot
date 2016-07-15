@@ -421,7 +421,7 @@ function status(statuscall, channelID, rawEvent, cl) {
                 }
             } else if (status === 'online') {
                 if (cl) {
-                    return "currently Online"
+                    return "Currently Online"
                 } else {
                     messageSend(channelID, statuscall + " Is currently online")
                 }
