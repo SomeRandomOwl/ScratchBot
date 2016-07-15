@@ -1265,7 +1265,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         nsfw = false
     }
-    if (rawEvent.attachments[0] !== undefined) {
+    if (rawEvent.attachments !== undefined) {
         console.log(rawEvent.attachments)
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
