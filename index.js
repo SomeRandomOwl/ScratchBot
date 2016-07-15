@@ -1029,7 +1029,7 @@ bot.on('debug', function(rawEvent) {
         cID = rawEvent.d.id
         newName = rawEvent.d.name
         topic = rawEvent.d.topic
-        logger.info(chalk.gray("Channel just updated, Channel Name: " + newName + " Topic: " + topic))
+        logger.info(chalk.gray("Channel just updated on" + sname ", Channel Name: " + newName + " Topic: " + topic))
         for (var cname in storage.d.Servers[sname].Channels) {
             if (storage.d.Servers[sname].Channels[cname].id === cID) {
                 storage.d.Servers[sname].Channels[newName] = storage.d.Servers[sname].Channels[cname]
