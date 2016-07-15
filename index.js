@@ -1266,7 +1266,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         nsfw = false
     }
     if (rawEvent.d.attachments[0] !== undefined) {
-        console.log(rawEvent.d.attachments[0])
+        message = rawEvent.d.attachments[0].url
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
         var timeAt = moment().format('MMMM Do YYYY, hh:mm:ss a')
