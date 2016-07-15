@@ -1265,8 +1265,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         nsfw = false
     }
-    console.log(rawEvent)
-    if (rawEvent.attachments !== undefined) {}
+    if (rawEvent.attachments[0] !== undefined) {
+        console.log(rawEvent.attachments)
+    }
     if (message.toLowerCase().indexOf('http') !== -1) {
         var timeAt = moment().format('MMMM Do YYYY, hh:mm:ss a')
             //logger.info(chalk.gray("Link Posted, logging to file"))
