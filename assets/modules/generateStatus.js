@@ -1,9 +1,7 @@
 var fs = require('fs')
 var file;
 
-fs.readFile('./assets/game.txt', 'utf8', function(err, data) {
-    file = data
-})
+
 
 function build_list(big_list) {
     var words = big_list.split("\n");
@@ -18,8 +16,12 @@ function build_list(big_list) {
         }
     }
 }
-build_list(file)
 
+
+fs.readFile('./assets/game.txt', 'utf8', function(err, data) {
+    file = data
+    build_list(file)
+})
 module.exports = function(callback) {
     fs.readFile('./assets/game.txt', 'utf8', function(err, data) {
         file = data
