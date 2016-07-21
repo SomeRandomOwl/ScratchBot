@@ -68,7 +68,7 @@
         "typeList": ["Fun", "Admin", "Utility", "Other"],
         "prefix": {
             "type": "Admin",
-            "Help": "Changes the prefix used fo a server"
+            "help": "Changes the prefix used fo a server"
         },
         "8ball": {
             "type": "Fun",
