@@ -1,5 +1,4 @@
-module.exports = function(callback) {
-    var list = require('../game.json')
+module.exports = function(list, callback) {
     rN1 = Math.floor(Math.random() * list[0].length)
     rN2 = Math.floor(Math.random() * list[1].length)
     rn3 = Math.floor(Math.random() * list[2].length)
