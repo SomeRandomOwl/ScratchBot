@@ -1418,6 +1418,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
         }
         if (message.toLowerCase().indexOf('info') === 0 && ignore !== true) {
+            cmds.list.server(bot, storage, false, true)
+            cmds.list.channel(bot, storage, false, true)
+            cmds.list.user(bot, storage, false, true)
             messageSend(channelID, serverCnt + " Servers\n" +
                 channelCnt + " Channels\n" +
                 userCnt + " Users\n", true, 'xl', true, userID,
