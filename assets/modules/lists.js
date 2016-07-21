@@ -122,7 +122,6 @@ exports.user = function(bot, storage, verb, s) {
     }
     for (var serverID in bot.servers) {
         for (var userID in bot.servers[serverID].members) {
-            userCnt++
             if (verb) {
                 console.log(bot.servers[serverID].members[userID].username)
             }
@@ -205,6 +204,7 @@ exports.user = function(bot, storage, verb, s) {
             }
         }
     }
+    userCnt = Object.keys(bot.users).length
     if (s) {
         console.log(chalk.gray("With approximatly: " + userCnt + " Users across all of them\n"))
     }
