@@ -780,36 +780,35 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
 /*/Url shortener/*/
 function shorten(cl, ulink, channelID, userID, callback) {
     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
-            body = JSON.parse(body)
-            if (debug) {
-                messageSend(channelID, body, true, 'json')
-            }
-            console.log(cl)
-            console.log(error)
-            console.log(response.statusCode)
-            if (cl === false) {
-                if (!error && response.statusCode === 200) {
-                    if (body.status_txt === 'OK') {
-                        messageSend(channelID, '<@' + userID + '> Here is a short url: ' + body.data.url)
-                    } else {
-                        console.log(body)
-                        messageSend(channelID, '<@' + userID + '> There was a error processing that url')
-                    }
-                }
-            } else {
+        body = JSON.parse(body)
+        if (debug) {
+            messageSend(channelID, body, true, 'json')
+        }
+        console.log(cl)
+        console.log(error)
+        console.log(response.statusCode)
+        if (cl === false) {
+            if (!error && response.statusCode === 200) {
                 if (body.status_txt === 'OK') {
-                    console.log(body)
-                    prevUrl = body.data.url
-                    return body.data.url
+                    messageSend(channelID, '<@' + userID + '> Here is a short url: ' + body.data.url)
                 } else {
-                    return body.status_txt
+                    console.log(body)
+                    messageSend(channelID, '<@' + userID + '> There was a error processing that url')
                 }
             }
-            if (typeof callback === "function") {
-                const err = false;
-                const response = body.data.url
-                callback(err, response);
+        } else {
+            if (body.status_txt === 'OK') {
+                console.log(body)
+                prevUrl = body.data.url
+                return body.data.url
+            } else {
+                return body.status_txt
             }
+        }
+        if (typeof callback === "function") {
+            const err = false;
+            const response = body.data.url
+            callback(err, response);
         }
     })
 }
