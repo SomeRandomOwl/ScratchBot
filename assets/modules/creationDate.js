@@ -1,3 +1,4 @@
+var moment = require('moment');
 module.exports = function(userID, callback) {
     const timestamp = new Date(parseInt('141694315251367936') / 4194304 + 1420070400000);
     const createdM = moment.utc(timestamp);
