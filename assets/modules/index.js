@@ -20,5 +20,4 @@ exports.mtg = require('./mtg.js')
 exports.list = require('./lists.js')
 exports.question = require('./question.js')
 exports.creationDate = require('./creationDate.js')
-exports.gNG = require('./gNG.js')
 exports.util = util
