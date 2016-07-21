@@ -86,4 +86,3 @@ module.exports = function(callback) {
         callback(err, response);
     }
 }
-}
