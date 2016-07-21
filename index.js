@@ -778,32 +778,37 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
     }*/
 }
 /*/Url shortener/*/
-function shorten(cl, ulink, channelID, userID, messageID, debug) {
+function shorten(cl, ulink, channelID, userID, callback) {
     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
-        messageDelete(channelID, messageID)
-        body = JSON.parse(body)
-        if (debug) {
-            messageSend(channelID, body, true, 'json')
-        }
-        console.log(cl)
-        console.log(error)
-        console.log(response.statusCode)
-        if (cl === false) {
-            if (!error && response.statusCode === 200) {
+            body = JSON.parse(body)
+            if (debug) {
+                messageSend(channelID, body, true, 'json')
+            }
+            console.log(cl)
+            console.log(error)
+            console.log(response.statusCode)
+            if (cl === false) {
+                if (!error && response.statusCode === 200) {
+                    if (body.status_txt === 'OK') {
+                        messageSend(channelID, '<@' + userID + '> Here is a short url: ' + body.data.url)
+                    } else {
+                        console.log(body)
+                        messageSend(channelID, '<@' + userID + '> There was a error processing that url')
+                    }
+                }
+            } else {
                 if (body.status_txt === 'OK') {
-                    messageSend(channelID, '<@' + userID + '> Here is a short url: ' + body.data.url)
-                } else {
                     console.log(body)
-                    messageSend(channelID, '<@' + userID + '> There was a error processing that url')
+                    prevUrl = body.data.url
+                    return body.data.url
+                } else {
+                    return body.status_txt
                 }
             }
-        } else {
-            if (body.status_txt === 'OK') {
-                console.log(body)
-                prevUrl = body.data.url
-                return body.data.url
-            } else {
-                return body.status_txt
+            if (typeof callback === "function") {
+                const err = false;
+                const response = body.data.url
+                callback(err, response);
             }
         }
     })
@@ -1383,7 +1388,32 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('help') === 0 && ignore !== true) {
 
             if (message.indexOf(' ') === -1) {
-                help('help', channelID)
+                cList = "[help](Prints out the help doc for any Command)     \n"
+                cList2 = ""
+                messageSend(channelID, "Check your PM's :mailbox_with_mail:")
+                for (var i = 0; i < doc.cList.length; i++) {
+                    if (i < doc.cList.length - 1) {
+                        if (cList.length < 1800) {
+                            if (doc.help[doc.cList[i]].type === "Admin") {
+                                cList = cList + '[' + doc.cList[i] + "]" + "[" + doc.help[doc.cList[i]].help + "]\n"
+                            } else {
+                                cList = cList + '[' + doc.cList[i] + "]" + "(" + doc.help[doc.cList[i]].help + ")\n"
+                            }
+                        } else {
+                            if (doc.help[doc.cList[i]].type === "Admin") {
+                                cList2 = cList2 + '[' + doc.cList[i] + "]" + "[" + doc.help[doc.cList[i]].help + "]\n"
+                            } else {
+                                cList2 = cList2 + '[' + doc.cList[i] + "]" + "(" + doc.help[doc.cList[i]].help + ")\n"
+                            }
+                        }
+                    }
+                }
+                messageSend(userID, cList, true, 'md', false, null, "Here are my commands Yellow = Admin")
+                if (cList2.length > 2) {
+                    setTimeout(function() {
+                        messageSend(userID, cList2, true, 'md')
+                    }, 200);
+                }
             } else {
                 helpcall = message.substring(message.indexOf(' ') + 1)
                 help(helpcall, channelID)
@@ -1436,7 +1466,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             status(statuscall, channelID, rawEvent)
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
+        /*if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
             cList = "[help](Prints out the help doc for any Command)     \n"
             cList2 = ""
             messageSend(channelID, "Check your PM's :mailbox_with_mail:")
@@ -1464,7 +1494,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 }, 200);
             }
             rconcmd = 'Yes'
-        }
+        }*/
         if (message.toLowerCase().indexOf('poke') === 0 && ignore !== true) {
             var pkcall = rawEvent.d.mentions[0].id
             message = message.replace('poke', '')
