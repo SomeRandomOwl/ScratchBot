@@ -1860,9 +1860,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             return
         }
     } else if (rconcmd === "No" && ignore !== true) {
-        var timed = Date()
-        timed = '[' + timed.replace(' GMT-0500 (CDT)', '') + '] '
-        timed = timed.replace('GMT-0500 (Central Daylight Time)', '')
+        var timed = format('[MMMM Do YYYY, h:mm:ss a]')
         if (channelID in bot.directMessages) {
             console.log(timed + 'Channel: ' + 'DM |\n' + chalk.yellow(user + ': ') + message)
             fs.appendFile("logs/DMs/" + user + ".txt", '\n' + timed + user + ": " + message)
