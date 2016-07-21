@@ -15,6 +15,7 @@
         "pirate",
         "poke",
         "pug",
+        "prefix",
         "prune",
         "redditscenery",
         "roll",
@@ -65,6 +66,10 @@
     ],
     "help": {
         "typeList": ["Fun", "Admin", "Utility", "Other"],
+        "prefix": {
+            "type": "Admin",
+            "Help": "Changes the prefix used fo a server"
+        },
         "8ball": {
             "type": "Fun",
             "help": "Ask the bot a question"
