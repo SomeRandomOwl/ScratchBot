@@ -640,7 +640,6 @@ function redditScenery(channelID, reddit, name, sname) {
                 redditP = posts[Math.floor(Math.random() * posts.length)];
                 img = redditP.data.url
                 title = redditP.data.title
-                messageDelete(channelID, sentPrevId)
                 messageSend(channelID, title + '\n' + img)
             }
         })
