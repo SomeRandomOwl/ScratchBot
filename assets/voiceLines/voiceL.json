@@ -1,36 +1,90 @@
 {
+	"joinedChannels": [
+		"148129146420068352",
+		"148129146420068352",
+		"148129146420068352",
+		"171798432749584388",
+		"148129146420068352",
+		null,
+		"148129146420068352",
+		null,
+		"171798432749584388"
+	],
 	"shortNames": {
 		"demoman_autodejectedtie04.mp3": {
 			"playCount": 0,
-			"nicknames": []
+			"nicknames": [
+				"idiots"
+			]
 		},
 		"potatos_fgb_defiance16.mp3": {
 			"playCount": 0,
-			"nicknames": []
+			"nicknames": [
+				"moron"
+			]
 		},
 		"potatos_longfall_speech03.mp3": {
 			"playCount": 0,
-			"nicknames": []
+			"nicknames": [
+				"potato"
+			]
 		},
 		"potatos_see_bird01.mp3": {
 			"playCount": 0,
 			"nicknames": [
-				"bird"
+				"bird",
+				"BIRD"
 			]
 		},
 		"potatos_sp_a3_00_fall18.mp3": {
 			"playCount": 0,
+			"nicknames": [
+				"clap"
+			]
+		},
+		"occxraz.mp3": {
+			"playCount": 0,
 			"nicknames": []
+		},
+		"etuophx.mp3": {
+			"playCount": 0,
+			"nicknames": [
+				"asshole"
+			]
+		},
+		"dktmhqi.mp3": {
+			"playCount": 0,
+			"nicknames": [
+				"balls"
+			]
+		},
+		"You are an idiot HAHAHAHAHA!-b2pD0B9Rfps.mp3": {
+			"playCount": 0,
+			"nicknames": [
+				"IDIOT"
+			]
 		}
 	},
 	"nicknames": [
-		"bird"
+		"bird",
+		"asshole",
+		"idiots",
+		"moron",
+		"potato",
+		"BIRD",
+		"clap",
+		"balls",
+		"IDIOT"
 	],
 	"fileList": [
 		"demoman_autodejectedtie04.mp3",
 		"potatos_fgb_defiance16.mp3",
 		"potatos_longfall_speech03.mp3",
 		"potatos_see_bird01.mp3",
-		"potatos_sp_a3_00_fall18.mp3"
+		"potatos_sp_a3_00_fall18.mp3",
+		"occxraz.mp3",
+		"etuophx.mp3",
+		"dktmhqi.mp3",
+		"You are an idiot HAHAHAHAHA!-b2pD0B9Rfps.mp3"
 	]
 }
