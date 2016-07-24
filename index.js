@@ -951,7 +951,7 @@ function mute(sname, userID, un) {
 disc = false
 var startUpTime = null
     /* Bot on event functions */
-var update = schedule.scheduleJob('*/2 * * * *', function() {
+var update = schedule.scheduleJob('*/5 * * * *', function() {
     cmds.list.server(bot, storage, false)
     cmds.list.channel(bot, storage, false)
     cmds.list.user(bot, storage, false)
