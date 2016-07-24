@@ -1,7 +1,7 @@
 var questions = {}
 var shortid = require('shortid');
 
-exports.ask = function(question) {
+exports.ask = function(question, callback) {
     id = shortid.generate()
     questions[id] = question
     return id

@@ -352,7 +352,7 @@ function relxkcd(quer, channelID, name, sname) {
         messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
-    cmds.util.writeJSON('./assets/storage', storage)
+    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Retrieves a current status of a user/*/
 function status(statuscall, channelID, rawEvent, cl) {
@@ -544,7 +544,7 @@ function cat(channelID, name, sname) {
         messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
-    cmds.util.writeJSON('./assets/storage', storage)
+    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Posts a random snake picture, limit 1 per hour/*/
 function snake(channelID, name, sname, userID) {
@@ -589,7 +589,7 @@ function snake(channelID, name, sname, userID) {
         messageSend(channelID, ":no_entry: Hey hold up, only one snake per hour, last snake was posted: " + snakeacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
-    cmds.util.writeJSON('./assets/storage', storage)
+    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Posts a random pug picture, limit 1 per hour/*/
 function pug(channelID, name, sname) {
@@ -627,7 +627,7 @@ function pug(channelID, name, sname) {
         messageSend(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime)
         return elapsed
     }
-    cmds.util.writeJSON('./assets/storage', storage)
+    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Posts a random image from a SFW scenery subreddit/*/
 function redditScenery(channelID, reddit, name, sname) {
@@ -646,7 +646,7 @@ function redditScenery(channelID, reddit, name, sname) {
     } else {
         messageSend(channelID, "Not a recgonized image subreddit to see recgonized reddits type " + commandmod + "redditscenery list")
     }
-    cmds.util.writeJSON('./assets/storage', storage)
+    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Help command/*/
 function help(cmd, channelID) {
@@ -1173,7 +1173,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         return
     }
 
-    cmds.util.writeJSON('./assets/storage', storage)
+    //cmds.util.writeJSON('./assets/storage', storage)
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
@@ -1251,7 +1251,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             storage.d.Users[user].lastChat = moment().format('MMMM Do YYYY, hh:mm:ss a')
             storage.d.Users[user].lastChatR = cmds.util.gettime()
         }
-        cmds.util.writeJSON('./assets/storage', storage)
+        //cmds.util.writeJSON('./assets/storage', storage)
     }
     try {
         if (storage.d.Servers[sname].Channels[cname].nsfw === true) {
@@ -1287,7 +1287,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 lucount = lucount + 1
                 storage.d.Users[user].linkCnt = lucount
             }
-            cmds.util.writeJSON('./assets/storage', storage)
+            //cmds.util.writeJSON('./assets/storage', storage)
         }
         mkdirp('./logs/' + sname, function(err) {
             try {
@@ -1321,7 +1321,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 e = e
             }
         }
-        cmds.util.writeJSON('./assets/storage', storage)
+        //cmds.util.writeJSON('./assets/storage', storage)
     }
     if (sname !== undefined) {
         if (storage.d.Servers[sname].messageCnt === undefined) {
@@ -1331,7 +1331,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mscount = mscount + 1
             storage.d.Servers[sname].messageCnt = mscount
         }
-        cmds.util.writeJSON('./assets/storage', storage)
+        //cmds.util.writeJSON('./assets/storage', storage)
     }
     //debug!
     if (debug === 1) {
