@@ -1,6 +1,6 @@
 /*/WhoIs/*/
 var cmds = require('./')
-module.exports = function(bot, storage, name, serverID) {
+module.exports = function(bot, storage, name, serverID, self) {
     try {
         console.log(name)
         userID = storage.d.Users[name].id
@@ -74,17 +74,31 @@ module.exports = function(bot, storage, name, serverID) {
     lastChat = lastChat + '\n               (' + storage.d.Users[name].lastChat + ')'
 
     avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
-    message = '' +
-        'Name:          ' + userN + '#' + discriminator + '\n' +
-        'Nickname:      ' + nick + '\n' +
-        'ID:            ' + userID + '\n\n' +
-        'Status:        ' + status + '\n' +
-        'LastChat       ' + lastChat + '\n\n' +
-        'Roles:         ' + rolesm + '\n' +
-        'Bot:           ' + botT + '\n' +
-        'Muted:         ' + mute + '\n' +
-        'Deafened:      ' + deaf + '\n\n' +
-        'Joined:        ' + join + '\n' +
-        'Avatar:        ' + avatarL
+    if (self) {
+        message = '' +
+            'Name:          ' + userN + '#' + discriminator + '\n' +
+            'Nickname:      ' + nick + '\n' +
+            'ID:            ' + userID + '\n\n' +
+            'Status:        ' + status + '\n' +
+            'Roles:         ' + rolesm + '\n' +
+            'Bot:           ' + botT + '\n' +
+            'Muted:         ' + mute + '\n' +
+            'Deafened:      ' + deaf + '\n\n' +
+            'Joined:        ' + join + '\n' +
+            'Avatar:        ' + avatarL
+    } else {
+        message = '' +
+            'Name:          ' + userN + '#' + discriminator + '\n' +
+            'Nickname:      ' + nick + '\n' +
+            'ID:            ' + userID + '\n\n' +
+            'Status:        ' + status + '\n' +
+            'LastChat:      ' + lastChat + '\n\n' +
+            'Roles:         ' + rolesm + '\n' +
+            'Bot:           ' + botT + '\n' +
+            'Muted:         ' + mute + '\n' +
+            'Deafened:      ' + deaf + '\n\n' +
+            'Joined:        ' + join + '\n' +
+            'Avatar:        ' + avatarL
+    }
     return message
 }

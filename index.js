@@ -1507,7 +1507,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 5) {
                 try {
-                    statW = cmds.util.whoIs(bot, storage, user, serverID)
+                    statW = cmds.util.whoIs(bot, storage, user, serverID, true)
                     wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
                     whoRest = statW.substring(0, statW.indexOf('Avatar'))
                     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
