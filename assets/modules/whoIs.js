@@ -105,7 +105,6 @@ module.exports = function(bot, storage, name, serverID, self, callback) {
             'Muted:         ' + mute + '\n' +
             'Deafened:      ' + deaf + '\n\n' +
             'Joined:        ' + join + '\n' +
-            'Created:       ' + creation + '\n' +
             'Avatar:        ' + avatarL
     }
     return message
