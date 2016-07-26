@@ -686,13 +686,6 @@ function eightBall(channelID, question, userID) {
 }
 /*/Ask cleverbot a question/*/
 function clever(channelID, userID, msg) {
-    /*cBot.ask(question, function(err, response) {
-        if (err) {
-            console.log(err)
-        } else {
-            messageSend(channelID, response);
-        }
-    });*/
     Cleverbot.prepare(function() {
         cleverbot.write(msg, function(response) {
             try {
