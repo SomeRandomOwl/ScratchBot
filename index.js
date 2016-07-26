@@ -43,8 +43,8 @@ var logger = new(winston.Logger)({
             name: 'error-file',
             filename: './logs/filelog-error.log',
             level: 'error',
-//            handleExceptions: true,
-//            humanReadableUnhandledException: true
+            //            handleExceptions: true,
+            //            humanReadableUnhandledException: true
         })
     ]
 });
@@ -723,7 +723,7 @@ function unShorten(channelID, userID, url) {
 function stats(channelID, name, rawEvent, channelID, serverID) {
     /*try {*/
     if (name.toLowerCase().indexOf('<@') === -1) {
-        statW = cmds.util.whoIs(bot, storage, name)
+        statW = cmds.util.whoIs(bot, storage, name, serverID)
         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
@@ -751,7 +751,7 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         }
         /*for (var usern in storage.d.Users) {
             if (mentId === storage.d.Users[usern].id) {*/
-        statW = cmds.util.whoIs(bot, storage, name)
+        statW = cmds.util.whoIs(bot, storage, name, serverID)
         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
         whoRest = statW.substring(0, statW.indexOf('Avatar'))
         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
@@ -1507,7 +1507,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 5) {
                 try {
-                    statW = cmds.util.whoIs(bot, storage, user)
+                    statW = cmds.util.whoIs(bot, storage, user, serverID)
                     wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
                     whoRest = statW.substring(0, statW.indexOf('Avatar'))
                     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {

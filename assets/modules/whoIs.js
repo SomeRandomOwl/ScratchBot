@@ -1,10 +1,9 @@
 /*/WhoIs/*/
 var cmds = require('./')
-module.exports = function(bot, storage, name) {
+module.exports = function(bot, storage, name, serverID) {
     try {
         console.log(name)
         userID = storage.d.Users[name].id
-        serverID = storage.d.Servers[storage.d.Users[name].Servers[0]].id
         roles = bot.servers[serverID].members[userID].roles
         nick = bot.servers[serverID].members[userID].nick
         mute = bot.servers[serverID].members[userID].mute
