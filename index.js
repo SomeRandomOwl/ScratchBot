@@ -686,6 +686,13 @@ function eightBall(channelID, question, userID) {
 }
 /*/Ask cleverbot a question/*/
 function clever(channelID, userID, msg) {
+    /*cBot.ask(question, function(err, response) {
+        if (err) {
+            console.log(err)
+        } else {
+            messageSend(channelID, response);
+        }
+    });*/
     Cleverbot.prepare(function() {
         cleverbot.write(msg, function(response) {
             try {
@@ -716,21 +723,20 @@ function unShorten(channelID, userID, url) {
 function stats(channelID, name, rawEvent, channelID, serverID) {
     /*try {*/
     if (name.toLowerCase().indexOf('<@') === -1) {
-        cmds.util.whoIs(bot, storage, name, serverID, function(e, statW) {
-            wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
-            whoRest = statW.substring(0, statW.indexOf('Avatar'))
-            request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
-                body = JSON.parse(body)
-                thing = whoRest + 'Avatar:        "' + body.data.url + '"'
-                lastSeen = status(name, null, rawEvent, true)
-                messageSend(channelID, thing + "\n\n" +
-                    "Messages Sent: " + storage.d.Users[name].messageCnt + '\n' +
-                    "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
-                    "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
-                    "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
-                    "First Seen:    " + storage.d.Users[name].tracking + "\n" +
-                    "Last Seen      " + lastSeen, true, 'xl')
-            })
+        statW = cmds.util.whoIs(bot, storage, name, serverID)
+        wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
+        whoRest = statW.substring(0, statW.indexOf('Avatar'))
+        request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
+            body = JSON.parse(body)
+            thing = whoRest + 'Avatar:        "' + body.data.url + '"'
+            lastSeen = status(name, null, rawEvent, true)
+            messageSend(channelID, thing + "\n\n" +
+                "Messages Sent: " + storage.d.Users[name].messageCnt + '\n' +
+                "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
+                "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
+                "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
+                "First Seen:    " + storage.d.Users[name].tracking + "\n" +
+                "Last Seen      " + lastSeen, true, 'xl')
         })
     } else {
         try {
@@ -745,21 +751,20 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
         }
         /*for (var usern in storage.d.Users) {
             if (mentId === storage.d.Users[usern].id) {*/
-        cmds.util.whoIs(bot, storage, name, serverID, function(e, statW) {
-            wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
-            whoRest = statW.substring(0, statW.indexOf('Avatar'))
-            request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
-                body = JSON.parse(body)
-                thing = whoRest + 'Avatar:        "' + body.data.url + '"'
-                lastSeen = status(name, null, rawEvent, true)
-                messageSend(channelID, thing + "\n\n" +
-                    "Messages Sent: " + storage.d.Users[name].messageCnt + '\n' +
-                    "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
-                    "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
-                    "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
-                    "First Seen:    " + storage.d.Users[name].tracking + "\n" +
-                    "Last Seen:     " + lastSeen, true, 'xl')
-            })
+        statW = cmds.util.whoIs(bot, storage, name, serverID)
+        wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
+        whoRest = statW.substring(0, statW.indexOf('Avatar'))
+        request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
+            body = JSON.parse(body)
+            thing = whoRest + 'Avatar:        "' + body.data.url + '"'
+            lastSeen = status(name, null, rawEvent, true)
+            messageSend(channelID, thing + "\n\n" +
+                "Messages Sent: " + storage.d.Users[name].messageCnt + '\n' +
+                "Links Sent:    " + storage.d.Users[name].linkCnt + '\n' +
+                "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
+                "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
+                "First Seen:    " + storage.d.Users[name].tracking + "\n" +
+                "Last Seen:     " + lastSeen, true, 'xl')
         })
         /*} else {
                 continue
@@ -1502,7 +1507,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var name = message.substring(message.indexOf(' ') + 1)
             if (len === 5) {
                 try {
-                    cmds.util.whoIs(bot, storage, user, serverID, true, function(e, statW) {
+                    cmds.util.whoIs(bot, storage, user, serverID, true, function(err, statW) {
                         wLink = statW.substring(statW.indexOf('"h') + 1, statW.indexOf('g"') + 1)
                         whoRest = statW.substring(0, statW.indexOf('Avatar'))
                         request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + wLink + '&access_token=' + config.bitLy, function(error, response, body) {
