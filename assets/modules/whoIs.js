@@ -71,7 +71,7 @@ module.exports = function(bot, storage, name, serverID) {
         }
     }
 
-    lastChat = lastChat + '(' + storage.d.Users[name].lastChat + ')'
+    lastChat = lastChat + '\n               (' + storage.d.Users[name].lastChat + ')'
 
     avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
     message = '' +

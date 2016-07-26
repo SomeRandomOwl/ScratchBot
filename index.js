@@ -385,7 +385,7 @@ function status(statuscall, channelID, rawEvent, cl) {
                     }
                 }
                 if (cl) {
-                    return timeIdle + " ago (" + ltsmsg + ")"
+                    return timeIdle + " ago \n               (" + ltsmsg + ")"
                 } else {
                     messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
                 }
@@ -415,7 +415,7 @@ function status(statuscall, channelID, rawEvent, cl) {
                     }
                 }
                 if (cl) {
-                    return timeIdle + " ago (" + ltsmsg + ")"
+                    return timeIdle + " ago \n               (" + ltsmsg + ")"
                 } else {
                     messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
                 }
@@ -459,7 +459,7 @@ function status(statuscall, channelID, rawEvent, cl) {
                             }
                         }
                         if (cl) {
-                            return timeIdle + " ago (" + ltsmsg + ")"
+                            return timeIdle + " ago \n               (" + ltsmsg + ")"
                         } else {
                             messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
                         }
@@ -489,7 +489,7 @@ function status(statuscall, channelID, rawEvent, cl) {
                             }
                         }
                         if (cl) {
-                            return timeIdle + " ago (" + ltsmsg + ")"
+                            return timeIdle + " ago \n               (" + ltsmsg + ")"
                         } else {
                             messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
                         }
