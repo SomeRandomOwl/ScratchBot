@@ -987,7 +987,7 @@ bot.on('debug', function(rawEvent) {
             "lastseen": "unknown"
         }
         if (announceID !== null) {
-            messageSend(announceID, "<@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to " + bot.servers[rawEvent.d.guild_id].name + "!")
+            messageSend(announceID, "@everyone <@" + rawEvent.d.user.id + "> Just joined the server! welcome " + rawEvent.d.user.username + " to " + bot.servers[rawEvent.d.guild_id].name + "!")
         }
     }
     if (rawEvent.t === "GUILD_MEMBER_REMOVE") {
