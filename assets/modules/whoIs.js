@@ -1,6 +1,6 @@
 /*/WhoIs/*/
 var cmds = require('./')
-module.exports = function(bot, storage, name, serverID, self) {
+module.exports = function(bot, storage, name, serverID, self, callback) {
     try {
         console.log(name)
         userID = storage.d.Users[name].id
@@ -72,35 +72,41 @@ module.exports = function(bot, storage, name, serverID, self) {
     }
 
     lastChat = lastChat + '\n               (' + storage.d.Users[name].lastChat + ')'
-    creation = cmds.creationDate(userID)
-    avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
-    if (self) {
-        message = '' +
-            'Name:          ' + userN + '#' + discriminator + '\n' +
-            'Nickname:      ' + nick + '\n' +
-            'ID:            ' + userID + '\n\n' +
-            'Status:        ' + status + '\n' +
-            'Roles:         ' + rolesm + '\n' +
-            'Bot:           ' + botT + '\n' +
-            'Muted:         ' + mute + '\n' +
-            'Deafened:      ' + deaf + '\n\n' +
-            'Joined:        ' + join + '\n' +
-            'Created:       ' + creation + '\n' +
-            'Avatar:        ' + avatarL
-    } else {
-        message = '' +
-            'Name:          ' + userN + '#' + discriminator + '\n' +
-            'Nickname:      ' + nick + '\n' +
-            'ID:            ' + userID + '\n\n' +
-            'Status:        ' + status + '\n' +
-            'LastChat:      ' + lastChat + '\n\n' +
-            'Roles:         ' + rolesm + '\n' +
-            'Bot:           ' + botT + '\n' +
-            'Muted:         ' + mute + '\n' +
-            'Deafened:      ' + deaf + '\n\n' +
-            'Joined:        ' + join + '\n' +
-            'Created:       ' + creation + '\n' +
-            'Avatar:        ' + avatarL
-    }
+    cmds.creationDate(userID, function(err, creation) {
+        avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
+        if (self) {
+            message = '' +
+                'Name:          ' + userN + '#' + discriminator + '\n' +
+                'Nickname:      ' + nick + '\n' +
+                'ID:            ' + userID + '\n\n' +
+                'Status:        ' + status + '\n' +
+                'Roles:         ' + rolesm + '\n' +
+                'Bot:           ' + botT + '\n' +
+                'Muted:         ' + mute + '\n' +
+                'Deafened:      ' + deaf + '\n\n' +
+                'Joined:        ' + join + '\n' +
+                'Created:       ' + creation + '\n' +
+                'Avatar:        ' + avatarL
+        } else {
+            message = '' +
+                'Name:          ' + userN + '#' + discriminator + '\n' +
+                'Nickname:      ' + nick + '\n' +
+                'ID:            ' + userID + '\n\n' +
+                'Status:        ' + status + '\n' +
+                'LastChat:      ' + lastChat + '\n\n' +
+                'Roles:         ' + rolesm + '\n' +
+                'Bot:           ' + botT + '\n' +
+                'Muted:         ' + mute + '\n' +
+                'Deafened:      ' + deaf + '\n\n' +
+                'Joined:        ' + join + '\n' +
+                'Created:       ' + creation + '\n' +
+                'Avatar:        ' + avatarL
+        }
+        if (typeof callback === "function") {
+            const err = false;
+            const response = message;
+            callback(err, response);
+        }
+    })
     return message
 }
