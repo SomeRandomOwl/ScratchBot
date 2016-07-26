@@ -103,9 +103,8 @@ module.exports = function(bot, storage, name, serverID, self, callback) {
                 'Avatar:        ' + avatarL
         }
         if (typeof callback === "function") {
-            const err = false;
             const response = message;
-            callback(err, response);
+            callback(false, response);
         }
     })
     return message
