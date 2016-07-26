@@ -72,7 +72,7 @@ module.exports = function(bot, storage, name, serverID, self) {
     }
 
     lastChat = lastChat + '\n               (' + storage.d.Users[name].lastChat + ')'
-
+    creation = cmds.creationDate(userID)
     avatarL = '"https://discordapp.com/api/users/' + userID + '/avatars/' + avatar + '.jpg"'
     if (self) {
         message = '' +
@@ -85,6 +85,7 @@ module.exports = function(bot, storage, name, serverID, self) {
             'Muted:         ' + mute + '\n' +
             'Deafened:      ' + deaf + '\n\n' +
             'Joined:        ' + join + '\n' +
+            'Created:       ' + creation + '\n' +
             'Avatar:        ' + avatarL
     } else {
         message = '' +
@@ -98,6 +99,7 @@ module.exports = function(bot, storage, name, serverID, self) {
             'Muted:         ' + mute + '\n' +
             'Deafened:      ' + deaf + '\n\n' +
             'Joined:        ' + join + '\n' +
+            'Created:       ' + creation + '\n' +
             'Avatar:        ' + avatarL
     }
     return message
