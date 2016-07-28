@@ -1041,6 +1041,11 @@ bot.on('debug', function(rawEvent) {
             }
         }
     }
+    if (rawEvent.t === "MESSAGE_DELETE") {
+        if (rawEvent.d.channel_ID === '148129145791053824') {
+            messageSend('208259203066757131', 'A message was just deleted in <#' + rawEvent.d.channel_ID + '>')
+        }
+    }
 });
 bot.on('disconnect', function() {
     var disc = true
