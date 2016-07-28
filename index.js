@@ -27,7 +27,7 @@ var bot = new DiscordClient({
     token: config.token
 });
 var cmds = require('./assets/modules')
-
+var perm = require('./assets/modules/permissionHelper.js')(bot)
 cleverbot = new Cleverbot;
 
 /*/Set up logging/*/
