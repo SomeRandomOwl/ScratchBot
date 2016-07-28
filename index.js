@@ -1869,7 +1869,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             return
         }
     } else if (rconcmd === "No" && ignore !== true) {
-        var timed = moment().format('MMMM Do YYYY, h:mm:ss a')
+        var timed = moment().format('MMMM Do YYYY, h:mm:ss a ')
         if (channelID in bot.directMessages) {
             console.log(timed + 'Channel: ' + 'DM |\n' + chalk.yellow(user + ': ') + message)
             fs.appendFile("logs/DMs/" + user + ".txt", '\n' + timed + user + ": " + message)
