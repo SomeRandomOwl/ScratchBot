@@ -169,11 +169,10 @@ function yt(ytcall, userID, channelID) {
 /*/Used to change status message/*/
 function statusmsg(msg) {
     bot.setPresence({
-            idle_since: null,
-            game: {
-                name: msg,
-                url: "http://ratchtnet.com"
-            }
+        idle_since: null,
+        game: {
+            name: msg,
+            url: "http://ratchtnet.com"
         }
     })
 }
