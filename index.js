@@ -188,6 +188,12 @@ function statusmsg(msg) {
 /*/Used to send messages and keep tack of the message id/*/
 function messageSend(channelID, msg, set, callback) {
     try {
+        if (set === undefined) {
+            set = {
+                cb: false
+                mention: false
+            }
+        }
         sId = bot.serverFromChannel(channelID)
         for (var sname in storage.d.Servers) {
             if (storage.d.Servers[sname].id === sId) {
