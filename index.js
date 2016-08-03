@@ -262,8 +262,8 @@ function messageSend(channelID, msg, set, callback) {
             sentPrevId = response.id
             if (typeof callback === "function") {
                 const err = false;
-                const response = response.id
-                callback(response);
+                const res = response.id
+                callback(res);
             }
         } catch (e) {
             return
