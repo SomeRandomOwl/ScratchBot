@@ -190,7 +190,7 @@ function messageSend(channelID, msg, set, callback) {
     try {
         if (set === undefined) {
             set = {
-                cb: false
+                cb: false,
                 mention: false
             }
         }
