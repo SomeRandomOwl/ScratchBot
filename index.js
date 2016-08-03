@@ -186,7 +186,7 @@ function statusmsg(msg) {
     })
 }
 /*/Used to send messages and keep tack of the message id/*/
-function messageSend(channelID, msg, set) {
+function messageSend(channelID, msg, set, callback) {
     try {
         sId = bot.serverFromChannel(channelID)
         for (var sname in storage.d.Servers) {
@@ -230,7 +230,7 @@ function messageSend(channelID, msg, set) {
                 if (set.preText !== undefined) {
                     msg = '<@' + set.userID + '> ' + set.preText + '\n\n```' + msg + '```'
                 } else {
-                    msg = '<@' + set.userID + '>\n```' + msg + '```'
+                    msg = '<@' + set.nuserID + '>\n```' + msg + '```'
                 }
             } else {
                 if (set.preText !== undefined) {
@@ -254,10 +254,16 @@ function messageSend(channelID, msg, set) {
         try {
             logger.info(chalk.gray('Last Message Sent ID: ' + response.id))
             sentPrevId = response.id
+            if (typeof callback === "function") {
+                const err = false;
+                const response = response.id
+                callback(response);
+            }
         } catch (e) {
             return
         }
     });
+
     return sentPrevId
 }
 /*/Console related input functions/*/
