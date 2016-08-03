@@ -346,7 +346,7 @@ function relxkcd(quer, channelID, name, sname) {
         storage.d.Servers[sname].Channels[name].lastComicActt = 0
     }
     if (elapsed.h > 0) {
-        var comicacttime = moment().format('h:mm a')
+        var comicacttime = moment().utcOffset('-0600').format('h:mm a')
         storage.d.Servers[sname].Channels[name].lastComicActt = comicacttime
         request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -565,7 +565,7 @@ function cat(channelID, name, sname) {
         storage.d.Servers[sname].Channels[name].lastCatActt = 0
     }
     if (elapsed.h > 0) {
-        var catacttime = moment().format('h:mm a')
+        var catacttime = moment().utcOffset('-0600').format('h:mm a')
         storage.d.Servers[sname].Channels[name].lastCatActt = catacttime
         request('http://random.cat/meow', function(error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -603,7 +603,7 @@ function snake(channelID, name, sname, userID) {
         storage.d.Servers[sname].Channels[name].lastsnakeActt = 0
     }
     if (elapsed.h > 0) {
-        var snakeacttime = moment().format('h:mm a')
+        var snakeacttime = moment().utcOffset('-0600').format('h:mm a')
         storage.d.Servers[sname].Channels[name].lastsnakeActt = snakeacttime
         request('http://fur.im/snek/snek.php', function(error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -648,7 +648,7 @@ function pug(channelID, name, sname) {
         storage.d.Servers[sname].Channels[name].lastpugActt = 0
     }
     if (elapsed.h > 0) {
-        var pugacttime = moment().format('h:mm a')
+        var pugacttime = moment().utcOffset('-0600').format('h:mm a')
         storage.d.Servers[sname].Channels[name].lastpugActt = pugacttime
         request('http://pugme.herokuapp.com/bomb?count=1', function(error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -1137,7 +1137,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         }
         if (status === 'offline') {
             if (user !== undefined) {
-                var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
+                var lastseen = moment().utcOffset('-0600').format('MMMM Do YYYY, hh:mm:ss a')
                 storage.d.Users[user].lastseen = lastseen
                 storage.d.Users[user].rawLastSeen = cmds.util.gettime()
                 if (storage.d.Users[user].status !== 'offline' && verb) {
@@ -1145,7 +1145,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 }
                 storage.d.Users[user].status = status
             } else if (user === undefined) {
-                var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
+                var lastseen = moment().utcOffset('-0600').format('MMMM Do YYYY, hh:mm:ss a')
                 storage.d.Users[user].rawLastSeen = cmds.util.gettime()
                 for (var user in storage.d.Users) {
                     if (userID === storage.d.Users[user].id) {
@@ -1162,7 +1162,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             }
         }
         if (status === 'idle') {
-            var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
+            var lastseen = moment().utcOffset('-0600').format('MMMM Do YYYY, hh:mm:ss a')
             storage.d.Users[user].lastseen = lastseen
             storage.d.Users[user].rawLastSeen = cmds.util.gettime()
             if (storage.d.Users[user].status !== 'idle' && verb) {
@@ -1171,7 +1171,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             storage.d.Users[user].status = status
         }
         if (status === 'online') {
-            var lastseen = moment().format('MMMM Do YYYY, hh:mm:ss a')
+            var lastseen = moment().utcOffset('-0600').format('MMMM Do YYYY, hh:mm:ss a')
             usrStatus = storage.d.Users[user].status
             if (usrStatus === 'idle') {
                 var usrStatIdle = storage.d.Users[user].totalIdle
@@ -1310,13 +1310,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
             storage.d.Users[user].messageCnt = 1
-            storage.d.Users[user].lastChat = moment().format('MMMM Do YYYY, hh:mm:ss a')
+            storage.d.Users[user].lastChat = moment().utcOffset('-0600').format('MMMM Do YYYY, hh:mm:ss a')
             storage.d.Users[user].lastChatR = cmds.util.gettime()
         } else {
             mucount = storage.d.Users[user].messageCnt
             mucount = mucount + 1
             storage.d.Users[user].messageCnt = mucount
-            storage.d.Users[user].lastChat = moment().format('MMMM Do YYYY, hh:mm:ss a')
+            storage.d.Users[user].lastChat = moment().utcOffset('-0600').format('MMMM Do YYYY, hh:mm:ss a')
             storage.d.Users[user].lastChatR = cmds.util.gettime()
         }
         //cmds.util.writeJSON('./assets/storage', storage)
@@ -1340,7 +1340,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         message = rawEvent.d.attachments[0].url
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
-        var timeAt = moment().format('MMMM Do YYYY, hh:mm:ss a')
+        var timeAt = moment().utcOffset('-0600').format('MMMM Do YYYY, hh:mm:ss a')
             //logger.info(chalk.gray("Link Posted, logging to file"))
         if (message.indexOf(' ', message.indexOf('http')) === -1) {
             var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'))
@@ -1719,7 +1719,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     storage.d.Servers[sname].Channels[cname].lastComicActt = null
                 }
                 if (elapsed.h > 0) {
-                    var comicacttime = moment().format('h:mm a')
+                    var comicacttime = moment().utcOffset('-0600').format('h:mm a')
                     storage.d.Servers[sname].Channels[cname].lastComicActt = comicacttime
                     xkcd.img(function(err, res) {
                         if (!err) {
@@ -1935,7 +1935,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             return
         }
     } else if (rconcmd === "No" && ignore !== true) {
-        var timed = moment().format('MMMM Do YYYY, h:mm:ss a ')
+        var timed = moment().utcOffset('-0600').utcOffset('-0600').format('MMMM Do YYYY, h:mm:ss a ')
         if (channelID in bot.directMessages) {
             console.log(timed + 'Channel: ' + 'DM |\n' + chalk.yellow(user + ': ') + message)
             fs.appendFile("logs/DMs/" + user + ".txt", '\n' + timed + user + ": " + message)
