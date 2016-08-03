@@ -207,7 +207,7 @@ function messageSend(channelID, msg, set) {
     if (set.cb === true) {
         if (set.type !== undefined) {
             if (set.mention === true) {
-                if (type === 'json') {
+                if (set.type === 'json') {
                     msg = JSON.stringify(msg, null, '\t')
                 }
                 if (set.preText !== undefined) {
@@ -227,7 +227,7 @@ function messageSend(channelID, msg, set) {
             }
         } else {
             if (set.mention === true) {
-                if (preText !== undefined) {
+                if (set.preText !== undefined) {
                     msg = '<@' + userID + '> ' + preText + '\n\n```' + msg + '```'
                 } else {
                     msg = '<@' + userID + '>\n```' + msg + '```'
