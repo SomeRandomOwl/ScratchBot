@@ -140,21 +140,30 @@ function yt(ytcall, userID, channelID) {
                         description = description.replace('https://', '')
                     }
 
-                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo:       https://youtu.be/' + result.items[0].id.videoId + ' ;', true, 'css')
+                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo:       https://youtu.be/' + result.items[0].id.videoId + ' ;', {
+                        cb: true,
+                        type: 'css'
+                    })
                 } else if (result.items[0].id.kind === 'youtube#channel') {
                     var description = result.items[0].snippet.description
                     while (description.indexOf('http') !== -1) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nChannel:     https://www.youtube.com/channel/' + result.items[0].id.channelId + ' ;', true, 'css')
+                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nChannel:     https://www.youtube.com/channel/' + result.items[0].id.channelId + ' ;', {
+                        cb: true,
+                        type: 'css'
+                    })
                 } else if (result.items[0].id.kind === 'youtube#playlist') {
                     var description = result.items[0].snippet.description
                     while (description.indexOf('http') !== -1) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nPlaylist:    https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ' ;', true, 'css')
+                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nPlaylist:    https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ' ;', {
+                        cb: true,
+                        type: 'css'
+                    })
                 } else {
                     messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
                 }
@@ -177,7 +186,7 @@ function statusmsg(msg) {
     })
 }
 /*/Used to send messages and keep tack of the message id/*/
-function messageSend(channelID, msg, cb, type, mention, userID, preText) {
+function messageSend(channelID, msg, set) {
     try {
         sId = bot.serverFromChannel(channelID)
         for (var sname in storage.d.Servers) {
@@ -192,39 +201,39 @@ function messageSend(channelID, msg, cb, type, mention, userID, preText) {
     } catch (e) {
         //
     }
-    if (mention === true && cb === false) {
+    if (set.mention === true && set.cb === false) {
         msg = msg + ' <@' + userID + '>\n'
     }
-    if (cb === true) {
-        if (type !== undefined) {
-            if (mention === true) {
+    if (set.cb === true) {
+        if (set.type !== undefined) {
+            if (set.mention === true) {
                 if (type === 'json') {
                     msg = JSON.stringify(msg, null, '\t')
                 }
-                if (preText !== undefined) {
+                if (set.preText !== undefined) {
                     msg = '<@' + userID + '> ' + preText + '\n```' + type + '\n' + msg + '```'
                 } else {
                     msg = '<@' + userID + '>\n```' + type + '\n' + msg + '```'
                 }
             } else {
-                if (type === 'json') {
+                if (set.type === 'json') {
                     msg = JSON.stringify(msg, null, '\t')
                 }
-                if (preText !== undefined) {
+                if (set.preText !== undefined) {
                     msg = preText + '\n```' + type + '\n' + msg + '```'
                 } else {
                     msg = '```' + type + '\n' + msg + '```'
                 }
             }
         } else {
-            if (mention === true) {
+            if (set.mention === true) {
                 if (preText !== undefined) {
                     msg = '<@' + userID + '> ' + preText + '\n\n```' + msg + '```'
                 } else {
                     msg = '<@' + userID + '>\n```' + msg + '```'
                 }
             } else {
-                if (preText !== undefined) {
+                if (set.preText !== undefined) {
                     msg = preText + '\n```' + msg + '```'
                 } else {
                     msg = '```' + msg + '```'
@@ -390,7 +399,10 @@ function status(statuscall, channelID, rawEvent, cl) {
                 if (cl) {
                     return timeIdle + " ago \n               (" + ltsmsg + ")"
                 } else {
-                    messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                    messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, {
+                        cb: true,
+                        type: 'xl'
+                    })
                 }
             } else if (status === 'offline') {
                 rawLastSeen = storage.d.Users[statuscall].rawLastSeen
@@ -420,7 +432,10 @@ function status(statuscall, channelID, rawEvent, cl) {
                 if (cl) {
                     return timeIdle + " ago \n               (" + ltsmsg + ")"
                 } else {
-                    messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                    messageSend(channelID, statuscall + ": " + storage.d.Users[statuscall].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, {
+                        cb: true,
+                        type: 'xl'
+                    })
                 }
             } else if (status === 'online') {
                 if (cl) {
@@ -464,7 +479,10 @@ function status(statuscall, channelID, rawEvent, cl) {
                         if (cl) {
                             return timeIdle + " ago \n               (" + ltsmsg + ")"
                         } else {
-                            messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                            messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, {
+                                cb: true,
+                                type: 'xl'
+                            })
                         }
                     } else if (status === 'offline') {
                         rawLastSeen = storage.d.Users[usern].rawLastSeen
@@ -494,7 +512,10 @@ function status(statuscall, channelID, rawEvent, cl) {
                         if (cl) {
                             return timeIdle + " ago \n               (" + ltsmsg + ")"
                         } else {
-                            messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, true, 'xl')
+                            messageSend(channelID, usern + ": " + storage.d.Users[usern].status + "\nFor: " + timeIdle + "\nLastseen: " + ltsmsg, {
+                                cb: true,
+                                type: 'xl'
+                            })
                         }
                     } else if (status === 'online') {
                         messageSend(channelID, statuscall + " Is currently online")
@@ -689,13 +710,6 @@ function eightBall(channelID, question, userID) {
 }
 /*/Ask cleverbot a question/*/
 function clever(channelID, userID, msg) {
-    /*cBot.ask(question, function(err, response) {
-        if (err) {
-            console.log(err)
-        } else {
-            messageSend(channelID, response);
-        }
-    });*/
     Cleverbot.prepare(function() {
         cleverbot.write(msg, function(response) {
             try {
@@ -739,7 +753,10 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                 "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
                 "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
                 "First Seen:    " + storage.d.Users[name].tracking + "\n" +
-                "Last Seen      " + lastSeen, true, 'xl')
+                "Last Seen      " + lastSeen, {
+                    cb: true,
+                    type: 'xl'
+                })
         })
     } else {
         try {
@@ -767,7 +784,10 @@ function stats(channelID, name, rawEvent, channelID, serverID) {
                 "Time Idle:     " + storage.d.Users[name].totalIdle.d + " Days " + storage.d.Users[name].totalIdle.h + " Hours " + storage.d.Users[name].totalIdle.m + " Minutes " + storage.d.Users[name].totalIdle.s + " Seconds\n" +
                 "Time Offline:  " + storage.d.Users[name].totalOffline.d + " Days " + storage.d.Users[name].totalOffline.h + " Hours " + storage.d.Users[name].totalOffline.m + " Minutes " + storage.d.Users[name].totalOffline.s + " Seconds\n\n" +
                 "First Seen:    " + storage.d.Users[name].tracking + "\n" +
-                "Last Seen:     " + lastSeen, true, 'xl')
+                "Last Seen:     " + lastSeen, {
+                    cb: true,
+                    type: 'xl'
+                })
         })
         /*} else {
                 continue
@@ -784,7 +804,10 @@ function shorten(cl, ulink, channelID, userID, callback) {
     request('https://api-ssl.bitly.com/v3/shorten?longUrl=' + ulink + '&access_token=' + config.bitLy, function(error, response, body) {
         body = JSON.parse(body)
         if (debug) {
-            messageSend(channelID, body, true, 'json')
+            messageSend(channelID, body, {
+                cb: true,
+                type: 'json'
+            })
         }
         console.log(cl)
         console.log(error)
@@ -843,7 +866,12 @@ function wordNik(cl, channelID, userID, word, type, debug) {
             body = JSON.parse(body)
             console.log(body)
             if (debug) {
-                messageSend(channelID, body, true, 'json', true, userID)
+                messageSend(channelID, body, {
+                    cb: true,
+                    type: 'json',
+                    mention: true,
+                    userID: userID
+                })
             }
             try {
                 for (var semi = 0; semi > -1;) {
@@ -859,10 +887,18 @@ function wordNik(cl, channelID, userID, word, type, debug) {
                         messageSend(channelID, '' +
                             'Word:          ' + toSentenceCase(body[0].word) + '\n\n' +
                             'PartofSpeech:  ' + body[0].partOfSpeech + '\n' +
-                            'Definition:    ' + body[0].text, true, 'xl', true, userID)
+                            'Definition:    ' + body[0].text, {
+                                cb: true,
+                                type: 'xl',
+                                mention: true,
+                                userID: userID
+                            })
                     }
                 } catch (e) {
-                    messageSend(channelID, "Bad word!", false, null, true, userID)
+                    messageSend(channelID, "I couldent find the definition for that word", {
+                        mention: true,
+                        userID: userID
+                    })
                 }
             } else {
                 return body
@@ -876,7 +912,10 @@ function wordNik(cl, channelID, userID, word, type, debug) {
                 semi = body.examples[0].text.indexOf(';')
             }
             if (debug) {
-                messageSend(channelID, body, true, 'json')
+                messageSend(channelID, body, {
+                    cb: true,
+                    type: 'json'
+                })
             }
             if (cl === false) {
                 if (!error && response.statusCode === 200) {
@@ -887,7 +926,12 @@ function wordNik(cl, channelID, userID, word, type, debug) {
                         'Definition:    ' + body.definitions[0].text + ';\n\n' +
                         'ExampleUseage: ' + body.examples[0].text + ';\n' +
                         'CitedFrom:     ' + body.examples[0].title + ';\n\n' +
-                        'Url:           ' + body.examples[0].url + ';', true, 'css', true, userID)
+                        'Url:           ' + body.examples[0].url + ';', {
+                            cb: true,
+                            type: 'css',
+                            mention: true,
+                            userID: userID
+                        })
                 }
             } else {
                 return body
@@ -933,6 +977,10 @@ function admin(id, userID, type) {
         channel: id,
         target: userID
     })
+}
+
+function pin(channelID, msg) {
+
 }
 
 function mute(sname, userID, un) {
@@ -1414,10 +1462,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         }
                     }
                 }
-                messageSend(userID, cList, true, 'md', false, null, "Here are my commands Yellow = Admin")
+                messageSend(userID, cList, {
+                    cb: true,
+                    type: 'md',
+                    preText: "Here are my commands Yellow = Admin"
+                })
                 if (cList2.length > 2) {
                     setTimeout(function() {
-                        messageSend(userID, cList2, true, 'md')
+                        messageSend(userID, cList2, {
+                            cb: true,
+                            type: 'md'
+                        })
                     }, 200);
                 }
             } else {
@@ -1475,35 +1530,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             status(statuscall, channelID, rawEvent)
             rconcmd = 'Yes'
         }
-        /*if (message.toLowerCase().indexOf('commands') === 0 && ignore !== true) {
-            cList = "[help](Prints out the help doc for any Command)     \n"
-            cList2 = ""
-            messageSend(channelID, "Check your PM's :mailbox_with_mail:")
-            for (var i = 0; i < doc.cList.length; i++) {
-                if (i < doc.cList.length - 1) {
-                    if (cList.length < 1800) {
-                        if (doc.help[doc.cList[i]].type === "Admin") {
-                            cList = cList + '[' + doc.cList[i] + "]" + "[" + doc.help[doc.cList[i]].help + "]\n"
-                        } else {
-                            cList = cList + '[' + doc.cList[i] + "]" + "(" + doc.help[doc.cList[i]].help + ")\n"
-                        }
-                    } else {
-                        if (doc.help[doc.cList[i]].type === "Admin") {
-                            cList2 = cList2 + '[' + doc.cList[i] + "]" + "[" + doc.help[doc.cList[i]].help + "]\n"
-                        } else {
-                            cList2 = cList2 + '[' + doc.cList[i] + "]" + "(" + doc.help[doc.cList[i]].help + ")\n"
-                        }
-                    }
-                }
-            }
-            messageSend(userID, cList, true, 'md', false, null, "Here are my commands Yellow = Admin")
-            if (cList2.length > 2) {
-                setTimeout(function() {
-                    messageSend(userID, cList2, true, 'md')
-                }, 200);
-            }
-            rconcmd = 'Yes'
-        }*/
         if (message.toLowerCase().indexOf('poke') === 0 && ignore !== true) {
             var pkcall = rawEvent.d.mentions[0].id
             message = message.replace('poke', '')
@@ -1526,7 +1552,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                                 "Links Sent:    " + storage.d.Users[user].linkCnt + '\n' +
                                 "Time Idle:     " + storage.d.Users[user].totalIdle.d + " Days " + storage.d.Users[user].totalIdle.h + " Hours " + storage.d.Users[user].totalIdle.m + " Minutes " + storage.d.Users[user].totalIdle.s + " Seconds\n" +
                                 "Time Offline:  " + storage.d.Users[user].totalOffline.d + " Days " + storage.d.Users[user].totalOffline.h + " Hours " + storage.d.Users[user].totalOffline.m + " Minutes " + storage.d.Users[user].totalOffline.s + " Seconds\n\n" +
-                                "First Seen:    " + storage.d.Users[user].tracking, true, 'xl', true, userID)
+                                "First Seen:    " + storage.d.Users[user].tracking, {
+                                    cb: true,
+                                    type: 'xl',
+                                    mention: true,
+                                    userID: userID
+                                })
                         })
                     })
                 } catch (e) {
@@ -1534,9 +1565,15 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     console.log(e)
                 }
             } else if (message.toLowerCase().indexOf('server') !== -1) {
-                messageSend(channelID, storage.d.Servers[sname].messageCnt + "Messages", true, 'xl')
+                messageSend(channelID, storage.d.Servers[sname].messageCnt + "Messages", {
+                    cb: true,
+                    type: 'xl'
+                })
             } else if (message.toLowerCase().indexOf('channel') !== -1) {
-                messageSend(channelID, storage.d.Servers[sname].Channels[cname].messageCnt + 'Messages', true, 'xl')
+                messageSend(channelID, storage.d.Servers[sname].Channels[cname].messageCnt + 'Messages', {
+                    cb: true,
+                    type: 'xl'
+                })
             } else {
                 stats(channelID, name, rawEvent, channelID, serverID)
             }
@@ -1637,10 +1674,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 if (vl.indexOf('new') !== -1) {
                     cmds.voiceLines.list()
                     setTimeout(function() {
-                        messageSend(channelID, cmds.voiceLines.newFiles, true, 'json')
+                        messageSend(channelID, cmds.voiceLines.newFiles, {
+                            cb: true,
+                            type: 'json'
+                        })
                     }, 500)
                 } else {
-                    messageSend(channelID, cmds.voiceLines.vlJ.nicknames, true, 'json')
+                    messageSend(channelID, cmds.voiceLines.vlJ.nicknames, {
+                        cb: true,
+                        type: 'json'
+                    })
                 }
             } else {
                 cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
@@ -1817,7 +1860,10 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     eval(jscall)
                 } catch (e) {
                     logger.error(chalk.red("Bad JS Command " + e))
-                    messageSend(channelID, e, true, 'fix')
+                    messageSend(channelID, e, {
+                        cb: true,
+                        type: 'fix'
+                    })
                 }
             } else {
                 messageSend(channelID, '<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
