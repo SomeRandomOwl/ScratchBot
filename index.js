@@ -997,11 +997,32 @@ function admin(id, userID, type) {
         target: userID
     })
 }
-
-function pin(channelID, msg) {
-
+//mySQL query
+function query(channelID, query) {
+    connection.query(query, function(err, rows) {
+        if (err) {
+            messageSend(channelID, err, {
+                cb: true,
+                type: fix
+            })
+        } else {
+            messageSend(channelID, rows, {
+                cb: true,
+                type: 'json'
+            })
+        }
+    })
 }
-
+//Pins a message
+function pin(channelID, msg) {
+    messageSend(channelID, msg, {}, function(res) {
+        bot.pinMessage({
+            channelID: channelID,
+            messageID: res
+        })
+    })
+}
+//Hard Mutes someone
 function mute(sname, userID, un) {
     if (un) {
         if (storage.d.Servers[sname].muted === undefined) {
