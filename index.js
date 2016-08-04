@@ -1823,6 +1823,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('cat') === 0 && ignore !== true) {
             cat(channelID, cname, sname)
         }
+        if (message.toLowerCase().indexOf('pin') === 0 && ignore !== true) {
+            var pincmd = message
+            var pincall = pincmd.replace('pin ', '')
+            pin(channelID, pincall)
+        }
         if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
             snake(channelID, cname, sname, userID)
         }
