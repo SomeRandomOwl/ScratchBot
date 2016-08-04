@@ -1827,7 +1827,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var pincmd = message
             var pincall = pincmd.replace('pin ', '')
             if (ownerId === userID || serverID === '162390519748624384') {
-                pin(channelID, user + ': ' + pincall)
+                pin(channelID, '<@' + userID + '>: ' + pincall)
             }
         }
         if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
