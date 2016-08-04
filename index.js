@@ -1016,7 +1016,7 @@ var query = {
         },
         'i': function(channelID, query) {
             queryC = query.substring(0, query.indexOf('|'))
-            queryV = query.substring(query.indexOf('|') + 1)
+            queryV = query.substring(query.indexOf('|'))
             queryV = JSON.parse(queryV)
             console.log(queryV)
         }
