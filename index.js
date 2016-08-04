@@ -998,22 +998,31 @@ function admin(id, userID, type) {
     })
 }
 //mySQL query
-function query(channelID, query) {
-    connection.query(query, function(err, rows) {
-        if (err) {
-            messageSend(channelID, err, {
-                cb: true,
-                type: 'fix'
-            })
-        } else {
-            messageSend(channelID, rows, {
-                cb: true,
-                type: 'json'
+var query = {
+        'e': function(channelID, query) {
+            connection.query(query, function(err, rows) {
+                if (err) {
+                    messageSend(channelID, err, {
+                        cb: true,
+                        type: 'fix'
+                    })
+                } else {
+                    messageSend(channelID, rows, {
+                        cb: true,
+                        type: 'json'
+                    })
+                }
             })
         }
-    })
-}
-//Pins a message
+        'i': function(channelID, query) {
+            queryC = query.substring(0, query.indexOf('|'))
+            queryV = query.substring(query.indexOf('|') + 1)
+            queryV = JSON.parse(queryV)
+            console.log(queryV)
+        }
+    }
+    //Pins a message
+
 function pin(channelID, msg) {
     messageSend(channelID, msg, {}, function(res) {
         bot.pinMessage({
@@ -1834,7 +1843,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var queryCmd = message
             var queryCall = queryCmd.replace('query ', '')
             if (ownerId === userID) {
-                query(channelID, queryCall)
+                query.e(channelID, queryCall)
             }
         }
         if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
