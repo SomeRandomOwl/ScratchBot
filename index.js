@@ -1003,7 +1003,7 @@ function query(channelID, query) {
         if (err) {
             messageSend(channelID, err, {
                 cb: true,
-                type: fix
+                type: 'fix'
             })
         } else {
             messageSend(channelID, rows, {
