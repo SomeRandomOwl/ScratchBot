@@ -1832,7 +1832,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('query') === 0 && ignore !== true) {
             var queryCmd = message
-            var queryCall = queryCmd.replace('pin ', '')
+            var queryCall = queryCmd.replace('query ', '')
             if (ownerId === userID) {
                 query(channelID, queryCall)
             }
