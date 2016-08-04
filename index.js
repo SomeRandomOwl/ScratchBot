@@ -29,6 +29,13 @@ var bot = new Discord.Client({
 var cmds = require('./assets/modules')
 var perm = require('./assets/modules/permissionHelper.js')(bot)
 cleverbot = new Cleverbot;
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: config.mySQLUser,
+    password: config.mySQLPass,
+    database: config.mySQLDb
+});
 
 /*/Set up logging/*/
 var logger = new(winston.Logger)({
