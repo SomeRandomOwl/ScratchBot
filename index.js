@@ -1830,6 +1830,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 pin(channelID, '<@' + userID + '>: ' + pincall)
             }
         }
+        if (message.toLowerCase().indexOf('query') === 0 && ignore !== true) {
+            var queryCmd = message
+            var queryCall = queryCmd.replace('pin ', '')
+            if (ownerId === userID) {
+                query(channelID, queryCall)
+            }
+        }
         if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
             snake(channelID, cname, sname, userID)
         }
