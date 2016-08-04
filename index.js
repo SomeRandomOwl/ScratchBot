@@ -1823,7 +1823,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('cat') === 0 && ignore !== true) {
             cat(channelID, cname, sname)
         }
-        if (message.toLowerCase().indexOf('pin') === 0 && ignore !== true) {
+        if (message.toLowerCase().indexOf('pin') === 0 && message.toLowerCase().indexOf('ping') === -1 && ignore !== true) {
             var pincmd = message
             var pincall = pincmd.replace('pin ', '')
             if (ownerId === userID || serverID === '162390519748624384') {
