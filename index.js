@@ -998,31 +998,24 @@ function admin(id, userID, type) {
     })
 }
 //mySQL query
-var query = {
-        'e': function(channelID, query) {
-            connection.query(query, function(err, rows) {
-                if (err) {
-                    messageSend(channelID, err, {
-                        cb: true,
-                        type: 'fix'
-                    })
-                } else {
-                    messageSend(channelID, rows, {
-                        cb: true,
-                        type: 'json'
-                    })
-                }
-            })
-        },
-        'i': function(channelID, query) {
-            queryC = query.substring(0, query.indexOf('|'))
-            queryV = query.substring(query.indexOf('|'))
-            queryV = JSON.parse(queryV)
-            console.log(queryV)
-        }
-    }
-    //Pins a message
+var query
 
+function(channelID, query) {
+    connection.query(query, function(err, rows) {
+        if (err) {
+            messageSend(channelID, err, {
+                cb: true,
+                type: 'fix'
+            })
+        } else {
+            messageSend(channelID, rows, {
+                cb: true,
+                type: 'json'
+            })
+        }
+    })
+}
+//Pins a message
 function pin(channelID, msg) {
     messageSend(channelID, msg, {}, function(res) {
         bot.pinMessage({
@@ -1047,6 +1040,23 @@ function mute(sname, userID, un) {
         storage.d.Servers[sname].muted.push(userID)
         console.log(userID + " Has been muted")
     }
+}
+
+function testQ(test, channelID) {
+    q = "" +
+        "INSERT into users (`userid`, `name`, `msgCnt`, `linkCnt`, `status`, `lastSeen`, `lastChat`, `rawLastChat`, `rawLastSeen`, `tracking`) VALUES ('" +
+        test.userID + "','" +
+        test.name + "','" +
+        test.msgCnt + "','" +
+        test.linkCnt + "','" +
+        test.status + "','" +
+        test.lastSeen + "','" +
+        test.lastChat + "','" +
+        test.rawLastChat + "','" +
+        test.rawLastSeen + "','" +
+        test.tracking + "','" +
+        ")"
+    query(channelID, q)
 }
 disc = false
 var startUpTime = null
