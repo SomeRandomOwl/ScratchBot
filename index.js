@@ -851,8 +851,8 @@ function shorten(cl, ulink, channelID, userID, callback) {
         }
         if (typeof callback === "function") {
             const err = false;
-            const response = body.data.url
-            callback(err, response);
+            const res = body.data.url
+            callback(err, res);
         }
     })
 }
