@@ -998,9 +998,7 @@ function admin(id, userID, type) {
     })
 }
 //mySQL query
-var query
-
-function(channelID, query) {
+function query(channelID, query) {
     connection.query(query, function(err, rows) {
         if (err) {
             messageSend(channelID, err, {
@@ -1853,7 +1851,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var queryCmd = message
             var queryCall = queryCmd.replace('query ', '')
             if (ownerId === userID) {
-                query.e(channelID, queryCall)
+                query(channelID, queryCall)
             }
         }
         if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
