@@ -1052,8 +1052,7 @@ function testQ(test, channelID) {
         test.lastChat + "','" +
         test.rawLastChat + "','" +
         test.rawLastSeen + "','" +
-        test.tracking + "','" +
-        ")"
+        test.tracking + "')"
     query(channelID, q)
 }
 disc = false
