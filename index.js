@@ -712,7 +712,7 @@ function messageDelete(channelID, messageID) {
 /*/Dekete multiple messages/*/
 function messagesDelete(channelID, num) {
     bot.getMessages({
-        channel: channelID,
+        channelID: channelID,
         limit: Number(num)
     }, function(error, messageArr) {
         if (error) {
