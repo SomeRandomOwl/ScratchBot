@@ -715,7 +715,9 @@ function messagesDelete(channelID, num) {
         channel: channelID,
         limit: Number(num)
     }, function(error, messageArr) {
-        if (error) returnconsole.log(error);
+        if (error) {
+            console.log(error)
+        }
         bot.deleteMessages({
             channelID: channelID,
             messageIDs: messageArr.map(m => m.id)
