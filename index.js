@@ -1093,7 +1093,7 @@ var update = schedule.scheduleJob('*/5 * * * *', function() {
     cmds.list.channel(bot, storage, false)
     cmds.list.user(bot, storage, false)
 });
-var status = schedule.scheduleJob('1 * * * *', function() {
+var statusu = schedule.scheduleJob('1 * * * *', function() {
     var status = ['help | info | invite', '@' + bot.username + ' help', '@' + bot.username + ' info', '@' + bot.username + ' invite']
     statusmsg(status[num])
     num = num + 1
