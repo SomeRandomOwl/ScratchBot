@@ -997,6 +997,35 @@ function admin(id, userID, type) {
         target: userID
     })
 }
+//improved mysql query
+function clQ(Q, callback) {
+    if (q.type === 'INSERT') {
+        var change = q.change, //Takes a multi dimensional array from the input object and prepares them to be spliced into the query string
+            loc = q.location //Takes a string from the location object and splices it in at the end
+        if (change[1].length !== change[0].length) {
+            if (typeof callback === "function") {
+                const err = true;
+                const response = "The supplied values didnt each have a matching pair";
+                callback(err, response);
+            }
+            return false
+        }
+    } else if (q.type === 'UPDATE') {
+        var change = q.change, //Takes a multidimensioal array and splices it into a query string
+            loc = q.location //Takes the location to insert the values in
+        if (change[1].length !== change[0].length) {
+            if (typeof callback === "function") {
+                const err = true;
+                const response = "The supplied values didnt each have a matching pair";
+                callback(err, response);
+            }
+            return false
+        }
+    } else if (q.type === 'SELECT') {
+        var what = q.what, //Values to select to be spliced into a query string
+            loc = q.location //Where to select them from to splice into a query string
+    }
+}
 //mySQL query
 function query(channelID, query) {
     connection.query(query, function(err, rows) {
@@ -1039,7 +1068,7 @@ function mute(sname, userID, un) {
         console.log(userID + " Has been muted")
     }
 }
-
+//test query
 function testQ(test, channelID) {
     q = "" +
         "INSERT into users (`userid`, `name`, `msgCnt`, `linkCnt`, `status`, `lastSeen`, `lastChat`, `rawLastChat`, `rawLastSeen`, `tracking`) VALUES ('" +

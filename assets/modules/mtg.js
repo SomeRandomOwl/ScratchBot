@@ -12,7 +12,11 @@ module.exports = function(bot, messageSend, channelID, card) {
                 'Rarity:    ' + body.cards[0].rarity + '\n' +
                 'Text:     \n' + body.cards[0].text.toLowerCase() + '\n'
             art = '\nhttp://magiccards.info/scans/en/' + body.cards[0].set.toLowerCase() + '/' + body.cards[0].number + '.jpg \n' + 'http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=' + body.cards[0].multiverseid
-            messageSend(channelID, message, true, 'xl', false, null, art)
+            messageSend(channelID, message, {
+                cb: true,
+                type: 'xl',
+                preText: art
+            })
 
         } catch (e) {
             console.log(e)
