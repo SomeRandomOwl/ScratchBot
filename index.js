@@ -1,74 +1,74 @@
 /* Welcome, this is scratch bots source code, everything that makes her run and tick! */
-var Discord = require('discord.io');
-var winston = require('winston');
-var config = require('../../config.json');
-var fs = require('fs');
-var Roll = require('roll');
-roll = new Roll();
-var math = require('mathjs');
-var readline = require('readline');
-var YouTube = require('youtube-node');
-var youTube = new YouTube();
-var moment = require('moment');
-var xkcd = require('xkcd-imgs');
-var chalk = require('chalk');
-var request = require('request');
-var mkdirp = require('mkdirp');
-var doc = require('./assets/doc.json')
-var Cleverbot = require('cleverbot-node');
-var pirateSpeak = require('pirate-speak');
-var google = require('googleapis');
-var urlshortener = google.urlshortener('v1');
-var schedule = require('node-schedule');
-var bot = new Discord.Client({
-    autorun: true,
-    //email: config.email,
-    //password: config.pass,
-    token: config.token
-});
-var cmds = require('./assets/modules')
-var perm = require('./assets/modules/permissionHelper.js')(bot)
-cleverbot = new Cleverbot;
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-    host: 'localhost',
-    user: config.mySQLUser,
-    password: config.mySQLPass,
-    database: config.mySQLDb
-});
+var Discord = require('discord.io'),
+    winston = require('winston'),
+    config = require('../../config.json'),
+    fs = require('fs'),
+    Roll = require('roll'),
+    math = require('mathjs'),
+    readline = require('readline'),
+    YouTube = require('youtube-node'),
+    youTube = new YouTube(),
+    moment = require('moment'),
+    xkcd = require('xkcd-imgs'),
+    chalk = require('chalk'),
+    request = require('request'),
+    mkdirp = require('mkdirp'),
+    doc = require('./assets/doc.json'),
+    Cleverbot = require('cleverbot-node'),
+    pirateSpeak = require('pirate-speak'),
+    google = require('googleapis'),
+    urlshortener = google.urlshortener('v1'),
+    schedule = require('node-schedule'),
+    bot = new Discord.Client({
+        autorun: true,
+        //email: config.email,
+        //password: config.pass,
+        token: config.token
+    }),
+    cmds = require('./assets/modules'),
+    perm = require('./assets/modules/permissionHelper.js')(bot),
+    mysql = require('mysql'),
+    connection = mysql.createConnection({
+        host: 'localhost',
+        user: config.mySQLUser,
+        password: config.mySQLPass,
+        database: config.mySQLDb
+    });
 
+cleverbot = new Cleverbot
+roll = new Roll();
 /*/Set up logging/*/
 var logger = new(winston.Logger)({
-    transports: [
-        new(winston.transports.Console)(),
-        new(winston.transports.File)({
-            name: 'info-file',
-            filename: './logs/filelog-info.log',
-            level: 'info'
-        }),
-        new(winston.transports.File)({
-            name: 'error-file',
-            filename: './logs/filelog-error.log',
-            level: 'error',
-            //            handleExceptions: true,
-            //            humanReadableUnhandledException: true
-        })
-    ]
-});
-var story = new(winston.Logger)({
-    levels: {
-        space: 0,
-        unknown: 1,
-        laderis: 2,
-    },
-    transports: [
-        new(winston.transports.File)({
-            name: 'stoey-file',
-            filename: './logs/story.log',
-            level: 'laderis'
-        }),
-    ]
-});
+        transports: [
+            new(winston.transports.Console)(),
+            new(winston.transports.File)({
+                name: 'info-file',
+                filename: './logs/filelog-info.log',
+                level: 'info'
+            }),
+            new(winston.transports.File)({
+                name: 'error-file',
+                filename: './logs/filelog-error.log',
+                level: 'error',
+                //            handleExceptions: true,
+                //            humanReadableUnhandledException: true
+            })
+        ]
+    }),
+    story = new(winston.Logger)({
+        levels: {
+            space: 0,
+            unknown: 1,
+            laderis: 2,
+        },
+        transports: [
+            new(winston.transports.File)({
+                name: 'stoey-file',
+                filename: './logs/story.log',
+                level: 'laderis'
+            }),
+        ]
+    });
 
 /*/Loads Storage.json if it exists/*/
 if (fs.existsSync('./assets/storage.json')) {
@@ -85,20 +85,21 @@ youTube.setKey(config.youTubeApiKey);
 
 
 /* Global variable setting */
-var cnaid = '171798432749584387'
-var dateFormat = 'MMMM Do YYYY, h:mm:ss a'
-var lastseen = null
-var logChan = config.logChan;
-var sentPrevId = null;
-var commandmod = config.cmdMod;
-var ownerId = config.ownerId;
-var rconcmd = 'No';
-var clist = doc.cList
-var debug = false;
-var serverID = null;
-var xkcdJson = null
-var verb = false
-var prevUrl
+var cnaid = '171798432749584387',
+    dateFormat = 'MMMM Do YYYY, h:mm:ss a',
+    lastseen = null,
+    logChan = config.logChan,
+    sentPrevId = null,
+    commandmod = config.cmdMod,
+    ownerId = config.ownerId,
+    rconcmd = 'No',
+    clist = doc.cList,
+    debug = false,
+    serverID = null,
+    xkcdJson = null,
+    verb = false,
+    prevUrl,
+    num = 0
 
 String.prototype.replaceBetween = function(start, end, what) {
     return this.substring(0, start) + what + this.substring(end);
@@ -1092,6 +1093,11 @@ var update = schedule.scheduleJob('*/5 * * * *', function() {
     cmds.list.channel(bot, storage, false)
     cmds.list.user(bot, storage, false)
 });
+var status = schedule.scheduleJob('1 * * * *', function() {
+    var status = ['help | info | invite', '@' + bot.username + ' help', '@' + bot.username + ' info', '@' + bot.username + ' invite']
+    statusmsg(status[num])
+    num++
+})
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
     if (disc === false) {
