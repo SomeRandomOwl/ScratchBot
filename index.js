@@ -1408,7 +1408,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             nsfw = false
         }
     } catch (e) {
-        console.log(e)
         try {
             storage.d.Servers[sname].Channels[cname].nsfw = false
         } catch (e) {
