@@ -1,5 +1,6 @@
 const ytdl = require('ytdl-core');
 const fs = require('fs')
+const mkdirp = require('mkdirp')
 downloadYoutubeAudio = function(url, callback) {
     const opts = {
         filter: "audioonly"
@@ -30,7 +31,9 @@ downloadYoutubeAudio = function(url, callback) {
 
             if (extension) {
                 //found a supported format - let's save it
-                const path = `../audio/download/yt-${info.video_id}.${extension}`;
+                mkdirp('./audio/', function(err) {
+                    const path = `./audio/yt-${info.video_id}.${extension}`;
+                })
                 ytdl(url, opts).pipe(fs.createWriteStream(path)).on('finish', function() {
                     //download completed
                     if (typeof callback === "function") {
