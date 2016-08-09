@@ -1782,7 +1782,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
             rconcmd = "Yes"
         }
-        if (message.toLowerCase().indexOf('vl') === 0 && ignore !== true) {
+        if (message.toLowerCase().indexOf('vp') === 0 && ignore !== true) {
             vp = message.substring(message.indexOf(' ') + 1)
             rconcmd = "Yes"
             cmds.vp.play(bot, serverID, userID, channelID, vp)
