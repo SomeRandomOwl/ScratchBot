@@ -1752,6 +1752,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('clever') === 0 && ignore !== true) {
             cleverr = message.substring(message.indexOf(' ') + 1)
             clever(channelID, userID, cleverr)
+            rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('vl') === 0 && ignore !== true) {
             vl = message.substring(message.indexOf(' ') + 1)
@@ -1779,6 +1780,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             } else {
                 cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
             }
+            rconcmd = "Yes"
+        }
+        if (message.toLowerCase().indexOf('vl') === 0 && ignore !== true) {
+            vp = message.substring(message.indexOf(' ') + 1)
+            rconcmd = "Yes"
+            cmds.vp.play(bot, serverID, userID, channelID, vp)
         }
         if (message.toLowerCase().indexOf('8ball') === 0 && ignore !== true) {
             ebQ = message.substring(message.indexOf(' ') + 1)
