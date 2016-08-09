@@ -15,6 +15,7 @@ var util = {
     //messageSend
 }
 
+exports.vp = require('./vp.js')
 exports.voiceLines = require('./voiceLines.js')
 exports.mtg = require('./mtg.js')
 exports.list = require('./lists.js')
