@@ -33,13 +33,14 @@ downloadYoutubeAudio = function(url, callback) {
                 //found a supported format - let's save it
                 mkdirp('./audio/', function(err) {
                     const path = `./audio/yt-${info.video_id}.${extension}`;
+
+                    ytdl(url, opts).pipe(fs.createWriteStream(path)).on('finish', function() {
+                        //download completed
+                        if (typeof callback === "function") {
+                            callback(null, path);
+                        }
+                    });
                 })
-                ytdl(url, opts).pipe(fs.createWriteStream(path)).on('finish', function() {
-                    //download completed
-                    if (typeof callback === "function") {
-                        callback(null, path);
-                    }
-                });
             } else {
                 //couldnt find supported format
                 if (typeof callback === "function") {
