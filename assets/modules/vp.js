@@ -11,10 +11,11 @@ downloadYoutubeAudio = function(url, callback) {
             }
         } else {
             //success! lets see if it has a supported format
+            var extension = null;
             info.formats.some(function(format) {
                 const formatRegex = /audio\/(\w+);/g;
                 if (format && format.type) {
-                    let match = formatRegex.exec(format.type);
+                    var match = formatRegex.exec(format.type);
                     if (match) {
                         extension = match[1];
                         return true;
