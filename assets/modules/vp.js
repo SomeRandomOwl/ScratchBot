@@ -1,4 +1,5 @@
 const ytdl = require('ytdl-core');
+const fs = require('fs')
 downloadYoutubeAudio = function(url, callback) {
     const opts = {
         filter: "audioonly"
