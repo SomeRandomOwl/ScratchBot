@@ -30,7 +30,7 @@ downloadYoutubeAudio = function(url, callback) {
 
             if (extension) {
                 //found a supported format - let's save it
-                const path = `./assets/audio/download/yt-${info.video_id}.${extension}`;
+                const path = `../audio/download/yt-${info.video_id}.${extension}`;
                 ytdl(url, opts).pipe(fs.createWriteStream(path)).on('finish', function() {
                     //download completed
                     if (typeof callback === "function") {

@@ -1094,11 +1094,6 @@ var update = schedule.scheduleJob('*/5 * * * *', function() {
     cmds.list.channel(bot, storage, false)
     cmds.list.user(bot, storage, false)
 });
-var statusu = schedule.scheduleJob('1 * * * *', function() {
-    var status = ['help | info | invite', '@' + bot.username + ' help', '@' + bot.username + ' info', '@' + bot.username + ' invite']
-    statusmsg(status[num])
-    num = num + 1
-})
 bot.on('ready', function() {
     logger.info(chalk.blue("Rebuilding tracked servers, users, and channels. This could take a while...\n"))
     if (disc === false) {
