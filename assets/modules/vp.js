@@ -11,7 +11,6 @@ downloadYoutubeAudio = function(url, callback) {
             }
         } else {
             //success! lets see if it has a supported format
-            let extension = null;
             info.formats.some(function(format) {
                 const formatRegex = /audio\/(\w+);/g;
                 if (format && format.type) {
