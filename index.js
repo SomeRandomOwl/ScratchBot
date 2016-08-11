@@ -317,7 +317,7 @@ function consoleparse(line) {
 function diceroll(dice, userID, channelID) {
     if (dice.indexOf('d') === 0) {
         var dienum = roll.roll(dice);
-        messageSend(channelID, '<@' + userID + '>' + ' rolled: ' + dienum.rolled.toString())
+        messageSend(channelID, '<@' + userID + '> ' + 'rolled: ' + dienum.rolled.toString())
     }
     //This is if theres more than one die thrown
     if (dice.indexOf('d') !== 0 && dice.indexOf('d') != -1) {
