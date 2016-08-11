@@ -148,9 +148,10 @@ function yt(ytcall, userID, channelID) {
                         description = description.replace('https://', '')
                     }
 
-                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nVideo:       https://youtu.be/' + result.items[0].id.videoId + ' ;', {
+                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';', {
                         cb: true,
-                        type: 'css'
+                        type: 'css',
+                        preText: 'https://youtu.be/' + result.items[0].id.videoId
                     })
                 } else if (result.items[0].id.kind === 'youtube#channel') {
                     var description = result.items[0].snippet.description
@@ -158,9 +159,10 @@ function yt(ytcall, userID, channelID) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nChannel:     https://www.youtube.com/channel/' + result.items[0].id.channelId + ' ;', {
+                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ' ;', {
                         cb: true,
-                        type: 'css'
+                        type: 'css',
+                        preText: 'https://www.youtube.com/channel/' + result.items[0].id.channelId
                     })
                 } else if (result.items[0].id.kind === 'youtube#playlist') {
                     var description = result.items[0].snippet.description
@@ -168,9 +170,10 @@ function yt(ytcall, userID, channelID) {
                         description = description.replace('http://', '')
                         description = description.replace('https://', '')
                     }
-                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';\nPlaylist:    https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId + ' ;', {
+                    messageSend(channelID, '\nTitle:       ' + result.items[0].snippet.title + ';\n\nDescription: ' + description + ';', {
                         cb: true,
-                        type: 'css'
+                        type: 'css',
+                        preText: 'https://www.youtube.com/playlist?list=' + result.items[0].id.playlistId
                     })
                 } else {
                     messageSend(channelID, '<@' + userID + '> Sorry I could not retrieve that :confused:')
