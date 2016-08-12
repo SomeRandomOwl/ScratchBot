@@ -1009,8 +1009,8 @@ function clQ(Q, callback) {
             loc = q.location
         if (change[1].length !== change[0].length) {
             if (typeof callback === "function") {
-                const err = true;
-                const response = "The supplied values didnt each have a matching pair";
+                var err = true,
+                    response = "The supplied values didnt each have a matching pair";
                 callback(err, response);
             }
             return false
@@ -1019,15 +1019,15 @@ function clQ(Q, callback) {
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
-                    const err = true;
-                    const response = err;
+                    var err = true,
+                        response = err;
                     callback(err, response);
                 }
                 return false
             } else {
                 if (typeof callback === "function") {
-                    const err = false;
-                    const response = rows;
+                    var err = false,
+                        response = rows;
                     callback(err, response);
                 }
                 return false
@@ -1041,8 +1041,8 @@ function clQ(Q, callback) {
             changeST = ''
         if (change[1].length !== change[0].length) {
             if (typeof callback === "function") {
-                const err = true;
-                const response = "The supplied values didnt each have a matching pair";
+                var err = true,
+                    response = "The supplied values didnt each have a matching pair";
                 callback(err, response);
             }
             return false
@@ -1062,15 +1062,15 @@ function clQ(Q, callback) {
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
-                    const err = true;
-                    const response = err;
+                    var err = true,
+                        response = err;
                     callback(err, response);
                 }
                 return false
             } else {
                 if (typeof callback === "function") {
-                    const err = false;
-                    const response = rows;
+                    var err = false,
+                        response = rows;
                     callback(err, response);
                 }
                 return false
@@ -1085,15 +1085,15 @@ function clQ(Q, callback) {
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
-                    const err = true;
-                    const response = err;
+                    var err = true,
+                        response = err;
                     callback(err, response);
                 }
                 return false
             } else {
                 if (typeof callback === "function") {
-                    const err = false;
-                    const response = rows;
+                    var err = false,
+                        response = rows;
                     callback(err, response);
                 }
                 return false
