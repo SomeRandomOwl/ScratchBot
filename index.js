@@ -1003,7 +1003,7 @@ function admin(id, userID, type) {
     })
 }
 //improved mysql query
-function clQ(Q, callback) {
+function clQ(q, callback) {
     if (q.type === 'INSERT') {
         var change = q.change,
             loc = q.location
