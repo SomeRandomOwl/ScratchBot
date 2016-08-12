@@ -1019,14 +1019,12 @@ function clQ(q, callback) {
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
-                    var error = true,
-                        response = err;
-                    callback(error, response);
+                    callback(err, rows);
                 }
                 return false
             } else {
                 if (typeof callback === "function") {
-                    var err = false,
+                    var err = null,
                         response = rows;
                     callback(err, response);
                 }
@@ -1062,14 +1060,12 @@ function clQ(q, callback) {
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
-                    var error = true,
-                        response = err;
-                    callback(error, response);
+                    callback(err, rows);
                 }
                 return false
             } else {
                 if (typeof callback === "function") {
-                    var err = false,
+                    var err = null,
                         response = rows;
                     callback(err, response);
                 }
@@ -1085,14 +1081,12 @@ function clQ(q, callback) {
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
-                    var error = true,
-                        response = err;
-                    callback(error, response);
+                    callback(err, rows);
                 }
                 return false
             } else {
                 if (typeof callback === "function") {
-                    var err = false,
+                    var err = null,
                         response = rows;
                     callback(err, response);
                 }
