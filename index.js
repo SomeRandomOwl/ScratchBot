@@ -1015,7 +1015,7 @@ function clQ(Q, callback) {
             }
             return false
         }
-        query = "INSERT INTO" + loc + "(" + change[0] + ") VALUES (" + change[1] + ")"
+        query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + change[1] + ")"
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
@@ -1035,7 +1035,10 @@ function clQ(Q, callback) {
         })
     } else if (q.type === 'UPDATE') {
         var change = q.change,
-            loc = q.location
+            loc = q.location,
+            where = q.where,
+            id = q.id,
+            changeST = ''
         if (change[1].length !== change[0].length) {
             if (typeof callback === "function") {
                 const err = true;
@@ -1044,7 +1047,18 @@ function clQ(Q, callback) {
             }
             return false
         }
-        query = "INSERT INTO" + loc + "(" + change[0] + ") VALUES (" + change[1] + ")"
+        for (var i = 0; i < change[0].length; i++) {
+            if (change[0].length !== 1) {
+                if (i === change[0].length - 1) {
+                    changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
+                } else {
+                    changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "', "
+                }
+            } else {
+                changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
+            }
+        }
+        query = "UPDATE " + loc + changtST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
