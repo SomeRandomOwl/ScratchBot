@@ -1079,8 +1079,8 @@ function clQ(Q, callback) {
     } else if (q.type === 'SELECT') {
         var what = q.what,
             loc = q.location,
-            where = q.where
-        id = q.id
+            where = q.where,
+            id = q.id
         query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
         db.query(query, function(err, rows) {
             if (err !== null) {
