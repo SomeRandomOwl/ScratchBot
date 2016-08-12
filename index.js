@@ -28,7 +28,7 @@ var Discord = require('discord.io'),
     cmds = require('./assets/modules'),
     perm = require('./assets/modules/permissionHelper.js')(bot),
     mysql = require('mysql'),
-    connection = mysql.createConnection({
+    db = mysql.createConnection({
         host: 'localhost',
         user: config.mySQLUser,
         password: config.mySQLPass,
@@ -1005,8 +1005,8 @@ function admin(id, userID, type) {
 //improved mysql query
 function clQ(Q, callback) {
     if (q.type === 'INSERT') {
-        var change = q.change, //Takes a multi dimensional array from the input object and prepares them to be spliced into the query string
-            loc = q.location //Takes a string from the location object and splices it in at the end
+        var change = q.change,
+            loc = q.location
         if (change[1].length !== change[0].length) {
             if (typeof callback === "function") {
                 const err = true;
@@ -1015,9 +1015,30 @@ function clQ(Q, callback) {
             }
             return false
         }
+        query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + change[1] + ")"
+        db.query(query, function(err, rows) {
+            if (err !== null) {
+                if (typeof callback === "function") {
+                    const err = true;
+                    const response = err;
+                    callback(err, response);
+                }
+                return false
+            } else {
+                if (typeof callback === "function") {
+                    const err = false;
+                    const response = rows;
+                    callback(err, response);
+                }
+                return false
+            }
+        })
     } else if (q.type === 'UPDATE') {
-        var change = q.change, //Takes a multidimensioal array and splices it into a query string
-            loc = q.location //Takes the location to insert the values in
+        var change = q.change,
+            loc = q.location,
+            where = q.where,
+            id = q.id,
+            changeST = ''
         if (change[1].length !== change[0].length) {
             if (typeof callback === "function") {
                 const err = true;
@@ -1026,14 +1047,63 @@ function clQ(Q, callback) {
             }
             return false
         }
+        for (var i = 0; i < change[0].length; i++) {
+            if (change[0].length !== 1) {
+                if (i === change[0].length - 1) {
+                    changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
+                } else {
+                    changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "', "
+                }
+            } else {
+                changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
+            }
+        }
+        query = "UPDATE " + loc + changtST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
+        db.query(query, function(err, rows) {
+            if (err !== null) {
+                if (typeof callback === "function") {
+                    const err = true;
+                    const response = err;
+                    callback(err, response);
+                }
+                return false
+            } else {
+                if (typeof callback === "function") {
+                    const err = false;
+                    const response = rows;
+                    callback(err, response);
+                }
+                return false
+            }
+        })
     } else if (q.type === 'SELECT') {
-        var what = q.what, //Values to select to be spliced into a query string
-            loc = q.location //Where to select them from to splice into a query string
+        var what = q.what,
+            loc = q.location,
+            where = q.where,
+            id = q.id
+        query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
+        db.query(query, function(err, rows) {
+            if (err !== null) {
+                if (typeof callback === "function") {
+                    const err = true;
+                    const response = err;
+                    callback(err, response);
+                }
+                return false
+            } else {
+                if (typeof callback === "function") {
+                    const err = false;
+                    const response = rows;
+                    callback(err, response);
+                }
+                return false
+            }
+        })
     }
 }
 //mySQL query
 function query(channelID, query) {
-    connection.query(query, function(err, rows) {
+    dbquery(query, function(err, rows) {
         if (err) {
             messageSend(channelID, err, {
                 cb: true,
