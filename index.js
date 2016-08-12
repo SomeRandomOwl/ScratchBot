@@ -1037,8 +1037,8 @@ function clQ(q, callback) {
         var change = q.change,
             loc = q.location,
             where = q.where,
-            id = q.id,
-            changeST = ''
+            id = q.id
+        changeST = ''
         if (change[1].length !== change[0].length) {
             if (typeof callback === "function") {
                 var err = true,
@@ -1058,7 +1058,7 @@ function clQ(q, callback) {
                 changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
             }
         }
-        query = "UPDATE " + loc + changtST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
+        query = "UPDATE " + loc + changeST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
