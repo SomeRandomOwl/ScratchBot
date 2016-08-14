@@ -1105,7 +1105,7 @@ function clQ(q, callback) {
     }
 }
 //mySQL query
-function DBDBquery(channelID, query) {
+function DBquery(channelID, query) {
     db.query(query, function(err, rows) {
         if (err) {
             messageSend(channelID, err, {
