@@ -1004,7 +1004,7 @@ function admin(id, userID, type) {
 }
 //improved mysql query
 function clQ(q, callback) {
-    if (q.type === 'INSERT') {
+    if (q.type.toUpperCase() === 'INSERT') {
         var change = q.change,
             loc = q.location
         if (change[1].length !== change[0].length) {
@@ -1016,6 +1016,9 @@ function clQ(q, callback) {
             return false
         }
         query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + change[1] + ")"
+        if (q.debug) {
+            console.log(query)
+        }
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
@@ -1031,7 +1034,7 @@ function clQ(q, callback) {
                 return false
             }
         })
-    } else if (q.type === 'UPDATE') {
+    } else if (q.type.toUpperCase() === 'UPDATE') {
         var change = q.change,
             loc = q.location,
             where = q.where,
@@ -1057,6 +1060,9 @@ function clQ(q, callback) {
             }
         }
         query = "UPDATE " + loc + changeST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
+        if (q.debug) {
+            console.log(query)
+        }
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
@@ -1072,12 +1078,15 @@ function clQ(q, callback) {
                 return false
             }
         })
-    } else if (q.type === 'SELECT') {
+    } else if (q.type.toUpperCase() === 'SELECT') {
         var what = q.what,
             loc = q.location,
             where = q.where,
             id = q.id
         query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
+        if (q.debug) {
+            console.log(query)
+        }
         db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
