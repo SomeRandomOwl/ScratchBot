@@ -1059,7 +1059,7 @@ function clQ(q, callback) {
                 changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
             }
         }
-        query = "UPDATE " + loc + changeST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
+        query = "UPDATE " + loc + ' SET ' + changeST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
         if (q.debug) {
             console.log(query)
         }
