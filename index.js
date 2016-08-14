@@ -1105,7 +1105,7 @@ function clQ(q, callback) {
     }
 }
 //mySQL query
-function query(channelID, query) {
+function DBDBquery(channelID, query) {
     db.query(query, function(err, rows) {
         if (err) {
             messageSend(channelID, err, {
@@ -1160,7 +1160,7 @@ function testQ(test, channelID) {
         test.rawLastChat + "','" +
         test.rawLastSeen + "','" +
         test.tracking + "')"
-    query(channelID, q)
+    DBquery(channelID, q)
 }
 disc = false
 var startUpTime = null
@@ -1963,7 +1963,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var queryCmd = message
             var queryCall = queryCmd.replace('query ', '')
             if (ownerId === userID) {
-                query(channelID, queryCall)
+                DBquery(channelID, queryCall)
             }
         }
         if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
