@@ -697,7 +697,7 @@ function redditScenery(channelID, reddit, name, sname) {
 }
 
 function dragon(channelID) {
-    request('https://www.reddit.com/r/' + 'dragon' + '.json', function(error, response, body) {
+    request('https://www.reddit.com/r/' + 'dragons' + '.json', function(error, response, body) {
         if (!error && response.statusCode == 200) {
             redditJson = JSON.parse(body)
             posts = redditJson.data.children
