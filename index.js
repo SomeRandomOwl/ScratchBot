@@ -1210,7 +1210,7 @@ bot.on('ready', function() {
     logger.info(chalk.magenta(bot.username + " -- (" + bot.id + ")" + " Is now running"))
     statusmsg("help | info | invite")
 });
-bot.on('debug', function(rawEvent) {
+bot.on('any', function(rawEvent) {
     try {
         var announceID = storage.d.Servers[bot.servers[rawEvent.d.guild_id].name].settings.announceChan
     } catch (e) {
