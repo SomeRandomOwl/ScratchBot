@@ -34,7 +34,7 @@ var Discord = require('discord.io'),
         password: config.mySQLPass,
         database: config.mySQLDb
     }),
-    startupF
+    startupF = false
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -79,6 +79,10 @@ if (fs.existsSync('./assets/storage.json')) {
 if (fs.existsSync('./assets/storage.json') === false) {
     logger.info(chalk.underline.red('Didnt Find Storage.json, Please run generateStorageFile.js'))
 }
+
+setTimeout(function() {
+    var startupF = true
+}, 10000)
 
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
@@ -1210,9 +1214,6 @@ bot.on('ready', function() {
     cmds.list.user(bot, storage, false, true)
     logger.info(chalk.magenta(bot.username + " -- (" + bot.id + ")" + " Is now running"))
     statusmsg("help | info | invite")
-    setTimeout(function() {
-        var startupF = true
-    }, 10000)
 });
 bot.on('any', function(rawEvent) {
     try {
