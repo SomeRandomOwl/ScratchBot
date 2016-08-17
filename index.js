@@ -726,10 +726,25 @@ function help(cmd, channelID) {
 /*/Quick way to delete a message/*/
 function messageDelete(channelID, messageID) {
     bot.deleteMessage({
-        channel: channelID,
+        channelID: channelID,
         messageID: messageID
     })
 }
+
+function tempmsg(channelID, message, length) {
+    bot.sendMessage({
+        to: channelID,
+        message: message,
+        typing: false
+    }, function(error, response) {
+        setTimeout(function() {
+            bot.deleteMessage({
+                channelID: channelID,
+                messageID: response.id
+            })
+        }, length)
+    });
+};
 /*/Dekete multiple messages/*/
 function messagesDelete(channelID, num) {
     bot.getMessages({
