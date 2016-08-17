@@ -1209,6 +1209,9 @@ bot.on('ready', function() {
     cmds.list.user(bot, storage, false, true)
     logger.info(chalk.magenta(bot.username + " -- (" + bot.id + ")" + " Is now running"))
     statusmsg("help | info | invite")
+    setTimeout(function() {
+        var startupF = true
+    }, 10000)
 });
 bot.on('any', function(rawEvent) {
     try {
@@ -1256,7 +1259,9 @@ bot.on('any', function(rawEvent) {
                 'Channels': {}
             }
         }
-        messageSend('174257824761774080', "I have been added to a new server: " + name + " with the id of: " + serverID)
+        if (startupF) {
+            messageSend('174257824761774080', "I have been added to a new server: " + name + " with the id of: " + serverID)
+        }
     }
     if (rawEvent.t === "CHANNEL_CREATE") {
         /*console.log(rawEvent)
