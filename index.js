@@ -81,8 +81,8 @@ if (fs.existsSync('./assets/storage.json') === false) {
 }
 
 setTimeout(function() {
-    var startupF = true
-}, 10000)
+    startupF = true
+}, 5000)
 
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
