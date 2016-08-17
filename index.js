@@ -33,7 +33,8 @@ var Discord = require('discord.io'),
         user: config.mySQLUser,
         password: config.mySQLPass,
         database: config.mySQLDb
-    });
+    }),
+    startupF
 
 cleverbot = new Cleverbot
 roll = new Roll();
