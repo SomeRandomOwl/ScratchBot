@@ -697,11 +697,7 @@ function redditScenery(channelID, reddit, name, sname) {
 }
 
 function dragon(channelID) {
-    messageSend(channelID, 'Retriveing a picture, should be only a moment', function(id) {
-        setTimeout(function() {
-            messageDelete(channelID, id)
-        }, 2000)
-    })
+    tempmsg(channelID, "Getting you a dragon, hold on...", 2000)
     request('https://www.reddit.com/r/' + 'dragons' + '.json', function(error, response, body) {
         if (!error && response.statusCode == 200) {
             redditJson = JSON.parse(body)
