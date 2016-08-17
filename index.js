@@ -1256,6 +1256,7 @@ bot.on('any', function(rawEvent) {
                 'Channels': {}
             }
         }
+        messageSend('174257824761774080', "I have been added to a new server: " + name + " with the id of: " + serverID)
     }
     if (rawEvent.t === "CHANNEL_CREATE") {
         /*console.log(rawEvent)
