@@ -1052,10 +1052,13 @@ function clQ(q, callback) {
         changeST = ''
         for (var i = 0; i < change[0].length; i++) {
             changeVAL = change[1][i]
-            console.log(changeVAL)
-            if (changeVAL.indexOf("\'") !== -1 && typeof changeVAL === 'string') {
-                changeVAL.replace("\'", "\\'")
-                change[1][i] = changeVAL
+            try {
+                if (changeVAL.indexOf("\'") !== -1 && typeof changeVAL === 'string') {
+                    changeVAL.replace("\'", "\\'")
+                    change[1][i] = changeVAL
+                }
+            } catch (e) {
+                //
             }
             if (change[0].length !== 1) {
                 if (i === change[0].length - 1) {
