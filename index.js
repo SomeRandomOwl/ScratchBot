@@ -1052,7 +1052,7 @@ function clQ(q, callback) {
         changeST = ''
         for (var i = 0; i < change[0].length; i++) {
             changeVAL = change[1][i]
-            if (changeVAL.indexOf("'") !== -1) {
+            if (cmds.util.isInArray("'", changeVAL)) {
                 changeVAL = change[1][i]
                 changeVAL.replace("'", "\'")
                 change[1][i] = changeVAL
