@@ -1053,10 +1053,7 @@ function clQ(q, callback) {
         for (var i = 0; i < change[0].length; i++) {
             changeVAL = change[1][i]
             try {
-                if (changeVAL.indexOf("\'") !== -1 && typeof changeVAL === 'string') {
-                    changeVAL.replace("\'", "\\'")
-                    change[1][i] = changeVAL
-                }
+                change[1][i].replace(/\'/g, `\\'`)
             } catch (e) {
                 //
             }
