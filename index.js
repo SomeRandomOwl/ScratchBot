@@ -731,7 +731,7 @@ function messageDelete(channelID, messageID) {
         messageID: messageID
     })
 }
-
+/*/Sends a message then deletes it after a while/*/
 function tempmsg(channelID, message, length) {
     bot.sendMessage({
         to: channelID,
@@ -1052,7 +1052,9 @@ function clQ(q, callback) {
         changeST = ''
         for (var i = 0; i < change[0].length; i++) {
             if (change[1][i].indexOf("'") !== -1) {
-                change[1][i].replace("'", "\'")
+                changeVAL = change[1][i]
+                changeVAL.replace("'", "\'")
+                change[1][i] = changeVAL
             }
             if (change[0].length !== 1) {
                 if (i === change[0].length - 1) {
