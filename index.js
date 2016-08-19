@@ -1052,6 +1052,7 @@ function clQ(q, callback) {
         changeST = ''
         for (var i = 0; i < change[0].length; i++) {
             changeVAL = change[1][i]
+            console.log(changeVAL)
             if (changeVAL.indexOf("\'") !== -1) {
                 changeVAL = change[1][i]
                 changeVAL.replace("\'", "\'")
