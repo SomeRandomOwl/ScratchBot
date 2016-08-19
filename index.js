@@ -1049,6 +1049,7 @@ function clQ(q, callback) {
             }
             return false
         }
+        changeST = ''
         for (var i = 0; i < change[0].length; i++) {
             if (change[0].length !== 1) {
                 if (i === change[0].length - 1) {
