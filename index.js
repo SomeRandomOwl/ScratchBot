@@ -345,53 +345,19 @@ function diceroll(dice, userID, channelID) {
 }
 /*/Retrieves a relavant xkcd comic from a query/*/
 function relxkcd(quer, channelID, name, sname) {
-    var comictime = cmds.util.gettime()
-    try {
-        lastcomictime = storage.d.Servers[sname].Channels[name].lastComic
-        elapsed = comictime - lastcomictime
-        elapsed = cmds.util.secondsToTime(elapsed)
-        comicacttime = storage.d.Servers[sname].Channels[name].lastComicActt
-        nextTime = lastcomictime + 3600
-        nextTime = nextTime - comictime
-        nextTime = cmds.util.secondsToTime(nextTime)
-        nextTime = nextTime.m + " Minutes and " + nextTime.s + " Seconds"
-        console.log("Comic elapsed: " + JSON.stringify(elapsed))
-    } catch (e) {
-        console.log(e)
-        storage.d.Servers[sname].Channels[name].lastComic = 0
-        storage.d.Servers[sname].Channels[name].lastComicActt = 0
-    }
-    if (elapsed.h > 0) {
-        var comicacttime = moment().utcOffset('-0600').format('h:mm a')
-        storage.d.Servers[sname].Channels[name].lastComicActt = comicacttime
-        request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
-            if (!error && response.statusCode == 200) {
-                comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
-                precent = body.substring(body.indexOf('\n'))
-                request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
-                    if (!error && response.statusCode == 200) {
-                        xkcdJson = JSON.parse(body)
-                        messageSend(channelID, xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
-                        return elapsed
-                    }
-                })
-            }
-        })
-        var lastcomictime = cmds.util.gettime()
-        storage.d.Servers[sname].Channels[name].lastComic = lastcomictime
-    } else {
-        try {
-            if (comicacttime === undefined) {
-                messageSend(channelID, "Sorry there was some sort of error, should be fixed now, try again")
-                storage.d.Servers[sname].Channels[name].lastComic = 0
-                storage.d.Servers[sname].Channels[name].lastComicActt = 0
-            }
-        } catch (e) {
-            e = e
+    request('https://relevantxkcd.appspot.com/process?action=xkcd&query=' + quer, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            comicnum = body.substring(body.indexOf('\n0') + 4, body.indexOf(' /'))
+            precent = body.substring(body.indexOf('\n'))
+            request('http://xkcd.com/' + comicnum + '/info.0.json', function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    xkcdJson = JSON.parse(body)
+                    messageSend(channelID, xkcdJson.title + '\n ```' + xkcdJson.alt + '```\n' + xkcdJson.img)
+                    return elapsed
+                }
+            })
         }
-        messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime + ", time untill next post is allowed: " + nextTime)
-        return elapsed
-    }
+    })
     //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Retrieves a current status of a user/*/
@@ -1051,12 +1017,6 @@ function clQ(q, callback) {
         }
         changeST = ''
         for (var i = 0; i < change[0].length; i++) {
-            /*changeVAL = change[1][i]
-            try {
-                change[1][i].replace(/\'/g, `\\\'`);
-            } catch (e) {
-                //
-            }*/
             if (change[0].length !== 1) {
                 if (i === change[0].length - 1) {
                     changeST = changeST + '"' + change[1][i] + '"'
@@ -1928,30 +1888,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         if (message.toLowerCase().indexOf('xkcd') === 0 && ignore !== true) {
             if (message.indexOf(' ') === -1) {
-                var comictime = cmds.util.gettime()
-                try {
-                    lastcomictime = storage.d.Servers[sname].Channels[cname].lastComic
-                    elapsed = comictime - lastcomictime
-                    elapsed = cmds.util.secondsToTime(elapsed)
-                    comicacttime = storage.d.Servers[sname].Channels[cname].lastComicActt
-                    console.log("Comic elapsed: " + JSON.stringify(elapsed))
-                } catch (e) {
-                    storage.d.Servers[sname].Channels[cname].lastComic = null
-                    storage.d.Servers[sname].Channels[cname].lastComicActt = null
-                }
-                if (elapsed.h > 0) {
-                    var comicacttime = moment().utcOffset('-0600').format('h:mm a')
-                    storage.d.Servers[sname].Channels[cname].lastComicActt = comicacttime
-                    xkcd.img(function(err, res) {
-                        if (!err) {
-                            messageSend(channelID, res.title + "\n" + res.url)
-                        }
-                    });
-                    var lastcomictime = cmds.util.gettime()
-                    storage.d.Servers[sname].Channels[cname].lastComic = lastcomictime
-                } else {
-                    messageSend(channelID, ":no_entry: Hey hold up, only one comic per hour, last comic was posted: " + comicacttime)
-                }
+                xkcd.img(function(err, res) {
+                    if (!err) {
+                        messageSend(channelID, res.title + "\n" + res.url)
+                    }
+                });
             } else {
                 var xkcdcmd = message
                 var xkcdcall = xkcdcmd.replace('xkcd ', '')
