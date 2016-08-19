@@ -1051,20 +1051,20 @@ function clQ(q, callback) {
         }
         changeST = ''
         for (var i = 0; i < change[0].length; i++) {
-            changeVAL = change[1][i]
+            /*changeVAL = change[1][i]
             try {
-                change[1][i].replace(/\'/g, `\\'`)
+                change[1][i].replace(/\'/g, `\\\'`);
             } catch (e) {
                 //
-            }
+            }*/
             if (change[0].length !== 1) {
                 if (i === change[0].length - 1) {
-                    changeST = changeST + "'" + change[1][i] + "'"
+                    changeST = changeST + '"' + change[1][i] + '"'
                 } else {
-                    changeST = changeST + "'" + change[1][i] + "', "
+                    changeST = changeST + '"' + change[1][i] + '", '
                 }
             } else {
-                changeST = changeST + "'" + change[1][i] + "'"
+                changeST = changeST + '"' + change[1][i] + '"'
             }
         }
         query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + changeST + ")"
