@@ -1051,6 +1051,9 @@ function clQ(q, callback) {
         }
         changeST = ''
         for (var i = 0; i < change[0].length; i++) {
+            if (change[1][i].indexOf("'") !== -1) {
+                change[1][i].replace("'", "\'")
+            }
             if (change[0].length !== 1) {
                 if (i === change[0].length - 1) {
                     changeST = changeST + "'" + change[1][i] + "'"
