@@ -4,12 +4,6 @@ var object = {
         "ignoredChannels": []
     },
     "d": {
-        "Channels": {
-            "test": {
-                "id": "null",
-                "settings": {}
-            }
-        },
         "Servers": {
             "test": {
                 "id": "null",

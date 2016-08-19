@@ -1049,7 +1049,18 @@ function clQ(q, callback) {
             }
             return false
         }
-        query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + change[1] + ")"
+        for (var i = 0; i < change[0].length; i++) {
+            if (change[0].length !== 1) {
+                if (i === change[0].length - 1) {
+                    changeST = "'" + change[1][i] + "'"
+                } else {
+                    changeST = "'" + change[1][i] + "', "
+                }
+            } else {
+                changeST = "'" + change[1][i] + "'"
+            }
+        }
+        query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + changeST + ")"
         if (q.debug) {
             console.log(query)
         }
