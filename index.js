@@ -1423,55 +1423,25 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     var messageID = rawEvent.d.id
     try {
         var serverID = bot.channels[channelID].guild_id
-    } catch (e) { /**/ }
-    //gets the server and channel name
-    try {
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
-    } catch (e) {
-        //ig
-    }
-    try {
-        if (storage.d.Servers[sname].muted.indexOf(userID) !== -1) {
-            messageDelete(channelID, messageID)
-            logger.info(chalk.red('Deleted') + chalk.gray(' the message of a muted user: ' + user))
-        }
-    } catch (e) {
-        /**/
-    }
-    try {
         if (storage.d.Servers[sname].SownerId !== undefined) {
             var SownerId = storage.d.Servers[sname].SownerId
+        }
+
+        try {
+            verb = storage.d.Servers[sname].settings.verb
+        } catch (e) {
+            verb = false
+            try {
+                storage.d.Servers[sname].settings.verb = false
+            } catch (e) {
+                /**/
+            }
         }
     } catch (e) {
         error = true
     }
-    try {
-        verb = storage.d.Servers[sname].settings.verb
-    } catch (e) {
-        verb = false
-        try {
-            storage.d.Servers[sname].settings.verb = false
-        } catch (e) {
-            /**/
-        }
-    }
-    /*try {
-        if (storage.d.Servers[sname] === undefined) {
-            storage.d.Servers[name] = {
-                'id': serverID,
-                'messageCnt': 0,
-                'settings': {
-                    'announceChan': null,
-                    'verb': false,
-                },
-                'SownerId': SownerId,
-                'Channels': {}
-            }
-        }
-    } catch (e) {
-        console.log(e)
-    }*/
     //Logging Related
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
@@ -1567,9 +1537,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         //cmds.util.writeJSON('./assets/storage', storage)
     }
     //debug!
-    if (debug === 1) {
-        console.log(rawEvent)
-    }
     try {
         if (storage.d.Servers[sname].settings.prefixOvrid !== undefined) {
             commandmod = storage.d.Servers[sname].settings.prefixOvrid
