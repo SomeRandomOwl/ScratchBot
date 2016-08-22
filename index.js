@@ -27,14 +27,8 @@ var Discord = require('discord.io'),
     }),
     cmds = require('./assets/modules'),
     perm = require('./assets/modules/permissionHelper.js')(bot),
-    mysql = require('mysql'),
-    db = mysql.createConnection({
-        host: 'localhost',
-        user: config.mySQLUser,
-        password: config.mySQLPass,
-        database: config.mySQLDb
-    }),
-    startupF = false
+    startupF = false,
+    db = require('./db.js')
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -1002,123 +996,9 @@ function admin(id, userID, type) {
         target: userID
     })
 }
-//improved mysql query
-function clQ(q, callback) {
-    if (q.type.toUpperCase() === 'INSERT') {
-        var change = q.change,
-            loc = q.location
-        if (change[1].length !== change[0].length) {
-            if (typeof callback === "function") {
-                var err = true,
-                    response = "The supplied values didnt each have a matching pair";
-                callback(err, response);
-            }
-            return false
-        }
-        changeST = ''
-        for (var i = 0; i < change[0].length; i++) {
-            if (change[0].length !== 1) {
-                if (i === change[0].length - 1) {
-                    changeST = changeST + '"' + change[1][i] + '"'
-                } else {
-                    changeST = changeST + '"' + change[1][i] + '", '
-                }
-            } else {
-                changeST = changeST + '"' + change[1][i] + '"'
-            }
-        }
-        query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + changeST + ")"
-        if (q.debug) {
-            console.log(query)
-        }
-        db.query(query, function(err, rows) {
-            if (err !== null) {
-                if (typeof callback === "function") {
-                    callback(err, rows);
-                }
-                return false
-            } else {
-                if (typeof callback === "function") {
-                    var err = null,
-                        response = rows;
-                    callback(err, response);
-                }
-                return false
-            }
-        })
-    } else if (q.type.toUpperCase() === 'UPDATE') {
-        var change = q.change,
-            loc = q.location,
-            where = q.where,
-            id = q.id
-        changeST = ''
-        if (change[1].length !== change[0].length) {
-            if (typeof callback === "function") {
-                var err = true,
-                    response = "The supplied values didnt each have a matching pair";
-                callback(err, response);
-            }
-            return false
-        }
-        for (var i = 0; i < change[0].length; i++) {
-            if (change[0].length !== 1) {
-                if (i === change[0].length - 1) {
-                    changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
-                } else {
-                    changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "', "
-                }
-            } else {
-                changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
-            }
-        }
-        query = "UPDATE " + loc + ' SET ' + changeST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
-        if (q.debug) {
-            console.log(query)
-        }
-        db.query(query, function(err, rows) {
-            if (err !== null) {
-                if (typeof callback === "function") {
-                    callback(err, rows);
-                }
-                return false
-            } else {
-                if (typeof callback === "function") {
-                    var err = null,
-                        response = rows;
-                    callback(err, response);
-                }
-                return false
-            }
-        })
-    } else if (q.type.toUpperCase() === 'SELECT') {
-        var what = q.what,
-            loc = q.location,
-            where = q.where,
-            id = q.id
-        query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
-        if (q.debug) {
-            console.log(query)
-        }
-        db.query(query, function(err, rows) {
-            if (err !== null) {
-                if (typeof callback === "function") {
-                    callback(err, rows);
-                }
-                return false
-            } else {
-                if (typeof callback === "function") {
-                    var err = null,
-                        response = rows;
-                    callback(err, response);
-                }
-                return false
-            }
-        })
-    }
-}
 //mySQL query
 function DBquery(channelID, query) {
-    db.query(query, function(err, rows) {
+    db.con.query(query, function(err, rows) {
         if (err) {
             messageSend(channelID, err, {
                 cb: true,
@@ -1158,22 +1038,7 @@ function mute(sname, userID, un) {
         console.log(userID + " Has been muted")
     }
 }
-//test query
-function testQ(test, channelID) {
-    q = "" +
-        "INSERT into users (`userid`, `name`, `msgCnt`, `linkCnt`, `status`, `lastSeen`, `lastChat`, `rawLastChat`, `rawLastSeen`, `tracking`) VALUES ('" +
-        test.userID + "','" +
-        test.name + "','" +
-        test.msgCnt + "','" +
-        test.linkCnt + "','" +
-        test.status + "','" +
-        test.lastSeen + "','" +
-        test.lastChat + "','" +
-        test.rawLastChat + "','" +
-        test.rawLastSeen + "','" +
-        test.tracking + "')"
-    DBquery(channelID, q)
-}
+
 disc = false
 var startUpTime = null
     /* Bot on event functions */
