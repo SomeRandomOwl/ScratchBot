@@ -556,7 +556,7 @@ function cat(channelID, name, sname) {
         var lastcattime = cmds.util.gettime()
         storage.d.Servers[sname].Channels[name].lastCat = lastcattime
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime + ", time untill next post is allowed: " + nextTime)
+        tempmsg(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime, 5000)
         return elapsed
     }
     //cmds.util.writeJSON('./assets/storage', storage)
@@ -601,7 +601,7 @@ function snake(channelID, name, sname, userID) {
             }
         })
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one snake per hour, last snake was posted: " + snakeacttime + ", time untill next post is allowed: " + nextTime)
+        tempmsg(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime, 5000)
         return elapsed
     }
     //cmds.util.writeJSON('./assets/storage', storage)
@@ -639,7 +639,7 @@ function pug(channelID, name, sname) {
         var lastpugtime = cmds.util.gettime()
         storage.d.Servers[sname].Channels[name].lastpug = lastpugtime
     } else {
-        messageSend(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime)
+        tempmsg(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime, 5000)
         return elapsed
     }
     //cmds.util.writeJSON('./assets/storage', storage)
@@ -1846,6 +1846,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('cat') === 0 && ignore !== true) {
+            messageDelete(channelID, messageID)
             cat(channelID, cname, sname)
             rconcmd = 'Yes'
         }
@@ -1866,14 +1867,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
+            messageDelete(channelID, messageID)
             snake(channelID, cname, sname, userID)
         }
         rconcmd = 'Yes'
         if (message.toLowerCase().indexOf('pug') === 0 && ignore !== true) {
+            messageDelete(channelID, messageID)
             pug(channelID, cname, sname)
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('dragon') === 0 && ignore !== true) {
+            messageDelete(channelID, messageID)
             dragon(channelID)
             rconcmd = "Yes"
         }
