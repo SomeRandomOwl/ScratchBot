@@ -1325,7 +1325,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         id: 'userID',
         where: userID
     }, function(err, res) {
-        if (err !== undefined) {
+        if (err !== null) {
             console.log(err)
         } else {
             console.log(success)
