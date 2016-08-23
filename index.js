@@ -1324,7 +1324,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }, function(e, r) {
         for (var i = 0; i < r.length; i++) {
             try {
-                if (message.indexOf(r[i]) !== -1) {
+                if (message.indexOf(r[i].phrase) !== -1) {
                     messageDelete(channelID, messageID)
                 }
             } catch (e) { /**/ }
