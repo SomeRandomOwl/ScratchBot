@@ -1307,19 +1307,6 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     //cmds.util.writeJSON('./assets/storage', storage)
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
-    db.clq({
-            type: 'select',
-            what: '*',
-            location: 'autoDel'
-        }
-
-        function(e, r) {
-            for (var i = 0; i < r.length; i++) {
-                try {
-                    if (message.indexOf(r[i]) !== -1) {}
-                } catch (e) { /**/ }
-            }
-        })
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
         var ignore = true
     }
@@ -1332,20 +1319,18 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     //Gets the message id and server id
     var messageID = rawEvent.d.id
     db.clq({
-            type: 'select',
-            what: '*',
-            location: 'autoDel'
+        type: 'select',
+        what: '*',
+        location: 'autoDel'
+    }, function(e, r) {
+        for (var i = 0; i < r.length; i++) {
+            try {
+                if (message.indexOf(r[i]) !== -1) {
+                    messageDelete(channelID, messageID)
+                }
+            } catch (e) { /**/ }
         }
-
-        function(e, r) {
-            for (var i = 0; i < r.length; i++) {
-                try {
-                    if (message.indexOf(r[i]) !== -1) {
-                        messageDelete(channelID, messageID)
-                    }
-                } catch (e) { /**/ }
-            }
-        })
+    })
     try {
         var serverID = bot.channels[channelID].guild_id
         var cname = bot.servers[serverID].channels[channelID].name
