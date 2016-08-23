@@ -28,7 +28,8 @@ var Discord = require('discord.io'),
     cmds = require('./assets/modules'),
     perm = require('./assets/modules/permissionHelper.js')(bot),
     startupF = false,
-    db = require('./db.js')
+    db = require('./db.js'),
+    shortid = require('shortid')
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -1052,6 +1053,24 @@ function mute(sname, userID, un) {
     }
 }
 
+function aD(phrase) {
+    id = shortid.generate()
+    db.clq({
+        type: 'insert',
+        location: 'autoDel',
+        change: [
+            [
+                'id',
+                'phrase'
+            ],
+            [
+                id,
+                phrase
+            ]
+        ]
+    })
+}
+
 disc = false
 var startUpTime = null
     /* Bot on event functions */
@@ -1288,6 +1307,19 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     //cmds.util.writeJSON('./assets/storage', storage)
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
+    db.clq({
+            type: 'select',
+            what: '*',
+            location: 'autoDel'
+        }
+
+        function(e, r) {
+            for (var i = 0; i < r.length; i++) {
+                try {
+                    if (message.indexOf(r[i]) !== -1) {}
+                } catch (e) { /**/ }
+            }
+        })
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
         var ignore = true
     }
@@ -1299,6 +1331,21 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     //Gets the message id and server id
     var messageID = rawEvent.d.id
+    db.clq({
+            type: 'select',
+            what: '*',
+            location: 'autoDel'
+        }
+
+        function(e, r) {
+            for (var i = 0; i < r.length; i++) {
+                try {
+                    if (message.indexOf(r[i]) !== -1) {
+                        messageDelete(channelID, messageID)
+                    }
+                } catch (e) { /**/ }
+            }
+        })
     try {
         var serverID = bot.channels[channelID].guild_id
         var cname = bot.servers[serverID].channels[channelID].name

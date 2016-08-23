@@ -100,7 +100,11 @@ exports.clq = function(q, callback) {
             loc = q.location,
             where = q.where,
             id = q.id
-        query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
+        if (id !== undefined) {
+            query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
+        } else {
+            query = "SELECT " + what + " FROM " + loc
+        }
         if (q.debug) {
             console.log(query)
         }
