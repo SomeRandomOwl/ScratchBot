@@ -1320,12 +1320,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     //Logging Related
     db.clq({
         type: 'select',
-        what: 'userid, msgCnt, lastChat, lastChatR',
+        what: 'userid, msgCnt, lastChat, rawLastChat',
         location: 'users',
         id: 'userID',
         where: userID
     }, function(err, res) {
-        console.log(err, res)
         try {
             if (res[0] === undefined) {
                 db.clq({
