@@ -1318,6 +1318,19 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         error = true
     }
     //Logging Related
+    db.clq({
+        type: 'select',
+        what: 'userid',
+        location: 'users',
+        id: 'userID',
+        where: userID
+    }, function(err, res) {
+        if (err !== undefined) {
+            console.log(err)
+        } else {
+            console.log(success)
+        }
+    })
     if (storage.d.Users[user] !== undefined) {
         if (storage.d.Users[user].messageCnt === undefined) {
             storage.d.Users[user].messageCnt = 1
