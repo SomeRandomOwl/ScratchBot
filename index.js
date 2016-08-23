@@ -524,7 +524,7 @@ function status(statuscall, channelID, rawEvent, cl) {
     }
 }
 /*/Posts a random cat picture, limit 1 per hour/*/
-function cat(channelID, name, sname) {
+function cat(channelID, name, sname, messageID) {
     var cattime = cmds.util.gettime()
     if (storage.d.Servers[sname].Channels[name].lastCat === undefined) {
         storage.d.Servers[sname].Channels[name].lastCat = 0
@@ -550,6 +550,7 @@ function cat(channelID, name, sname) {
             if (!error && response.statusCode == 200) {
                 catJson = JSON.parse(body)
                 messageSend(channelID, "Heres a cat! " + catJson.file)
+                messageDelete(channelID, messageID)
                 return elapsed
             }
         })
@@ -562,7 +563,7 @@ function cat(channelID, name, sname) {
     //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Posts a random snake picture, limit 1 per hour/*/
-function snake(channelID, name, sname, userID) {
+function snake(channelID, name, sname, userID, messageID) {
     var snaketime = cmds.util.gettime()
     if (storage.d.Servers[sname].Channels[name].lastsnake === undefined) {
         storage.d.Servers[sname].Channels[name].lastsnake = 0
@@ -588,6 +589,7 @@ function snake(channelID, name, sname, userID) {
             if (!error && response.statusCode == 200) {
                 snakeJson = JSON.parse(body)
                 messageSend(channelID, "Heres a snake! " + snakeJson.file)
+                messageDelete(channelID, messageID)
                 return elapsed
             }
         })
@@ -607,7 +609,7 @@ function snake(channelID, name, sname, userID) {
     //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Posts a random pug picture, limit 1 per hour/*/
-function pug(channelID, name, sname) {
+function pug(channelID, name, sname, messageID) {
     var pugtime = cmds.util.gettime()
     if (storage.d.Servers[sname].Channels[name].lastpug === undefined) {
         storage.d.Servers[sname].Channels[name].lastpug = 0
@@ -633,6 +635,7 @@ function pug(channelID, name, sname) {
             if (!error && response.statusCode == 200) {
                 pugJson = JSON.parse(body)
                 messageSend(channelID, "Heres a pug! " + pugJson.pugs[0])
+                messageDelete(channelID, messageID)
                 return elapsed
             }
         })
@@ -1846,8 +1849,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('cat') === 0 && ignore !== true) {
-            messageDelete(channelID, messageID)
-            cat(channelID, cname, sname)
+            cat(channelID, cname, sname, messageID)
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('pin') === 0 && message.toLowerCase().indexOf('ping') === -1 && ignore !== true) {
@@ -1867,13 +1869,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('snake') === 0 && ignore !== true) {
-            messageDelete(channelID, messageID)
-            snake(channelID, cname, sname, userID)
+            snake(channelID, cname, sname, userID, messageID)
+            rconcmd = 'Yes'
         }
         rconcmd = 'Yes'
         if (message.toLowerCase().indexOf('pug') === 0 && ignore !== true) {
-            messageDelete(channelID, messageID)
-            pug(channelID, cname, sname)
+            pug(channelID, cname, sname, messageID)
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('dragon') === 0 && ignore !== true) {
