@@ -1334,7 +1334,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         [
                             'userid',
                             'name',
-                            'msgCnt'
+                            'msgCnt',
                             'lastchat',
                             'rawLastChat',
                             'tracking'
