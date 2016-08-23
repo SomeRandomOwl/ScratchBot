@@ -543,7 +543,7 @@ function cat(channelID, name, sname) {
         storage.d.Servers[sname].Channels[name].lastCat = 0
         storage.d.Servers[sname].Channels[name].lastCatActt = 0
     }
-    if (elapsed.h > 0) {
+    if (elapsed.m > 45) {
         var catacttime = moment().utcOffset('-0500').format('h:mm a')
         storage.d.Servers[sname].Channels[name].lastCatActt = catacttime
         request('http://random.cat/meow', function(error, response, body) {
@@ -581,7 +581,7 @@ function snake(channelID, name, sname, userID) {
         storage.d.Servers[sname].Channels[name].lastsnake = 0
         storage.d.Servers[sname].Channels[name].lastsnakeActt = 0
     }
-    if (elapsed.h > 0) {
+    if (elapsed.m > 45) {
         var snakeacttime = moment().utcOffset('-0500').format('h:mm a')
         storage.d.Servers[sname].Channels[name].lastsnakeActt = snakeacttime
         request('http://fur.im/snek/snek.php', function(error, response, body) {
@@ -626,7 +626,7 @@ function pug(channelID, name, sname) {
         storage.d.Servers[sname].Channels[name].lastpug = 0
         storage.d.Servers[sname].Channels[name].lastpugActt = 0
     }
-    if (elapsed.h > 0) {
+    if (elapsed.m > 45) {
         var pugacttime = moment().utcOffset('-0500').format('h:mm a')
         storage.d.Servers[sname].Channels[name].lastpugActt = pugacttime
         request('http://pugme.herokuapp.com/bomb?count=1', function(error, response, body) {
