@@ -1320,15 +1320,61 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     //Logging Related
     db.clq({
         type: 'select',
-        what: 'userid',
+        what: 'userid, messageCnt, lastChat, lastChatR',
         location: 'users',
         id: 'userID',
         where: userID
     }, function(err, res) {
-        if (err !== null) {
-            console.log(err)
-        } else {
-            console.log('success')
+        try {
+            if (res[0] === undefined) {
+                db.clq({
+                    type: 'insert',
+                    location: 'users',
+                    change: [
+                        [
+                            'userid',
+                            'name',
+                            'msgCnt'
+                            'lastchat',
+                            'rawLastChat',
+                            'tracking'
+                        ],
+                        [
+                            userID,
+                            user,
+                            '1',
+                            moment().format('MMMM Do YYYY, hh:mm:ss a'),
+                            cmds.util.gettime(),
+                            moment().format('MMMM Do YYYY, hh:mm:ss a')
+                        ]
+                    ]
+                })
+            } else {
+                db.clq({
+                    type: 'update',
+                    location: 'users',
+                    id: 'userID',
+                    where: userID,
+                    change: [
+                        [
+                            'messageCnt',
+                            'lastChat',
+                            'lastChatR'
+                        ],
+                        [
+                            res[0].msgCnt + 1,
+                            moment().format('MMMM Do YYYY, hh:mm:ss a'),
+                            cmds.util.gettime()
+                        ]
+                    ]
+                }, function(e, r) {
+                    if (e !== null) {
+                        console.log(e)
+                    }
+                })
+            }
+        } catch (E) {
+            console.log(E)
         }
     })
     if (storage.d.Users[user] !== undefined) {
