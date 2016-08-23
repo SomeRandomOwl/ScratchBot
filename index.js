@@ -1054,7 +1054,6 @@ function mute(sname, userID, un) {
 }
 
 function aD(phrase) {
-    id = shortid.generate()
     db.clq({
         type: 'insert',
         location: 'autoDel',
@@ -1064,7 +1063,7 @@ function aD(phrase) {
                 'phrase'
             ],
             [
-                id,
+                shortid.generate(),
                 phrase
             ]
         ]
