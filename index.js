@@ -550,7 +550,6 @@ function cat(channelID, name, sname, messageID) {
             if (!error && response.statusCode == 200) {
                 catJson = JSON.parse(body)
                 messageSend(channelID, "Heres a cat! " + catJson.file)
-                messageDelete(channelID, messageID)
                 return elapsed
             }
         })
@@ -558,6 +557,7 @@ function cat(channelID, name, sname, messageID) {
         storage.d.Servers[sname].Channels[name].lastCat = lastcattime
     } else {
         tempmsg(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + catacttime + ", time untill next post is allowed: " + nextTime, 5000)
+        messageDelete(channelID, messageID)
         return elapsed
     }
     //cmds.util.writeJSON('./assets/storage', storage)
@@ -589,7 +589,6 @@ function snake(channelID, name, sname, userID, messageID) {
             if (!error && response.statusCode == 200) {
                 snakeJson = JSON.parse(body)
                 messageSend(channelID, "Heres a snake! " + snakeJson.file)
-                messageDelete(channelID, messageID)
                 return elapsed
             }
         })
@@ -604,6 +603,7 @@ function snake(channelID, name, sname, userID, messageID) {
         })
     } else {
         tempmsg(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + snakeacttime + ", time untill next post is allowed: " + nextTime, 5000)
+        messageDelete(channelID, messageID)
         return elapsed
     }
     //cmds.util.writeJSON('./assets/storage', storage)
@@ -635,7 +635,6 @@ function pug(channelID, name, sname, messageID) {
             if (!error && response.statusCode == 200) {
                 pugJson = JSON.parse(body)
                 messageSend(channelID, "Heres a pug! " + pugJson.pugs[0])
-                messageDelete(channelID, messageID)
                 return elapsed
             }
         })
@@ -643,6 +642,7 @@ function pug(channelID, name, sname, messageID) {
         storage.d.Servers[sname].Channels[name].lastpug = lastpugtime
     } else {
         tempmsg(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + pugacttime + ", time untill next post is allowed: " + nextTime, 5000)
+        messageDelete(channelID, messageID)
         return elapsed
     }
     //cmds.util.writeJSON('./assets/storage', storage)
