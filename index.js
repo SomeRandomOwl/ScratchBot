@@ -1325,7 +1325,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         id: 'userID',
         where: userID
     }, function(err, res) {
-        console.log(res)
+        console.log(res, err)
         try {
             if (res[0] === undefined) {
                 db.clq({
