@@ -1357,9 +1357,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     where: userID,
                     change: [
                         [
-                            'messageCnt',
+                            'msgCnt',
                             'lastChat',
-                            'lastChatR'
+                            'rawLastChat'
                         ],
                         [
                             res[0].msgCnt + 1,
