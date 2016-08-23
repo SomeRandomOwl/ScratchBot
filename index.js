@@ -1011,6 +1011,13 @@ function DBquery(channelID, query) {
             messageSend(channelID, rows, {
                 cb: true,
                 type: 'json'
+            }, function(err, r) {
+                if (err) {
+                    messageSend(channelID, r, {
+                        cb: true,
+                        type: 'json'
+                    })
+                }
             })
         }
     })
