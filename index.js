@@ -263,17 +263,20 @@ function messageSend(channelID, msg, set, callback) {
         typing: false
     }, function(error, response) {
         if (error) {
+            if (typeof callback === "function") {
+                var err = true;
+                var res = error
+                callback(err, res);
+            }
             console.log(error)
-            console.log(channelID)
-            console.log(msg)
         }
         try {
             logger.info(chalk.gray('Last Message Sent ID: ' + response.id))
             sentPrevId = response.id
             if (typeof callback === "function") {
-                const err = false;
-                const res = response.id
-                callback(res);
+                var err = false;
+                var res = response.id
+                callback(err, res);
             }
         } catch (e) {
             return
