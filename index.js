@@ -1328,7 +1328,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (err !== null) {
             console.log(err)
         } else {
-            console.log(success)
+            console.log('success')
         }
     })
     if (storage.d.Users[user] !== undefined) {
