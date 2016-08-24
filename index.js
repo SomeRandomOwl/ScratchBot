@@ -1885,7 +1885,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cat(channelID, cname, sname, messageID)
             rconcmd = 'Yes'
         }
-        if (message.toLowerCase().indexOf('aD') === 0 && ignore !== true) {
+        if (message.toLowerCase().indexOf('ad') === 0 && ignore !== true) {
             phrase = message.substring(message.indexOf(' ') + 1)
             roles = bot.servers[serverID].members[userID].roles
             permissions = []
