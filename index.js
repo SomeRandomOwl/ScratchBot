@@ -1903,11 +1903,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             for (var i = 0; i < manage_messagesCheck.length; i++) {
                 if (manage_messagesCheck[i] && stop === false) {
                     var stop = true
-                    ad(phrase, channelID)
+                    aD(phrase, channelID)
                     messageSend(channelID, "That phrase will now be automatically deleted")
                 } else if (userID === SownerId && stop === false) {
                     var stop = true
-                    ad(phrase, channelID)
+                    aD(phrase, channelID)
                     messageSend(channelID, "That phrase will now be automatically deleted")
                 }
             }
