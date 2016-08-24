@@ -557,7 +557,7 @@ function cat(channelID, name, sname, messageID) {
         var lastcattime = cmds.util.gettime()
         storage.d.Servers[sname].Channels[name].lastCat = lastcattime
     } else {
-        tempmsg(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + catacttime + ", time untill next post is allowed: " + nextTime, 5000)
+        tempmsg(channelID, ":no_entry: Hey hold up, only one cat per hour, last cat was posted: " + catacttime + ", time untill next post is allowed: " + nextTime, 5000)
         messageDelete(channelID, messageID)
         return elapsed
     }
@@ -603,7 +603,7 @@ function snake(channelID, name, sname, userID, messageID) {
             }
         })
     } else {
-        tempmsg(channelID, ":no_entry: Hey hold up, only one pug per hour, last pug was posted: " + snakeacttime + ", time untill next post is allowed: " + nextTime, 5000)
+        tempmsg(channelID, ":no_entry: Hey hold up, only one snake per hour, last snake was posted: " + snakeacttime + ", time untill next post is allowed: " + nextTime, 5000)
         messageDelete(channelID, messageID)
         return elapsed
     }
