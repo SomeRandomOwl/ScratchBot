@@ -1885,6 +1885,34 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             cat(channelID, cname, sname, messageID)
             rconcmd = 'Yes'
         }
+        if (message.toLowerCase().indexOf('aD') === 0 && ignore !== true) {
+            phrase = message.substring(message.indexOf(' ') + 1)
+            roles = bot.servers[serverID].members[userID].roles
+            permissions = []
+            manage_messagesCheck = []
+            if (roles.length !== 0) {
+                for (var i = 0; i < roles.length; i++) {
+                    permissions.push(bot.servers[serverID].roles[roles[i]].permissions)
+                }
+            }
+            for (var i = 0; i < permissions.length; i++) {
+                manage_messagesCheck.push(perm.decodePerm(permissions[i]).CHAT_MANAGE_MESSAGES)
+                manage_messagesCheck.push(perm.decodePerm(permissions[i]).GEN_ADMINISTRATOR)
+            }
+            var stop === false
+            for (var i = 0; i < manage_messagesCheck.length; i++) {
+                if (manage_messagesCheck[i] && stop === false) {
+                    var stop = true
+                    ad(phrase, channelID)
+                    messageSend(channelID, "That phrase will now be automatically deleted")
+                } else if (userID === SownerId && stop === false) {
+                    var stop = true
+                    ad(phrase, channelID)
+                    messageSend(channelID, "That phrase will now be automatically deleted")
+                }
+            }
+            rconcmd = 'Yes'
+        }
         if (message.toLowerCase().indexOf('pin') === 0 && message.toLowerCase().indexOf('ping') === -1 && ignore !== true) {
             var pincmd = message
             var pincall = pincmd.replace('pin ', '')
