@@ -1899,7 +1899,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 manage_messagesCheck.push(perm.decodePerm(permissions[i]).CHAT_MANAGE_MESSAGES)
                 manage_messagesCheck.push(perm.decodePerm(permissions[i]).GEN_ADMINISTRATOR)
             }
-            var stop === false
+            var stop = false
             for (var i = 0; i < manage_messagesCheck.length; i++) {
                 if (manage_messagesCheck[i] && stop === false) {
                     var stop = true
