@@ -4,7 +4,10 @@ var config = require('../../config.json'),
         host: 'localhost',
         user: config.mySQLUser,
         password: config.mySQLPass,
-        database: config.mySQLDb
+        database: config.mySQLDb,
+        supportBigNumbers: true,
+        bigNumberStrings: true,
+
     });
 
 exports.con = db
