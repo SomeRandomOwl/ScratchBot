@@ -1393,11 +1393,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     where: userID,
                     change: [
                         [
+                            'name',
                             'msgCnt',
                             'lastChat',
                             'rawLastChat'
                         ],
                         [
+                            user
                             res[0].msgCnt + 1,
                             moment().format('MMMM Do YYYY, hh:mm:ss a'),
                             cmds.util.gettime()
@@ -1661,6 +1663,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         if (message.toLowerCase().indexOf('stats') === 0 && ignore !== true) {
             var len = message.length
             var name = message.substring(message.indexOf(' ') + 1)
+            messageSend(channelID, 'Please note these stats _Will_ not be accurate! Currently migrating the database to a new format so the old system is in place untill it is updated, but that also means that the triggers that updates your stats wont be present, but dont worry they are still being updated')
             if (len === 5) {
                 try {
                     cmds.util.whoIs(bot, storage, user, serverID, true, function(err, statW) {
@@ -1683,7 +1686,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         })
                     })
                 } catch (e) {
-                    messageSend(channelID, 'Um...There was a error doing that, probally because you havent sent any links yet')
+                    messageSend(channelID, 'There was a error pulling your stats from the database')
                     console.log(e)
                 }
             } else if (message.toLowerCase().indexOf('server') !== -1) {
