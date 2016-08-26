@@ -1326,6 +1326,9 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     } else {
         DM = false
     }
+    if (user.indexOf("\'")) {
+        user.replace("\'", "")
+    }
     //Gets the message id and server id
     var messageID = rawEvent.d.id
     db.clq({
