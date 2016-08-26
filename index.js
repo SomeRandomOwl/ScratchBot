@@ -1507,7 +1507,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             what: 'channelID, linkCnt',
             location: 'channels',
             id: 'channelID',
-            where: userID
+            where: channelID
         }, function(err, res) {
             try {
                 if (res[0] === undefined) {
