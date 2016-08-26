@@ -356,7 +356,6 @@ function relxkcd(quer, channelID, name, sname) {
             })
         }
     })
-    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Retrieves a current status of a user/*/
 function status(statuscall, channelID, rawEvent, cl) {
@@ -561,7 +560,6 @@ function cat(channelID, name, sname, messageID) {
         messageDelete(channelID, messageID)
         return elapsed
     }
-    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Posts a random snake picture, limit 1 per hour/*/
 function snake(channelID, name, sname, userID, messageID) {
@@ -607,7 +605,6 @@ function snake(channelID, name, sname, userID, messageID) {
         messageDelete(channelID, messageID)
         return elapsed
     }
-    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Posts a random pug picture, limit 1 per hour/*/
 function pug(channelID, name, sname, messageID) {
@@ -646,7 +643,6 @@ function pug(channelID, name, sname, messageID) {
         messageDelete(channelID, messageID)
         return elapsed
     }
-    //cmds.util.writeJSON('./assets/storage', storage)
 }
 /*/Posts a random image from a SFW scenery subreddit/*/
 function redditScenery(channelID, reddit, name, sname) {
@@ -665,7 +661,6 @@ function redditScenery(channelID, reddit, name, sname) {
     } else {
         messageSend(channelID, "Not a recgonized image subreddit to see recgonized reddits type " + commandmod + "redditscenery list")
     }
-    //cmds.util.writeJSON('./assets/storage', storage)
 }
 
 function dragon(channelID) {
@@ -1305,7 +1300,6 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         return
     }
 
-    //cmds.util.writeJSON('./assets/storage', storage)
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
@@ -1350,8 +1344,31 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 /**/
             }
         }
+        if (storage.d.Servers[sname].Channels[cname].nsfw === true) {
+            nsfw = true
+        } else {
+            nsfw = false
+        }
+        if (storage.d.Servers[sname].settings.prefixOvrid !== undefined) {
+            commandmod = storage.d.Servers[sname].settings.prefixOvrid
+        } else {
+            commandmod = '!'
+        }
+        if (rawEvent.d.mentions[0].id !== undefined) {
+            if (rawEvent.d.mentions[0].id === bot.id) {
+                if (message.indexOf('<@') === 0) {
+                    message = message.replace("<@" + bot.id + "> ", commandmod)
+                }
+            }
+        }
     } catch (e) {
         error = true
+        try {
+            storage.d.Servers[sname].Channels[cname].nsfw = false
+        } catch (e) {
+            /**/
+        }
+        nsfw = false
     }
     //Logging Related
     db.clq({
@@ -1415,55 +1432,65 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             console.log(E)
         }
     })
-    if (storage.d.Users[user] !== undefined) {
-        if (storage.d.Users[user].messageCnt === undefined) {
-            storage.d.Users[user].messageCnt = 1
-            storage.d.Users[user].lastChat = moment().utcOffset('-0500').format('MMMM Do YYYY, hh:mm:ss a')
-            storage.d.Users[user].lastChatR = cmds.util.gettime()
-        } else {
-            mucount = storage.d.Users[user].messageCnt
-            mucount = mucount + 1
-            storage.d.Users[user].messageCnt = mucount
-            storage.d.Users[user].lastChat = moment().utcOffset('-0500').format('MMMM Do YYYY, hh:mm:ss a')
-            storage.d.Users[user].lastChatR = cmds.util.gettime()
-        }
-        //cmds.util.writeJSON('./assets/storage', storage)
-    }
-    try {
-        if (storage.d.Servers[sname].Channels[cname].nsfw === true) {
-            nsfw = true
-        } else {
-            nsfw = false
-        }
-    } catch (e) {
-        try {
-            storage.d.Servers[sname].Channels[cname].nsfw = false
-        } catch (e) {
-            /**/
-        }
-        nsfw = false
-    }
     if (rawEvent.d.attachments[0] !== undefined) {
-        message = rawEvent.d.attachments[0].url
+        message = message + ' ' + rawEvent.d.attachments[0].url
     }
     if (message.toLowerCase().indexOf('http') !== -1) {
         var timeAt = moment().utcOffset('-0500').format('MMMM Do YYYY, hh:mm:ss a')
-            //logger.info(chalk.gray("Link Posted, logging to file"))
         if (message.indexOf(' ', message.indexOf('http')) === -1) {
             var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'))
         } else if (message.indexOf(' ', message.indexOf('http')) !== -1) {
             var link = '[' + timeAt + '] ' + user + ': ' + message.substring(message.indexOf('http'), message.indexOf(' ', message.indexOf('http')))
         }
-        if (storage.d.Users[user] !== undefined) {
-            if (storage.d.Users[user].linkCnt === undefined) {
-                storage.d.Users[user].linkCnt = 1
-            } else {
-                lucount = storage.d.Users[user].linkCnt
-                lucount = lucount + 1
-                storage.d.Users[user].linkCnt = lucount
+        db.clq({
+            type: 'select',
+            what: 'userid, linkCnt',
+            location: 'users',
+            id: 'userID',
+            where: userID
+        }, function(err, res) {
+            try {
+                if (res[0] === undefined) {
+                    db.clq({
+                        type: 'insert',
+                        location: 'users',
+                        change: [
+                            ['userid', 'name', 'linkCnt', 'lastchat', 'rawLastChat', 'tracking'],
+                            [
+                                userID,
+                                user,
+                                '1',
+                                moment().format('MMMM Do YYYY, hh:mm:ss a'),
+                                cmds.util.gettime(),
+                                moment().format('MMMM Do YYYY, hh:mm:ss a')
+                            ]
+                        ]
+                    })
+                } else {
+                    db.clq({
+                        type: 'update',
+                        location: 'users',
+                        id: 'userID',
+                        where: userID,
+                        change: [
+                            ['name', 'linkCnt', 'lastChat', 'rawLastChat'],
+                            [
+                                user
+                                res[0].linkCnt + 1,
+                                moment().format('MMMM Do YYYY, hh:mm:ss a'),
+                                cmds.util.gettime()
+                            ]
+                        ]
+                    }, function(e, r) {
+                        if (e !== null) {
+                            console.log(e)
+                        }
+                    })
+                }
+            } catch (E) {
+                console.log(E)
             }
-            //cmds.util.writeJSON('./assets/storage', storage)
-        }
+        })
         mkdirp('./logs/' + sname, function(err) {
             try {
                 if (nsfw) {
@@ -1496,7 +1523,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 e = e
             }
         }
-        //cmds.util.writeJSON('./assets/storage', storage)
     }
     if (sname !== undefined) {
         if (storage.d.Servers[sname].messageCnt === undefined) {
@@ -1506,17 +1532,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             mscount = mscount + 1
             storage.d.Servers[sname].messageCnt = mscount
         }
-        //cmds.util.writeJSON('./assets/storage', storage)
-    }
-    //debug!
-    try {
-        if (storage.d.Servers[sname].settings.prefixOvrid !== undefined) {
-            commandmod = storage.d.Servers[sname].settings.prefixOvrid
-        } else {
-            commandmod = '!'
-        }
-    } catch (e) {
-        e = e
+
     }
     //function to quick call message sending to minimize code
     function msgT(msg, cb, type) {
@@ -1535,18 +1551,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             message: msg,
             typing: false
         });
-    }
-    //try {
-    try {
-        if (rawEvent.d.mentions[0].id !== undefined) {
-            if (rawEvent.d.mentions[0].id === bot.id) {
-                if (message.indexOf('<@') === 0) {
-                    message = message.replace("<@" + bot.id + "> ", commandmod)
-                }
-            }
-        }
-    } catch (e) {
-        var error = null
     }
     //This tests for commands using the command mod set in the config
     if (message.indexOf(commandmod) === 0) {
