@@ -663,7 +663,7 @@ function redditScenery(channelID, reddit, name, sname) {
     }
 }
 
-function dragon(channelID) {
+function dragon(channelID, messageID) {
     tempmsg(channelID, "Getting you a dragon, hold on...", 2000)
     request('https://www.reddit.com/r/' + 'dragons' + '.json', function(error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -673,10 +673,25 @@ function dragon(channelID) {
             img = redditP.data.url
             title = redditP.data.title
             messageSend(channelID, title + '\n' + img)
+            messageDelete(channelID, messageID)
         }
     })
 }
-/*/Help command/*/
+
+function aww(channelID, messageID) {
+    tempmsg(channelID, "Getting you a cute picture, hold on...", 2000)
+    request('https://www.reddit.com/r/' + 'aww' + '.json', function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            redditJson = JSON.parse(body)
+            posts = redditJson.data.children
+            redditP = posts[Math.floor(Math.random() * posts.length)];
+            img = redditP.data.url
+            title = redditP.data.title
+            messageSend(channelID, title + '\n' + img)
+            messageDelete(channelID, messageID)
+        }
+    })
+} /*/Help command/*/
 function help(cmd, channelID) {
     if (help) {
         try {
@@ -1974,6 +1989,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             dragon(channelID)
             rconcmd = "Yes"
         }
+        if (message.toLowerCase().indexOf('aww') === 0 && ignore !== true) {
+            messageDelete(channelID, messageID)
+            aww(channelID)
+            rconcmd = "Yes"
+        }
+
         if (message.toLowerCase().indexOf('redditscenery') === 0 && ignore !== true) {
             var random = redditList[Math.floor(Math.random() * redditList.length)]
             var redditcmd = message
