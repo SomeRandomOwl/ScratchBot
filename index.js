@@ -1561,17 +1561,52 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 console.log(E)
             }
         })
-
     }
     if (sname !== undefined) {
-        if (storage.d.Servers[sname].messageCnt === undefined) {
-            storage.d.Servers[sname].messageCnt = 1
-        } else {
-            mscount = storage.d.Servers[sname].messageCnt
-            mscount = mscount + 1
-            storage.d.Servers[sname].messageCnt = mscount
-        }
-
+        db.clq({
+            type: 'select',
+            what: 'serverid, messageCnt',
+            location: 'servers',
+            id: 'serverid',
+            where: serverID
+        }, function(err, res) {
+            try {
+                if (res[0] === undefined) {
+                    db.clq({
+                        type: 'insert',
+                        location: 'channels',
+                        change: [
+                            ['serverid', 'name', 'messageCnt', 'sOwnerId'],
+                            [
+                                serverID,
+                                sname,
+                                '1',
+                                bot.servers[serverID].owner_id
+                            ]
+                        ]
+                    })
+                } else {
+                    db.clq({
+                        type: 'update',
+                        location: 'servers',
+                        id: 'serverid',
+                        where: serverID,
+                        change: [
+                            ['messageCnt'],
+                            [
+                                res[0].messageCnt + 1
+                            ]
+                        ]
+                    }, function(e, r) {
+                        if (e !== null) {
+                            console.log(e)
+                        }
+                    })
+                }
+            } catch (E) {
+                console.log(E)
+            }
+        })
     }
     //function to quick call message sending to minimize code
     function msgT(msg, cb, type) {
