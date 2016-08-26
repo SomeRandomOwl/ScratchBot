@@ -1504,7 +1504,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (cname !== undefined) {
         db.clq({
             type: 'select',
-            what: 'channelID, linkCnt',
+            what: 'channelID, messageCnt',
             location: 'channels',
             id: 'channelID',
             where: channelID
