@@ -1416,7 +1416,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             'rawLastChat'
                         ],
                         [
-                            user
+                            user,
                             res[0].msgCnt + 1,
                             moment().format('MMMM Do YYYY, hh:mm:ss a'),
                             cmds.util.gettime()
