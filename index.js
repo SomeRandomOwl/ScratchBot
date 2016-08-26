@@ -1502,27 +1502,51 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         })
     }
     if (cname !== undefined) {
-        try {
-            if (storage.d.Servers[sname].Channels[cname].messageCnt === undefined) {
-                storage.d.Servers[sname].Channels[cname].messageCnt = 1
-            } else {
-                mccount = storage.d.Servers[sname].Channels[cname].messageCnt
-                mccount = mccount + 1
-                storage.d.Servers[sname].Channels[cname].messageCnt = mccount
-            }
-        } catch (e) {
+        db.clq({
+            type: 'select',
+            what: 'channelID, linkCnt',
+            location: 'channels',
+            id: 'channelID',
+            where: userID
+        }, function(err, res) {
             try {
-                if (storage.d.Servers[sname].Channels[cname] === undefined) {
-                    storage.d.Servers[sname].Channels[cname] = {
-                        "id": channelID,
-                        "type": 'text',
-                        "messageCnt": 0,
-                    }
+                if (res[0] === undefined) {
+                    db.clq({
+                        type: 'insert',
+                        location: 'channels',
+                        change: [
+                            ['channelID', 'serverID', 'name', 'messageCnt'],
+                            [
+                                channelID,
+                                serverID,
+                                cname,
+                                '1'
+                            ]
+                        ]
+                    })
+                } else {
+                    db.clq({
+                        type: 'update',
+                        location: 'channels',
+                        id: 'channelID',
+                        where: channelID,
+                        change: [
+                            ['messageCnt'],
+                            [
+                                res[0].messageCnt + 1
+                            ]
+                        ]
+                    }, function(e, r) {
+                        if (e !== null) {
+                            console.log(e)
+                        }
+                    })
                 }
-            } catch (e) {
-                e = e
+            } catch (E) {
+                console.log(E)
             }
-        }
+        })
+
     }
     if (sname !== undefined) {
         if (storage.d.Servers[sname].messageCnt === undefined) {
