@@ -1475,7 +1475,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         change: [
                             ['name', 'linkCnt', 'lastChat', 'rawLastChat'],
                             [
-                                user
+                                user,
                                 res[0].linkCnt + 1,
                                 moment().format('MMMM Do YYYY, hh:mm:ss a'),
                                 cmds.util.gettime()
