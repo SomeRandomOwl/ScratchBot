@@ -1213,7 +1213,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     verb = false
 
     db.con.query('SELECT VERB FROM servers WHERE serverid = ' + rawEvent.d.guild_id, function(err, rows) {
-        console.log(rows)
+        console.log(JSON.parse(rows))
     })
     try {
         db.clq({
