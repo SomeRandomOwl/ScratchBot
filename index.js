@@ -1217,7 +1217,9 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         id: 'serverID',
         where: rawEvent.d.guild_id
     }, function(e, r) {
-        console.log(r)
+        try {
+            console.log(r[0])
+        } catch (e) { /**/ }
     })
     try {
         db.clq({
