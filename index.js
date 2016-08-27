@@ -1210,6 +1210,7 @@ bot.on('disconnect', function() {
     logger.info(chalk.green("Reconnected"))
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
+    var verb = false
     db.clq({
         type: 'select',
         what: 'verb',
@@ -1218,8 +1219,10 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         where: rawEvent.d.guild_id
     }, function(e, r) {
         try {
-            console.log(r[0].verb)
-        } catch (e) { /**/ }
+            verb = r[0].verb
+        } catch (e) {
+            verb = false
+        }
     })
     try {
         db.clq({
