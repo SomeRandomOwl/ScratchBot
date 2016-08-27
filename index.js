@@ -1449,7 +1449,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                 })
             }
         } catch (E) {
-            console.log(E, err, rows)
+            console.log(E, err)
         }
     })
     if (rawEvent.d.attachments[0] !== undefined) {
@@ -1507,7 +1507,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     })
                 }
             } catch (E) {
-                console.log(E, err, rows)
+                console.log(E, err)
             }
         })
         mkdirp('./logs/' + sname, function(err) {
@@ -1562,7 +1562,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     })
                 }
             } catch (E) {
-                console.log(E, err, rows)
+                console.log(E, err)
             }
         })
     }
