@@ -1211,16 +1211,9 @@ bot.on('disconnect', function() {
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     verb = false
-    db.clq({
-        type: 'select',
-        what: 'serverID, verb',
-        location: 'servers',
-        id: 'serverID',
-        where: rawEvent.d.guild_id
-    }, function(e, r) {
-        try {
-            console.log(r[0])
-        } catch (e) { /**/ }
+
+    db.con.query('SELECT VERB FROM servers WHERE serverid = ' + rawEvent.d.guild_id, function(err, rows) {
+        console.log(rows)
     })
     try {
         db.clq({
