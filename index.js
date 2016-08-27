@@ -29,7 +29,8 @@ var Discord = require('discord.io'),
     perm = require('./assets/modules/permissionHelper.js')(bot),
     startupF = false,
     db = require('./db.js'),
-    shortid = require('shortid')
+    shortid = require('shortid'),
+    meta
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -1331,7 +1332,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     //Gets the message id and server id
     var messageID = rawEvent.d.id
-    var meta = {
+    meta = {
         userID: userID,
         user: user,
         channelID: channelID,
