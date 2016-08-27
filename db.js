@@ -12,8 +12,7 @@ var config = require('../../config.json'),
 var queue = []
 var pause = false
 var sleep = 0
-exports.con = db
-exports.queuer = {
+var queuer = {
     add: function(item) {
         queue.push(item)
         if (sleep > 4) {
@@ -64,6 +63,8 @@ exports.queuer = {
     }
 }
 queuer.procces()
+exports.con = db
+exports.queuer = queuer
 exports.clq = function(q, callback) {
     if (q.type.toUpperCase() === 'INSERT') {
         var change = q.change,
