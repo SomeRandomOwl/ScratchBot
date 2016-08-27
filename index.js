@@ -1342,6 +1342,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         messageID: messageID,
         rawEvent: rawEvent
     }
+    console.log(meta)
     db.clq({
         type: 'select',
         what: '*',
@@ -1640,7 +1641,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             typing: false
         });
     }
-    //This tests for commands using the command mod set in the config
+    /**COMMAND RECGONITION**/
     if (message.indexOf(commandmod) === 0) {
         message = message.replace(commandmod, '')
         if (message.toLowerCase().indexOf('ping') === 0 && ignore !== true) {
@@ -2138,6 +2139,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             }
         }
     }
+    /****/
     if (channelID === '164845697508704257') {
         if (message.indexOf('#') !== -1) {
             for (var pound = 0; pound > -1;) {
