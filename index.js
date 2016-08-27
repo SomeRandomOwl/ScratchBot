@@ -1213,7 +1213,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     db.clQ({
         type: 'select',
         what: 'verb',
-        location: 'servers'
+        location: 'servers',
         id: 'serverID',
         where: rawEvent.d.guild_id
     }, function(e, r) {
