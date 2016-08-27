@@ -1403,7 +1403,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     //Logging Related
     db.clq({
         type: 'select',
-        what: 'userid, msgCnt, lastChat, rawLastChat',
+        what: 'userid, msgCnt',
         location: 'users',
         id: 'userID',
         where: userID
