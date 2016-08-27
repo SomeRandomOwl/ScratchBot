@@ -1210,6 +1210,7 @@ bot.on('disconnect', function() {
     logger.info(chalk.green("Reconnected"))
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
+    verb = false
     db.clq({
         type: 'select',
         what: 'serverID, verb',
