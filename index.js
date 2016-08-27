@@ -1338,7 +1338,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         serverID: serverID,
         serverName: sname,
         channelName: cname,
-        messageID: messageID
+        messageID: messageID,
         rawEvent: rawEvent
     }
     db.clq({
