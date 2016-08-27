@@ -46,12 +46,14 @@ var queuer = {
             console.log('Queue is empty')
         } else {
             for (var i = 0; i < 3; i++) {
-                db.query(queue[i], function(err, rows) {
-                    if (err !== null) {
-                        console.log(err)
-                    }
-                    queuer.remove(1)
-                })
+                if (queue.length !== 0) {
+                    db.query(queue[i], function(err, rows) {
+                        if (err !== null) {
+                            console.log(err)
+                        }
+                        queuer.remove(1)
+                    })
+                }
             }
             if (sleep !== 5 && !pause) {
                 setTimeout(function() {
