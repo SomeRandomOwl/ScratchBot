@@ -126,7 +126,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
             bot.getAudioContext({
                 channel: userVoiceC,
                 stereo: true
-            }, function(stream) {
+            }, function(e, stream) {
                 stream.playAudioFile('./assets/voiceLines/' + file);
             })
         } else {
@@ -142,7 +142,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
                         bot.getAudioContext({
                             channel: userVoiceC,
                             stereo: true
-                        }, function(stream) {
+                        }, function(e, stream) {
                             stream.playAudioFile('./assets/voiceLines/' + fileN);
                         })
                     } else {
