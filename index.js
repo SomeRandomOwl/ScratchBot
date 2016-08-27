@@ -1332,17 +1332,6 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     //Gets the message id and server id
     var messageID = rawEvent.d.id
-    meta = {
-        userID: userID,
-        user: user,
-        channelID: channelID,
-        serverID: serverID,
-        serverName: sname,
-        channelName: cname,
-        messageID: messageID,
-        rawEvent: rawEvent
-    }
-    console.log(meta)
     db.clq({
         type: 'select',
         what: '*',
@@ -1400,6 +1389,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         }
         nsfw = false
     }
+    meta = {
+        userID: userID,
+        user: user,
+        channelID: channelID,
+        serverID: serverID,
+        serverName: sname,
+        channelName: cname,
+        messageID: messageID,
+        rawEvent: rawEvent
+    }
+
     //Logging Related
     db.clq({
         type: 'select',
