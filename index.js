@@ -1218,7 +1218,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         where: rawEvent.d.guild_id
     }, function(e, r) {
         try {
-            console.log(r[0].rowDataPacket)
+            console.log(r[0].RowDataPacket)
         } catch (e) { /**/ }
     })
     try {
