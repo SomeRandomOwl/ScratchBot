@@ -1212,8 +1212,8 @@ bot.on('disconnect', function() {
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     verb = false
 
-    db.con.query('SELECT VERB FROM servers WHERE serverid = ' + rawEvent.d.guild_id, function(err, rows) {
-        console.log(rows[0])
+    db.con.query('SELECT verb FROM servers WHERE serverid = ' + rawEvent.d.guild_id, function(err, rows) {
+        console.log(rows[0].verb)
     })
     try {
         db.clq({
