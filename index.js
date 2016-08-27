@@ -1212,7 +1212,7 @@ bot.on('disconnect', function() {
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     db.clq({
         type: 'select',
-        what: 'verb',
+        what: 'serverID, verb',
         location: 'servers',
         id: 'serverID',
         where: rawEvent.d.guild_id
