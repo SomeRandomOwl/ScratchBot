@@ -13,7 +13,7 @@ var queue = []
 var pause = false
 var sleep = 0
 var queuer = {
-    addQ: function(item) {
+    add: function(item) {
         queue.push(item)
         if (sleep > 4) {
             sleep = 0
@@ -46,12 +46,11 @@ var queuer = {
             console.log('Queue is empty')
         } else {
             for (var i = 0; i < 3; i++) {
-                if (queue.length > 0) {
+                if (queue.length !== 0) {
                     db.query(queue[i], function(err, rows) {
                         if (err !== null) {
                             console.log(err)
                         }
-                        console.log(queue[i])
                         queuer.remove(1)
                     })
                 }
@@ -96,7 +95,7 @@ exports.clq = function(q, callback) {
         if (q.debug) {
             console.log(query)
         }
-        db.query(query, function(err, rows) {
+        /*db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
                     callback(err, rows);
@@ -110,7 +109,7 @@ exports.clq = function(q, callback) {
                 }
                 return false
             }
-        })
+        })*/
     } else if (q.type.toUpperCase() === 'UPDATE') {
         var change = q.change,
             loc = q.location,
@@ -140,7 +139,7 @@ exports.clq = function(q, callback) {
         if (q.debug) {
             console.log(query)
         }
-        db.query(query, function(err, rows) {
+        /*db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
                     callback(err, rows);
@@ -154,7 +153,7 @@ exports.clq = function(q, callback) {
                 }
                 return false
             }
-        })
+        })*/
     } else if (q.type.toUpperCase() === 'SELECT') {
         var what = q.what,
             loc = q.location,
@@ -185,6 +184,6 @@ exports.clq = function(q, callback) {
         })
     }
     if (q.type.toUpperCase() !== 'SELECT') {
-        //queuer.addQ(query)
+        queuer.add(query)
     }
 }
