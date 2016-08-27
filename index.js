@@ -1282,7 +1282,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 ],
                 [
                     user,
-                    status
+                    status,
                     Date.now()
                 ]
             ]
