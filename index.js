@@ -1083,6 +1083,24 @@ function aD(phrase, channelID) {
     })
 }
 
+function timCount(total, newT, callback) {
+    total.d = total.d + newT.d
+    total.h = total.h + newT.h
+    total.m = total.m + newT.m
+    total.s = total.s + newT.s
+    total.m = total.m * 60
+    total.h = total.h * 3600
+    totalC = total.m + total.s + total.h
+    totalC = cmds.util.secondsToTime(totalC)
+    total.d = total.d + totalC.d
+    total.h = totalC.h
+    total.m = totalC.m
+    total.s = totalC.s
+    if (typeof callback === "function") {
+        callback(total);
+    }
+}
+
 disc = false
 var startUpTime = null
     /* Bot on event functions */
@@ -1261,21 +1279,9 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 } else {
                     var lastIdleTime = storage.d.Users[user].totalIdle
                     var previousIdle = cmds.util.secondsToTime(cmds.util.gettime() - storage.d.Users[user].rawLastSeen)
-                    lastIdleTime.d = lastIdleTime.d + previousIdle.d
-                    lastIdleTime.h = lastIdleTime.h + previousIdle.h
-                    lastIdleTime.m = lastIdleTime.m + previousIdle.m
-                    lastIdleTime.s = lastIdleTime.s + previousIdle.s
-                    lastIdleTime.m = lastIdleTime.m * 60
-                    lastIdleTime.h = lastIdleTime.h * 3600
-                    lastIdleTimeC = lastIdleTime.m + lastIdleTime.s + lastIdleTime.h
-                    lastIdleTimeC = cmds.util.secondsToTime(lastIdleTimeC)
-                    lastIdleTime.d = lastIdleTime.d + lastIdleTimeC.d
-                    lastIdleTime.h = lastIdleTimeC.h
-                    lastIdleTime.m = lastIdleTimeC.m
-                    lastIdleTime.s = lastIdleTimeC.s
-                    storage.d.Users[user].totalIdle = lastIdleTime
-                    lastIdleTime = {}
-                    previousIdle = {}
+                    timCount(lastIdleTime, previousIdle, function(total) {
+                        storage.d.Users[user].totalIdle = total
+                    })
                 }
             } else if (usrStatus === 'offline') {
                 //console.log('prev Offline')
@@ -1290,21 +1296,9 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 } else {
                     var lastOfflineTime = storage.d.Users[user].totalOffline
                     var previousOffline = cmds.util.secondsToTime(cmds.util.gettime() - storage.d.Users[user].rawLastSeen)
-                    lastOfflineTime.d = lastOfflineTime.d + previousOffline.d
-                    lastOfflineTime.h = lastOfflineTime.h + previousOffline.h
-                    lastOfflineTime.m = lastOfflineTime.m + previousOffline.m
-                    lastOfflineTime.s = lastOfflineTime.s + previousOffline.s
-                    lastOfflineTime.m = lastOfflineTime.m * 60
-                    lastOfflineTime.h = lastOfflineTime.h * 3600
-                    lastOfflineTimeC = lastOfflineTime.m + lastOfflineTime.s + lastOfflineTime.h
-                    lastOfflineTimeC = cmds.util.secondsToTime(lastOfflineTimeC)
-                    lastOfflineTime.d = lastOfflineTime.d + lastOfflineTimeC.d
-                    lastOfflineTime.h = lastOfflineTimeC.h
-                    lastOfflineTime.m = lastOfflineTimeC.m
-                    lastOfflineTime.s = lastOfflineTimeC.s
-                    storage.d.Users[user].totalOffline = lastOfflineTime
-                    lastOfflineTime = {}
-                    previousOffline = {}
+                    timCount(lastOfflineTime, previousOffline, function(total) {
+                        storage.d.Users[user].totalIdle = total
+                    })
                 }
             }
             if (storage.d.Users[user].status !== 'online' && verb) {
