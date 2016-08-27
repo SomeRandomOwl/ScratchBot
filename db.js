@@ -96,7 +96,7 @@ exports.clq = function(q, callback) {
         if (q.debug) {
             console.log(query)
         }
-        /*db.query(query, function(err, rows) {
+        db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
                     callback(err, rows);
@@ -110,7 +110,7 @@ exports.clq = function(q, callback) {
                 }
                 return false
             }
-        })*/
+        })
     } else if (q.type.toUpperCase() === 'UPDATE') {
         var change = q.change,
             loc = q.location,
@@ -140,7 +140,7 @@ exports.clq = function(q, callback) {
         if (q.debug) {
             console.log(query)
         }
-        /*db.query(query, function(err, rows) {
+        db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
                     callback(err, rows);
@@ -154,7 +154,7 @@ exports.clq = function(q, callback) {
                 }
                 return false
             }
-        })*/
+        })
     } else if (q.type.toUpperCase() === 'SELECT') {
         var what = q.what,
             loc = q.location,
@@ -185,6 +185,6 @@ exports.clq = function(q, callback) {
         })
     }
     if (q.type.toUpperCase() !== 'SELECT') {
-        queuer.addQ(query)
+        //queuer.addQ(query)
     }
 }
