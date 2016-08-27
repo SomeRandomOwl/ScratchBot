@@ -1414,21 +1414,13 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     type: 'insert',
                     location: 'users',
                     change: [
-                        [
-                            'userid',
-                            'name',
-                            'msgCnt',
-                            'lastchat',
-                            'rawLastChat',
-                            'tracking'
-                        ],
+                        ['userid', 'name', 'msgCnt', 'lastchat', 'tracking'],
                         [
                             userID,
                             user,
                             '1',
-                            moment().format('MMMM Do YYYY, hh:mm:ss a'),
-                            cmds.util.gettime(),
-                            moment().format('MMMM Do YYYY, hh:mm:ss a')
+                            Date.now(),
+                            Date.now()
                         ]
                     ]
                 })
@@ -1442,14 +1434,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         [
                             'name',
                             'msgCnt',
-                            'lastChat',
-                            'rawLastChat'
+                            'lastChat'
                         ],
                         [
                             user,
                             res[0].msgCnt + 1,
-                            moment().format('MMMM Do YYYY, hh:mm:ss a'),
-                            cmds.util.gettime()
+                            Date.now()
                         ]
                     ]
                 }, function(e, r) {
@@ -1485,14 +1475,14 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         type: 'insert',
                         location: 'users',
                         change: [
-                            ['userid', 'name', 'linkCnt', 'lastchat', 'rawLastChat', 'tracking'],
+                            ['userid', 'name', 'msgCnt', 'linkCnt', 'lastchat', 'tracking'],
                             [
                                 userID,
                                 user,
                                 '1',
-                                moment().format('MMMM Do YYYY, hh:mm:ss a'),
-                                cmds.util.gettime(),
-                                moment().format('MMMM Do YYYY, hh:mm:ss a')
+                                '1',
+                                Date.now(),
+                                Date.now()
                             ]
                         ]
                     })
@@ -1503,12 +1493,11 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         id: 'userID',
                         where: userID,
                         change: [
-                            ['name', 'linkCnt', 'lastChat', 'rawLastChat'],
+                            ['name', 'linkCnt', 'lastChat'],
                             [
                                 user,
                                 res[0].linkCnt + 1,
-                                moment().format('MMMM Do YYYY, hh:mm:ss a'),
-                                cmds.util.gettime()
+                                Date.now(),
                             ]
                         ]
                     }, function(e, r) {
