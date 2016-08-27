@@ -27,7 +27,7 @@ var queuer = {
         var queue = []
     },
     remove: function(ammount) {
-        queue.spice(0, ammount)
+        queue.splice(0, ammount)
     },
     toggle: function() {
         if (pause) {
