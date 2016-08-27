@@ -1435,7 +1435,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         ],
                         [
                             user,
-                            res[0].msgCnt + 1,
+                            'msgCnt + 1',
                             moment().format('MMMM Do YYYY, hh:mm:ss a'),
                             cmds.util.gettime()
                         ]
@@ -1494,7 +1494,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                             ['name', 'linkCnt', 'lastChat', 'rawLastChat'],
                             [
                                 user,
-                                res[0].linkCnt + 1,
+                                'linkCnt + 1',
                                 moment().format('MMMM Do YYYY, hh:mm:ss a'),
                                 cmds.util.gettime()
                             ]
@@ -1551,7 +1551,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         change: [
                             ['messageCnt'],
                             [
-                                res[0].messageCnt + 1
+                                'messageCnt + 1'
                             ]
                         ]
                     }, function(e, r) {
@@ -1597,7 +1597,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         change: [
                             ['messageCnt'],
                             [
-                                res[0].messageCnt + 1
+                                'messageCnt + 1'
                             ]
                         ]
                     }, function(e, r) {
