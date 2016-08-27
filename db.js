@@ -9,8 +9,61 @@ var config = require('../../config.json'),
         bigNumberStrings: true,
 
     });
-
+var queue = []
+var pause = false
+var sleep = 0
 exports.con = db
+exports.queuer = {
+    add: function(item) {
+        queue.push(item)
+        if (sleep > 4) {
+            sleep = 0
+            queuer.procces()
+        } else {
+            sleep = 0
+        }
+    },
+    clear: function() {
+        delete queue
+        var queue = []
+    },
+    remove: function(ammount) {
+        queue.spice(0, ammount)
+    },
+    toggle: function() {
+        if (pause) {
+            pause = false
+        } else {
+            pause = true
+        }
+    },
+    procces: function() {
+        len = queue.length
+        if (queue.length > 3) {
+            console.log("Warning queue is large it'll take about " + Math.floor(queue.length / 3) + " Seconds to process")
+        }
+        if (queue.length === 0) {
+            sleep++
+            console.log('Queue is empty')
+        } else {
+            for (var i = 0; i < 3; i++) {
+                db.query(queue[i], function(err, rows) {
+                    if (err !== null) {
+                        console.log(err)
+                    }
+                    queuer.remove(1)
+                })
+            }
+            if (sleep !== 5 && !pause) {
+                setTimeout(function() {
+                    queuer.procces()
+                    console.log("Queue processed " + len + ' Entries')
+                }, 1000)
+            }
+        }
+    }
+}
+queuer.procces()
 exports.clq = function(q, callback) {
     if (q.type.toUpperCase() === 'INSERT') {
         var change = q.change,
@@ -35,11 +88,11 @@ exports.clq = function(q, callback) {
                 changeST = changeST + '"' + change[1][i] + '"'
             }
         }
-        query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + changeST + ")"
+        var query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + changeST + ")"
         if (q.debug) {
             console.log(query)
         }
-        db.query(query, function(err, rows) {
+        /*db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
                     callback(err, rows);
@@ -53,7 +106,7 @@ exports.clq = function(q, callback) {
                 }
                 return false
             }
-        })
+        })*/
     } else if (q.type.toUpperCase() === 'UPDATE') {
         var change = q.change,
             loc = q.location,
@@ -79,11 +132,11 @@ exports.clq = function(q, callback) {
                 changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
             }
         }
-        query = "UPDATE " + loc + ' SET ' + changeST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
+        var query = "UPDATE " + loc + ' SET ' + changeST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
         if (q.debug) {
             console.log(query)
         }
-        db.query(query, function(err, rows) {
+        /*db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
                     callback(err, rows);
@@ -97,21 +150,21 @@ exports.clq = function(q, callback) {
                 }
                 return false
             }
-        })
+        })*/
     } else if (q.type.toUpperCase() === 'SELECT') {
         var what = q.what,
             loc = q.location,
             where = q.where,
             id = q.id
         if (id !== undefined) {
-            query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
+            var query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
         } else {
-            query = "SELECT " + what + " FROM " + loc
+            var query = "SELECT " + what + " FROM " + loc
         }
         if (q.debug) {
             console.log(query)
         }
-        db.query(query, function(err, rows) {
+        /*db.query(query, function(err, rows) {
             if (err !== null) {
                 if (typeof callback === "function") {
                     callback(err, rows);
@@ -125,6 +178,7 @@ exports.clq = function(q, callback) {
                 }
                 return false
             }
-        })
+        })*/
     }
+    queuer.add(query)
 }

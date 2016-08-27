@@ -191,5 +191,5 @@
             "help": "Admin Only, Deletes a specified number of messages in the current channel"
         }
     },
-    "info": "This bot has been coded by <@70921043782402048> it is designed to be a simple chat bot combining Useful commands I've seen across a few bots but never really unified together in a way I really wanted. To see a list of commands do the issue the commands command, if you need help on what a command does issue the help command followed by the command you need help with"
+    "info": "This bot has been coded by seth177 it is designed to be a simple chat bot combining Useful commands I've seen across a few bots but never really unified together in a way I really wanted. To see a list of commands do the issue the commands command, if you need help on what a command does issue the help command followed by the command you need help with"
 }

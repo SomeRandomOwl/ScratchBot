@@ -2102,7 +2102,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             rconcmd = 'Yes'
         }
         if (message.toLowerCase().indexOf('invite') === 0 && ignore !== true) {
-            messageSend(channelID, "Here is my invite link: https://goo.gl/wwrmZi \nIf you dont trust short urls use the following command to unshorten it: " + commandmod + "us https://goo.gl/wwrmZi \n\nBy default the bot is set to hav all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
+            messageSend(channelID, "Here is my invite link: https://goo.gl/wwrmZi \nIf you dont trust short urls use the following command to unshorten it: " + commandmod + "us https://goo.gl/wwrmZi \n\nBy default the bot is set to have all permissions, just pick what you want it to have, at a minimum it needs read and manage messages")
             rconcmd = "Yes"
         }
         if (message.toLowerCase().indexOf('js') === 0) {
@@ -2118,7 +2118,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     })
                 }
             } else {
-                messageSend(channelID, '<@' + userID + "> You are not allowed to use this command, only <@" + ownerId + "> can because it can damage the bot")
+                messageSend(channelID, '<@' + userID + "> You are not allowed to use this command, only the owner of the bot can because it can damage the bot")
             }
             rconcmd = 'Yes'
         } else {
