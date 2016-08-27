@@ -1210,10 +1210,16 @@ bot.on('disconnect', function() {
     logger.info(chalk.green("Reconnected"))
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
-    verb = false
-
-    db.con.query('SELECT verb FROM servers WHERE serverid = ' + rawEvent.d.guild_id, function(err, rows) {
-        console.log(rows[0].verb)
+    db.clq({
+        type: 'select',
+        what: 'verb',
+        location: 'servers',
+        id: 'serverID',
+        where: rawEvent.d.guild_id
+    }, function(e, r) {
+        try {
+            console.log(r[0].verb)
+        } catch (e) { /**/ }
     })
     try {
         db.clq({
