@@ -1331,6 +1331,16 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     }
     //Gets the message id and server id
     var messageID = rawEvent.d.id
+    var meta = {
+        userID: userID,
+        user: user,
+        channelID: channelID,
+        serverID: serverID,
+        serverName: sname,
+        channelName: cname,
+        messageID: messageID
+        rawEvent: rawEvent
+    }
     db.clq({
         type: 'select',
         what: '*',
@@ -1551,7 +1561,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                         change: [
                             ['messageCnt'],
                             [
-                        res[0].messageCnt + 1
+                                res[0].messageCnt + 1
                             ]
                         ]
                     }, function(e, r) {
@@ -1893,7 +1903,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
                     })
                 }
             } else {
-                cmds.voiceLines.play(bot, serverID, userID, channelID, vl)
+                cmds.voiceLines.play(bot, meta, vl)
             }
             rconcmd = "Yes"
         }

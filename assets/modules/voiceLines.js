@@ -81,14 +81,14 @@ exports.nickname = function(file, name, bot, channelID) {
         return "Nickname already Exists"
     }
 }
-exports.play = function(bot, serverID, userID, channelID, file) {
-    botVoicC = bot.servers[serverID].members[bot.id].voice_channel_id
-    userVoiceC = bot.servers[serverID].members[userID].voice_channel_id
+exports.play = function(bot, meta, file) {
+    botVoicC = bot.servers[meta.serverID].members[bot.id].voice_channel_id
+    userVoiceC = bot.servers[meta.serverID].members[meta.userID].voice_channel_id
 
     if (botVoicC === undefined) {
         if (userVoiceC === undefined) {
             bot.sendMessage({
-                to: channelID,
+                to: meta.channelID,
                 message: 'You are not in a voice channel!',
                 typing: false
             })
@@ -99,7 +99,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
     } else {
         if (userVoiceC === undefined) {
             bot.sendMessage({
-                to: channelID,
+                to: meta.channelID,
                 message: 'You are not in a voice channel!',
                 typing: false
             })
@@ -109,14 +109,14 @@ exports.play = function(bot, serverID, userID, channelID, file) {
         }
     }
     bot.sendMessage({
-        to: channelID,
+        to: meta.channelID,
         message: 'That should play in a moment',
         typing: false
     }, function(error, response) {
 
         setTimeout(function() {
             bot.deleteMessage({
-                channel: channelID,
+                channelID: meta.channelID,
                 messageID: response.id
             })
         }, 1100)
@@ -124,7 +124,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
     setTimeout(function() {
         if (file.endsWith('.mp3')) {
             bot.getAudioContext({
-                channel: userVoiceC,
+                channelID: userVoiceC,
                 stereo: true
             }, function(e, stream) {
                 stream.playAudioFile('./assets/voiceLines/' + file);
@@ -140,7 +140,7 @@ exports.play = function(bot, serverID, userID, channelID, file) {
                 for (var fileN in vlJ.shortNames) {
                     if (vlJ.shortNames[fileN].nicknames.indexOf(file) !== -1) {
                         bot.getAudioContext({
-                            channel: userVoiceC,
+                            channelID: userVoiceC,
                             stereo: true
                         }, function(e, stream) {
                             stream.playAudioFile('./assets/voiceLines/' + fileN);
