@@ -1210,106 +1210,101 @@ bot.on('disconnect', function() {
     logger.info(chalk.green("Reconnected"))
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
-    var sname = bot.servers[rawEvent.d.guild_id].name
+    db.clQ({
+        type: 'select',
+        what: 'verb',
+        location: 'servers'
+        id: 'serverID',
+        where: rawEvent.d.guild_id
+    }, function(e, r) {
+        verb = r[0].verb
+    })
     try {
-        var verb = storage.d.Servers[sname].settings.verb
-    } catch (e) {
-        verb = false
-        storage.d.Servers[sname].settings.verb = false
-    }
-    try {
-        if (storage.d.Users[user] === "undefined") {
-            storage.d.Users[user] = {
-                "id": userID,
-                "messageCnt": 0,
-                "linkCnt": 0,
-                "status": "unknown",
-                "lastseen": "unknown",
-                "rawLastSeen": 0
+        db.clq({
+            type: 'select',
+            what: 'userid',
+            location: 'users',
+            id: 'userID',
+            where: userID
+        }, function(err, res) {
+            try {
+                if (res[0] === undefined) {
+                    db.clq({
+                        type: 'insert',
+                        location: 'users',
+                        change: [
+                            ['userid', 'name', 'lastseen', 'tracking'],
+                            [
+                                userID,
+                                user,
+                                Date.now(),
+                                Date.now()
+                            ]
+                        ]
+                    })
+                }
+            } catch (e) {
+                console.log(e, err)
             }
-        }
+        })
+        db.clq({
+            type: 'select',
+            what: 'userid',
+            location: 'timecounters',
+            id: 'userID',
+            where: userID
+        }, function(err, res) {
+            try {
+                if (res[0] === undefined) {
+                    db.clq({
+                        type: 'insert',
+                        location: 'users',
+                        change: [
+                            ['userid'],
+                            [userID]
+                        ]
+                    })
+                }
+            } catch (e) {
+                console.log(e, err)
+            }
+        })
+        db.clq({
+            type: 'update',
+            location: 'users',
+            id: 'userID',
+            where: userID,
+            change: [
+                [
+                    'name',
+                    'status',
+                    'lastSeen'
+                ],
+                [
+                    user,
+                    status
+                    Date.now()
+                ]
+            ]
+        })
         if (status === 'offline') {
-            if (user !== undefined) {
-                var lastseen = moment().utcOffset('-0500').format('MMMM Do YYYY, hh:mm:ss a')
-                storage.d.Users[user].lastseen = lastseen
-                storage.d.Users[user].rawLastSeen = cmds.util.gettime()
-                if (storage.d.Users[user].status !== 'offline' && verb) {
-                    logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
-                }
-                storage.d.Users[user].status = status
-            } else if (user === undefined) {
-                var lastseen = moment().utcOffset('-0500').format('MMMM Do YYYY, hh:mm:ss a')
-                storage.d.Users[user].rawLastSeen = cmds.util.gettime()
-                for (var user in storage.d.Users) {
-                    if (userID === storage.d.Users[user].id) {
-                        storage.d.Users[user].lastseen = lastseen
-                        storage.d.Users[user].rawLastSeen = cmds.util.gettime()
-                        if (storage.d.Users[user].status !== 'offline' && verb) {
-                            logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
-                        }
-                        storage.d.Users[user].status = status
-                    } else {
-                        continue
-                    }
-                }
+            if (verb) {
+                logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
             }
         }
         if (status === 'idle') {
-            var lastseen = moment().utcOffset('-0500').format('MMMM Do YYYY, hh:mm:ss a')
-            storage.d.Users[user].lastseen = lastseen
-            storage.d.Users[user].rawLastSeen = cmds.util.gettime()
-            if (storage.d.Users[user].status !== 'idle' && verb) {
+            if (verb) {
                 logger.info(chalk.gray(lastseen + ' : ' + chalk.yellow(user + " is now: " + chalk.underline(status))));
             }
-            storage.d.Users[user].status = status
         }
         if (status === 'online') {
-            var lastseen = moment().utcOffset('-0500').format('MMMM Do YYYY, hh:mm:ss a')
-            usrStatus = storage.d.Users[user].status
-            if (usrStatus === 'idle') {
-                var usrStatIdle = storage.d.Users[user].totalIdle
-                    //console.log('prev idle')
-                if (storage.d.Users[user].totalIdle === undefined) {
-                    storage.d.Users[user].totalIdle = {
-                        'd': 0,
-                        'h': 0,
-                        'm': 0,
-                        's': 0
-                    }
-                } else {
-                    var lastIdleTime = storage.d.Users[user].totalIdle
-                    var previousIdle = cmds.util.secondsToTime(cmds.util.gettime() - storage.d.Users[user].rawLastSeen)
-                    timCount(lastIdleTime, previousIdle, function(total) {
-                        storage.d.Users[user].totalIdle = total
-                    })
-                }
-            } else if (usrStatus === 'offline') {
-                //console.log('prev Offline')
-                var usrStatOff = storage.d.Users[user].totalOffline
-                if (storage.d.Users[user].totalOffline === undefined) {
-                    storage.d.Users[user].totalOffline = {
-                        'd': 0,
-                        'h': 0,
-                        'm': 0,
-                        's': 0
-                    }
-                } else {
-                    var lastOfflineTime = storage.d.Users[user].totalOffline
-                    var previousOffline = cmds.util.secondsToTime(cmds.util.gettime() - storage.d.Users[user].rawLastSeen)
-                    timCount(lastOfflineTime, previousOffline, function(total) {
-                        storage.d.Users[user].totalIdle = total
-                    })
-                }
-            }
-            if (storage.d.Users[user].status !== 'online' && verb) {
+            if (verb) {
                 logger.info(chalk.gray(lastseen + ' : ' + chalk.green(user + " is now: " + chalk.underline(status))));
             }
-            storage.d.Users[user].status = status
         }
     } catch (e) {
         return
     }
-
 });
 bot.on('message', function(user, userID, channelID, message, rawEvent) {
     if (storage.settings.ignoredChannels.indexOf(channelID) !== -1) {
