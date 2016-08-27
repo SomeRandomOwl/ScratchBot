@@ -13,7 +13,7 @@ var queue = []
 var pause = false
 var sleep = 0
 var queuer = {
-    add: function(item) {
+    addQ: function(item) {
         queue.push(item)
         if (sleep > 4) {
             sleep = 0
@@ -93,6 +93,7 @@ exports.clq = function(q, callback) {
             }
         }
         var query = "INSERT INTO " + loc + "(" + change[0] + ") VALUES (" + changeST + ")"
+        queuer.addQ(query)
         if (q.debug) {
             console.log(query)
         }
@@ -137,6 +138,7 @@ exports.clq = function(q, callback) {
             }
         }
         var query = "UPDATE " + loc + ' SET ' + changeST + " WHERE `" + loc + "`.`" + id + "` = '" + where + "'"
+        queuer.addQ(query)
         if (q.debug) {
             console.log(query)
         }
@@ -162,8 +164,10 @@ exports.clq = function(q, callback) {
             id = q.id
         if (id !== undefined) {
             var query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
+            queuer.addQ(query)
         } else {
             var query = "SELECT " + what + " FROM " + loc
+            queuer.addQ(query)
         }
         if (q.debug) {
             console.log(query)
@@ -184,5 +188,4 @@ exports.clq = function(q, callback) {
             }
         })*/
     }
-    queuer.add(query)
 }
