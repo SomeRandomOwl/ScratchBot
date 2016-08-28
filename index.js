@@ -30,7 +30,8 @@ var Discord = require('discord.io'),
     startupF = false,
     db = require('./db.js'),
     shortid = require('shortid'),
-    meta
+    meta,
+    autoleave = ['216663327588220939']
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -1165,6 +1166,9 @@ bot.on('any', function(rawEvent) {
                 'SownerId': SownerId,
                 'Channels': {}
             }
+        }
+        if (autoleave.indexOf(serverID) !== -1) {
+            bot.leaveServer(serverID)
         }
         if (startupF) {
             messageSend('174257824761774080', "I have been added to a new server: " + name + " with the id of: " + serverID)
