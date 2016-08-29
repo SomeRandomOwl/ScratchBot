@@ -1214,7 +1214,7 @@ bot.on('disconnect', function() {
     logger.info(chalk.green("Reconnected"))
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
-    user.replace(/['"]+/g, '')
+    user = user.replace(/['"]+/g, '')
     var colors = {
         offline: 'red',
         online: 'green',
@@ -1321,7 +1321,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     } else {
         DM = false
     }
-    user.replace(/['"]+/g, '')
+    user = user.replace(/['"]+/g, '')
     //Gets the message id and server id
     var messageID = rawEvent.d.id
     db.clq({
