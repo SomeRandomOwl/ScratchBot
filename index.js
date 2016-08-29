@@ -1232,7 +1232,7 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
             verb = r[0].verb
             if (verb) {
                 console.log(verb)
-                logger.info(chalk.gray(lastseen + ' : ' + chalk[colors[status]](user + " is now: " + chalk.underline(status))));
+                logger.info(chalk.gray(moment(Date.now()).format('MMMM Do YYYY, hh:mm:ss a') + ' : ' + chalk[colors[status]](user + " is now: " + chalk.underline(status))));
             }
         } catch (e) {}
     })
