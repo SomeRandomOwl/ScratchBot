@@ -1224,9 +1224,10 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     }, function(e, r) {
         try {
             verb = r[0].verb
-        } catch (e) {
-            verb = false
-        }
+            if (verb) {
+                console.log(verb)
+            }
+        } catch (e) {}
     })
     try {
         db.clq({
