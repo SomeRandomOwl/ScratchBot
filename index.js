@@ -1214,6 +1214,12 @@ bot.on('disconnect', function() {
     logger.info(chalk.green("Reconnected"))
 });
 bot.on("presence", function(user, userID, status, gameName, rawEvent) {
+    user.replace(/['"]+/g, '')
+    var colors = {
+        offline: 'red',
+        online: 'green',
+        odle: 'yellow'
+    }
     var verb = false
     db.clq({
         type: 'select',
@@ -1224,8 +1230,9 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
     }, function(e, r) {
         try {
             verb = r[0].verb
-            if (verb === true) {
+            if (verb) {
                 console.log(verb)
+                logger.info(chalk.gray(lastseen + ' : ' + chalk[colors[status]](user + " is now: " + chalk.underline(status))));
             }
         } catch (e) {}
     })
@@ -1297,21 +1304,9 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
                 ]
             ]
         })
-        if (status === 'offline') {
-            if (verb) {
-                logger.info(chalk.gray(lastseen + ' : ' + chalk.red(user + " is now: " + chalk.underline(status))));
-            }
-        }
-        if (status === 'idle') {
-            if (verb) {
-                logger.info(chalk.gray(lastseen + ' : ' + chalk.yellow(user + " is now: " + chalk.underline(status))));
-            }
-        }
-        if (status === 'online') {
-            if (verb) {
-                logger.info(chalk.gray(lastseen + ' : ' + chalk.green(user + " is now: " + chalk.underline(status))));
-            }
-        }
+        if (status === 'offline') {}
+        if (status === 'idle') {}
+        if (status === 'online') {}
     } catch (e) {
         return
     }
@@ -1326,9 +1321,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     } else {
         DM = false
     }
-    if (user.indexOf("\'")) {
-        user.replace("\'", "")
-    }
+    user.replace(/['"]+/g, '')
     //Gets the message id and server id
     var messageID = rawEvent.d.id
     db.clq({
