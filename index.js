@@ -204,9 +204,9 @@ function statusmsg(msg) {
 var queuer = {
     addQ: function(item) {
         queue.push(item)
-        queuer.started = true
         if (!queuer.started) {
             queuer.procces()
+            queuer.started = true
         }
     },
     clear: function() {
