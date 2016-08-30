@@ -1347,6 +1347,8 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
         var serverID = bot.channels[channelID].guild_id
         var cname = bot.servers[serverID].channels[channelID].name
         var sname = bot.servers[serverID].name
+        sname = sname.replace(/['"]+/g, '')
+        cname = cname.replace(/['"]+/g, '')
         if (storage.d.Servers[sname].SownerId !== undefined) {
             var SownerId = storage.d.Servers[sname].SownerId
         }
