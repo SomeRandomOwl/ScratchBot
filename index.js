@@ -320,7 +320,7 @@ function messageSend(channelID, msg, set, callback) {
             }
         }
     }
-    queuer.add({
+    queuer.addQ({
         id: channelID,
         msg: msg
     })
