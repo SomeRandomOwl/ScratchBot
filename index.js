@@ -205,7 +205,9 @@ var queuer = {
     addQ: function(item) {
         queue.push(item)
         queuer.started = true
-        queuer.procces()
+        if (!queuer.started) {
+            queuer.procces()
+        }
     },
     clear: function() {
         var queue = []
@@ -325,7 +327,6 @@ function messageSend(channelID, msg, set, callback) {
         id: channelID,
         msg: msg
     })
-    queuer.procces()
 }
 /*/Console related input functions/*/
 function consoleparse(line) {
