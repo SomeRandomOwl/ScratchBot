@@ -32,9 +32,8 @@ var Discord = require('discord.io'),
     shortid = require('shortid'),
     meta,
     autoleave = ['216663327588220939'],
-    queue = [],
-    lastStatusUser,
-    lastStatus
+    lastStatus,
+    lastStatusUser
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -201,66 +200,6 @@ function statusmsg(msg) {
         }
     })
 }
-var queuer = {
-    addQ: function(item) {
-        queue.push(item)
-        if (!queuer.started) {
-            queuer.procces()
-            queuer.started = true
-        }
-    },
-    clear: function() {
-        var queue = []
-    },
-    remove: function(ammount) {
-        queue.splice(0, ammount)
-    },
-    started: false,
-    procces: function() {
-        len = queue.length
-        if (queue.length > 10) {
-            console.log("Warning queue is large it'll take about " + Math.floor(queue.length / 10) + " Seconds to process")
-        }
-        if (queue.length > 0) {
-            bot.sendMessage({
-                to: queue[0].id,
-                message: queue[0].msg,
-                typing: false
-            }, function(error, response) {
-                if (error) {
-                    if (typeof callback === "function") {
-                        var err = true;
-                        var res = error
-                        callback(err, res);
-                    }
-                    console.log(error)
-                }
-                try {
-                    logger.info(chalk.gray('Last Message Sent ID: ' + response.id + ' Message: ' + msg.substring(0, msg.length / 2)))
-                    sentPrevId = response.id
-                    if (typeof callback === "function") {
-                        var err = false;
-                        var res = response.id
-                        callback(err, res);
-                    }
-                } catch (e) {
-                    return
-                }
-            });
-            queuer.remove(1)
-        }
-        if (queue.length === 0) {
-            queuer.started = false
-        }
-        if (queuer.started === true) {
-            setTimeout(function() {
-                queuer.procces()
-                console.log("Queue processed " + len + ' Entries')
-            }, 1000)
-        }
-    }
-}
-
 /*/Used to send messages and keep tack of the message id/*/
 function messageSend(channelID, msg, set, callback) {
     try {
@@ -323,10 +262,33 @@ function messageSend(channelID, msg, set, callback) {
             }
         }
     }
-    queuer.addQ({
-        id: channelID,
-        msg: msg
-    })
+    bot.sendMessage({
+        to: channelID,
+        message: msg,
+        typing: false
+    }, function(error, response) {
+        if (error) {
+            if (typeof callback === "function") {
+                var err = true;
+                var res = error
+                callback(err, res);
+            }
+            console.log(error)
+        }
+        try {
+            logger.info(chalk.gray('Last Message Sent ID: ' + response.id))
+            sentPrevId = response.id
+            if (typeof callback === "function") {
+                var err = false;
+                var res = response.id
+                callback(err, res);
+            }
+        } catch (e) {
+            return
+        }
+    });
+
+    return sentPrevId
 }
 /*/Console related input functions/*/
 function consoleparse(line) {
