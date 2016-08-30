@@ -32,7 +32,9 @@ var Discord = require('discord.io'),
     shortid = require('shortid'),
     meta,
     autoleave = ['216663327588220939'],
-    queue = []
+    queue = [],
+    lastStatusUser,
+    lastStatus
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -294,7 +296,7 @@ function messageSend(channelID, msg, set, callback) {
                         console.log(error)
                     }
                     try {
-                        logger.info(chalk.gray('Last Message Sent ID: ' + response.id))
+                        logger.info(chalk.gray('Last Message Sent ID: ' + response.id + ' Message: ' + msg.substring(0, msg.length / 2)))
                         sentPrevId = response.id
                         if (typeof callback === "function") {
                             var err = false;
@@ -1266,7 +1268,11 @@ bot.on("presence", function(user, userID, status, gameName, rawEvent) {
         try {
             verb = r[0].verb
             if (verb) {
-                logger.info(chalk.gray(moment(Date.now()).format('MMMM Do YYYY, hh:mm:ss a') + ' : ' + chalk[colors[status]](user + " is now: " + chalk.underline(status))));
+                if (userID === lastStatusUser && lastSeen > lastSeen + 1000) {
+                    logger.info(chalk.gray(moment(Date.now()).format('MMMM Do YYYY, hh:mm:ss a') + ' : ' + chalk[colors[status]](user + " is now: " + chalk.underline(status))));
+                    var lastStatus = Date.now()
+                    var lastStatusUser = userID
+                }
             }
         } catch (e) {}
     })
