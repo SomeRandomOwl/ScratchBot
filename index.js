@@ -31,7 +31,8 @@ var Discord = require('discord.io'),
     db = require('./db.js'),
     shortid = require('shortid'),
     meta,
-    autoleave = ['216663327588220939']
+    autoleave = ['216663327588220939'],
+    queue = []
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -260,33 +261,67 @@ function messageSend(channelID, msg, set, callback) {
             }
         }
     }
-    bot.sendMessage({
-        to: channelID,
-        message: msg,
-        typing: false
-    }, function(error, response) {
-        if (error) {
-            if (typeof callback === "function") {
-                var err = true;
-                var res = error
-                callback(err, res);
+    var queuer = {
+        addQ: function(item) {
+            queue.push(item)
+            queuer.started = true
+            queuer.procces()
+        },
+        clear: function() {
+            var queue = []
+        },
+        remove: function(ammount) {
+            queue.splice(0, ammount)
+        },
+        started: false,
+        procces: function() {
+            len = queue.length
+            if (queue.length > 10) {
+                console.log("Warning queue is large it'll take about " + Math.floor(queue.length / 10) + " Seconds to process")
             }
-            console.log(error)
-        }
-        try {
-            logger.info(chalk.gray('Last Message Sent ID: ' + response.id))
-            sentPrevId = response.id
-            if (typeof callback === "function") {
-                var err = false;
-                var res = response.id
-                callback(err, res);
+            if (queue.length > 0) {
+                bot.sendMessage({
+                    to: queue[0].id,
+                    message: queue[0].msg,
+                    typing: false
+                }, function(error, response) {
+                    if (error) {
+                        if (typeof callback === "function") {
+                            var err = true;
+                            var res = error
+                            callback(err, res);
+                        }
+                        console.log(error)
+                    }
+                    try {
+                        logger.info(chalk.gray('Last Message Sent ID: ' + response.id))
+                        sentPrevId = response.id
+                        if (typeof callback === "function") {
+                            var err = false;
+                            var res = response.id
+                            callback(err, res);
+                        }
+                    } catch (e) {
+                        return
+                    }
+                });
+                queuer.remove(1)
             }
-        } catch (e) {
-            return
+            if (queue.length === 0) {
+                queuer.started = false
+            }
+            if (queuer.started === true) {
+                setTimeout(function() {
+                    queuer.procces()
+                    console.log("Queue processed " + len + ' Entries')
+                }, 100)
+            }
         }
-    });
-
-    return sentPrevId
+    }
+    queuer.add({
+        id: channelID,
+        msg: msg
+    })
 }
 /*/Console related input functions/*/
 function consoleparse(line) {
