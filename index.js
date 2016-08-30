@@ -316,7 +316,7 @@ function messageSend(channelID, msg, set, callback) {
                 setTimeout(function() {
                     queuer.procces()
                     console.log("Queue processed " + len + ' Entries')
-                }, 100)
+                }, 1000)
             }
         }
     }
