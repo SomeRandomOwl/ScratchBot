@@ -8,8 +8,8 @@ var config = require('../../config.json'),
         supportBigNumbers: true,
         bigNumberStrings: true,
 
-    });
-
+    }),
+    cache = {};
 exports.con = db
 exports.clq = function(q, callback) {
     if (q.type.toUpperCase() === 'INSERT') {
@@ -105,6 +105,7 @@ exports.clq = function(q, callback) {
             id = q.id
         if (id !== undefined) {
             query = "SELECT " + what + " FROM " + loc + " WHERE " + id + " LIKE '%" + where + "%'"
+            CacheThis = true
         } else {
             query = "SELECT " + what + " FROM " + loc
         }
@@ -112,6 +113,10 @@ exports.clq = function(q, callback) {
             console.log(query)
         }
         db.query(query, function(err, rows) {
+            if (CacheThis) {
+                cache[loc].[id] = rows
+            }
+            exports.cache = cache
             if (err !== null) {
                 if (typeof callback === "function") {
                     callback(err, rows);
