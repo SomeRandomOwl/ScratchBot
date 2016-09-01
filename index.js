@@ -651,7 +651,7 @@ function pug(channelID, name, sname, messageID) {
 /*/Posts a random image from a SFW scenery subreddit/*/
 function redditScenery(channelID, reddit, name, sname) {
     if (cmds.util.isInArray(reddit, redditList)) {
-        var notif = messageSend(channelID, "Grabbing a image from reddit, this might take a few seconds...")
+        tempmsg(channelID, "Grabbing a image from reddit, this might take a few seconds...", 2000)
         request('https://www.reddit.com/r/' + reddit + 'porn' + '.json', function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 redditJson = JSON.parse(body)
@@ -1225,7 +1225,7 @@ bot.on('disconnect', function() {
     var disc = true
     startupF = false
     setTimeout(function() {
-	startupF = true
+        startupF = true
     }, 5000)
     logger.error(chalk.red("Bot got disconnected, reconnecting"))
     bot.connect()
