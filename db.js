@@ -117,7 +117,7 @@ exports.clq = function(q, callback) {
                 if (cache[loc] === undefined) {
                     cache[loc] = {}
                 }
-                cache[loc][where] = rows
+                cache[loc][where] = rows[0]
             }
             exports.cache = cache
             if (err !== null) {
