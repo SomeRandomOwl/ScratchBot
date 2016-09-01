@@ -114,6 +114,11 @@ exports.clq = function(q, callback) {
         }
         db.query(query, function(err, rows) {
             if (CacheThis) {
+                if (cache[loc] === undefined) {
+                    cache[loc] = {
+                        id: {}
+                    }
+                }
                 cache[loc].id[id] = rows
             }
             exports.cache = cache
