@@ -113,7 +113,7 @@ exports.clq = function(q, callback) {
             console.log(query)
         }
         db.query(query, function(err, rows) {
-            if (CacheThis) {
+            if (id !== undefined) {
                 if (cache[loc] === undefined) {
                     cache[loc] = {
                         id: {}
