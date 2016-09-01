@@ -2182,15 +2182,17 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             username: user
         })
     }
-    db.clq({
-        type: 'select',
-        what: 'verb',
-        location: 'servers',
-        id: 'serverID',
-        where: serverID
-    }, function(e, r) {
-        verb = r[0].verb
-    })
+    try {
+        db.clq({
+            type: 'select',
+            what: 'verb',
+            location: 'servers',
+            id: 'serverID',
+            where: serverID
+        }, function(e, r) {
+            verb = r[0].verb
+        })
+    } catch (e) { /**/ }
     //Special conditions to prevent the logging of bots and specially monitored chats
     if (userID.indexOf('104867073343127552') === 0 || channelID.indexOf('164845697508704257') === 0 || channelID.indexOf('167855344129802241') === 0) {
         if (userID === '104867073343127552') {
