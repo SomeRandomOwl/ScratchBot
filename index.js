@@ -1223,6 +1223,10 @@ bot.on('any', function(rawEvent) {
 });
 bot.on('disconnect', function() {
     var disc = true
+    startupF = false
+    setTimeout(function() {
+	startupF = true
+    }, 5000)
     logger.error(chalk.red("Bot got disconnected, reconnecting"))
     bot.connect()
     logger.info(chalk.green("Reconnected"))
@@ -1826,12 +1830,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             if (userID.indexOf(ownerId) === 0) {
                 messagesDelete(channelID, Number(pcall) + 1)
                 setTimeout(function() {
-                    messageSend(channelID, 'Ok removed the last ' + pcall + " Messages")
+                    tempmsg(channelID, 'Ok removed the last ' + pcall + ' Messages', 2000)
                 }, 500)
             } else if (userID.indexOf(SownerId) === 0 && userID.indexOf(ownerId) === -1) {
                 messagesDelete(channelID, Number(pcall) + 1)
                 setTimeout(function() {
-                    messageSend(channelID, 'Ok removed the last ' + pcall + " Messages")
+                    tempmsg(channelID, 'Ok removed the last ' + pcall + ' Messages', 2000)
                 }, 500)
             } else {
                 messageSend(channelID, "You are not allowed to do that command, you need to be either the bot or server owner/Admin")
