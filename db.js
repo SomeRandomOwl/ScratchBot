@@ -119,7 +119,7 @@ exports.clq = function(q, callback) {
                         id: {}
                     }
                 }
-                cache[loc].id[id] = rows
+                cache[loc].id[where] = rows
             }
             exports.cache = cache
             if (err !== null) {
