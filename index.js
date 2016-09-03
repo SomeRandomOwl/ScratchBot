@@ -2208,14 +2208,12 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             console.log(timed + 'Channel: ' + 'DM |\n' + chalk.yellow(user + ': ') + message)
             fs.appendFile("logs/DMs/" + user + ".txt", '\n' + timed + user + ": " + message)
         } else {
-            servern = bot.servers[serverID].name
-            channeln = bot.servers[serverID].channels[channelID].name
             mkdirp('./logs/' + servern, function(err) {
-                fs.appendFile("./logs/" + servern + '/' + channeln + '.txt', '\n' + timed + user + ": " + message)
+                fs.appendFile("./logs/" + sname + '/' + cname + '.txt', '\n' + timed + user + ": " + message)
             })
             try {
                 if (verb === true || cnaid === channelID || storage.d.Servers[sname].settings.verb === true) {
-                    console.log('\n' + timed + ' Channel: ' + chalk.blue(servern + '/' + channeln) + ' |\n' + chalk.cyan(user + ': ') + message)
+                    console.log('\n' + timed + ' Channel: ' + chalk.blue(sname + '/' + channeln) + ' |\n' + chalk.cyan(user + ': ') + message)
                 }
             } catch (e) {
                 //do nothing
