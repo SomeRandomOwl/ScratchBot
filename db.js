@@ -69,6 +69,11 @@ exports.clq = function(q, callback) {
             return false
         }
         for (var i = 0; i < change[0].length; i++) {
+            console.log('cahce before: ' + cache[loc][where])
+            cache[loc][where][change[0][i]] = change[1][i]
+            console.log('cahce after: ' + cache[loc][where])
+        }
+        for (var i = 0; i < change[0].length; i++) {
             if (change[0].length !== 1) {
                 if (i === change[0].length - 1) {
                     changeST = changeST + ' ' + change[0][i] + " = '" + change[1][i] + "'"
