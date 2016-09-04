@@ -69,9 +69,9 @@ exports.clq = function(q, callback) {
             return false
         }
         for (var i = 0; i < change[0].length; i++) {
-            console.log('cahce before: ' + cache[loc][where])
+            console.log('cahce before: ' + JSON.stringify(cache[loc][where], null, '\t'))
             cache[loc][where][change[0][i]] = change[1][i]
-            console.log('cahce after: ' + cache[loc][where])
+            console.log('cahce after: ' + JSON.stringify(cache[loc][where], null, '\t'))
         }
         for (var i = 0; i < change[0].length; i++) {
             if (change[0].length !== 1) {
