@@ -34,8 +34,7 @@ var Discord = require('discord.io'),
     autoleave = ['216663327588220939'],
     lastStatus,
     lastStatusUser,
-    gSearch = require('google'),
-    gSearch.resultsPerPage = 25
+    gSearch = require('google')
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -91,7 +90,7 @@ youTube.setKey(config.youTubeApiKey);
 
 
 /* Global variable setting */
-var cnaid = '171798432749584387',
+var cnaid,
     dateFormat = 'MMMM Do YYYY, h:mm:ss a',
     lastseen = null,
     logChan = config.logChan,
@@ -2219,7 +2218,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             })
             try {
                 if (verb === true || cnaid === channelID || storage.d.Servers[sname].settings.verb === true) {
-                    console.log('\n' + timed + ' Channel: ' + chalk.blue(sname + '/' + channeln) + ' |\n' + chalk.cyan(user + ': ') + message)
+                    console.log('\n' + timed + ' Channel: ' + chalk.blue(sname + '/' + cname) + ' |\n' + chalk.cyan(user + ': ') + message)
                 }
             } catch (e) {
                 //do nothing
