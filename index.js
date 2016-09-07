@@ -35,10 +35,24 @@ var Discord = require('discord.io'),
     lastStatus,
     lastStatusUser,
     gSearch = require('google'),
-    gSearch.resultsPerPage = 25
+    cleverbot = new Cleverbot,
+    roll = new Roll(),
+    cnaid = '171798432749584387',
+    dateFormat = 'MMMM Do YYYY, h:mm:ss a',
+    lastseen = null,
+    logChan = config.logChan,
+    sentPrevId = null,
+    commandmod = config.cmdMod,
+    ownerId = config.ownerId,
+    rconcmd = 'No',
+    clist = doc.cList,
+    debug = false,
+    serverID = null,
+    xkcdJson = null,
+    verb = false,
+    prevUrl,
+    num = 0;
 
-cleverbot = new Cleverbot
-roll = new Roll();
 /*/Set up logging/*/
 var logger = new(winston.Logger)({
         transports: [
@@ -87,25 +101,6 @@ setTimeout(function() {
 
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
-/*/Bot credentials/*/
-
-
-/* Global variable setting */
-var cnaid = '171798432749584387',
-    dateFormat = 'MMMM Do YYYY, h:mm:ss a',
-    lastseen = null,
-    logChan = config.logChan,
-    sentPrevId = null,
-    commandmod = config.cmdMod,
-    ownerId = config.ownerId,
-    rconcmd = 'No',
-    clist = doc.cList,
-    debug = false,
-    serverID = null,
-    xkcdJson = null,
-    verb = false,
-    prevUrl,
-    num = 0
 
 String.prototype.replaceBetween = function(start, end, what) {
     return this.substring(0, start) + what + this.substring(end);
@@ -1045,14 +1040,15 @@ function DBquery(channelID, query) {
 //Pins a message
 function pin(meta, msg) {
     bot.sendMessage({
-	to: meta.channelID,
-	message: msg},
-	function(e, res) {
-	    bot.pinMessage({
-		channelID: meta.channelID,
-		messageID: res.id
-	    })
-	}
+            to: meta.channelID,
+            message: msg
+        },
+        function(e, res) {
+            bot.pinMessage({
+                channelID: meta.channelID,
+                messageID: res.id
+            })
+        }
     )
 }
 //Hard Mutes someone
@@ -1654,7 +1650,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
     /**COMMAND RECGONITION**/
     if (message.indexOf(commandmod) === 0) {
         message = message.replace(commandmod, '')
-        if (message.toLowerCase().indexOf('ping') === 0 && ignore !== true) {
+        if (message.toLowerCase().startsWith('ping') === 0 && ignore !== true) {
             messageSend(channelID, 'pong')
             rconcmd = 'Yes'
         }
