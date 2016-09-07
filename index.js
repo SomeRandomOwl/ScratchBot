@@ -100,28 +100,6 @@ setTimeout(function() {
 
 /*/Load Up a Youtube Api Key /*/
 youTube.setKey(config.youTubeApiKey);
-<<<<<<< HEAD
-/*/Bot credentials/*/
-
-
-/* Global variable setting */
-var cnaid,
-    dateFormat = 'MMMM Do YYYY, h:mm:ss a',
-    lastseen = null,
-    logChan = config.logChan,
-    sentPrevId = null,
-    commandmod = config.cmdMod,
-    ownerId = config.ownerId,
-    rconcmd = 'No',
-    clist = doc.cList,
-    debug = false,
-    serverID = null,
-    xkcdJson = null,
-    verb = false,
-    prevUrl,
-    num = 0
-=======
->>>>>>> 6d83030e7f80d855696ab16ee9ec490190c8ba91
 
 String.prototype.replaceBetween = function(start, end, what) {
     return this.substring(0, start) + what + this.substring(end);
