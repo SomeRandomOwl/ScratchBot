@@ -12,6 +12,7 @@
     "cleverbot.io": ">=1.0.4",
     "discord.io": "github:izy521/discord.io",
     "feedparser": "^1.1.4",
+    "google": "^2.1.0",
     "googleapis": ">=7.0.0",
     "mathjs": ">=3.2.1",
     "moment": ">=2.13.0",

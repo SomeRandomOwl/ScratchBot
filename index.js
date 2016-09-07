@@ -33,7 +33,9 @@ var Discord = require('discord.io'),
     meta,
     autoleave = ['216663327588220939'],
     lastStatus,
-    lastStatusUser
+    lastStatusUser,
+    gSearch = require('google'),
+    gSearch.resultsPerPage = 25
 
 cleverbot = new Cleverbot
 roll = new Roll();
@@ -1041,13 +1043,17 @@ function DBquery(channelID, query) {
     })
 }
 //Pins a message
-function pin(channelID, msg) {
-    messageSend(channelID, msg, {}, function(res) {
-        bot.pinMessage({
-            channelID: channelID,
-            messageID: res
-        })
-    })
+function pin(meta, msg) {
+    bot.sendMessage({
+	to: meta.channelID,
+	message: msg},
+	function(e, res) {
+	    bot.pinMessage({
+		channelID: meta.channelID,
+		messageID: res.id
+	    })
+	}
+    )
 }
 //Hard Mutes someone
 function mute(sname, userID, un) {
@@ -2017,7 +2023,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             var pincmd = message
             var pincall = pincmd.replace('pin ', '')
             if (ownerId === userID || serverID === '162390519748624384') {
-                pin(channelID, '<@' + userID + '>: ' + pincall)
+                pin(meta, '<@' + userID + '>: ' + pincall)
             }
             rconcmd = 'Yes'
         }
@@ -2208,7 +2214,7 @@ bot.on('message', function(user, userID, channelID, message, rawEvent) {
             console.log(timed + 'Channel: ' + 'DM |\n' + chalk.yellow(user + ': ') + message)
             fs.appendFile("logs/DMs/" + user + ".txt", '\n' + timed + user + ": " + message)
         } else {
-            mkdirp('./logs/' + servern, function(err) {
+            mkdirp('./logs/' + sname, function(err) {
                 fs.appendFile("./logs/" + sname + '/' + cname + '.txt', '\n' + timed + user + ": " + message)
             })
             try {
