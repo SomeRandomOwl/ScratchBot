@@ -72,7 +72,7 @@
         },
         "8ball": {
             "type": "Fun",
-            "help": "Has the bot answer a Yes/No question."
+            "help": "Makes the bot answer a Yes/No question."
         },
         "pirate": {
             "type": "Admin",
@@ -108,7 +108,7 @@
         },
         "ids": {
             "type": "Utility",
-            "help": "Makes bot send a message with the user's id and the current channel id."
+            "help": "Makes the bot send a message with the user's id and the current channel id."
         },
         "clever": {
             "type": "Fun",
@@ -116,11 +116,11 @@
         },
         "math": {
             "type": "Useful",
-            "help": "Makes bot evaluate a math expression."
+            "help": "Makes the bot evaluate a math expression."
         },
         "status": {
             "type": "Utility",
-            "help": "Makes bot report the status of a specific user and when they were last online-line."
+            "help": "Makes the bot report the status of a specific user and when they were last online-line."
         },
         "commands": {
             "type": "Utility",
@@ -128,15 +128,15 @@
         },
         "poke": {
             "type": "Other",
-            "help": "Makes bot DM a user the channel and user that issued the command. E.G.: poke @username."
+            "help": "Makes the bot DM a user the channel and user that issued the command. E.G.: poke @username."
         },
         "stats": {
             "type": "Utility",
-            "help": "Makes bot print out current tracked stats for a given user."
+            "help": "Makes the bot print out current tracked stats for a given user."
         },
         "ignore": {
             "type": "Admin",
-            "help": "Makes bot ignore all commands and logging on a channel, to un-ignore a channel do: ignore remove."
+            "help": "Makes the bot ignore all commands and logging on a channel, to un-ignore a channel do: ignore remove."
         },
         "yt": {
             "type": "Useful",
@@ -148,23 +148,23 @@
         },
         "announce": {
             "type": "Admin",
-            "help": "Makes a bot announce user changes on a channel, issue command again to turn off. Can only be enabled in one channel."
+            "help": "Makes the bot announce user changes on a channel, issue command again to turn off. Can only be enabled in one channel."
         },
         "cat": {
             "type": "Fun",
-            "help": "Makes bot post a random cat picture."
+            "help": "Makes the bot post a random cat picture."
         },
         "snake": {
             "type": "Fun",
-            "help": "Makes bot post a random snake picture."
+            "help": "Makes the bot post a random snake picture."
         },
         "pug": {
             "type": "Fun",
-            "help": "Makes bot post a random pug picture."
+            "help": "Makes the bot post a random pug picture."
         },
         "redditscenery": {
             "type": "Fun",
-            "help": "Makes bot post a random picture from a list, to see the list issue : redditscenery list."
+            "help": "Makes the bot post a random picture from a list, to see the list issue : redditscenery list."
         },
         "js": {
             "type": "Admin",
