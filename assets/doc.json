@@ -68,7 +68,7 @@
         "typeList": ["Fun", "Admin", "Utility", "Other"],
         "prefix": {
             "type": "Admin",
-            "help": "Changes the prefix used fo a server"
+            "help": "Changes the prefix used for a server"
         },
         "8ball": {
             "type": "Fun",
@@ -80,7 +80,7 @@
         },
         "ping": {
             "type": "Utility",
-            "help": "used to test connectivity to the bot"
+            "help": "Used to test connectivity to the bot"
         },
         "us": {
             "type": "Useful",
@@ -92,7 +92,7 @@
         },
         "help": {
             "type": "Utility",
-            "help": "Prints the help for a command, for a list of commands do the commands command"
+            "help": "Prints the help for a command, for a list of commands use 'commands'"
         },
         "info": {
             "type": "Utility",
@@ -100,7 +100,7 @@
         },
         "roll": {
             "type": "Fun",
-            "help": "Rolls a die/dice accepts multiple inputs."
+            "help": "Rolls a die/dice accepts multiple inputs"
         },
         "avatar": {
             "type": "Other",
@@ -120,11 +120,11 @@
         },
         "status": {
             "type": "Utility",
-            "help": "Makes bot report the status of a specific user and if they are off-line state when they went off-line."
+            "help": "Makes bot report the status of a specific user and, if they are off-line, state when they went off-line."
         },
         "commands": {
             "type": "Utility",
-            "help": "Makes the bot DM the user issuing the command a list of commands"
+            "help": "Makes the bot DM the user, issuing a list of commands"
         },
         "poke": {
             "type": "Other",
@@ -132,7 +132,7 @@
         },
         "stats": {
             "type": "Utility",
-            "help": "Makes bot print out current tracked stats for a user."
+            "help": "Makes bot print out current tracked stats for a user"
         },
         "ignore": {
             "type": "Admin",
@@ -140,7 +140,7 @@
         },
         "yt": {
             "type": "Useful",
-            "help": "Makes the bot search Youtube for a video, user, or play-list."
+            "help": "Makes the bot search Youtube for a video, user, or play-list"
         },
         "xkcd": {
             "type": "Fun",
@@ -172,7 +172,7 @@
         },
         "verb": {
             "type": "Admin",
-            "help": "bot owner only, disallows message and status output to console"
+            "help": "Bot owner only! Disallows message and status output to console"
         },
         "uptime": {
             "type": "Utility",
